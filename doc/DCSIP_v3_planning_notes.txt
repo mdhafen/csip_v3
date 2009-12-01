@@ -1,0 +1,104 @@
+New DCSIP
+
+new features:
+question/answer versioning
+answer serializing
+authorization for principals/district
+credential sync with gmail/AD/PowerSchool?
+
+existing features:
+per location category
+location have multiple loc_category
+
+
+database:
+user
+  name
+  userid
+  password
+  salt
+  role
+  location
+
+location
+  name
+  mingrade
+  maxgrade
+  loc_category
+  loc_subcategory
+  loc_demo
+
+role
+  name
+  rights
+
+year
+  name
+  version
+  sap_due_date
+  csip_due_date
+  district_due_date
+  board_due_date
+  language_proficiency_goal
+  math_proficiency_goal
+
+csip
+  location
+  year
+
+category
+  name
+  class [csip|sap]
+  type [standard|link]
+  group [plc's]
+  note ["Complete if Applicable"]
+  gradelevel
+  loc_category
+
+category_specifics
+  principal_approval
+  community_approval
+  district_approval
+  custom_goals ['Add A Goal link'&'Subgoal Addresses option box']
+  category
+  csip
+
+question
+  [content]
+  part
+  version
+  order
+  type [standard|multi-question]
+  question_options
+  category
+
+question_options
+  value
+  label
+
+answer
+  [content]
+  question
+  csip
+
+goal
+  [content]
+  email
+  focus
+  csip
+  category
+
+goal_activity
+  [content]
+  progress
+  report
+  completed
+  forwarded
+  date
+  goal
+
+activity_people
+  name
+  email
+  activity
+
