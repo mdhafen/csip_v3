@@ -28,14 +28,24 @@ if ( $op == 'Save' ) {
   $update = array();
 
   $goal_desc = input( 'goal_description', INPUT_STR );
+  $goal_progress = input( 'goal_progress', INPUT_STR );
+  $goal_report = input( 'goal_report', INPUT_STR );
 
   if ( $goal ) {
     if ( $goal_desc != $goal['goal'] ) {
       $update['goal'] = $goal_desc;
     }
+    if ( $goal_progress != $goal['progress'] ) {
+      $update['progress'] = $goal_progress;
+    }
+    if ( $goal_report != $goal['report'] ) {
+      $update['report'] = $goal_report;
+    }
   } else {
     $update = array(
 	'goal' => $goal_desc,
+	'progress' => $goal_progress,
+	'report' => $goal_report,
 	'csipid' => $csip['csipid'],
 	'categoryid' => $categoryid,
 		    );

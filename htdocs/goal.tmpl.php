@@ -18,14 +18,33 @@ if ( $data['csip'] ) {
 }
 ?>
 
-<h3>Goal</h3>
-
 <?php if ( $data['updated'] ) { ?>
 <div class="important">Changes Saved</div>
 <?php } ?>
 
 <form method="post" action="<?= $data['_config']['base_url'] ?>goal.php?goalid=<?= $data['goal']['goalid'] ?>&categoryid=<?= $data['categoryid'] ?>">
-<textarea rows="5" cols="40" name="goal_description"><?= $data['goal']['goal'] ?></textarea><br>
+<table class="goal">
+<tr>
+
+<td>
+<div class="title">Goal</div>
+<textarea rows="15" cols="65" name="goal_description"><?= $data['goal']['goal'] ?></textarea>
+</td>
+
+<td>
+<div>
+<div class="title">Progress Report</div>
+<textarea name="goal_progress" cols="50" rows="6"><?= $data['goal']['progress'] ?></textarea>
+</div>
+
+<div>
+<div class="title">End of Year Reflection</div>
+<textarea name="goal_report" cols="50" rows="6"><?= $data['goal']['report'] ?></textarea>
+</div>
+</td>
+
+</tr>
+</table><br>
 <?php
 if ( ( $data['_session']['CAN_update_csip'] && $data['csip']['category'][ $data['categoryid'] ]['category_class'] == 'CSIP' ) || 
      ( $data['_session']['CAN_update_sap'] && $data['csip']['category'][ $data['categoryid'] ]['category_class'] == 'SAP' ) ) {

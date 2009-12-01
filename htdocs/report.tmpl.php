@@ -51,9 +51,32 @@ foreach ( (array) $data['category_list'] as $categoryid => $category ) {
           if ( count( (array) $data['csip']['category'][ $category['categoryid'] ]['goal'] ) ) {
 	    foreach ( (array) $data['csip']['category'][ $category['categoryid'] ]['goal'] as $goal ) {
 ?>
-<h3>Goal</h3>
-<div><?= $goal['goal'] ?></div>
-<h4>Subgoals</h4>
+
+<hr>
+<table class="goal">
+<tr>
+
+<td>
+<div class="title">Goal</div>
+<div class='report_goal_description'><?= $goal['goal'] ?></div>
+</td>
+
+<td>
+<div>
+<div class="title">Progress Report</div>
+<div class='report_goal_progress'><?= $goal['progress'] ?></div>
+</div>
+
+<div>
+<div class="title">End of Year Reflection</div>
+<div class='report_goal_report'><?= $goal['report'] ?></div>
+</div>
+</td>
+
+</tr>
+</table>
+
+<h4 class="title">Subgoals</h4>
 
 <table class="subgoals">
 <?php

@@ -114,7 +114,7 @@ function update_goal_fields( $goalid, $update ) {
     $query = rtrim( $query, ", " );
     $query .= "WHERE goalid = ". $dbh->quote( $goalid );
   } else {
-    $query = "INSERT INTO goal (goal,csipid,categoryid) VALUES (?,?,?)";
+    $query = "INSERT INTO goal (goal,progress,report,csipid,categoryid) VALUES (?,?,?,?,?)";
   }
   $sth = $dbh->prepare( $query );
   $sth->execute( array_values( $update ) );

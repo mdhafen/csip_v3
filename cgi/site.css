@@ -257,7 +257,7 @@ table.category_list td.section_title {
 /*    float: right; */
 }
 
-.subgoals td {
+.goal td, .subgoals td {
     vertical-align: top;
 }
 
@@ -275,6 +275,9 @@ table.category_list td.section_title {
 .report_answer_type_6,
 .report_answer_type_7,
 .report_answer_type_8,
+.report_goal_description,
+.report_goal_progress,
+.report_goal_report,
 .report_goal_activity_description,
 .report_goal_activity_date,
 .report_goal_activity_people_name,
@@ -288,6 +291,9 @@ table.category_list td.section_title {
     border: 1px solid black;
 }
 
+.report_goal_description,
+.report_goal_progress,
+.report_goal_report,
 .report_goal_activity_description,
 .report_goal_activity_progress,
 .report_goal_activity_report,
