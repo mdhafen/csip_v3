@@ -1,0 +1,801 @@
+<?php
+require_once( $config['base_dir'] ."/lib/data.phpm" );
+require_once( $config['base_dir'] ."/lib/input.phpm" );
+require_once( $config['base_dir'] ."/lib/security.phpm" );
+
+require_once( 'activity.phpm' );
+require_once( 'csips.phpm' );
+
+function cat_has_previous( $catid = 0, $csipid = 0 ) {
+  if ( ! $catid || ! $csipid ) {
+    return;
+  }
+
+  $dbh = db_connect();
+
+  $query = "
+    SELECT yearid, locationid, version
+      FROM csip
+CROSS JOIN year USING (yearid)
+     WHERE csipid = :cid
+";
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':cid', $csipid );
+  $sth->execute();
+
+  $result = $sth->fetch( PDO::FETCH_ASSOC );
+
+  $yearid = $result['yearid'];
+  $locationid = $result['locationid'];
+  $version = $result['version'];
+
+  if ( $yearid == 1 ) {  // for quick return
+    return false;
+  }
+
+  $query = "
+    SELECT csipid,version
+      FROM csip
+CROSS JOIN year USING (yearid)
+     WHERE yearid = :yid
+       AND locationid = :lid
+";
+
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':yid', $yearid - 1 );
+  $sth->bindValue( ':lid', $locationid );
+  $sth->execute();
+
+  $result = $sth->fetch( PDO::FETCH_ASSOC );
+
+  $old_csip = $result['csipid'];
+  $old_version = $result['version'];
+
+  if ( $old_version < $version ) { // have to figure out what the old catid is
+    $query = "
+SELECT parent_category
+  FROM category
+ WHERE categoryid = :cid
+";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':cid', $catid );
+    $sth->execute();
+    $result = $sth->fetch( PDO::FETCH_ASSOC );
+
+    $parent_cat = $result['parent_category'];
+    if ( $parent_cat == 0 ) {  // no parent to trace back to
+      return false;
+    }
+
+    $query = "
+SELECT categoryid,version,parent_category
+  FROM category
+ WHERE categoryid = :cid
+";
+    $sth = $dbh->prepare( $query );
+
+    while ( $old_version != $version && $parent_cat > 0 ) {
+      $sth->bindValue( ':cid', $parent_cat );
+      $sth->execute();
+      $result = $sth->fetch( PDO::FETCH_ASSOC );
+      $version = $result['version'];
+      $catid = $result['categoryid'];
+      $parent_cat = $result['parent_category'];
+    }
+
+    if ( $old_version != $version ) {  // loop drop out check
+      return false;
+    }
+  }
+
+  $total = act_get_count_all_cat( $catid, $old_csip );
+  $compl = act_get_count_completed_cat( $catid, $old_csip );
+
+  if ( $total == 0 ) {
+    return false;
+  }
+
+  return array( $total, $compl );
+}
+
+function cat_get_previous( $catid = 0, $csipid = 0 ) {
+  if ( ! $catid || ! $csipid ) {
+    return;
+  }
+
+  $dbh = db_connect();
+
+  $query = "
+    SELECT yearid, locationid, version
+      FROM csip
+CROSS JOIN year USING (yearid)
+     WHERE csipid = :cid
+";
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':cid', $csipid );
+  $sth->execute();
+
+  $result = $sth->fetch( PDO::FETCH_ASSOC );
+
+  $yearid = $result['yearid'];
+  $locationid = $result['locationid'];
+  $version = $result['version'];
+
+  if ( $yearid == 1 ) {  // for quick return
+    return false;
+  }
+
+  $query = "
+    SELECT csipid,version
+      FROM csip
+CROSS JOIN year USING (yearid)
+     WHERE yearid = :yid
+       AND locationid = :lid
+";
+
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':yid', $yearid - 1 );
+  $sth->bindValue( ':lid', $locationid );
+  $sth->execute();
+
+  $result = $sth->fetch( PDO::FETCH_ASSOC );
+
+  $old_csip = $result['csipid'];
+  $old_version = $result['version'];
+
+  if ( $old_version < $version ) { // have to figure out what the old catid is
+    $query = "
+SELECT parent_category
+  FROM category
+ WHERE categoryid = :cid
+";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':cid', $catid );
+    $sth->execute();
+    $result = $sth->fetch( PDO::FETCH_ASSOC );
+
+    $parent_cat = $result['parent_category'];
+    if ( $parent_cat == 0 ) {  // no parent to trace back to
+      return false;
+    }
+
+    $query = "
+SELECT categoryid,version,parent_category
+  FROM category
+ WHERE categoryid = :cid
+";
+    $sth = $dbh->prepare( $query );
+
+    while ( $old_version != $version && $parent_cat > 0 ) {
+      $sth->bindValue( ':cid', $parent_cat );
+      $sth->execute();
+      $result = $sth->fetch( PDO::FETCH_ASSOC );
+      $version = $result['version'];
+      $catid = $result['categoryid'];
+      $parent_cat = $result['parent_category'];
+    }
+
+    if ( $old_version != $version ) {  // loop drop out check
+      return false;
+    }
+  }
+
+  $list = array();
+  $query = "SELECT * FROM goal WHERE categoryid = :cid AND csipid = :csid";
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':cid', $catid );
+  $sth->bindValue( ':csid', $old_csip );
+  $sth->execute();
+  while ( $result = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+    $list[ $result['goalid'] ] = stripslashes_array( $result );
+    $goals[] = $result['goalid'];
+  }
+
+  $query = "SELECT * FROM activity WHERE goalid IN (". implode( ',', $goals ) .")";
+  $sth = $dbh->prepare( $query );
+  $sth->execute();
+  while ( $result = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+    $list[ $result['goalid'] ]['activity'][ $result['activityid'] ] = stripslashes_array( $result );
+  }
+
+  return $list;
+}
+
+function cat_get_html_input( $question = '', $answer = '', $categoryid, $csip ) {
+  if ( ! $question ) {
+    return;
+  }
+
+  $html = '';
+  $type = $question['type'];
+  $questionid = $question['questionid'];
+  $q_text = mangle_question( $question, $categoryid, $csip );
+  if ( $type != 8 && $answer['answer'] ) {
+    $answer['answer'] = stripslashes( $answer['answer'] );
+  }
+  switch ($type) {
+  case 1:
+    $input = "<textarea cols='60' rows='15' name='$questionid'>$answer[answer]</textarea>\n";
+    if ( ( $pos = strpos( $q_text, '[input]' ) ) !== false ) {
+      $html = substr_replace( $q_text, $input, $pos, strpos( $q_text, "]", $pos ) + 1 - $pos );
+    } else {
+      $html = "$q_text<br>\n$input";
+    }
+    break;
+
+  case 2:
+    $options = question_get_options( $question['question_option_group'] );
+    $input = "<select name='$questionid'>\n";
+    $input .= "<option value=''>(Select One)</option>\n";
+    foreach ( $options as $value => $label ) {
+      $selected = ( $value == $answer['answer'] ) ? "selected='selected'" : "";
+      $input .= "<option value='$value' $selected>$label</option>\n";
+    }
+    $input .= "</select>\n";
+    if ( ( $pos = strpos( $q_text, '[input]' ) ) !== false ) {
+      $html = substr_replace( $q_text, $input, $pos, strpos( $q_text, "]", $pos ) + 1 - $pos );
+    } else {
+      $html = "$q_text<br>\n$input";
+    }
+    break;
+
+  case 3:
+    $input = "<input type='text' size='3' name='$questionid' value='$answer[answer]'>";
+    if ( ( $pos = strpos( $q_text, '[input]' ) ) !== false ) {
+      $html = substr_replace( $q_text, $input, $pos, strpos( $q_text, "]", $pos ) + 1 - $pos );
+    } else {
+      $html = "$q_text<br>\n$input";
+    }
+    break;
+
+  case 4:
+    $input = "<input type='text' size='10' name='$questionid' value='$answer[answer]'>";
+    if ( ( $pos = strpos( $q_text, '[input]' ) ) !== false ) {
+      $html = substr_replace( $q_text, $input, $pos, strpos( $q_text, "]", $pos ) + 1 - $pos );
+    } else {
+      $html = "$q_text<br>\n$input";
+    }
+    break;
+
+  case 5:
+    $input = "<input type='text' size='40' name='$questionid' value='$answer[answer]'>";
+    if ( ( $pos = strpos( $q_text, '[input]' ) ) !== false ) {
+      $html = substr_replace( $q_text, $input, $pos, strpos( $q_text, "]", $pos ) + 1 - $pos );
+    } else {
+      $html = "$q_text<br>\n$input";
+    }
+    break;
+
+  case 6:
+    $input = "<input type='password' size='40' name='$questionid' value='$answer[answer]'>";
+    if ( ( $pos = strpos( $q_text, '[input]' ) ) !== false ) {
+      $html = substr_replace( $q_text, $input, $pos, strpos( $q_text, "]", $pos ) + 1 - $pos );
+    } else {
+      $html = "$q_text<br>\n$input";
+    }
+    break;
+
+  case 7:
+  default:
+    $selected = ( $answer['answer'] ) ? "checked='checked'" : "";
+    $input = "<input type='checkbox' name='$questionid' $selected>";
+    if ( ( $pos = strpos( $q_text, '[input]' ) ) !== false ) {
+      $html = substr_replace( $q_text, $input, $pos, strpos( $q_text, "]", $pos ) + 1 - $pos );
+    } else {
+      $html = "$input\n$q_text<br>\n";
+    }
+    break;
+
+  case 9:
+    $html = $q_text;
+    break;
+
+  case 8:
+    if ( $answer['answer'] ) {
+      $answer = unserialize( $answer['answer'] );
+      if ( ! is_array( $answer ) ) {
+        $answer = array();
+      }
+    } else {
+      $answer = array();
+    }
+    $answer = stripslashes_array( $answer );
+    $html = $q_text;
+    while ( ($pos = strpos( $html, '[input_' ) ) !== false ) {
+      $multi_type = substr( $html, $pos + 7, 2 );
+      $multi_type = rtrim( $multi_type, '] %' );
+      $ans = array_shift( $answer );
+
+      $text = "";
+
+      switch ($multi_type) {
+      case 1:
+	$text = "<textarea cols='60' rows='15' name='{$questionid}[]'>$ans</textarea>\n";
+	break;
+
+      case 2:
+	$options = question_get_options( $question['question_option_group'] );
+	$text = "<select name='{$questionid}[]'>\n";
+	$text .= "<option value=''>(Select One)</option>";
+	foreach ( $options as $value => $label ) {
+	  $selected = ( $value == $ans ) ? "selected='selected'" : "";
+	  $text .= "<option value='$value' $selected>$label</option>";
+	}
+	$text .= "</select>\n";
+	break;
+
+      case 3:
+	$text = "<input type='text' size='3' name='{$questionid}[]' value='$ans'>";
+	break;
+
+      case 4:
+	$text = "<input type='text' size='10' name='{$questionid}[]' value='$ans'>";
+	break;
+
+      case 5:
+	$text = "<input type='text' size='40' name='{$questionid}[]' value='$ans'>";
+	break;
+
+      case 7:
+      default:
+	$selected = ( $ans ) ? "checked='checked" : "";
+	$text = "<input type='checkbox' name='{$questionid}[]' $selected>";
+	break;
+      }
+
+      $html = substr_replace( $html, $text, $pos, strpos( $html, "]", $pos ) + 1 - $pos );
+    }
+    break;
+  }
+
+  return $html;
+}
+
+function cat_get_html_report( $question = '', $answer = '', $categoryid, $csip ) {
+  if ( ! $question ) {
+    return;
+  }
+
+  $html = '';
+  $type = $question['type'];
+  $questionid = $question['questionid'];
+  $q_text = mangle_question( $question, $categoryid, $csip );
+  if ( $type != 8 && $answer['answer'] ) {
+    $answer['answer'] = stripslashes( $answer['answer'] );
+  }
+  switch ($type) {
+  case 1:
+    $input = "<div class='report_answer_type_1'>$answer[answer]</div>\n";
+    if ( ( $pos = strpos( $q_text, '[input]' ) ) !== false ) {
+      $html = substr_replace( $q_text, $input, $pos, strpos( $q_text, "]", $pos ) + 1 - $pos );
+    } else {
+      $html = "$q_text<br>\n$input";
+    }
+    break;
+
+  case 2:
+    $input = "<div class='report_answer_type_2'>$answer[answer]</div>\n";
+    if ( ( $pos = strpos( $q_text, '[input]' ) ) !== false ) {
+      $html = substr_replace( $q_text, $input, $pos, strpos( $q_text, "]", $pos ) + 1 - $pos );
+    } else {
+      $html = "$q_text<br>\n$input";
+    }
+    break;
+
+  case 3:
+    $input = "<div class='report_answer_type_3'>$answer[answer]</div>\n";
+    if ( ( $pos = strpos( $q_text, '[input]' ) ) !== false ) {
+      $html = substr_replace( $q_text, $input, $pos, strpos( $q_text, "]", $pos ) + 1 - $pos );
+    } else {
+      $html = "$q_text<br>\n$input";
+    }
+    break;
+
+  case 4:
+    $input = "<div class='report_answer_type_4'>$answer[answer]</div>\n";
+    if ( ( $pos = strpos( $q_text, '[input]' ) ) !== false ) {
+      $html = substr_replace( $q_text, $input, $pos, strpos( $q_text, "]", $pos ) + 1 - $pos );
+    } else {
+      $html = "$q_text<br>\n$input";
+    }
+    break;
+
+  case 5:
+    $input = "<div class='report_answer_type_5'>$answer[answer]</div>\n";
+    if ( ( $pos = strpos( $q_text, '[input]' ) ) !== false ) {
+      $html = substr_replace( $q_text, $input, $pos, strpos( $q_text, "]", $pos ) + 1 - $pos );
+    } else {
+      $html = "$q_text<br>\n$input";
+    }
+    break;
+
+  case 6:
+    $input = "<div class='report_answer_type_6'>$answer[answer]</div>";
+    if ( ( $pos = strpos( $q_text, '[input]' ) ) !== false ) {
+      $html = substr_replace( $q_text, $input, $pos, strpos( $q_text, "]", $pos ) + 1 - $pos );
+    } else {
+      $html = "$q_text<br>\n$input";
+    }
+    break;
+
+  case 7:
+  default:
+    $selected = ( $answer['answer'] ) ? "checked='checked'" : "";
+    $input = "<input type='checkbox' disabled='disabled' $selected>";
+    if ( ( $pos = strpos( $q_text, '[input]' ) ) !== false ) {
+      $html = substr_replace( $q_text, $input, $pos, strpos( $q_text, "]", $pos ) + 1 - $pos );
+    } else {
+      $html = "$input\n$q_text<br>\n";
+    }
+    break;
+
+  case 9:
+    $html = $q_text;
+    break;
+
+  case 8:
+    $answer = unserialize( $answer['answer'] );
+    if ( ! is_array( $answer ) ) {
+      $answer = array();
+    }
+    $answer = stripslashes_array( $answer );
+    $html = $q_text;
+    while ( ($pos = strpos( $html, '[input_' ) ) !== false ) {
+      $multi_type = substr( $html, $pos + 7, 2 );
+      $multi_type = rtrim( $multi_type, '] %' );
+      $ans = array_shift( $answer );
+
+      $text = "";
+
+      switch ($multi_type) {
+      case 1:
+	$text = "<div class='report_answer_type_1'>$ans</div>\n";
+	break;
+
+      case 2:
+	$text = "<div class='report_answer_type_2'>$ans</div>";
+	break;
+
+      case 3:
+	$text = "<div class='report_answer_type_3'>$ans</div>";
+	break;
+
+      case 4:
+	$text = "<div class='report_answer_type_4'>$ans</div>";
+	break;
+
+      case 5:
+	$text = "<div class='report_answer_type_5'>$ans</div>";
+	break;
+
+      case 7:
+      default:
+	$selected = ( $ans ) ? "checked='checked" : "";
+	$text = "<input type='checkbox' disabled='disabled' $selected>";
+	break;
+      }
+
+      $html = substr_replace( $html, $text, $pos, strpos( $html, "]", $pos ) + 1 - $pos );
+    }
+    break;
+  }
+
+  return $html;
+}
+
+function mangle_question( $question, $categoryid, $csip ) {
+  $dbh = db_connect();
+
+  $category = $csip['category'][ $categoryid ];
+  $text = $question['question'];
+  $text = str_replace( "[category_name]", $category['category_name'], $text );
+  $text = str_replace( "[year_name]", $csip['year_name'], $text );
+  $text = str_replace( "[year_name-1]", mangle_num_down( $csip['year_name'] ), $text );
+  $text = str_replace( "[yearid]", $csip['yearid'], $text );
+  $text = str_replace( "[question_group]", $question['question_group'], $text );
+  $text = str_replace( "[categoryid]", $category['categoryid'], $text );
+  $text = str_replace( "[locationid]", $csip['locationid'], $text );
+  $text = str_replace( "[csipid]", $csip['csipid'], $text );
+
+  while ( ($pos = strpos( $text, "[[")) !== false ) {
+    $pos2 = strpos( $text, "]]" );
+    $query = substr( $text, $pos + 2, ( $pos2 - $pos - 2 ) );
+    if ( strpos( $query, '[answer_' ) !== false ) {
+      preg_match( '/\[answer_(\d+)\]/', $query, $matches );
+      $num = $matches[1];
+      $query = preg_replace( '/\[answer_\d+\]/', 'answer', $query );
+    }
+    if ( strpos( $query, 'answer' ) !== false ) {
+      $style_it = true;
+    }
+    $sth = $dbh->prepare( $query );
+    $sth->execute();
+    $result = $sth->fetch( PDO::FETCH_BOTH );
+    $answer = $result[0];
+    if ( isset( $num ) ) {
+      $answer = (array) unserialize( $answer );
+      $answer = $answer[ $num ];
+    }
+    $answer = stripslashes( $answer );
+    if ( ! isset( $answer ) ) { $answer = '&nbsp; &nbsp;&nbsp;'; }
+    if ( $style_it ) {
+      $class = "answer_for_question";  // small input style
+      $answer = "<span class='$class'>". $answer ."</span>";
+    }
+    $text = substr_replace( $text, $answer, $pos, ( $pos2 - $pos + 2 ) );
+  }
+
+  $text = nl2br( $text );
+  return $text;
+}
+
+function mangle_num_down( $text ) {
+  preg_match_all( "/(\d+)/", $text, $matches );
+  $matches = $matches[1];
+  //sort( $matches, SORT_NUMERIC );
+  foreach ( $matches as $num ) {
+    $new_num = $num - 1;
+    $text = str_replace( "$num", $new_num, $text );
+  }
+  return $text;
+}
+
+function question_get_options( $option_group ) {
+  $dbh = db_connect();
+
+  $options = array();
+  $query = "
+ SELECT option_value, option_label
+   FROM question_options
+  WHERE question_option_group = :group
+";
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':group', $option_group );
+  $sth->execute();
+  while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+    $row = stripslashes_array( $row );
+    $options[ $row['option_value'] ] = $row['option_label'];
+  }
+
+  return $options;
+}
+
+function cat_save_answers( $categoryid, $part, &$csip ) {
+  $dbh = db_connect();
+
+  if ( $csip['loc_demo'] == 1 ) { return; }  // location is Demo
+
+  if ( ( $csip['category'][ $categoryid ]['category_class'] == 'CSIP' && ! authorized( 'update_csip' ) ) ||
+       ( $csip['category'][ $categoryid ]['category_class'] == 'SAP' && ! authorized( 'update_sap' ) ) ) {
+    return;
+  }
+
+  $question_group_id = $csip['category'][$categoryid]['question_group'];
+  $question_group = $csip['question_group'][ $question_group_id ];
+  foreach ( (array) $question_group as $question ) {
+    if ( $question['part'] == $part ) {
+
+      $input = input( $question['questionid'], INPUT_STR );
+      $answer = array();
+
+      if ( is_array( $input ) ) {
+	$input = serialize( $input );
+      }
+
+      if ( $csip['category'][$categoryid]['answer'] ) {
+	foreach ( (array) $csip['category'][$categoryid]['answer'] as $ans ) {
+	  if ( $ans['questionid'] == $question['questionid'] ) {
+	    $answer = $ans;
+	    break;
+	  }
+	}
+      }
+
+      if ( $input != $answer['answer'] ) {
+	if ( $answer ) {
+	  $query = "UPDATE answer SET answer = :ans WHERE answerid = :ansid";
+	  $sth = $dbh->prepare( $query );
+	  $sth->bindValue( ':ans', $input );
+	  $sth->bindValue( ':ansid', $answer['answerid'] );
+	  $sth->execute();
+	} else {
+	  $query = "INSERT INTO answer ( answer, questionid, categoryid, csipid ) VALUES ( :ans, :ques, :cat, :csip )";
+	  $sth = $dbh->prepare( $query );
+	  $sth->bindValue( ':ans', $input );
+	  $sth->bindValue( ':ques', $question['questionid'] );
+	  $sth->bindValue( ':cat', $categoryid );
+	  $sth->bindValue( ':csip', $csip['csipid'] );
+	  $sth->execute();
+	}
+      }
+    }
+  }
+}
+
+function cat_reload_answers( $csip, $categoryid ) {
+  $dbh = db_connect();
+
+  $query = "SELECT * FROM answer WHERE csipid = :cid AND categoryid = :catid";
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':cid', $csip['csipid'] );
+  $sth->bindValue( ':catid', $categoryid );
+  $sth->execute();
+  while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+    // can't stripslashes here because the answer might be serialized
+    $csip['category'][ $row['categoryid'] ]['answer'][ $row['answerid'] ] = $row;
+  }
+
+  return $csip;
+}
+
+function cat_reload_goal( $csip, $goalid ) {
+  $dbh = db_connect();
+  $categoryid = 0;
+
+  $query = "SELECT * FROM goal WHERE goalid = :gid";
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':gid', $goalid );
+  $sth->execute();
+  while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+    $csip['category'][ $row['categoryid'] ]['goal'][ $goalid ] = stripslashes_array( $row );
+    $categoryid = $row['categoryid'];
+  }
+
+  if ( ! $categoryid ) { return $csip; }
+
+  $query = "
+    SELECT *
+      FROM activity 
+     WHERE goalid = :gid
+";
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':gid', $goalid );
+  $sth->execute();
+  while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+    $csip['category'][ $categoryid ]['goal'][ $goalid ]['activity'][ $row['activityid'] ] = stripslashes_array( $row );
+  }
+
+  $query = "
+    SELECT activity_people.*
+      FROM activity_people
+CROSS JOIN activity USING (activityid)
+     WHERE goalid = :gid
+";
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':gid', $goalid );
+  $sth->execute();
+  while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+    $csip['category'][ $categoryid ]['goal'][ $goalid ]['activity'][ $row['activityid'] ]['activity_people'][ $row['activity_people_id'] ] = stripslashes_array( $row );
+  }
+
+  return $csip;
+}
+
+function cat_completion( $categoryid, $csip ) {  // only for reports
+  $num_questions = count( (array) $csip['question_group'][ $csip['category'][ $categoryid ]['question_group'] ] );
+  $num_answers = count( (array) $csip['category'][ $categoryid ]['answer'] );
+
+  //  need to count goals too
+  $num_goals = count( (array) $csip['category'][ $categoryid ]['goal'] );
+  $num_questions += $num_goals;
+  $num_answers += $num_goals;
+
+  if ( $num_questions > 0 ) {
+    $result = $num_answers / $num_questions;
+  } else {
+    $result = 0;
+  }
+
+  return ( $result );
+}
+
+function cat_part_completion( $categoryid, $part, $csip ) { // only for reports
+  $questions = array();
+  $question_ids = array();
+  $question_group = $csip['question_group'][ $csip['category'][ $categoryid ]['question_group'] ];
+  foreach ( $question_group as $question ) {
+    if ( $question['part'] == $part ) {
+      array_push( $questions, $question );
+      array_push( $question_ids, $question['questionid'] );
+    }
+  }
+  $num_questions = count( (array) $questions );
+
+  $answers = $csip['category'][ $categoryid ]['answer'];
+  foreach ( (array) $answers as $answer ) {
+    if ( in_array( $answer['questionid'], $question_ids ) ) {
+      $num_answers++;
+    }
+  }
+
+  if ( $part == -1 ) {  // Dealing with goals... This is overly simple
+    $num_goals = count( (array) $csip['category'][ $categoryid ]['goal'] );
+    $num_questions += $num_goals;
+    $num_answers += $num_goals;
+  }
+
+  return ( $num_answers / $num_questions );
+}
+
+function cat_approve( $csipid, $categoryid, $level ) {
+  $dbh = db_connect();
+  $today = date( 'Y-m-d' );
+
+  switch ( $level ) {
+  case 'principal': $level = 'principal_approved'; break;
+  case 'community': $level = 'community_approved'; break;
+  case 'district' : $level = 'district_approved'; break;
+  }
+
+  if ( loc_is_demo( 'csip', $csipid ) ) { return; }
+
+  $query = "
+ SELECT COUNT(*)
+   FROM category_specifics
+  WHERE csipid = :csid
+    AND categoryid = :cid
+";
+
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':csid', $csipid );
+  $sth->bindValue( ':cid', $categoryid );
+  $sth->execute();
+  if ( $sth->fetchColumn() > 0 ) {
+    $query = "UPDATE category_specifics SET $level = :date WHERE csipid = :csid AND categoryid = :cid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':date', $today );
+    $sth->bindValue( ':csid', $csipid );
+    $sth->bindValue( ':cid', $categoryid );
+    $sth->execute();
+  } else {
+    $query = "INSERT INTO category_specifics ( $level, categoryid, csipid ) VALUES ( :date, :cid, :csid )";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':date', $today );
+    $sth->bindValue( ':cid', $categoryid );
+    $sth->bindValue( ':csid', $csipid );
+  }
+
+  $sth->execute();
+
+  return;
+}
+
+function cat_get_goal_completion( $categoryid, $csipid ) {
+  $dbh = db_connect();
+
+  $query = "
+      SELECT count(*)
+        FROM activity
+  CROSS JOIN goal USING (goalid)
+       WHERE categoryid = :cid
+         AND csipid = :csid
+";
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':cid', $categoryid );
+  $sth->bindValue( ':csid', $csipid );
+  $sth->execute();
+  $total = $sth->fetchColumn();
+
+  if ( ! $total > 0 ) { return array( 0, 0 ); }
+
+  $query = "SELECT COUNT(*) FROM activity CROSS JOIN goal USING (goalid) WHERE categoryid = :cid AND csipid = :csid AND progress <> ''";
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':cid', $categoryid );
+  $sth->bindValue( ':csid', $csipid );
+  $sth->execute();
+  $progress = $sth->fetchColumn();
+
+  $query = "SELECT COUNT(*) FROM activity CROSS JOIN goal USING (goalid) WHERE categoryid = :cid AND csipid = :csid AND report <> ''";
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':cid', $categoryid );
+  $sth->bindValue( ':csid', $csipid );
+  $sth->execute();
+  $report = $sth->fetchColumn();
+
+  $progress = sprintf( "%.0d", ($progress / $total)*100 );
+  $report = sprintf( "%.0d", ($report / $total)*100 );
+
+  return array( $progress, $report );
+}
+
+?>

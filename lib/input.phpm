@@ -1,0 +1,138 @@
+<?php
+define( 'INPUT_RAW', '1' );
+define( 'INPUT_NUM', '2' );
+define( 'INPUT_INT', '3' );
+define( 'INPUT_PINT', '4' );
+define( 'INPUT_STR', '5' );
+define( 'INPUT_HTML', '6' );
+define( 'INPUT_HTML_SCRIPT', '7' );
+define( 'INPUT_EMAIL', '8' );
+
+require_once( 'PEAR.php' );  // to check for error
+require_once( 'Mail/RFC822.php' );  // to validate the email address
+
+require_once( 'config.phpm' );
+require_once( 'data.phpm' );
+
+//  Load session data from the database.
+function load_session() {
+    // load $str from db
+    global $config;
+    if ( $config[ 'session_store_db' ] == 1 ) {
+        $dbh = db_connect();
+	$query = "SELECT session_data FROM sessions WHERE session_id = :sid";
+	$sth = $dbh->prepare( $query );
+	$sth->bindParam( ':sid', session_id() );
+	$sth->execute();
+
+	$row = $sth->fetch();
+	$str = $row['session_data'];
+
+	$_SESSION = unserialize( base64_decode( $str ) );
+    }
+}
+
+function save_session() {
+    // save $str in db
+    global $config;
+    if ( $config[ 'session_store_db' ] == 1 ) {
+        $dbh = db_connect();
+	$query = '';
+	if ( $_SESSION[ 'new_session' ] ) {
+	    $query = "INSERT INTO sessions ( session_data, session_id ) VALUES ( :data, :sid )";
+	} else {
+	    $query = "UPDATE session SET session_data = :data WHERE session_id = :sid";
+	}
+
+	$str = $_SESSION;
+	$str = base64_encode( serialize( $str ) );
+
+	$sth = $dbh->prepare( $query );
+	$sth->bindParam( ':data', $str );
+	$sth->bindParam( ':sid', session_id() );
+	$sth->execute();
+    }
+    unset( $_SESSION[ 'new_session' ] );
+}
+
+function destroy_session() {
+    if ( ! session_id() ) { return; }
+
+    global $config;
+    if ( $config[ 'session_store_db' ] == 1 ) {
+        $dbh = db_connect();
+	$sth = $dbh->prepare( "DELETE FROM sessions WHERE session_id = :sid" );
+	$sth->bindParam( ':sid', session_id() );
+	$sth->execute();
+    }
+
+    $_SESSION = array();
+    if ( isset( $_COOKIE[ session_name() ] ) ) {
+        setcookie( session_name(), '', time()-3600, '/' );
+    }
+    session_destroy();
+}
+
+// Default input type set here
+function input( $name, $type=INPUT_STR ) {
+	$output;
+	$output = $_REQUEST[ $name ];
+
+	if ( $output ) {
+		input_validation( $output, $type );
+	}
+
+	return $output;
+}
+
+function input_validation( &$output, $type ) {
+	if ( is_array( $output ) ) {
+		$count = count( $output );
+	} else {
+		$count = 1;
+	}
+
+	for ( $i = 0; $i < $count; $i++ ) {
+		if ( is_array( $output ) ) {
+	  		$value = &$output[$i];
+		} else {
+			$value = &$output;
+		}
+
+		if ( $type == INPUT_NUM ) {
+			if ( ! is_numeric( $value ) ) { $error++; }
+		}
+		if ( $type == INPUT_INT ) {
+			if ( ! is_numeric( $value ) ) { $error++; }
+			if ( ! is_int( $value +0 ) ) { $error++; }
+		}
+		if ( $type == INPUT_PINT ) {
+			if ( ! ctype_digit( $value ) ) { $error++; }
+		}
+		if ( $type == INPUT_STR ) {
+			if ( ! is_string( $value ) ) { $error++; }
+			if ( ! $error ) {
+				$value = strip_tags( html_entity_decode( $value ) );	
+			}
+		}
+		if ( $type == INPUT_HTML ) {
+			if ( ! is_string( $value ) ) { $error++; }
+			if ( ! $error ) {
+				$parser =& new HTML_Safe();
+				$value = html_entity_decode( $value );
+				$value = $parser->parse( $value );
+			}
+		}
+		if ( $type == INPUT_EMAIL ) {
+			$valid = 0;
+			$str = Mail_RFC822::parseAddressList( $value, '', FALSE, TRUE );
+			if ( PEAR::isError( $str ) ) {
+				$error++;
+			}
+		}
+		if ( $error ) {
+			$value = '';
+		}
+	}
+}
+?>

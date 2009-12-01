@@ -1,0 +1,77 @@
+<?php
+require_once( 'config.phpm' );
+require_once( 'input.phpm' );
+require_once( 'security.phpm' );
+
+function output( $data, $filename ) {
+	$output = '';
+
+	$output = output_build( $data, $filename );
+	output_transmit( $output );
+}
+
+function output_build( $data, $filename ) {
+	global $config;
+	$output = '';
+
+	if ( $filename ) {
+		$filename = $config['base_dir'] .'/htdocs/'. $filename;
+
+		if ( ! file_exists( $filename ) ) {
+			foreach ( array( 'php', 'tmpl', 'html', 'htm' ) as $ext ) {
+				if ( file_exists( "$filename.$ext" ) ) {
+					$filename .= ".". $ext;
+					break;
+				}
+			}
+		}
+
+		if ( ! is_readable( $filename ) ) {
+			print "Couldn't read template file for output: $filename";
+			return;
+		}
+
+	}
+	return array( $data, $filename );
+}
+
+function output_transmit( $output ) {
+	if ( ! $output ) { return; }
+
+	// read first couple lines of file ( up to <html>? ) to guess type?
+	global $output_type;
+	if ( $output_type == 'xml' ) {
+		$type = 'application/xml';
+	} else {
+		$type = 'text/html';
+	}
+
+	$cookie = set_cookie();
+
+	if ( $type ) { header( "Content-type: $type" ); }
+
+	global $data;
+	$data = $output[0];
+	$filename = $output[1];
+
+	if ( $filename ) {
+		global $config;
+		$data['_config']['base_url'] = $config['base_url'];
+		$data['_config']['base_dir'] = $config['base_dir'];
+		$data['_session']['username'] = $_SESSION[ 'loggedin_user' ][ 'username' ];
+
+		foreach ( (array) get_authorizations() as $perm ) {
+			$data['_session']["CAN_$perm"] = $perm;
+		}
+
+		include_once( $filename );
+	} else {
+		print $data;
+	}
+}
+
+function set_cookie() {
+	//  PHP handles the session_id
+}
+
+?>

@@ -1,0 +1,37 @@
+<?php
+include_once( 'config.phpm' );
+//require PDO;
+
+$dbh = '';
+
+function db_connect() {
+	global $dbh, $config;
+
+	if ( ! $dbh ) {
+		$settings = $config['database'];
+		$engine = $settings['engine'];
+		$host = $settings['host'];
+		$schema = $settings['schema'];
+		$port = ( $settings['port'] ) ? ";port=$settings[port]" : "";
+		$dsn = "$engine:host=$host$port;dbname=$schema";
+		try {
+			$dbh = new PDO( $dsn, $settings['user'], $settings['passwd'] );
+		} catch ( PDOException $e ) {
+			print "Couldn't connect to database: ". $e->getMessage();
+			die();
+		}
+		$dbh->setAttribute( PDO::ATTR_CASE, PDO::CASE_NATURAL );
+	}
+	return $dbh;
+}
+
+function stripslashes_array( $array ) {
+  if ( ! is_array( $array ) ) { return $array; }
+
+  foreach ( $array as &$value ) {
+    $value = stripslashes( $value );
+  }
+  return $array;
+}
+
+?>

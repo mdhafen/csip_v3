@@ -1,0 +1,257 @@
+<?php
+require_once( $config['base_dir'] ."/lib/data.phpm" );
+
+function get_users() {
+  $dbh = db_connect();
+
+  $query = "SELECT * FROM user ORDER BY locationid,fullname,username";
+  $sth = $dbh->prepare( $query );
+  $sth->execute();
+
+  while ( $row = $sth->fetch() ) {
+    $result[] = stripslashes_array( $row );
+  }
+
+  return $result;
+}
+
+function get_locations() {
+  $dbh = db_connect();
+
+  $query = "SELECT * FROM location ORDER BY name";
+  $sth = $dbh->prepare( $query );
+  $sth->execute();
+
+  while ( $row = $sth->fetch() ) {
+    $result[] = stripslashes_array( $row );
+  }
+
+  return $result;
+}
+
+function get_user_by_userid( $userid ) {
+  $dbh = db_connect();
+
+  $query = "SELECT * FROM user WHERE userid = :uid";
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':uid', $userid );
+  $sth->execute();
+
+  $row = $sth->fetch();
+
+  return stripslashes_array( $row );
+}
+
+function update_user_fields( $userid, $updated ) {
+  $dbh = db_connect();
+
+  if ( $userid ) {
+    $query = "UPDATE user SET ";
+    foreach ( $updated as $field => $value ) {
+      $query .= "$field = ?, ";
+    }
+    $query = rtrim( $query, ", " );
+    $query .= "WHERE userid = ". $dbh->quote( $userid );
+  } else {
+    $query = "INSERT INTO user (username,fullname,email,role,locationid,password,salt) VALUES (?,?,?,?,?,?,?)";
+  }
+  $sth = $dbh->prepare( $query );
+  $sth->execute( array_values( $updated ) );
+
+  /*
+  if ( $sth->errorCode() ) {
+    print_r( $sth->errorInfo() );
+    exit;
+  }
+  */
+
+  if ( ! $userid ) {
+    $userid = $dbh->lastInsertId();
+  }
+
+  return $userid;
+}
+
+function update_location_fields( $locationid, $updated ) {
+  $dbh = db_connect();
+
+  if ( $locationid ) {
+    $query = "UPDATE location SET ";
+    foreach ( $updated as $field => $value ) {
+      $query .= "$field = ?, ";
+    }
+    $query = rtrim( $query, ", " );
+    $query .= "WHERE locationid = ". $dbh->quote( $locationid );
+  } else {
+    $query = "INSERT INTO location (locationid,name,mingrade,maxgrade,loc_category,loc_subcategory,loc_demo) VALUES (?,?,?,?,?,?,?)";
+  }
+  $sth = $dbh->prepare( $query );
+  $sth->execute( array_values( $updated ) );
+
+  /*
+  if ( $sth->errorCode() ) {
+    print_r( $sth->errorInfo() );
+    exit;
+  }
+  */
+
+  if ( ! $locationid ) {
+    $locationid = $updated['locationid'];
+  }
+
+  return $locationid;
+}
+
+function delete_user( $userid ) {
+  $dbh = db_connect();
+
+  if ( $userid ) {
+    $query = "DELETE FROM user WHERE userid = :uid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':uid', $userid );
+    $sth->execute();
+  }
+}
+
+function delete_location( $locationid ) {
+  $dbh = db_connect();
+
+  if ( $locationid ) {
+    delete_location_dependants( $locationid );
+
+    $query = "DELETE FROM location WHERE locationid = :lid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':lid', $locationid );
+    $sth->execute();
+  }
+}
+
+function delete_location_dependants( $locationid ) {
+  $dbh = db_connect();
+
+  if ( $locationid ) {
+    $query = "DELETE FROM user WHERE locationid = :lid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':lid', $locationid );
+    $sth->execute();
+
+    $query = "SELECT csipid FROM csip WHERE locationid = :lid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':lid', $locationid );
+    $sth->execute();
+    while ( $row = $sth->fetch() ) {
+      $csips[] = $row['csipid'];
+    }
+
+    if ( count( $csips ) ) {
+      $query = "DELETE FROM answer WHERE csipid IN (". implode( ',', $csips ) .")";
+      $sth = $dbh->prepare( $query );
+      $sth->execute();
+
+      $query = "DELETE FROM category_specifics WHERE csipid IN (". implode( ',', $csips ) .")";
+      $sth = $dbh->prepare( $query );
+      $sth->execute();
+
+      $query = "DELETE FROM csip WHERE locationid = :lid";
+      $sth = $dbh->prepare( $query );
+      $sth->bindValue( ':lid', $locationid );
+      $sth->execute();
+
+      $query = "SELECT goalid FROM goal WHERE csipid IN (". implode( ',', $csips ) .")";
+      $sth = $dbh->prepare( $query );
+      $sth->execute();
+      while ( $row = $sth->fetch() ) {
+	$goals[] = $row['goalid'];
+      }
+
+      if ( count( $goals ) ) {
+	$query = "SELECT activityid FROM activity WHERE goalid IN (". implode( ',', $goals ) .")";
+	$sth = $dbh->prepare( $query );
+	$sth->execute();
+	while ( $row = $sth->fetch() ) {
+	  $acts[] = $row['activityid'];
+	}
+
+	if ( count( $acts ) ) {
+	  $query = "DELETE FROM activity_people WHERE activityid IN (". implode( ',', $acts ) .")";
+	  $sth = $dbh->prepare( $query );
+	  $sth->execute();
+
+	  $query = "DELETE FROM activity WHERE goalid IN (". implode( ',', $goals ) .")";
+	  $sth = $dbh->prepare( $query );
+	  $sth->execute();
+	}
+
+	$query = "DELETE FROM goal WHERE csipid IN (". implode( ',', $csips ) .")";
+	$sth = $dbh->prepare( $query );
+	$sth->execute();
+      }
+    }
+  }
+}
+
+function get_location_num_dependants( $locationid ) {
+  $dbh = db_connect();
+
+  $result = array(
+	'user' => 0,
+	'csip' => 0,
+	'answer' => 0,
+	'goal' => 0,
+	'activity' => 0,
+	'activity_people' => 0,
+		  );
+  if ( $locationid ) {
+    $query = "SELECT COUNT(*) AS users FROM user WHERE locationid = :lid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':lid', $locationid );
+    $sth->execute();
+    $row = $sth->fetch();
+    $result['user'] = $row['users'];
+
+    $query = "SELECT csipid FROM csip WHERE locationid = :lid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':lid', $locationid );
+    $sth->execute();
+    while ( $row = $sth->fetch() ) {
+      $csips[] = $row['csipid'];
+    }
+    $result['csip'] = count( $csips );
+
+    if ( $result['csip'] ) {
+      $query = "SELECT COUNT(*) AS answers FROM answer WHERE csipid IN (". implode( ',', $csips ) .")";
+      $sth = $dbh->prepare( $query );
+      $sth->execute();
+      $row = $sth->fetch();
+      $result['answer'] = $row['answers'];
+
+      $query = "SELECT goalid FROM goal WHERE csipid IN (". implode( ',', $csips ) .")";
+      $sth = $dbh->prepare( $query );
+      $sth->execute();
+      while ( $row = $sth->fetch() ) {
+	$goals[] = $row['goalid'];
+      }
+      $result['goal'] = count( $goals );
+      if ( $result['goal'] ) {
+	$query = "SELECT activityid FROM activity WHERE goalid IN (". implode( ',', $goals ) .")";
+	$sth = $dbh->prepare( $query );
+	$sth->execute();
+	while ( $row = $sth->fetch() ) {
+	  $acts[] = $row['activityid'];
+	}
+	$result['activity'] = count( $acts );
+
+	if ( $result['activity'] ) {
+	  $query = "SELECT COUNT(*) AS people FROM activity_people WHERE activityid IN (". implode( ',', $acts ) .")";
+	  $sth = $dbh->prepare( $query );
+	  $sth->execute();
+	  $row = $sth->fetch();
+	  $result['activity_people'] = $row['people'];
+	}
+      }
+    }
+  }
+  return $result;
+}
+
+?>

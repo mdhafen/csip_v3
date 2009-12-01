@@ -1,0 +1,67 @@
+<?php
+// Make sure all class definitions are loaded before this!
+session_name( 'CSIPSESSID' );
+session_start();
+$config = array(
+	'base_dir'          => '/var/www/',  // sane defaults
+	'base_url'	    => '/', // these are set below
+	'secure_phrase'     => 'DontTreadOnMe',
+	'cookie_token_name' => 'CSIPTOKEN',
+	'database'          => array(
+		'engine' => 'mysql',
+		'host'   => 'mysql.washk12.org',
+		'schema' => 'csip_v3',
+		'user'   => 'csip',
+		'passwd' => 'w3bm@st3r',
+	),
+	'auth' => array(
+		1   => "load_csip",
+		2   => "load_other_csip",
+		4   => "update_sap",
+		8   => "update_csip",
+		16  => "approve_school",
+		32  => "approve_district",
+		64  => "view_reports",
+		128 => "manage_users",
+	),
+	'role' => array(
+		1 => array(
+			'name' => 'community council',
+			'auth' => 65, // load,report
+		),
+		2 => array(
+			'name' => 'plc member',
+			'auth' => 69, // load,update_csip,report
+		),
+		3 => array(
+	       		'name' => 'principal',
+			'auth' => 93, // load,update_sap,approve_school,report
+		),
+		4 => array(
+	       		'name' => 'district personel',
+			'auth' => 99, // load,load_other,app_district,report
+		),
+		5 => array(
+			'name' => 'board member',
+			'auth' => 67, // load,load_other,report
+		),
+		6 => array(
+	       		'name' => 'site supervisor',
+			'auth' => 255, // all
+		),
+	),
+);
+
+$config['base_dir'] = realpath( dirname( __FILE__ ) . '/../' );
+$config['this_url'] = $_SERVER['SCRIPT_NAME'];
+$config['base_url'] = "/";  // A known value, just make the sys.admin. set it
+/*
+$config['base_url'] = implode( '/',
+	array_intersect(
+		explode( '/', parse_url( $config['this_url'], PHP_URL_PATH ) ),
+		explode( '/', $config['base_dir'] ."/cgi" )
+	)
+);
+if ( ! $config['base_url'] ) { $config['base_url'] = '/'; }
+ */
+?>
