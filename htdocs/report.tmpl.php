@@ -32,6 +32,7 @@ foreach ( (array) $data['category_list'] as $categoryid => $category ) {
 ?>
 
 <?php foreach ( (array) $data['category_list'] as $categoryid => $category ) { ?>
+<hr size="15" noshade="noshade">
 <a name="cat_<?= $categoryid ?>"></a>
 <h2 class="category_name"><?= $category['category_name'] ?></h2>
 <?php   if ( $category['category_type'] == 1 ) { ?>
@@ -52,7 +53,7 @@ foreach ( (array) $data['category_list'] as $categoryid => $category ) {
 	    foreach ( (array) $data['csip']['category'][ $category['categoryid'] ]['goal'] as $goal ) {
 ?>
 
-<hr>
+<hr size="5" noshade="noshade">
 <table class="goal">
 <tr>
 
