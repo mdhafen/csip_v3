@@ -778,14 +778,14 @@ function cat_get_goal_completion( $categoryid, $csipid ) {
 
   if ( ! $total > 0 ) { return array( 0, 0 ); }
 
-  $query = "SELECT COUNT(*) FROM activity CROSS JOIN goal USING (goalid) WHERE categoryid = :cid AND csipid = :csid AND progress <> ''";
+  $query = "SELECT COUNT(*) FROM activity CROSS JOIN goal USING (goalid) WHERE categoryid = :cid AND csipid = :csid AND activity.progress <> ''";
   $sth = $dbh->prepare( $query );
   $sth->bindValue( ':cid', $categoryid );
   $sth->bindValue( ':csid', $csipid );
   $sth->execute();
   $progress = $sth->fetchColumn();
 
-  $query = "SELECT COUNT(*) FROM activity CROSS JOIN goal USING (goalid) WHERE categoryid = :cid AND csipid = :csid AND report <> ''";
+  $query = "SELECT COUNT(*) FROM activity CROSS JOIN goal USING (goalid) WHERE categoryid = :cid AND csipid = :csid AND activity.report <> ''";
   $sth = $dbh->prepare( $query );
   $sth->bindValue( ':cid', $categoryid );
   $sth->bindValue( ':csid', $csipid );
