@@ -9,11 +9,11 @@ include_once( '../inc/activity.phpm' );
 authorize( 'load_csip' );
 
 $activityid = input( 'activity', INPUT_PINT );
-$response = input( 'response', INPUT_STR );
+$response = input( 'response', INPUT_HTML_NONE );
 $op = input( 'op', INPUT_STR );
 
-$progress = input( 'progress', INPUT_STR );
-$report = input( 'report', INPUT_STR );
+$progress = input( 'progress', INPUT_HTML_NONE );
+$report = input( 'report', INPUT_HTML_NONE );
 $complete = input( 'complete', INPUT_STR );
 if ( $complete ) { $complete = ( $complete == 'yes' ) ? 1 : 0; }
 

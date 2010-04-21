@@ -27,9 +27,9 @@ $focus_list = question_get_options( -1 );
 if ( $op == 'Save' ) {
   $update = array();
 
-  $goal_desc = input( 'goal_description', INPUT_STR );
-  $goal_progress = input( 'goal_progress', INPUT_STR );
-  $goal_report = input( 'goal_report', INPUT_STR );
+  $goal_desc = input( 'goal_description', INPUT_HTML_NONE );
+  $goal_progress = input( 'goal_progress', INPUT_HTML_NONE );
+  $goal_report = input( 'goal_report', INPUT_HTML_NONE );
 
   if ( $goal ) {
     if ( $goal_desc != $goal['goal'] ) {
@@ -62,12 +62,12 @@ if ( $op == 'Save' ) {
   $activity = $goal['activity'][ $activityid ];
 
   $focus = input( "{$activityid}_focus", INPUT_STR );
-  $activity_desc = input( "{$activityid}_activity_description", INPUT_STR );
+  $activity_desc = input( "{$activityid}_activity_description", INPUT_HTML_NONE );
   $complete_date = input( "{$activityid}_complete_date", INPUT_STR );
   $completed = input( "{$activityid}_complete", INPUT_STR );
-  $progress = input( "{$activityid}_progress", INPUT_STR );
-  $report = input( "{$activityid}_report", INPUT_STR );
-  $people_fullname = input( "{$activityid}_fullname", INPUT_STR );
+  $progress = input( "{$activityid}_progress", INPUT_HTML_NONE );
+  $report = input( "{$activityid}_report", INPUT_HTML_NONE );
+  $people_fullname = input( "{$activityid}_fullname", INPUT_HTML_NONE );
   if ( $people_fullname ) {
     $people_id = input( "{$activityid}_people_id", INPUT_PINT );
     $people_email = input( "{$activityid}_people_email", INPUT_EMAIL );

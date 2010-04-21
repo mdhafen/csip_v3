@@ -93,8 +93,8 @@ function authenticate() {
 	load_session();
 
 	if ( ! $_SESSION[ 'loggedin_user' ] ) {
-		$username = input( '_username', INPUT_STR );
-		$password = input( '_password', INPUT_RAW );
+		$username = input( '_username', INPUT_HTML_NONE );
+		$password = input( '_password', INPUT_STR );
 		if ( ! $username || ! $password ) {
 			$_SESSION[ 'NOSESSION' ] = 1;
 			$_SESSION[ 'username' ] = $username;

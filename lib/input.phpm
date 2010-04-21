@@ -1,11 +1,11 @@
 <?php
-define( 'INPUT_RAW', '1' );
-define( 'INPUT_NUM', '2' );
-define( 'INPUT_INT', '3' );
-define( 'INPUT_PINT', '4' );
-define( 'INPUT_STR', '5' );
-define( 'INPUT_HTML', '6' );
-define( 'INPUT_HTML_SCRIPT', '7' );
+define( 'INPUT_NUM', '1' );
+define( 'INPUT_INT', '2' );
+define( 'INPUT_PINT', '3' );
+define( 'INPUT_STR', '4' );
+define( 'INPUT_HTML_NONE', '5' );
+define( 'INPUT_HTML_SOME', '6' );
+define( 'INPUT_HTML_ALL', '7' );
 define( 'INPUT_EMAIL', '8' );
 
 require_once( 'PEAR.php' );  // to check for error
@@ -111,16 +111,28 @@ function input_validation( &$output, $type ) {
 		}
 		if ( $type == INPUT_STR ) {
 			if ( ! is_string( $value ) ) { $error++; }
+		}
+		if ( $type == INPUT_HTML_NONE ) {
 			if ( ! $error ) {
+			if ( ! is_string( $value ) ) { $error++; }
 				$value = strip_tags( html_entity_decode( $value ) );	
+				$value = htmlspecialchars( $value );
 			}
 		}
-		if ( $type == INPUT_HTML ) {
+		if ( $type == INPUT_HTML_SOME ) {
 			if ( ! is_string( $value ) ) { $error++; }
 			if ( ! $error ) {
 				$parser =& new HTML_Safe();
 				$value = html_entity_decode( $value );
 				$value = $parser->parse( $value );
+				$value = htmlspecialchars( $value );
+			}
+		}
+		if ( $type == INPUT_HTML_ALL ) {
+			if ( ! $error ) {
+			if ( ! is_string( $value ) ) { $error++; }
+				$value = html_entity_decode( $value );
+				$value = htmlspecialchars( $value );
 			}
 		}
 		if ( $type == INPUT_EMAIL ) {

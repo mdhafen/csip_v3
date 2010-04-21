@@ -575,7 +575,7 @@ function cat_save_answers( $categoryid, $part, &$csip ) {
   foreach ( (array) $question_group as $question ) {
     if ( $question['part'] == $part ) {
 
-      $input = input( $question['questionid'], INPUT_STR );
+      $input = input( $question['questionid'], INPUT_HTML_NONE );
       $answer = array();
 
       if ( is_array( $input ) ) {

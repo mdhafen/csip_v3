@@ -36,13 +36,13 @@ if ( $userid ) {
 }
 
 if ( $op == "Save" ) {  // Update/Add the user
-  $username = input( 'username', INPUT_STR );
-  $fullname = input( 'fullname', INPUT_STR );
+  $username = input( 'username', INPUT_HTML_NONE );
+  $fullname = input( 'fullname', INPUT_HTML_NONE );
   $email = input( 'email', INPUT_EMAIL );
   $role = input( 'role', INPUT_PINT );
   $location = input( 'location', INPUT_PINT );
-  $password = input( 'password', INPUT_RAW );
-  $password2 = input( 'password_2', INPUT_RAW );
+  $password = input( 'password', INPUT_STR );
+  $password2 = input( 'password_2', INPUT_STR );
   if ( $password && $password != '*****' && $password == $password2 ) {
     list( $user_password, $salt ) = new_password( $password );
   }

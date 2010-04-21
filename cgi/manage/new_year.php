@@ -11,12 +11,12 @@ authorize( 'manage_users' );
 $op = input( 'op', INPUT_STR );
 
 if ( $op == 'Save Year' ) {
-  $year_name = input( 'year_name', INPUT_STR );
+  $year_name = input( 'year_name', INPUT_HTML_NONE );
   $version = input( 'version', INPUT_PINT );
-  $sap_due_date = input( 'sap_due', INPUT_STR );
-  $csip_due_date = input( 'csip_due', INPUT_STR );
-  $board_due_date = input( 'board_due', INPUT_STR );
-  $district_due_date = input( 'district_due', INPUT_STR );
+  $sap_due_date = input( 'sap_due', INPUT_HTML_NONE );
+  $csip_due_date = input( 'csip_due', INPUT_HTML_NONE );
+  $board_due_date = input( 'board_due', INPUT_HTML_NONE );
+  $district_due_date = input( 'district_due', INPUT_HTML_NONE );
 
   $new = array(
 	       'year_name' => $year_name,

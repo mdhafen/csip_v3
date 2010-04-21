@@ -30,12 +30,12 @@ if ( $locationid ) {
 
 if ( $op == "Save" ) {  // Update/Add the user
   $newlocationid = input( 'new_locationid', INPUT_PINT );
-  $name = input( 'name', INPUT_STR );
+  $name = input( 'name', INPUT_HTML_NONE );
   $mingrade = input( 'mingrade', INPUT_PINT );
   $maxgrade = input( 'maxgrade', INPUT_PINT );
-  $loc_cat = input( 'loc_cat', INPUT_STR );
-  $loc_subcat = input( 'loc_subcat', INPUT_STR );
-  $loc_demo = input( 'loc_demo', INPUT_RAW );
+  $loc_cat = input( 'loc_cat', INPUT_HTML_NONE );
+  $loc_subcat = input( 'loc_subcat', INPUT_HTML_NONE );
+  $loc_demo = input( 'loc_demo', INPUT_STR );
   $loc_demo = ( $loc_demo ) ? 1 : 0;
 
   $error = array();
