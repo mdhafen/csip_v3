@@ -12,4 +12,8 @@ foreach ( $updates as $file ) {
   }
 }
 
+foreach ( $results as $msg ) {
+  print $msg ."\n";
+}
+
 ?>
