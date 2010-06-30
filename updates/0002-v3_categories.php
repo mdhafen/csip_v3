@@ -57,14 +57,14 @@ VALUES
  ( 'Social Studies', 'MAND', 0, '', 0, 0, 0, '', 3, 0, 0, 'SEC', 1, 0, 0, 1, 84 ),
  ( 'Health / PE', 'MAND', 0, '', 0, 0, 0, '', 3, 0, 0, 'SEC', 1, 0, 0, 1, 85 ),
  ( 'Career and Technology', 'MAND', 0, '', 0, 0, 0, '', 3, 0, 0, 'SEC', 1, 0, 0, 1, 86 ),
- ( 'Basic Skills Competency Test (BSCT)', 'OPT', 0, '', 0, 0, 0, '', 3, 0, 0, 'HS', 1, 0, 0, 0, 87 )
- ( 'Citizenship', 'OPT', 0, '', 0, 0, 0, '(Complete if applicable)', 3, 0, 0, 'NA', 1, 1, 1, 1, 88 )
- ( 'Other', 'OPT', 0, '', 0, 0, 0, '(Complete if applicable)', 3, 0, 0, 'NA', 1, 1, 1, 1, 89 )
- ( 'Title One', 'OPT', 1, 'http://www.schools.utah.gov/TitleI/', 0, 0, 0, '', 3, 0, 0, 'ELEM', 0, 0, 0, 1, 90 )
- ( 'Trust Lands', 'OPT', 1, 'http://www.schoollandtrust.org/', 0, 0, 0, '', 3, 0, 0, 'NA', 0, 0, 0, 1, 91 )
- ( 'Safety Plan', 'OPT', 0, '', 0, 0, 0, '(Complete if applicable)', 3, 0, 0, 'NA', 1, 1, 1, 1, 92 )
+ ( 'Basic Skills Competency Test (BSCT)', 'OPT', 0, '', 0, 0, 0, '', 3, 0, 0, 'HS', 1, 0, 0, 0, 87 ),
+ ( 'Citizenship', 'OPT', 0, '', 0, 0, 0, '(Complete if applicable)', 3, 0, 0, 'NA', 1, 1, 1, 1, 88 ),
+ ( 'Other', 'OPT', 0, '', 0, 0, 0, '(Complete if applicable)', 3, 0, 0, 'NA', 1, 1, 1, 1, 89 ),
+ ( 'Title One', 'OPT', 1, 'http://www.schools.utah.gov/TitleI/', 0, 0, 0, '', 3, 0, 0, 'ELEM', 0, 0, 0, 1, 90 ),
+ ( 'Trust Lands', 'OPT', 1, 'http://www.schoollandtrust.org/', 0, 0, 0, '', 3, 0, 0, 'NA', 0, 0, 0, 1, 91 ),
+ ( 'Safety Plan', 'OPT', 0, '', 0, 0, 0, '(Complete if applicable)', 3, 0, 0, 'NA', 1, 1, 1, 1, 92 ),
  ( 'Special Education', 'OPT', 0, '', 0, 0, 0, '', 3, 0, 0, 'NA', 1, 1, 1, 1, 0 ),
- ( 'English Language Learners (ELL)', 'OPT', 0, '', 0, 0, 0, '', 3, 0, 0, 'NA', 1, 1, 1, 1, 0 ),
+ ( 'English Language Learners (ELL)', 'OPT', 0, '', 0, 0, 0, '', 3, 0, 0, 'NA', 1, 1, 1, 1, 0 )
 ";
   $result = $dbh->exec( $query );
   if ( $result !== FALSE ) {
