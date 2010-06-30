@@ -13,7 +13,7 @@ $sth->execute();
 
 $row = $sth->fetch();
 if ( $row['count'] == 0 ) {
-  $query = "ALTER TABLE category ADD COLUMN category_group_order INT(10) UNSIGNED AFTER category_group";
+  $query = "ALTER TABLE category ADD COLUMN category_group_order INT(10) UNSIGNED NOT NULL DEFAULT 0 AFTER category_group";
   $sth = $dbh->prepare( $query );
   $sth->execute();
   return "Added column to category table: category_group_order";
