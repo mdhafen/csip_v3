@@ -72,6 +72,7 @@ VALUES
   }
 }
 
-return "Adding version 3 categories: ". $dbh->errorInfo();
+$error = $dbh->errorInfo();
+return "Adding version 3 categories: ". $error[2];
 
 ?>

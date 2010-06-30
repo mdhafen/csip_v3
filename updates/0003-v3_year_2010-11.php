@@ -21,6 +21,7 @@ VALUES ( '2010-2011', 3, NULL, NULL, NULL, NULL ),
   }
 }
 
-return "Adding version 3 year: ". $dbh->errorInfo();
+$error = $dbh->errorInfo();
+return "Adding version 3 year: ". $error[2];
 
 ?>
