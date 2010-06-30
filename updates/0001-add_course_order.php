@@ -14,7 +14,7 @@ $sth->execute();
 $row = $sth->fetch();
 if ( $row['count'] == 0 ) {
   $query = "ALTER TABLE category ADD COLUMN category_group_order INT(10) UNSIGNED AFTER category_group";
-  return "Added table: category_group_order";
+  return "Added column to category table: category_group_order";
 }
 
 ?>
