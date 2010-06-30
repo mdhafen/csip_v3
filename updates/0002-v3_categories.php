@@ -66,8 +66,12 @@ VALUES
  ( 'Special Education', 'OPT', 0, '', 0, 0, 0, '', 3, 0, 0, 'NA', 1, 1, 1, 1, 0 ),
  ( 'English Language Learners (ELL)', 'OPT', 0, '', 0, 0, 0, '', 3, 0, 0, 'NA', 1, 1, 1, 1, 0 ),
 ";
-  $dbh->exec( $query );
-  return "Adding version 3 questions: categories";
+  $result = $dbh->exec( $query );
+  if ( $result !== FALSE ) {
+    return "Adding version 3 questions: categories";
+  }
 }
+
+return "Adding version 3 categories: ". $dbh->errorInfo();
 
 ?>

@@ -15,8 +15,12 @@ if ( $row['count'] == 0 ) {
 INSERT INTO year ( year_name, version, sap_due_date, csip_due_date, board_due_date, district_due_date )
 VALUES ( '2010-2011', 3, NULL, NULL, NULL, NULL ),
 ";
-  $dbh->exec( $query );
-  return "Adding version 3 questions: 2010-2011 year";
+  $result = $dbh->exec( $query );
+  if ( $result == 1 ) {
+    return "Adding version 3 questions: 2010-2011 year";
+  }
 }
+
+return "Adding version 3 year: ". $dbh->errorInfo();
 
 ?>
