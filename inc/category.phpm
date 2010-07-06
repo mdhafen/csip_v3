@@ -492,6 +492,8 @@ function mangle_question( $question, $categoryid, $csip ) {
   $text = str_replace( "[year_name]", $csip['year_name'], $text );
   $text = str_replace( "[year_name-1]", mangle_num_down( $csip['year_name'] ), $text );
   $text = str_replace( "[yearid]", $csip['yearid'], $text );
+  $text = str_replace( "[course_group]", $category['course_group'], $text );
+  $text = str_replace( "[course_group_order]", $category['course_group_order'], $text );
   $text = str_replace( "[question_group]", $question['question_group'], $text );
   $text = str_replace( "[categoryid]", $category['categoryid'], $text );
   $text = str_replace( "[locationid]", $csip['locationid'], $text );
