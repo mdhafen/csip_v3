@@ -18,9 +18,9 @@ INSERT INTO category (
  question_group, gradelevel, loc_cat_subcat,
  needs_principal_approve, needs_community_approve, needs_district_approve,
  custom_goal_focus, parent_category )
-VALUES 
- ( 'Kindergarten Math', 'MAND', 0, '', 0, 1, 1, '', 3, 0, 0, 'ELEM', 1, 0, 0, 0, 97 ),
- ( 'Kindergarten Literacy', 'MAND', 0, '', 0, 1, 2, '', 3, 0, 0, 'ELEM', 1, 0, 0, 0, 101 ),
+VALUES
+ ( 'Kindergarten Math', 'MAND', 0, '', 0, 0, 0, '', 3, 0, 0, 'ELEM', 1, 0, 0, 0, 97 ),
+ ( 'Kindergarten Literacy', 'MAND', 0, '', 0, 0, 0, '', 3, 0, 0, 'ELEM', 1, 0, 0, 0, 101 ),
  ( 'Language Arts 1', 'MAND', 0, '', 1, 1, 1, '', 3, 0, 1, 'NA', 1, 0, 0, 0, 51 ),
  ( 'Language Arts 2', 'MAND', 0, '', 2, 1, 2, '', 3, 0, 2, 'NA', 1, 0, 0, 0, 52 ),
  ( 'Language Arts 3', 'MAND', 0, '', 3, 1, 3, '', 3, 0, 3, 'NA', 1, 0, 0, 0, 53 ),

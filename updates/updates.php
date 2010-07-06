@@ -3,6 +3,7 @@
 $updates = array(
   '0001-add_course_order',
   '0002-v3_categories',
+  '0003-v3_questions',
 );
 $results = array();
 
