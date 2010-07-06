@@ -116,8 +116,8 @@ foreach ( (array) $data['category_list'] as $class => $cats ) {
 <?php if ( in_array( 'P', (array) $category['parts'] ) ) { ?>
 <a href="previous.php?category=<?= $category['categoryid'] ?>">
 <?php
-if ( ( $data['_session']['CAN_update_csip'] && $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'CSIP' ) || 
-     ( $data['_session']['CAN_update_sap'] && $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'SAP' ) ) {
+if ( ( $data['_session']['CAN_update_csip'] && ( $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'CSIP' || $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'OPT' ) ) || 
+     ( $data['_session']['CAN_update_sap'] && ( $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'SAP' || $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'MAND' ) ) ) {
 ?>
 Edit
 <?php } else { ?>
@@ -133,8 +133,8 @@ view
 	    if ( $category['parts'][$i] ) {
 ?><a href="category.php?category=<?= $category['categoryid'] ?>&part=<?= $i ?>">
 <?php
-if ( ( $data['_session']['CAN_update_csip'] && $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'CSIP' ) || 
-     ( $data['_session']['CAN_update_sap'] && $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'SAP' ) ) {
+if ( ( $data['_session']['CAN_update_csip'] && ( $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'CSIP' || $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'OPT' ) ) || 
+     ( $data['_session']['CAN_update_sap'] && ( $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'SAP' || $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'MAND' ) ) ) {
 ?>
 Edit
 <?php } else { ?>
@@ -149,8 +149,8 @@ view
 <?php if ( $category['category_type'] != 1 ) { ?>
 <a href="goal_list.php?category=<?= $category['categoryid'] ?>">
 <?php
-if ( ( $data['_session']['CAN_update_csip'] && $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'CSIP' ) || 
-     ( $data['_session']['CAN_update_sap'] && $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'SAP' ) ) {
+if ( ( $data['_session']['CAN_update_csip'] && ( $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'CSIP' || $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'OPT' ) ) || 
+     ( $data['_session']['CAN_update_sap'] && ( $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'SAP' || $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'MAND' ) ) ) {
 ?>
 Edit
 <?php } else { ?>
@@ -254,8 +254,8 @@ view
 <?php if ( in_array( 'P', (array) $category['parts'] ) ) { ?>
 <a href="previous.php?category=<?= $category['categoryid'] ?>">
 <?php
-if ( ( $data['_session']['CAN_update_csip'] && $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'CSIP' ) || 
-     ( $data['_session']['CAN_update_sap'] && $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'SAP' ) ) {
+if ( ( $data['_session']['CAN_update_csip'] && ( $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'CSIP' || $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'OPT' ) ) || 
+     ( $data['_session']['CAN_update_sap'] && ( $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'SAP' || $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'MAND' ) ) ) {
 ?>
 Edit
 <?php } else { ?>
@@ -269,8 +269,8 @@ view
       if ( $category['parts'][$i] ) {
 ?><a href="category.php?category=<?= $category['categoryid'] ?>&part=<?= $i ?>">
 <?php
-if ( ( $data['_session']['CAN_update_csip'] && $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'CSIP' ) || 
-     ( $data['_session']['CAN_update_sap'] && $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'SAP' ) ) {
+if ( ( $data['_session']['CAN_update_csip'] && ( $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'CSIP' || $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'OPT' ) ) || 
+     ( $data['_session']['CAN_update_sap'] && ( $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'SAP' || $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'MAND' ) ) ) {
 ?>
 Edit
 <?php } else { ?>
@@ -283,8 +283,8 @@ view
     }
 ?><td><?php if ( $category['category_type'] != 1 ) { ?><a href="goal_list.php?category=<?= $category['categoryid'] ?>">
 <?php
-if ( ( $data['_session']['CAN_update_csip'] && $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'CSIP' ) || 
-     ( $data['_session']['CAN_update_sap'] && $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'SAP' ) ) {
+if ( ( $data['_session']['CAN_update_csip'] && ( $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'CSIP' || $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'OPT' ) ) || 
+     ( $data['_session']['CAN_update_sap'] && ( $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'SAP' || $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'MAND' ) ) ) {
 ?>
 Edit
 <?php } else { ?>
