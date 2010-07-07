@@ -22,8 +22,7 @@ UPDATE category
    SET custom_goal = 1
  WHERE version = 3
    AND category_name IN
-       ( 'Other', 'Citizenship', 'Basic Skills Competency Test (BSCT)',
-         'Safety Plan' )";
+       ( 'Other', 'Citizenship', 'Safety Plan' )";
   $dbh->exec( $query );
   return "Added column to category table: custom_goal";
 }
