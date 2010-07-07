@@ -93,9 +93,11 @@ foreach ( (array) $data['category_list'] as $class => $cats ) {
   }
 ?>
 <tr class="<?= $r_l ?>">
-<td rowspan=<?php echo $count; ?> class="category_class">
+<?php if ( $class_image ) { ?>
+<td rowspan=<?= $count ?> class="category_class">
 <img src='<?= $data['_config']['base_url'] ?>images/<?= $class_image ?>' alt='<?= $class_image_alt ?>'>
 </td>
+<?php } ?>
 <?php
   $first = 1;
   foreach ( (array) $cats['group'] as $group ) {
@@ -110,14 +112,19 @@ foreach ( (array) $data['category_list'] as $class => $cats ) {
 	$first = 0;
       }
 ?>
+<?php if ( ! $class_image ) { ?>
+<td>&nbsp;</td>
+<?php } ?>
 <td class="section_title"><?php if ( $category['category_type'] == 1 ) { ?><a target="_BLANK" href="<?= $category['type_target'] ?>"><?php } ?><?= $category['category_name'] ?><?php if ( $category['category_type'] == 1 ) { ?></a><?php } ?> <?= $category['category_note'] ?></td>
 <?php if ( $data['category_list']['PREVIOUS'] ) { ?>
 <td>
 <?php if ( in_array( 'P', (array) $category['parts'] ) ) { ?>
 <a href="previous.php?category=<?= $category['categoryid'] ?>">
 <?php
-if ( ( $data['_session']['CAN_update_csip'] && ( $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'CSIP' || $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'OPT' ) ) || 
-     ( $data['_session']['CAN_update_sap'] && ( $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'SAP' || $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'MAND' ) ) ) {
+$class = $data['csip']['category'][ $category['categoryid'] ]['category_class'];
+if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == 'OPT' ) ) || 
+     ( $data['_session']['CAN_update_sap'] && ( $class == 'SAP' || $class == 'MAND' ) ) ||
+     ( $class == 'OTHR' && ( $data['_session']['CAN_update_sap'] || $data['_session']['CAN_update_csip'] ) ) ) {
 ?>
 Edit
 <?php } else { ?>
@@ -133,8 +140,10 @@ view
 	    if ( $category['parts'][$i] ) {
 ?><a href="category.php?category=<?= $category['categoryid'] ?>&part=<?= $i ?>">
 <?php
-if ( ( $data['_session']['CAN_update_csip'] && ( $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'CSIP' || $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'OPT' ) ) || 
-     ( $data['_session']['CAN_update_sap'] && ( $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'SAP' || $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'MAND' ) ) ) {
+$class = $data['csip']['category'][ $category['categoryid'] ]['category_class'];
+if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == 'OPT' ) ) || 
+     ( $data['_session']['CAN_update_sap'] && ( $class == 'SAP' || $class == 'MAND' ) ) ||
+     ( $class == 'OTHR' && ( $data['_session']['CAN_update_sap'] || $data['_session']['CAN_update_csip'] ) ) ) {
 ?>
 Edit
 <?php } else { ?>
@@ -149,8 +158,10 @@ view
 <?php if ( $category['category_type'] != 1 ) { ?>
 <a href="goal_list.php?category=<?= $category['categoryid'] ?>">
 <?php
-if ( ( $data['_session']['CAN_update_csip'] && ( $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'CSIP' || $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'OPT' ) ) || 
-     ( $data['_session']['CAN_update_sap'] && ( $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'SAP' || $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'MAND' ) ) ) {
+$class = $data['csip']['category'][ $category['categoryid'] ]['category_class'];
+if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == 'OPT' ) ) || 
+     ( $data['_session']['CAN_update_sap'] && ( $class == 'SAP' || $class == 'MAND' ) ) ||
+     ( $class == 'OTHR' && ( $data['_session']['CAN_update_sap'] || $data['_session']['CAN_update_csip'] ) ) ) {
 ?>
 Edit
 <?php } else { ?>
@@ -254,8 +265,10 @@ view
 <?php if ( in_array( 'P', (array) $category['parts'] ) ) { ?>
 <a href="previous.php?category=<?= $category['categoryid'] ?>">
 <?php
-if ( ( $data['_session']['CAN_update_csip'] && ( $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'CSIP' || $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'OPT' ) ) || 
-     ( $data['_session']['CAN_update_sap'] && ( $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'SAP' || $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'MAND' ) ) ) {
+$class = $data['csip']['category'][ $category['categoryid'] ]['category_class'];
+if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == 'OPT' ) ) || 
+     ( $data['_session']['CAN_update_sap'] && ( $class == 'SAP' || $class == 'MAND' ) ) ||
+     ( $class == 'OTHR' && ( $data['_session']['CAN_update_sap'] || $data['_session']['CAN_update_csip'] ) ) ) {
 ?>
 Edit
 <?php } else { ?>
@@ -269,8 +282,10 @@ view
       if ( $category['parts'][$i] ) {
 ?><a href="category.php?category=<?= $category['categoryid'] ?>&part=<?= $i ?>">
 <?php
-if ( ( $data['_session']['CAN_update_csip'] && ( $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'CSIP' || $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'OPT' ) ) || 
-     ( $data['_session']['CAN_update_sap'] && ( $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'SAP' || $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'MAND' ) ) ) {
+$class = $data['csip']['category'][ $category['categoryid'] ]['category_class'];
+if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == 'OPT' ) ) || 
+     ( $data['_session']['CAN_update_sap'] && ( $class == 'SAP' || $class == 'MAND' ) ) ||
+     ( $class == 'OTHR' && ( $data['_session']['CAN_update_sap'] || $data['_session']['CAN_update_csip'] ) ) ) {
 ?>
 Edit
 <?php } else { ?>
@@ -283,8 +298,10 @@ view
     }
 ?><td><?php if ( $category['category_type'] != 1 ) { ?><a href="goal_list.php?category=<?= $category['categoryid'] ?>">
 <?php
-if ( ( $data['_session']['CAN_update_csip'] && ( $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'CSIP' || $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'OPT' ) ) || 
-     ( $data['_session']['CAN_update_sap'] && ( $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'SAP' || $data['csip']['category'][ $category['categoryid'] ]['category_class'] == 'MAND' ) ) ) {
+$class = $data['csip']['category'][ $category['categoryid'] ]['category_class'];
+if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == 'OPT' ) ) || 
+     ( $data['_session']['CAN_update_sap'] && ( $class == 'SAP' || $class == 'MAND' ) ) ||
+     ( $class == 'OTHR' && ( $data['_session']['CAN_update_sap'] || $data['_session']['CAN_update_csip'] ) ) ) {
 ?>
 Edit
 <?php } else { ?>
