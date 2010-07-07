@@ -177,7 +177,6 @@ if ( $op == 'Save' ) {
 	'csipid' => $csip['csipid'],
 	'categoryid' => $categoryid,
 		    );
-    }
 
     $goalid = update_goal_fields( $goalid, $update );
     $csip = cat_reload_goal( $csip, $goalid );
