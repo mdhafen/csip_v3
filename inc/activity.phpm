@@ -85,8 +85,13 @@ function update_activity_fields( $activityid, $update ) {
     }
     $sth->execute();
     $category_class = $sth->fetchColumn();
-    if ( ( $category_class == 'CSIP' && ! authorized( 'update_csip' ) ) ||
-	 ( $category_class == 'SAP' && ! authorized( 'update_sap' ) ) ) {
+    if ( ( ( $category_class == 'CSIP' || $category_class == 'OPT' ) &&
+           ! authorized( 'update_csip' ) ) ||
+	 ( ( $category_class == 'SAP' || $category_class == 'MAND' ) &&
+           ! authorized( 'update_sap' ) ) ||
+	 ( $category_class == 'OTHR' &&
+           ! ( authorized( 'update_sap' ) || authorized( 'update_csip' ) ) )
+       ) {
       return;
     }
   }
