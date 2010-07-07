@@ -260,6 +260,9 @@ view
       $first = 0;
     }
 ?>
+<?php if ( ! $class_image ) { ?>
+<td>&nbsp;</td>
+<?php } ?>
 <td class="section_title"><?php if ( $category['category_type'] == 1 ) { ?><a target="_BLANK" href="<?= $category['type_target'] ?>"><?php } ?><?= $category['category_name'] ?><?php if ( $category['category_type'] == 1 ) { ?></a><?php } ?> <?= $category['category_note'] ?></td>
 <?php if ( $data['category_list']['PREVIOUS'] ) { ?><td>
 <?php if ( in_array( 'P', (array) $category['parts'] ) ) { ?>
