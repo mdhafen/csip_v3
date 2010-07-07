@@ -7,7 +7,7 @@ $db_settings = $config['database'];
 $table = $db_settings['schema'];
 
 $dbh = db_connect();
-$query = "SELECT COUNT(*) AS count FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '$table' AND TABLE_NAME = 'category' AND COLUMN_NAME = 'category_group_order'";
+$query = "SELECT COUNT(*) AS count FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '$table' AND TABLE_NAME = 'category' AND COLUMN_NAME = 'course_group_order'";
 $sth = $dbh->query( $query );
 $row = $sth->fetch();
 if ( $row['count'] == 0 ) {

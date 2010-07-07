@@ -26,10 +26,10 @@ Students generally did not do as well on the following standards &amp; objective
   $result = $dbh->exec( $query );
   if ( $result !== FALSE ) {
     return "Adding version 3 questions: questions";
+  } else {
+    $error = $dbh->errorInfo();
+    return "Error adding version 3 questions: ". $error[2];
   }
 }
-
-$error = $dbh->errorInfo();
-return "Adding version 3 questions: ". $error[2];
 
 ?>

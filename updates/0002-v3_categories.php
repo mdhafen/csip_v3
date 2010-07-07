@@ -69,10 +69,10 @@ VALUES
   $result = $dbh->exec( $query );
   if ( $result !== FALSE ) {
     return "Adding version 3 questions: categories";
+  } else {
+    $error = $dbh->errorInfo();
+    return "Error adding version 3 categories: ". $error[2];
   }
 }
-
-$error = $dbh->errorInfo();
-return "Adding version 3 categories: ". $error[2];
 
 ?>
