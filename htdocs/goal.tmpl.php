@@ -22,6 +22,7 @@ if ( $data['csip'] ) {
 <div class="important">Changes Saved</div>
 <?php } ?>
 
+<?php if ( $data['csip']['category'][ $data['categoryid'] ]['custom_goal'] ) { ?>
 <form method="post" action="<?= $data['_config']['base_url'] ?>goal.php?goalid=<?= $data['goal']['goalid'] ?>&categoryid=<?= $data['categoryid'] ?>">
 <table class="goal">
 <tr>
@@ -46,8 +47,9 @@ if ( $data['csip'] ) {
 </tr>
 </table><br>
 <?php
-if ( ( $data['_session']['CAN_update_csip'] && $data['csip']['category'][ $data['categoryid'] ]['category_class'] == 'CSIP' ) || 
-     ( $data['_session']['CAN_update_sap'] && $data['csip']['category'][ $data['categoryid'] ]['category_class'] == 'SAP' ) ) {
+$class = $data['csip']['category'][ $data['categoryid'] ]['category_class'];
+if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == 'OPT' ) ) || 
+     ( $data['_session']['CAN_update_sap'] && ( $class == 'SAP' || $class == 'MAND' ) ) ) {
   if ( ! $data['csip']['loc_demo'] ) {
 ?>
 <input type="submit" name="op" id="op" value="Save">
@@ -56,22 +58,24 @@ if ( ( $data['_session']['CAN_update_csip'] && $data['csip']['category'][ $data[
 }
 ?>
 </form>
+<?php } ?>
 
-<h4>Subgoals</h4>
+<h4>Action Plans</h4>
 
 <table class="subgoals">
 <?php
 foreach ( (array) $data['goal']['activity'] as $activity ) {
   $activity_highlight = ! $activity_highlight;
   $a_light = ( $activity_highlight ) ? "highlighted" : "lowlighted";
+  $plan_count++;
 ?>
 <tr class='<?= $a_light ?>'>
 <form method="post" action="<?= $data['_config']['base_url'] ?>goal.php?goalid=<?= $data['goal']['goalid'] ?>&categoryid=<?= $data['categoryid'] ?>">
 <td>
 <input type="hidden" name="activityid" value="<?= $activity['activityid'] ?>">
-<div class="title">Subgoal / Plan</div>
+<div class="title">Action Plan <?= $plan_count ?></div>
 <?php if ( $data['csip']['category'][ $data['categoryid'] ]['custom_goal_focus'] ) { ?>
-<label for="<?= $activity['activityid'] ?>_focus">This Subgoal addresses:</label>
+<label for="<?= $activity['activityid'] ?>_focus">This Action Plan addresses:</label>
 <select name="<?= $activity['activityid'] ?>_focus" id="<?= $activity['activityid'] ?>_focus">
 <option value="">Choose Best Description</option>
 <?php
@@ -94,15 +98,16 @@ if ( $activity['complete_date'] && $activity['complete_date'] != '0000-00-00' ) 
 ?>"> (MM/DD/YYYY)
 </td>
 <td>
-Subgoal is:<br>
+Action Plan is:<br>
 <label for="<?= $activity['activityid'] ?>_c_y"><input type="radio" name="<?= $activity['activityid'] ?>_complete" id="<?= $activity['activityid'] ?>_c_y" value="yes"<?php if ( $activity['completed'] == 1 ) { ?> checked="checked"<?php } ?>>Complete</label><br>
 <label for="<?= $activity['activityid'] ?>_c_n"><input type="radio" name="<?= $activity['activityid'] ?>_complete" id="<?= $activity['activityid'] ?>_c_n" value="no"<?php if ( $activity['completed'] === 0 || $activity['completed'] === '0' ) { ?> checked="checked"<?php } ?>>Not Complete</label><br>
 </td>
 </tr>
 </table>
 <?php
-if ( ( $data['_session']['CAN_update_csip'] && $data['csip']['category'][ $data['categoryid'] ]['category_class'] == 'CSIP' ) || 
-     ( $data['_session']['CAN_update_sap'] && $data['csip']['category'][ $data['categoryid'] ]['category_class'] == 'SAP' ) ) {
+$class = $data['csip']['category'][ $data['categoryid'] ]['category_class'];
+if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == 'OPT' ) ) || 
+     ( $data['_session']['CAN_update_sap'] && ( $class == 'SAP || $class == 'MAND' )' ) ) {
   if ( ! $data['csip']['loc_demo'] ) {
 ?>
 <input type="submit" name="op" id="op" value="Save Subgoal">
@@ -160,7 +165,7 @@ if ( ( $data['_session']['CAN_update_csip'] && $data['csip']['category'][ $data[
 <?php } ?>
 </table>
 
-<?php if ( $data['goal']['goalid'] ) { ?>
+<?php if ( $data['goal']['goalid'] || ! $data['csip']['category'][ $data['categoryid'] ]['custom_goal'] ) { ?>
 <div class="pad_top_bottom">
 <a href="<?= $data['_config']['base_url'] ?>goal.php?op=Add+a+Subgoal&goalid=<?= $data['goal']['goalid'] ?>&categoryid=<?= $data['categoryid'] ?>">Add a Subgoal</a>
 </div>
