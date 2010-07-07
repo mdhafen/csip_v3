@@ -35,11 +35,11 @@ Our goal is to have [input_3]% of the students proficient on the [category_name]
  ( 3, 17, 1, 2, 1, 0, 'How often will measurement of student proficiency be done:
 [input]' ),
  ( 3, 17, -1, 1, 3, 0, '[input]% of students will be proficient at the end of the school year.' ),
- ( 3, 18, 1, 1, 1, 0, 'We have reviewed student results from the literacy sections of last year's K-post assessment. A majority of our students did well on the following concepts / skills:' ),
- ( 3, 18, 1, 2, 1, 0, 'We have reviewed student results from the literacy sections of last year's K-pre assessment. A majority of our students will need instruction in the following concepts / skills:' ),
+ ( 3, 18, 1, 1, 1, 0, 'We have reviewed student results from the literacy sections of last year''s K-post assessment. A majority of our students did well on the following concepts / skills:' ),
+ ( 3, 18, 1, 2, 1, 0, 'We have reviewed student results from the literacy sections of last year''s K-pre assessment. A majority of our students will need instruction in the following concepts / skills:' ),
  ( 3, 18, 1, 3, 2, 1, 'According to the results of the literacy sections of the K-pre test, our lowest performing subgroup is:' ),
- ( 3, 19, 1, 1, 1, 0, 'We have reviewed student results from the math sections of last year's K-post assessment. A majority of our students did well on the following concepts / skills:' ),
- ( 3, 19, 1, 2, 1, 0, 'We have reviewed student results from the math sections of last year's K-pre assessment. A majority of our students will need instruction in the following concepts / skills:' ),
+ ( 3, 19, 1, 1, 1, 0, 'We have reviewed student results from the math sections of last year''s K-post assessment. A majority of our students did well on the following concepts / skills:' ),
+ ( 3, 19, 1, 2, 1, 0, 'We have reviewed student results from the math sections of last year''s K-pre assessment. A majority of our students will need instruction in the following concepts / skills:' ),
  ( 3, 19, 1, 3, 2, 1, 'According to the results of the math sections of the K-pre test, our lowest performing subgroup is:' )
 ";
   $result = $dbh->exec( $query );
