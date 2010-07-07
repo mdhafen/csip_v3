@@ -568,9 +568,12 @@ function cat_save_answers( $categoryid, $part, &$csip ) {
   if ( $csip['loc_demo'] == 1 ) { return; }  // location is Demo
 
   $category_class = $csip['category'][ $categoryid ]['category_class'];
-  if ( ( ( $category_class == 'CSIP' || $category_class == 'OPT' ) && ! authorized( 'update_csip' ) ) ||
-       ( ( $category_class == 'SAP' || $category_class == 'MAND' ) && ! authorized( 'update_sap' ) ) ||
-       ( $category_class == 'OTHR' && ! ( authorized( 'update_csip' ) || authorized( 'update_sap' ) ) {
+  if ( ( ( $category_class == 'CSIP' || $category_class == 'OPT' ) &&
+         ! authorized( 'update_csip' ) ) ||
+       ( ( $category_class == 'SAP' || $category_class == 'MAND' ) &&
+         ! authorized( 'update_sap' )  ) ||
+       ( $category_class == 'OTHR' && ! ( authorized( 'update_csip' ) || authorized( 'update_sap' ) ) )
+     ) {
     return;
   }
 
