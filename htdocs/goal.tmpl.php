@@ -122,7 +122,7 @@ if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == '
   if ( ! $data['csip']['loc_demo'] ) {
 ?>
 <input type="hidden" name="op" value="Save Subgoal">
-<input type="submit" name="button" id="op" value="Save Action Plan">
+<input type="submit" name="button" value="Save Action Plan">
 <?php
   }
 }
@@ -171,7 +171,7 @@ if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == '
 <input type="hidden" name="activityid" value="<?= $activity['activityid'] ?>">
 <?php if ( $activity['activityid'] ) { ?>
 <input type="hidden" name="op" value="Delete Subgoal">
-<input type="submit" name="button" id="op" value="Delete Action Plan">
+<input type="submit" name="button" value="Delete Action Plan">
 <?php } ?>
 </form>
 </td></tr>
