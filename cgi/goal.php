@@ -182,6 +182,7 @@ if ( $op == 'Save' ) {
     $csip = cat_reload_goal( $csip, $goalid );
     $_SESSION['csip'] = $csip;
     $goal = array(
+    	'goalid' => $goalid,
         'goal' => $goal_desc,
 	'csipid' => $csip['csipid'],
 	'categoryid' => $categoryid,
