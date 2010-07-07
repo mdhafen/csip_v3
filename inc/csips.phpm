@@ -152,7 +152,7 @@ LEFT JOIN category_specifics
        OR ( loc_cat_subcat LIKE :loc_cat OR loc_cat_subcat LIKE :loc_subcat )
        OR ( loc_cat_subcat = 'ALL' )
        OR ( loc_cat_subcat = 'NA' AND gradelevel = 0 ) )
- ORDER BY category.category_class, category.gradelevel, category.category_name
+ ORDER BY category.category_class, category.category_type, category.course_group, category.gradelevel, category.category_name
 ";
   $sth = $dbh->prepare( $query );
   $sth->bindValue( ':cid', $csipid );
