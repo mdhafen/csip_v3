@@ -81,12 +81,14 @@ if ( $op == 'Save' ) {
       if ( $personid && $person_fullname == '' && $person_email == '' ) {
 	$person_delete = 1;
       }
-      $people[ $personid ] = array(
+      if ( $person_fullname || $person_email || $person_delete ) {
+        $people[ $personid ] = array(
 			'activity_people_id' => $personid,
 			'fullname' => $person_fullname,
 			'people_email' => $person_email,
 			'delete' => $person_delete,
-				 );
+				    );
+      }
     }
   }
 
