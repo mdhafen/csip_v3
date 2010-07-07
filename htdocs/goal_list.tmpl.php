@@ -18,8 +18,18 @@ if ( $data['csip'] ) {
 
 <h2><?= $data['csip']['category'][ $data['categoryid'] ]['category_name'] ?></h2>
 
-<?php if ( count( $data['questions'] ) ) { ?>
+<?php
+if ( count( $data['questions'] ) ) {
+  if ( $data['csip']['version'] >= 3 ) {
+?>
+<h3>Smart Goal for Student Learning</h3>
+<?php
+  } else {
+?>
 <h3>Smart Goals</h3>
+<?php
+  }
+?>
 
 <form method="post" action="<?= $data['_config']['base_url'] ?>goal_list.php?category=<?= $data['categoryid'] ?>">
 <ol>
