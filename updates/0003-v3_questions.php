@@ -28,7 +28,7 @@ D.D.' ),
  ( 3, 16, -1, 1, 8, 0, 'At the beginning of the [year_name] we have
 [input_3]% students proficient
 [input_3]% students not proficient
-on the [year_name-1] CRT.
+on the [year_name-1] [[SELECT category_name FROM category WHERE version = 3 AND course_group = [course_group] AND course_group_order = [course_group_order] -1]] CRT.
 Our goal is to have [input_3]% of the students proficient on the [category_name] CRT at the end of the school year.' ),
  ( 3, 17, 1, 1, 1, 0, 'Describe how you will measure student proficiency:
 [input]' ),
