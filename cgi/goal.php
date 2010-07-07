@@ -163,6 +163,32 @@ if ( $op == 'Save' ) {
 		'categoryid' => $categoryid,
 		);
 } elseif ( $op == 'Add a Subgoal' ) {
+  if ( ! $goalid ) {
+    $update = array();
+
+    $goal_desc = 'See Action Plan below';
+    $goal_progress = '';
+    $goal_report = '';
+
+    $update = array(
+	'goal' => $goal_desc,
+	'progress' => $goal_progress,
+	'report' => $goal_report,
+	'csipid' => $csip['csipid'],
+	'categoryid' => $categoryid,
+		    );
+    }
+
+    $goalid = update_goal_fields( $goalid, $update );
+    $csip = cat_reload_goal( $csip, $goalid );
+    $_SESSION['csip'] = $csip;
+    $goal = array(
+        'goal' => $goal_desc,
+	'csipid' => $csip['csipid'],
+	'categoryid' => $categoryid,
+                  );
+  }
+
   $act = array(
 	       'goalid' => $goalid,
 	       );
