@@ -58,7 +58,7 @@ function update_activity_fields( $activityid, $update ) {
   if ( loc_is_demo( 'activity', $activityid ) ) { return; }
 
   $people = array();
-  if ( $update['people'] ) {
+  if ( array_key_exists( 'people', $update ) ) {
     $people = $update['people'];
     unset( $update['people'] );
   }
