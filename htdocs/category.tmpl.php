@@ -35,8 +35,10 @@ Analysis Summary<?php
 <?php } ?>
 </ol>
 <?php
-if ( ( $data['_session']['CAN_update_csip'] && ( $data['csip']['category'][ $data['categoryid'] ]['category_class'] == 'CSIP' || $data['csip']['category'][ $data['categoryid'] ]['category_class'] == 'OPT' ) ) || 
-     ( $data['_session']['CAN_update_sap'] && ( $data['csip']['category'][ $data['categoryid'] ]['category_class'] == 'SAP' || $data['csip']['category'][ $data['categoryid'] ]['category_class'] == 'MAND' ) ) ) {
+$class = $data['csip']['category'][ $data['categoryid'] ]['category_class'];
+if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == 'OPT' ) ) || 
+     ( $data['_session']['CAN_update_sap'] && ( $class == 'SAP' || $class == 'MAND' ) ) ||
+     ( $class == 'OTHR' && ( $data['_session']['CAN_update_sap'] || $data['_session']['CAN_update_csip'] ) ) ) {
   if ( ! $data['csip']['loc_demo'] ) {
 ?>
 <input type="submit" name="op" value="Save Answers">
