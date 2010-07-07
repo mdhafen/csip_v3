@@ -110,7 +110,8 @@ if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == '
      ( $data['_session']['CAN_update_sap'] && ( $class == 'SAP' || $class == 'MAND' ) ) ) {
   if ( ! $data['csip']['loc_demo'] ) {
 ?>
-<input type="submit" name="op" id="op" value="Save Subgoal">
+<input type="hidden" name="op" value="Save Subgoal">
+<input type="submit" name="button" id="op" value="Save Action Plan">
 <?php
   }
 }
@@ -158,7 +159,8 @@ if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == '
 <form method="post" action="<?= $data['_config']['base_url'] ?>goal.php?goalid=<?= $data['goal']['goalid'] ?>&categoryid=<?= $data['categoryid'] ?>">
 <input type="hidden" name="activityid" value="<?= $activity['activityid'] ?>">
 <?php if ( $activity['activityid'] ) { ?>
-<input type="submit" name="op" id="op" value="Delete Subgoal">
+<input type="hidden" name="op" value="Delete Subgoal">
+<input type="submit" name="button" id="op" value="Delete Action Plan">
 <?php } ?>
 </form>
 </td></tr>
@@ -167,7 +169,7 @@ if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == '
 
 <?php if ( $data['goal']['goalid'] || ! $data['csip']['category'][ $data['categoryid'] ]['custom_goal'] ) { ?>
 <div class="pad_top_bottom">
-<a href="<?= $data['_config']['base_url'] ?>goal.php?op=Add+a+Subgoal&goalid=<?= $data['goal']['goalid'] ?>&categoryid=<?= $data['categoryid'] ?>">Add a Subgoal</a>
+<a href="<?= $data['_config']['base_url'] ?>goal.php?op=Add+a+Subgoal&goalid=<?= $data['goal']['goalid'] ?>&categoryid=<?= $data['categoryid'] ?>">Add an Action Plan</a>
 </div>
 <?php } ?>
 
