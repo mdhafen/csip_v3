@@ -16,11 +16,11 @@ INSERT INTO question (
  version, question_group, part, order_num, type, question_option_group, question
  )
 VALUES 
- ( 3, 16, 1, 1, 9, 0, 'Last year''s CRT scores for your current class(s) can be found on Power Teacher.
-<ol style=\"padding: 0;\"><li>From leftside menu select REPORTS.</li><li>From list of WCSD Reports (bottom half of screen) select ASSESSMENT REPORTS</li><li>Select current class.</li><li>Choose a CRT and then choose ASSESSMENT SUMMART > Submit.</li></ol>
+ ( 3, 16, 1, 1, 9, 0, 'Last year''s CRT scores for your current class(s) can be found on Power Teacher:
+<ol><li style=\"padding: 0;\">From leftside menu select REPORTS.</li><li style=\"padding: 0;\">From list of WCSD Reports (bottom half of screen) select ASSESSMENT REPORTS</li><li style=\"padding: 0;\">Select current class.</li><li style=\"padding: 0;\">Choose a CRT and then choose ASSESSMENT SUMMART > Submit.</li></ol>
 
 From this report you can:
-<ol style=\"padding: 0; list-style-type: upper-alpha;\"><li>See all testing information for your current students.</li><li>All CRT scale scores below 160 are highlighted in pink</li><li>Click on the scale score to drill down to Standard score.  Then click on the Standard to see the Objective score.</li><li>Click on a student''s name to see an assessment summary.</li><li>Subgroup information is summarized in the tables that follow the student list.  (Prof. is the number of Proficient students, Non. is the number of Non Proficient Students, Count is the total number of students in that subgroup.</li><li>To export to an Excel file click DOWNLOAD CSV DATA</li></ol>' ),
+<ol style=\"list-style-type: upper-alpha;\"><li style=\"padding: 0;\">See all testing information for your current students.</li><li style=\"padding: 0;\">All CRT scale scores below 160 are highlighted in pink</li><li style=\"padding: 0;\">Click on the scale score to drill down to Standard score.  Then click on the Standard to see the Objective score.</li><li style=\"padding: 0;\">Click on a student''s name to see an assessment summary.</li><li style=\"padding: 0;\">Subgroup information is summarized in the tables that follow the student list.  (Prof. is the number of Proficient students, Non. is the number of Non Proficient Students, Count is the total number of students in that subgroup.</li><li style=\"padding: 0;\">To export to an Excel file click DOWNLOAD CSV DATA</li></ol>' ),
  ( 3, 16, 1, 2, 8, 0, 'Overall [input_3]% of students were proficient on the [[SELECT category_name FROM category WHERE version = 3 AND course_group = [course_group] AND course_group_order = [course_group_order] -1]] CRT.  Students generally did well on the following standards &amp; objectives:
 [input_1]
 Students generally did not do as well on the following standards &amp; objectives:
