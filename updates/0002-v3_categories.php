@@ -52,18 +52,18 @@ VALUES
  ( 'Biology', 'OTHR', 0, '', 0, 3, 10, '', 3, 0, 0, 'HS,AH', 1, 0, 0, 0, 79 ),
  ( 'Chemistry', 'OTHR', 0, '', 0, 3, 11, '', 3, 0, 0, 'HS', 1, 0, 0, 0, 80 ),
  ( 'Physics', 'OTHR', 0, '', 0, 3, 12, '', 3, 0, 0, 'HS', 1, 0, 0, 0, 81 ),
- ( 'Fine Arts', 'OTHR', 0, '', 0, 0, 0, '', 3, 0, 0, 'SEC', 1, 0, 0, 1, 82 ),
- ( 'Foreign Language', 'OTHR', 0, '', 0, 0, 0, '', 3, 0, 0, 'INT,MID,HS', 1, 0, 0, 1, 83 ),
- ( 'Social Studies', 'OTHR', 0, '', 0, 0, 0, '', 3, 0, 0, 'SEC', 1, 0, 0, 1, 84 ),
- ( 'Health / PE', 'OTHR', 0, '', 0, 0, 0, '', 3, 0, 0, 'SEC', 1, 0, 0, 1, 85 ),
+ ( 'Fine Arts', 'OTHR', 0, '', 0, 0, 0, '', 3, 0, 0, 'SEC', 1, 0, 0, 0, 82 ),
+ ( 'Foreign Language', 'OTHR', 0, '', 0, 0, 0, '', 3, 0, 0, 'INT,MID,HS', 1, 0, 0, 0, 83 ),
+ ( 'Social Studies', 'OTHR', 0, '', 0, 0, 0, '', 3, 0, 0, 'SEC', 1, 0, 0, 0, 84 ),
+ ( 'Health / PE', 'OTHR', 0, '', 0, 0, 0, '', 3, 0, 0, 'SEC', 1, 0, 0, 0, 85 ),
  ( 'Career and Technology', 'OTHR', 0, '', 0, 0, 0, '', 3, 0, 0, 'SEC', 1, 0, 0, 1, 86 ),
- ( 'Citizenship', 'OTHR', 0, '', 0, 0, 0, '(Complete if applicable)', 3, 0, 0, 'NA', 1, 1, 1, 1, 88 ),
- ( 'Other', 'OTHR', 0, '', 0, 0, 0, '(Complete if applicable)', 3, 0, 0, 'NA', 1, 1, 1, 1, 89 ),
+ ( 'Citizenship', 'OTHR', 0, '', 0, 0, 0, '(Complete if applicable)', 3, 0, 0, 'NA', 1, 1, 1, 0, 88 ),
+ ( 'Other', 'OTHR', 0, '', 0, 0, 0, '(Complete if applicable)', 3, 0, 0, 'NA', 1, 1, 1, 0, 89 ),
  ( 'Title One', 'OTHR', 1, 'http://www.schools.utah.gov/TitleI/', 0, 0, 0, '', 3, 0, 0, 'ELEM', 0, 0, 0, 1, 90 ),
  ( 'Trust Lands', 'OTHR', 1, 'http://www.schoollandtrust.org/', 0, 0, 0, '', 3, 0, 0, 'NA', 0, 0, 0, 1, 91 ),
- ( 'Safety Plan', 'OTHR', 0, '', 0, 0, 0, '(Complete if applicable)', 3, 0, 0, 'NA', 1, 1, 1, 1, 92 ),
- ( 'Special Education', 'OTHR', 0, '', 0, 0, 0, '', 3, 0, 0, 'NA', 1, 1, 1, 1, 0 ),
- ( 'English Language Learners (ELL)', 'OTHR', 0, '', 0, 0, 0, '', 3, 0, 0, 'NA', 1, 1, 1, 1, 0 )
+ ( 'Safety Plan', 'OTHR', 0, '', 0, 0, 0, '(Complete if applicable)', 3, 0, 0, 'NA', 1, 1, 1, 0, 92 ),
+ ( 'Special Education', 'OTHR', 0, '', 0, 0, 0, '', 3, 0, 0, 'NA', 1, 1, 1, 0, 0 ),
+ ( 'English Language Learners (ELL)', 'OTHR', 0, '', 0, 0, 0, '', 3, 0, 0, 'NA', 1, 1, 1, 0, 0 )
 ";
   $result = $dbh->exec( $query );
   if ( $result !== FALSE ) {

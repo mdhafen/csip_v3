@@ -26,11 +26,28 @@ Analysis Summary<?php
   }
 ?></h3>
 
+<?php $first = 1; ?>
 <form method="post" action="<?= $data['_config']['base_url'] ?>category.php?category=<?= $data['categoryid'] ?>&part=<?= $data['part'] ?>">
 <ol>
 <?php foreach ( $data['questions'] as $question ) { ?>
 <li>
 <?= $question['input_html'] ?>
+<?php
+  if ( $first && $data['part'] == 1 && $data['csip']['version'] == 3 ) {
+    $first = 0;
+    
+    $class = $data['csip']['category'][ $data['categoryid'] ]['category_class'];
+      if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == 'OPT' ) ) || 
+           ( $data['_session']['CAN_update_sap'] && ( $class == 'SAP' || $class == 'MAND' ) ) ||
+           ( $class == 'OTHR' && ( $data['_session']['CAN_update_sap'] || $data['_session']['CAN_update_csip'] ) ) ) {
+      if ( ! $data['csip']['loc_demo'] ) {
+?>
+<input type="submit" name="op" value="Save Answers">
+<?php
+      }
+    }
+  }
+?>
 </li>
 <?php } ?>
 </ol>

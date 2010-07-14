@@ -18,7 +18,7 @@ UPDATE category
    AND question_group = 0
    AND category_name IN
        ( 'Language Arts 1', 'Language Arts 2', 'Math 1', 'Math 2', 'Fine Arts',
-         'Foreign Language', 'Health / PE', 'Social Studies',
+         'Foreign Language', 'Health / PE', 'Social Studies', 'Science 4',
          'Career and Technology', 'Special Education',
          'English Language Learners (ELL)' )
 ";
@@ -59,12 +59,12 @@ UPDATE category
    SET question_group = 16
  WHERE version = 3
    AND question_group = 0
-   AND category_name LIKE 'Language Arts%'
+   AND ( category_name LIKE 'Language Arts%'
     OR category_name LIKE 'Math%'
     OR category_name LIKE '%Algebra%'
     OR category_name LIKE 'Geometry%'
     OR category_name LIKE 'Science%'
-    OR category_name IN ( 'Earth Systems 9', 'Biology', 'Chemistry', 'Physics' )
+    OR category_name IN ( 'Earth Systems 9', 'Biology', 'Chemistry', 'Physics' ) )
 ";
   $result = $dbh->exec( $query );
   if ( $result !== FALSE ) {

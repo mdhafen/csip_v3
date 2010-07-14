@@ -76,7 +76,7 @@ if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == '
   }
 ?>
 <div class="pad_top_bottom">
-<a href="<?= $data['_config']['base_url'] ?>goal.php?categoryid=<?= $data['categoryid'] ?>">Add a Goal</a>
+<a href="<?= $data['_config']['base_url'] ?>goal.php?categoryid=<?= $data['categoryid'] ?>">Add an Action Plan</a>
 </div>
 </div>
 
