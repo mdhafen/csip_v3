@@ -16,6 +16,9 @@ if ( $row['count'] == 0 ) {
 
   $query = "UPDATE category SET custom_goal = 1 WHERE version < 3";
   $dbh->exec( $query );
+
+  $query = "UPDATE category SET custom_goal = 1 WHERE version = 3 AND category_name IN ( 'Kindergarten Math', 'Kindergarten Literacy' )";
+  $dbh->exec( $query );
   return "Added column to category table: custom_goal";
 }
 

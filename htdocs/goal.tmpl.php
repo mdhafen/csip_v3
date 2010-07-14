@@ -32,6 +32,7 @@ if ( $data['csip'] ) {
 <textarea rows="15" cols="65" name="goal_description"><?= $data['goal']['goal'] ?></textarea>
 </td>
 
+<?php if ( $data['csip']['version'] < 3 ) { ?>
 <td>
 <div>
 <div class="title">Progress Report</div>
@@ -43,6 +44,7 @@ if ( $data['csip'] ) {
 <textarea name="goal_report" cols="50" rows="6"><?= $data['goal']['report'] ?></textarea>
 </div>
 </td>
+<?php } ?>
 
 </tr>
 </table><br>

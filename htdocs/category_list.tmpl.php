@@ -40,9 +40,9 @@ for ( $i = 1; $i <= $data['csip']['parts']; $i++ ) {
 ?>
 <th>Smart Goals</th>
 <th><img src="<?= $data['_config']['base_url'] ?>images/Principal_Approved.png" alt="Principal Approved"></th>
+<!--
 <th><img src="<?= $data['_config']['base_url'] ?>images/Community_Approved.png" alt="Community Approved"></th>
 <th><img src="<?= $data['_config']['base_url'] ?>images/District_Approved.png" alt="District Approved"></th>
-<!--
 <th><img src='<?= $data['_config']['base_url'] ?>images/progress.png' alt='Progress'></th>
 <th><img src='<?= $data['_config']['base_url'] ?>images/End_of_Year.png' alt='End Of Year'></th>
  -->
@@ -193,6 +193,7 @@ view
 <?php
       }
 ?>
+<!--
 <?php
       if ( $category['needs_community_approve'] ) {
 	if ( $data['csip']['category'][ $category['categoryid'] ]['community_approved'] ) {
@@ -239,7 +240,6 @@ view
 <?php
       }
 ?>
-<!--
 <td class="<?php echo ( $category['progress_percent'] == 0 && $category['category_type'] != 1 ) ? 'incomplete' : ( ( $category['progress_percent'] == 100 || $category['category_type'] == 1 ) ? 'complete' : 'working' ); ?>"><?= $category['progress_percent'] ?>%</td>
 <td class="<?php echo ( $category['report_percent'] == 0 && $category['category_type'] != 1 ) ? 'incomplete' : ( ( $category['report_percent'] == 100 || $category['category_type'] == 1 ) ? 'complete' : 'working' ); ?>"><?= $category['report_percent'] ?>%</td>
  -->

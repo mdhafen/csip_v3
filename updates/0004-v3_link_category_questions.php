@@ -19,6 +19,7 @@ UPDATE category
    AND category_name IN
        ( 'Language Arts 1', 'Language Arts 2', 'Math 1', 'Math 2', 'Fine Arts',
          'Foreign Language', 'Health / PE', 'Social Studies', 'Science 4',
+         'Chemistry', 'Physics',
          'Career and Technology', 'Special Education',
          'English Language Learners (ELL)' )
 ";
