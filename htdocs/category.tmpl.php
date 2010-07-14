@@ -42,6 +42,7 @@ Analysis Summary<?php
            ( $class == 'OTHR' && ( $data['_session']['CAN_update_sap'] || $data['_session']['CAN_update_csip'] ) ) ) {
       if ( ! $data['csip']['loc_demo'] ) {
 ?>
+<br>
 <input type="submit" name="op" value="Save Answers">
 <?php
       }
