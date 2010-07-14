@@ -527,6 +527,18 @@ function mangle_question( $question, $categoryid, $csip ) {
     $text = substr_replace( $text, $answer, $pos, ( $pos2 - $pos + 2 ) );
   }
 
+  while ( strpos( $text, '[i_percent' ) !== false ) {
+    $style_it = ( strpos( $text, '[i_percent' ) !== false );
+    preg_match( '/\[i_percent[^\]\d]*(\d+)[^\]]*\]/', $text, $matches );
+    $answer = $matches[1];
+    $answer = 100 - $answer;
+    if ( $style_it ) {
+      $class = "answer_for_question";
+      $answer = "<span class='$class'>". $answer ."</span>";
+    }
+    $text = preg_replace( '/\[i_percent[^\]]*\d+[^\]]*\]/', $answer, $text );
+  }
+
   $text = nl2br( $text );
   return $text;
 }
