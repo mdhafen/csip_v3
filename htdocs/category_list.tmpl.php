@@ -334,6 +334,7 @@ view
 <?php
       }
 ?>
+<!--
 <?php
       if ( $category['needs_community_approve'] ) {
 	if ( $data['csip']['category'][ $category['categoryid'] ]['community_approved'] ) {
@@ -380,7 +381,6 @@ view
 <?php
       }
 ?>
-<!--
 <td class="<?php echo ( $category['progress_percent'] == 0 && $category['category_type'] != 1 ) ? 'incomplete' : ( ( $category['progress_percent'] == 100 || $category['category_type'] == 1 ) ? 'complete' : 'working' ); ?>"><?= $category['progress_percent'] ?>%</td>
 <td class="<?php echo ( $category['report_percent'] == 0 && $category['category_type'] != 1 ) ? 'incomplete' : ( ( $category['report_percent'] == 100 || $category['category_type'] == 1 ) ? 'complete' : 'working' ); ?>"><?= $category['report_percent'] ?>%</td>
  -->
