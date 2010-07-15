@@ -43,7 +43,6 @@ form.for_login {
 }
 
 #header {
-    text-align: center;
     position: relative;
     background-color: #00487d;
     white-space: nowrap;
@@ -95,41 +94,63 @@ form.for_login {
 }
 
 #due_date_key {
-    float: left;
+    display: inline-block;
     margin-top: 15px;
     margin-left: 25px;
+    background-color: inherit;
     color: #FFFFFF;
+    text-align: center;
     font-size: 9pt;
     white-space: nowrap;
     /*text-align: left; */
 }
 
 #header_center {
-    float: left;
-    position: relative;
+    display: inline-block;
+    background-color: inherit;
+    color: #DED716;
+    font-size: 9pt;
+    white-space: nowrap;
+    padding-right: 30px;
 }
 
 #header_right {
-    float: left;
+    display: inline-block;
+    position: relative;
+    top: -10px;
+    background-color: inherit;
+}
+
+#header_center_wcsd {
+    position: relative;
+    left: 0px;
+    line-height: 2;
+    vertical-align: middle;
 }
 
 #header_center_csip {
     position: relative;
+    line-height: 2;
+    vertical-align: middle;
     left: 15px;
 }
 
 #header_center_mission {
     position: relative;
+    line-height: 2;
+    vertical-align: middle;
     left: 30px;
 }
 
 #header_right_dcsip {
-    font-size: 15pt;
+    color: #FFFFFF;
+    font-size: 38pt;
 }
 
 #header_right_version {
+    color: #FFFFFF;
     vertical-align: sub;
-    font-size: 7pt;
+    font-size: 10pt;
 }
 
 #nav_anchor {
