@@ -73,7 +73,8 @@ if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == '
 if ( $goal['goal'] ) {
   echo substr( $goal['goal'], 0, 40 );
 } elseif ( count( (array) $goal['activity'] ) ) {
-  $act = reset( (array) $goal['activity'] );
+  $activities = (array) $goal['activity'];
+  $act = reset( $activities );
   echo substr( $act['activity'], 0, 40 );
 } else {
   echo 'See Action Plan';
