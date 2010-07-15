@@ -45,6 +45,7 @@ form.for_login {
 #header {
     position: relative;
     background-color: #00487d;
+    text-align: center;
     white-space: nowrap;
 }
 
@@ -109,6 +110,7 @@ form.for_login {
     display: inline-block;
     background-color: inherit;
     color: #DED716;
+    text-align: left;
     font-size: 9pt;
     white-space: nowrap;
     padding-right: 30px;
