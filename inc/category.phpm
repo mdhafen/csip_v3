@@ -500,6 +500,8 @@ function mangle_question( $question, $categoryid, $csip ) {
   $text = str_replace( "[csipid]", $csip['csipid'], $text );
 
   while ( ($pos = strpos( $text, "[[")) !== false ) {
+    $num = 0;
+    $style_it = false;
     $pos2 = strpos( $text, "]]" );
     $query = substr( $text, $pos + 2, ( $pos2 - $pos - 2 ) );
     if ( strpos( $query, '[answer_' ) !== false ) {
@@ -521,7 +523,6 @@ function mangle_question( $question, $categoryid, $csip ) {
       } else {
         $answer = $answer[ $num ];
       }
-      $answer = $answer[ $num ];
     }
     $answer = stripslashes( $answer );
     if ( ! isset( $answer ) ) { $answer = '&nbsp; &nbsp;&nbsp;'; }
