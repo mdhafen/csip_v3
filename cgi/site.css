@@ -104,6 +104,34 @@ form.for_login {
     /*text-align: left; */
 }
 
+#header_center {
+    float: left;
+    position: relative;
+}
+
+#header_right {
+    float: left;
+}
+
+#header_center_csip {
+    position: relative;
+    left: 15px;
+}
+
+#header_center_mission {
+    position: relative;
+    left: 30px;
+}
+
+#header_right_dcsip {
+    font-size: 15pt;
+}
+
+#header_right_version {
+    vertical-align: sub;
+    font-size: 7pt;
+}
+
 #nav_anchor {
     position: relative;
     background-color: #000000;
