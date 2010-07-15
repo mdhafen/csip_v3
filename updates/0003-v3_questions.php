@@ -16,7 +16,7 @@ INSERT INTO question (
  version, question_group, part, order_num, type, question_option_group, question
  )
 VALUES 
- ( 3, 16, 1, 1, 9, 0, 'Last year''s CRT scores for your current class(s) can be found on Power Teacher:
+ ( 3, 16, 1, 1, 9, 0, 'Last year''s CRT scores for your current class(s) can be found on <a href=\"https://psa.washk12.org/teachers/\" target=\"_BLANK\">Power Teacher</a>:
 <ol><li style=\"padding: 0;\">From leftside menu select REPORTS.</li><li style=\"padding: 0;\">From list of WCSD Reports (bottom half of screen) select ASSESSMENT REPORTS</li><li style=\"padding: 0;\">Select current class.</li><li style=\"padding: 0;\">Choose a CRT and then choose ASSESSMENT SUMMART > Submit.</li></ol>
 
 From this report you can:
