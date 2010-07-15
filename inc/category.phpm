@@ -515,7 +515,12 @@ function mangle_question( $question, $categoryid, $csip ) {
     $result = $sth->fetch( PDO::FETCH_BOTH );
     $answer = $result[0];
     if ( isset( $num ) ) {
-      $answer = (array) unserialize( $answer );
+      $answer = unserialize( $answer );
+      if ( ! is_array( $answer ) ) {
+        $answer = $result[0];
+      } else {
+        $answer = $answer[ $num ];
+      }
       $answer = $answer[ $num ];
     }
     $answer = stripslashes( $answer );
@@ -528,15 +533,19 @@ function mangle_question( $question, $categoryid, $csip ) {
   }
 
   while ( strpos( $text, '[i_percent' ) !== false ) {
-    $style_it = ( strpos( $text, '[i_percent' ) !== false );
+    $style_it = 1;
     preg_match( '/\[i_percent[^\]\d]*(\d+)[^\]]*\]/', $text, $matches );
     $answer = $matches[1];
-    $answer = 100 - $answer;
+    if ( isset ( $answer ) ) {
+      $answer = 100 - $answer;
+    } else {
+      $answer = '&nbsp; &nbsp;&nbsp;';
+    }
     if ( $style_it ) {
       $class = "answer_for_question";
       $answer = "<span class='$class'>". $answer ."</span>";
     }
-    $text = preg_replace( '/\[i_percent[^\]]*\d+[^\]]*\]/', $answer, $text );
+    $text = preg_replace( '/\[i_percent[^\]]*\d*[^\]]*\]/', $answer, $text );
   }
 
   $text = nl2br( $text );
