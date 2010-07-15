@@ -168,7 +168,7 @@ if ( $op == 'Save' ) {
   if ( ! $goalid ) {
     $update = array();
 
-    $goal_desc = 'See Action Plan';
+    $goal_desc = '';  # or 'See Action Plan'
     $goal_progress = '';
     $goal_report = '';
 

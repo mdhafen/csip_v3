@@ -68,7 +68,17 @@ if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == '
 <?php
     foreach ( (array) $data['csip']['category'][ $data['categoryid'] ]['goal'] as $goal ) {
 ?>
-<li><a href="goal.php?categoryid=<?= $data['categoryid'] ?>&goalid=<?= $goal['goalid'] ?>"><?php echo substr( $goal['goal'], 0, 40 ) ?>...</a><span class="pad-left"><a href="goal.php?categoryid=<?= $data['categoryid'] ?>&goalid=<?= $goal['goalid'] ?>">[Edit]</a></span><span class="pad-left"><a href="goal_delete.php?categoryid=<?= $data['categoryid'] ?>&goalid=<?= $goal['goalid'] ?>">[Delete]</a></span></li>
+<li><a href="goal.php?categoryid=<?= $data['categoryid'] ?>&goalid=<?= $goal['goalid'] ?>">
+<?php
+if ( $goal['goal'] ) {
+  echo substr( $goal['goal'], 0, 40 );
+} elseif ( count( (array) $goal['activity'] ) ) {
+  echo substr( reset( (array) $goal['activity'] ), 0, 40 );
+} else {
+  echo 'See Action Plan';
+}
+?>...
+</a><span class="pad-left"><a href="goal.php?categoryid=<?= $data['categoryid'] ?>&goalid=<?= $goal['goalid'] ?>">[Edit]</a></span><span class="pad-left"><a href="goal_delete.php?categoryid=<?= $data['categoryid'] ?>&goalid=<?= $goal['goalid'] ?>">[Delete]</a></span></li>
 <?php
     }
 ?></ol>
