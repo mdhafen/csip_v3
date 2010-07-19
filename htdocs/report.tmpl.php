@@ -54,6 +54,7 @@ foreach ( (array) $data['category_list'] as $categoryid => $category ) {
 ?>
 
 <hr size="5" noshade="noshade">
+<?php if ( $data['csip']['category'][ $category['categoryid'] ]['custom_goal'] ) { ?>
 <table class="goal">
 <tr>
 
@@ -62,6 +63,7 @@ foreach ( (array) $data['category_list'] as $categoryid => $category ) {
 <div class='report_goal_description'><?= $goal['goal'] ?></div>
 </td>
 
+<?php   if ( $data['csip']['version'] < 3 ) { ?>
 <td>
 <div>
 <div class="title">Progress Report</div>
@@ -73,24 +75,27 @@ foreach ( (array) $data['category_list'] as $categoryid => $category ) {
 <div class='report_goal_report'><?= $goal['report'] ?></div>
 </div>
 </td>
+<?php   } ?>
 
 </tr>
 </table>
+<?php } ?>
 
-<h4 class="title">Subgoals</h4>
+<h4 class="title">Action Plans</h4>
 
 <table class="subgoals">
 <?php
 foreach ( (array) $goal['activity'] as $activity ) {
   $activity_highlight = ! $activity_highlight;
   $a_light = ( $activity_highlight ) ? "highlighted" : "lowlighted";
+  $plan_count++;
 ?>
 <tr class='<?= $a_light ?>'>
 <td>
-<div class="title">General</div>
+<div class="title">Action Plan <?= $plan_count ?></div>
 <?php if ( $data['csip']['category'][ $data['categoryid'] ]['custom_goal_focus'] ) { ?>
 <div>
-This Subgoal addresses: <?= $activity['focus'] ?>
+This Action Plan addresses: <?= $activity['focus'] ?>
 </div>
 <?php } ?>
 Description:<br>
@@ -106,7 +111,7 @@ if ( $activity['complete_date'] ) {
 ?></div> (MM/DD/YYYY)
 </td>
 <td>
-Activity is:<br>
+Action Plan is:<br>
 <input type="radio" name="<?= $activity['activityid'] ?>_complete" id="<?= $activity['activityid'] ?>_c_y" value="yes"<?php if ( $activity['completed'] == 1 ) { ?> checked="checked"<?php } ?> disabled="disabled">Complete<br>
 <input type="radio" name="<?= $activity['activityid'] ?>_complete" id="<?= $activity['activityid'] ?>_c_n" value="no"<?php if ( $activity['completed'] === 0 || $activity['completed'] === '0' ) { ?> checked="checked"<?php } ?> disabled="disabled">Not Complete<br>
 <input type="radio" name="<?= $activity['activityid'] ?>_complete" id="<?= $activity['activityid'] ?>_c_p" value="postponed" disabled="disabled">Postponed<br>
