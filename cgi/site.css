@@ -270,6 +270,10 @@ table.category_list td.section_title {
     padding-bottom: 15px;
 }
 
+.text_center {
+    text-align: center;
+}
+
 @media print { 
   h2.category_name { 
     page-break-before: always;
