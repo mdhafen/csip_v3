@@ -338,7 +338,7 @@ function cat_get_html_input( $question = '', $answer = '', $categoryid, $csip ) 
 
       case 7:
       default:
-	$selected = ( $ans ) ? "checked='checked" : "";
+	$selected = ( $ans ) ? "checked='checked'" : "";
 	$text = "<input type='checkbox' name='{$questionid}[]' $selected>";
 	break;
       }
@@ -470,7 +470,7 @@ function cat_get_html_report( $question = '', $answer = '', $categoryid, $csip )
 
       case 7:
       default:
-	$selected = ( $ans ) ? "checked='checked" : "";
+	$selected = ( $ans ) ? "checked='checked'" : "";
 	$text = "<input type='checkbox' disabled='disabled' $selected>";
 	break;
       }
