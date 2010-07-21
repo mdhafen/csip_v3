@@ -65,10 +65,10 @@ if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == '
 <div>
 In order to meet the SMART GOAL for Student Learngin the following action plans will be completed.  Be sure to indicate for each plan:
 <ul>
- <li>A description of the activity</li>
- <li>How progress will be measured (data-type,frequency,etc.)</li>
+ <li style=\"padding: 0;\">A description of the activity</li>
+ <li style=\"padding: 0;\">How progress will be measured (data-type,frequency,etc.)</li>
+ <li style=\"padding: 0;\"><span class="important">ACCREDITATION ALERT: Include DRSLs as part of Action Plans</span></li>
 </ul>
-<div class="important">ACCREDITATION ALERT: Include DRSLs as part of Action Plans</div>
 </div>
 <?php } ?>
 

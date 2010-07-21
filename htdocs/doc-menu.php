@@ -1,6 +1,6 @@
 <div id="nav_anchor">
 <menu id="nav">
-<li id="nav_first">Menu</li>
+<li id="nav_first">Main Menu</li>
 <li><a href="<?= $data['_config']['base_url'] ?>">Home</a></li>
 <?php if ( $data['_session']['CAN_load_csip'] || $data['_session']['CAN_load_other_csip'] ) { ?>
 <li><a href="<?= $data['_config']['base_url'] ?>load_csip.php">Select CSIP</a></li>
