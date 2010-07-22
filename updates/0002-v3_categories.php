@@ -59,7 +59,7 @@ VALUES
  ( 'Career and Technology', 'OTHR', 0, '', 0, 0, 0, '', 3, 0, 0, 'SEC', 1, 0, 0, 1, 86 ),
  ( 'Citizenship', 'OTHR', 0, '', 0, 0, 0, '(Complete if applicable)', 3, 0, 0, 'NA', 1, 1, 1, 0, 88 ),
  ( 'Other', 'OTHR', 0, '', 0, 0, 0, '(Complete if applicable)', 3, 0, 0, 'NA', 1, 1, 1, 0, 89 ),
- ( 'Title One', 'OTHR', 1, 'https://csip.washk12.org/docs/Title I Plan Checklist.pdf', 0, 0, 0, '', 3, 0, 0, 'ELEM', 0, 0, 0, 1, 90 ),
+ ( 'Title I Plan Checklist', 'OTHR', 1, 'https://csip.washk12.org/docs/Title I Plan Checklist.pdf', 0, 0, 0, '', 3, 0, 0, 'ELEM', 0, 0, 0, 1, 90 ),
  ( 'Trust Lands', 'OTHR', 1, 'http://www.schoollandtrust.org/', 0, 0, 0, '', 3, 0, 0, 'NA', 0, 0, 0, 1, 91 ),
  ( 'Safety Plan', 'OTHR', 0, '', 0, 0, 0, '(Complete if applicable)', 3, 0, 0, 'NA', 1, 1, 1, 0, 92 ),
  ( 'Special Education', 'OTHR', 0, '', 0, 0, 0, '', 3, 0, 0, 'NA', 1, 1, 1, 0, 0 ),
