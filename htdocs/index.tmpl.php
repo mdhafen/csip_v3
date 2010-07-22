@@ -21,6 +21,6 @@ Begin a <a href="<?= $data['_config']['base_url'] ?>new_csip.php">New CSIP repor
 </p>
 
 <p>
-<a target='_BLANK' href="<?= $data['_config']['base_url'] ?>docs/Digital CSIP Blank Goal.pdf">Print blank</a> goal and activity forms.
+<a target='_BLANK' href="<?= $data['_config']['base_url'] ?>docs/Digital CSIP Blank Goal.pdf">Print blank</a> action plan forms.
 
 <?php include( 'doc-close.php' ); ?>
