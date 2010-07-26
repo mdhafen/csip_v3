@@ -8,7 +8,7 @@ $params = array(
 $mail_factory =& Mail::factory( 'smtp', $params );
 
 $from = 'postmaster@washk12.org.invalid';
-$subject = "DCSIP Sub-Goal due-date passed.  Please report.";
+$subject = "DCSIP Action Plan due-date passed.  Please report.";
 $messages = array();  # output buffer
 $today = date( 'Y-m-d' );
 $url = "http://csip.washk12.org/respond.php?";
@@ -64,8 +64,8 @@ foreach ( $result as $row ) {
 	  if ( $activity_email ) {
 	    if ( ! $messages[ $activity_email ] ) {
 	      $message = "
-This E-Mail is a request to report on sub-goals entered in the DCSIP system
-Your email address was entered as a person responsible for this sub-goal.
+This E-Mail is a request to report on Action Plans entered in the DCSIP system
+Your email address was entered as a person responsible for this Action Plan.
 Please use the links below to report on the activities listed below.
 ------------------------------------------------------------------\n\n
 ";
@@ -82,23 +82,32 @@ Category : $category[category_name]
 	    }
 
 	    if ( $first_activity ) {
+	      if ( $goal['goal']
+	        $desc = $goal['goal'];
+	      } elseif ( count( (array) $goal['activity'] ) ) {
+	        $activities = (array) $goal['activity'];
+	  	$act = reset( $activities );
+  		$desc = $act['activity'];
+	      } else {
+	        $desc = 'See Action Plan';
+	      }
 	      $message .= "
-Goal : $goal[goal]
+Action Plan : $desc
 ";
 	    } else {
 	      $first_activity = 0;
 	    }
 	    $update_message++;
 	    $message .= "
-Sub-Goal : $activity[activity]
+Action Plan $update_message : $activity[activity]
 
-Activity Expected Completion Date(MM/DD/YYYY): ".
+Action Plan Expected Completion Date(MM/DD/YYYY): ".
 date('m/d/Y', strtotime( $activity['complete_date'] ) ) ."
 
-If this sub-goal has been meet please visit : 
+If this Action Plan has been meet please visit : 
 {$url}activity={$activityid}&goal={$goalid}&category={$categoryid}&csip={$csipid}&response=yes
 
-If this sub-goal has NOT been meet pleast visit : 
+If this Action Plan has NOT been meet pleast visit : 
 {$url}activity={$activityid}&goal={$goalid}&category={$categoryid}&csip={$csipid}&response=no
 \n\n";
 
