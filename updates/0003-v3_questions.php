@@ -24,7 +24,7 @@ From this report you can:
 <b>Overall [input]% of students where proficient on the [[SELECT category_name FROM category WHERE version = 3 AND course_group = [course_group] AND course_group_order = [course_group_order] -1]] CRT.</b>
 <input type=\"submit\" name=\"op\" value=\"Save Answers\">' ),
  ( 3, 16, 1, 2, 8, 0, '<b>Subgroup(s), with 10 or more members, which had less than [[SELECT answer FROM answer CROSS JOIN question USING (questionid) WHERE csipid = [csipid] AND categoryid = [categoryid] AND part = 1 AND version = 3 AND order_num = 1]]% proficient</b>
-<table><tbody><tr><td>[input_7] Asian</td><td>[input_7] Hispanic</td><td>[input_7] SPED</td></tr><tr><td>[input_7] Black</td><td>[input_7] Indian</td><td>[input_7] ELL</td></tr><tr><td>[input_7] Caucasian</td><td>[input_7] Pacific Islander</td><td>[input_7] Low Income</td></tr></tbody></table>
+<table><tbody><tr><td>[input_7_Asian] Asian</td><td>[input_7_Hispanic] Hispanic</td><td>[input_7_SPED] SPED</td></tr><tr><td>[input_7_Black] Black</td><td>[input_7_Indian] Indian</td><td>[input_7_ELL] ELL</td></tr><tr><td>[input_7_Caucasian] Caucasian</td><td>[input_7_PacificIslander] Pacific Islander</td><td>[input_7_LowIncome] Low Income</td></tr></tbody></table>
 <input type=\"submit\" name=\"op\" value=\"Save Answers\">' ),
  ( 3, 16, 1, 3, 1, 0, 'Additional data analysis can be conducted on the Utah State Office of Education <a href=\"https://cognos.schools.utah.gov/cognos8/cgi-bin/cognos.cgi?b_action=xts.run&m=portal/main.xts&startwel=yes\" target=\"_BLANK\">Data Display</a>
 

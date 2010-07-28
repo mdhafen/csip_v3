@@ -338,8 +338,16 @@ function cat_get_html_input( $question = '', $answer = '', $categoryid, $csip ) 
 
       case 7:
       default:
-	$selected = ( $ans ) ? "checked='checked'" : "";
-	$text = "<input type='checkbox' name='{$questionid}[]' $selected>";
+        // get value for checkbox by preg_search( '/[input_7_([^\]]+)]/' )
+        preg_match( '/\[input_7_([^\]]+)\]/', $html, $value );
+	$value = $value[1];
+        if ( $value == $ans ) {
+	  $selected = "checked='checked'";
+	} else {
+	  $selected = "";
+	  array_unshift( $answer, $ans );  // in case that answer is for the next question
+	}
+	$text = "<input type='checkbox' name='{$questionid}[]' value='$value' $selected>";
 	break;
       }
 
@@ -470,7 +478,15 @@ function cat_get_html_report( $question = '', $answer = '', $categoryid, $csip )
 
       case 7:
       default:
-	$selected = ( $ans ) ? "checked='checked'" : "";
+        // get value for checkbox by preg_search( '/[input_7_([^\]]+)]/' )
+        preg_match( '/\[input_7_([^\]]+)\]/', $html, $value );
+	$value = $value[1];
+        if ( $value == $ans ) {
+	  $selected = "checked='checked'";
+	} else {
+	  $selected = "";
+	  array_unshift( $answer, $ans );  // in case that answer is for the next question
+	}
 	$text = "<input type='checkbox' disabled='disabled' $selected>";
 	break;
       }
