@@ -44,8 +44,8 @@ if ( $op == 'Save' ) {
   } else {
     $update = array(
 	'goal' => $goal_desc,
-	'progress' => $goal_progress,
-	'report' => $goal_report,
+	'progress' => $goal_progress || '',
+	'report' => $goal_report || '',
 	'csipid' => $csip['csipid'],
 	'categoryid' => $categoryid,
 		    );
