@@ -249,6 +249,32 @@ function forward_activity( $activityid, $new_csip, $new_category ) {
   $sth->bindValue( ':focus', $old_focus );
   $sth->bindValue( ':goal', $new_goal );
   $sth->execute();
+  $new_activity = $dbh->lastInsertId();
+
+  $query = "SELECT COUNT(*) FROM activity_people WHERE activityid = :aid";
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':aid', $old_activity );
+  $sth->execute();
+  if ( $sth->fetchColumn() > 0 ) {
+    $query = "SELECT * FROM activity_people WHERE activityid = :aid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':aid', $old_activity );
+    $sth->execute();
+    while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+      $row[activityid] = $new_activity;
+      unset( $row['activity_people_id'] );
+      $people[] = $row;
+    }
+
+    $query = "INSERT INTO activity_people ( fullname, people_email, activityid ) VALUES ( :full, :email, :aid )";
+    $sth = $dbh->prepare( $query );
+    foreach ( $people as $person ) {
+	$sth->bindValue( ':full', $people['fullname'] );
+        $sth->bindValue( ':email', $people['people_email'] );
+        $sth->bindValue( ':aid', $poeple['activityid'] );
+	$sth->execute();
+    }
+  }
 
   $query = "UPDATE activity SET forwarded = 1 WHERE activityid = :aid";
   $sth = $dbh->prepare( $query );
