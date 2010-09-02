@@ -57,8 +57,9 @@ Activity is:
 <label for="<?= $aid ?>_forward"><input type="checkbox" name="<?= $aid ?>_forward" id="<?= $aid ?>_forward" value="forward">Forward this Activity to the current Period</label><br>
 <?php } ?>
 <?php
-if ( ( $data['_session']['CAN_update_csip'] && $data['csip']['category'][ $data['categoryid'] ]['category_class'] == 'CSIP' ) || 
-     ( $data['_session']['CAN_update_sap'] && $data['csip']['category'][ $data['categoryid'] ]['category_class'] == 'SAP' ) ) {
+$class = $data['csip']['category'][ $data['categoryid'] ]['category_class'];
+if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == 'OPT' ) || 
+     ( $data['_session']['CAN_update_sap'] && ( $class == 'SAP' || $class == 'MAND' ) ) ) {
   if ( ! $data['csip']['loc_demo'] ) {
 ?>
 <div class="pad_top_bottom">
