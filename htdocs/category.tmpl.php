@@ -20,7 +20,7 @@ if ( $data['csip'] ) {
 
 <h3>Part <?= $data['part'] ?>: <?php
   if ( $data['part'] == 1 ) { ?>
-Student Achievment Data Analysis<?php
+Student Achievement Data Analysis<?php
   } else { ?>
 Analysis Summary<?php
   }
