@@ -58,7 +58,7 @@ Activity is:
 <?php } ?>
 <?php
 $class = $data['csip']['category'][ $data['categoryid'] ]['category_class'];
-if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == 'OPT' ) || 
+if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == 'OPT' ) ) || 
      ( $data['_session']['CAN_update_sap'] && ( $class == 'SAP' || $class == 'MAND' ) ) ) {
   if ( ! $data['csip']['loc_demo'] ) {
 ?>
