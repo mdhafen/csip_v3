@@ -7,6 +7,7 @@ $updates = array(
   '0003-v3_questions',
   '0004-v3_link_category_questions',
   '0005-custom_goal_option',
+  '0006-category_for_dhs',
 );
 $results = array();
 

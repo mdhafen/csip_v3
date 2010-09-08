@@ -149,7 +149,7 @@ LEFT JOIN category_specifics
       AND csipid = :cid 
     WHERE version = :ver
       AND ( ( gradelevel >= :mingrade AND gradelevel <= :maxgrade )
-       OR ( loc_cat_subcat LIKE :loc_cat OR loc_cat_subcat LIKE :loc_subcat )
+       OR ( loc_cat_subcat = :loc_loc OR loc_cat_subcat LIKE :loc_cat OR loc_cat_subcat LIKE :loc_subcat )
        OR ( loc_cat_subcat = 'ALL' )
        OR ( loc_cat_subcat = 'NA' AND gradelevel = 0 ) )
  ORDER BY category.category_class, category.category_type, category.course_group, category.gradelevel, category.category_name
@@ -159,6 +159,7 @@ LEFT JOIN category_specifics
   $sth->bindValue( ':ver', $csip['version'] );
   $sth->bindValue( ':mingrade', $csip['mingrade'] );
   $sth->bindValue( ':maxgrade', $csip['maxgrade'] );
+  $sth->bindValue( ':loc_loc', $csip['locationid'] );
   $sth->bindValue( ':loc_cat', "%$csip[loc_category]%" );
   $sth->bindValue( ':loc_subcat', "%$csip[loc_subcategory]%" );
   $sth->execute();
