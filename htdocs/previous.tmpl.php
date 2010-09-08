@@ -37,6 +37,9 @@ if ( $data['csip'] ) {
 Description:<br>
 <div class="report_goal_activity_description"><?= $activity['activity'] ?></div>
 <br>
+<table>
+<tr>
+<td>
 Expected Completion Date:
 <div class="report_goal_activity_date"><?php
     if ( $activity['complete_date'] ) {
@@ -72,6 +75,30 @@ if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == '
 ?>
 </form>
 </div>
+</td>
+<td>
+  <div class="title">Key People</div>
+  <table>
+    <tr><th>Name</th><th>Email Address</th></tr>
+    <tbody>
+<?php
+  $people_highlight = 0;
+  foreach ( (array) $activity['activity_people'] as $people ) {
+    $people_highlight = ! $people_highlight;
+    $p_light = ( $people_highlight ) ? "highlighted" : "lowlighted";
+?>
+<tr class="<?= $p_lighted ?>">
+<td><div class='report_goal_activity_people_name'><?= $people['fullname'] ?></div></td>
+<td><div class='report_goal_activity_people_email'><?= $people['people_email'] ?></div></td>
+</tr>
+<?php
+  }
+?>
+    </tbody>
+  </table>
+</td>
+</tr>
+</table>
 
 </div>
 <?php } ?>
