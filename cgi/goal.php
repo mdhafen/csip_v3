@@ -56,6 +56,32 @@ if ( $op == 'Save' ) {
     $updated = 1;
   }
 } elseif ( $op == 'Save Subgoal' ) {
+  if ( ! $goalid ) {
+    $update = array();
+
+    $goal_desc = '';  # or 'See Action Plan'
+    $goal_progress = '';
+    $goal_report = '';
+
+    $update = array(
+	'goal' => $goal_desc,
+	'progress' => $goal_progress,
+	'report' => $goal_report,
+	'csipid' => $csip['csipid'],
+	'categoryid' => $categoryid,
+		    );
+
+    $goalid = update_goal_fields( $goalid, $update );
+    $csip = cat_reload_goal( $csip, $goalid );
+    $_SESSION['csip'] = $csip;
+    $goal = array(
+    	'goalid' => $goalid,
+        'goal' => $goal_desc,
+	'csipid' => $csip['csipid'],
+	'categoryid' => $categoryid,
+                  );
+  }
+
   $update = array();
 
   $activityid = input( 'activityid', INPUT_PINT );
@@ -166,26 +192,10 @@ if ( $op == 'Save' ) {
 		);
 } elseif ( $op == 'Add a Subgoal' ) {
   if ( ! $goalid ) {
-    $update = array();
-
-    $goal_desc = '';  # or 'See Action Plan'
-    $goal_progress = '';
-    $goal_report = '';
-
-    $update = array(
-	'goal' => $goal_desc,
-	'progress' => $goal_progress,
-	'report' => $goal_report,
-	'csipid' => $csip['csipid'],
-	'categoryid' => $categoryid,
-		    );
-
-    $goalid = update_goal_fields( $goalid, $update );
-    $csip = cat_reload_goal( $csip, $goalid );
-    $_SESSION['csip'] = $csip;
+    $goalid = 0;
     $goal = array(
     	'goalid' => $goalid,
-        'goal' => $goal_desc,
+        'goal' => '',
 	'csipid' => $csip['csipid'],
 	'categoryid' => $categoryid,
                   );
