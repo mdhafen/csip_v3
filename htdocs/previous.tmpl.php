@@ -26,17 +26,19 @@ if ( $data['csip'] ) {
 
 <?php foreach ( (array) $data['previous'] as $goal ) { ?>
 <div class="pad_bottom">
-<div><?= $goal['goal'] ?></div>
+<div class="title">Goal</div>
+<div class='report_goal_description'><?= $goal['goal'] ?></div>
 
+<table class="subgoals">
 <?php
   foreach ( (array) $goal['activity'] as $aid => $activity ) {
     $activity_highlight = ! $activity_highlight;
     $a_light = ( $activity_highlight ) ? "highlighted" : "lowlighted";
+    $plan_count++;
 ?>
-<table class="subgoals">
 <tr class="<?= $a_light ?>">
 <td>
-<div>
+<div class="title">Action Plan <?= $plan_count ?></div>
 Description:<br>
 <div class="report_goal_activity_description"><?= $activity['activity'] ?></div>
 <br>
@@ -98,10 +100,8 @@ if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == '
   </table>
 </td>
 </tr>
-</table>
-
-</div>
 <?php } ?>
+</table>
 
 </div>
 <?php } ?>
