@@ -199,12 +199,12 @@ SELECT categoryid,version,parent_category
     $acts[] = $result['activityid'];
   }
 
-  $query = "SELECT activity_people.*,activity.goalid FROM activity_people CROSS JOIN activity USING (activityid ) WHERE activity_people.activityid IN (". implode( ',', $acts ) .")";
+  $query = "SELECT activity_people.*,activity.goalid FROM activity_people CROSS JOIN activity USING (activityid) WHERE activity_people.activityid IN (". implode( ',', $acts ) .")";
   $sth = $dbh->prepare( $query );
   $sth->execute();
   while ( $result = $sth->fetch( PDO::FETCH_ASSOC ) ) {
     $goalid = $result['goalid'];
-    unset $result['goalid'];
+    unset( $result['goalid'] );
     $list[ $goalid ]['activity'][ $result['activityid'] ]['activity_people'][ $result['activity_people_id'] ] = stripslashes_array( $result );
   }
 

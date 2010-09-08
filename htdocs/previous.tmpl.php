@@ -33,13 +33,13 @@ if ( $data['csip'] ) {
     $activity_highlight = ! $activity_highlight;
     $a_light = ( $activity_highlight ) ? "highlighted" : "lowlighted";
 ?>
-<div class="<?= $a_light ?>">
+<table class="subgoals">
+<tr class="<?= $a_light ?>">
+<td>
+<div>
 Description:<br>
 <div class="report_goal_activity_description"><?= $activity['activity'] ?></div>
 <br>
-<table>
-<tr>
-<td>
 Expected Completion Date:
 <div class="report_goal_activity_date"><?php
     if ( $activity['complete_date'] ) {
