@@ -197,7 +197,8 @@ function forward_activity( $activityid, $new_csip, $new_category ) {
   $sth->execute();
   $result = $sth->fetch( PDO::FETCH_ASSOC );
   $old_version = $result['version'];
-  $old_goal = $result['goal'];
+  //$old_goal = $result['goal'];
+  $old_goal = '';
   $old_email = $result['goal_email'];
   $old_activity = $result['activity'];
   $old_focus = $result['focus'];
