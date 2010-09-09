@@ -11,14 +11,14 @@ include( 'doc-menu.php' );
 <?php
 if ( $data['csip'] ) {
 ?>
-<h1><?= $data['csip']['year_name'] ?> Plan for <?= $data['csip']['name'] ?></h1>
+<h2><?= $data['csip']['year_name'] ?> Plan for <?= $data['csip']['name'] ?></h2>
 <?php
 }
 ?>
 
-<h2><?= $data['csip']['category'][ $data['categoryid'] ]['category_name'] ?></h2>
+<h3><?= $data['csip']['category'][ $data['categoryid'] ]['category_name'] ?></h3>
 
-<h3>Previous Year Report</h3>
+<h1>Previous Year Report</h1>
 
 <?php if ( $data['updated'] ) { ?>
 <div class="important">Changes Saved</div>
