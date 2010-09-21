@@ -39,7 +39,7 @@ foreach ( (array) $data['category_list'] as $categoryid => $category ) {
 <h3>No Part: <a target="_BLANK" href="<?= $category['type_target'] ?>">Link to another web site</a></h3>
 <?php   } else { ?>
 <?php     foreach ( (array) $category['part'] as $part => $questions ) { ?>
-<h3><?= ( $part == 1 ) ? "Part $part: Student Achievment Data Analysis" : ( ( $part == -1 ) ? "Smart Goals" : "Part $part: Analysis Summary" ) ?></h3>
+<h3><?= ( $part == 1 ) ? "Part $part: Student Achievement Data Analysis" : ( ( $part == -1 ) ? "Smart Goals" : "Part $part: Analysis Summary" ) ?></h3>
 <ol>
 <?php       foreach ( (array) $questions as $ques ) { ?>
 <li>
