@@ -45,7 +45,7 @@ Year created.<br>
 
 <tr>
 <td><label for="version">Question Version</label></td>
-<td><input name="version" id="version" value="3" readonly="readonly" ></td>
+<td><input name="version" id="version" value="4" readonly="readonly" ></td>
 </tr>
 
 </table>
