@@ -25,22 +25,22 @@ Year created.<br>
 
 <tr>
 <td><label for="sap_due">SAP Due Date</label></td>
-<td><input name="sap_due" id="sap_due" value="" > (YYYY-MM-DD)</td>
+<td><input name="sap_due" id="sap_due" value="" ></td>
 </tr>
 
 <tr>
 <td><label for="csip_due">CSIP Due Date</label></td>
-<td><input name="csip_due" id="csip_due" value="" > (YYYY-MM-DD)</td>
+<td><input name="csip_due" id="csip_due" value="" ></td>
 </tr>
 
 <tr>
 <td><label for="board_due">Community Board Due Date</label></td>
-<td><input name="board_due" id="board_due" value="" > (YYYY-MM-DD)</td>
+<td><input name="board_due" id="board_due" value="" ></td>
 </tr>
 
 <tr>
 <td><label for="district_due">School District Due Date</label></td>
-<td><input name="district_due" id="district_due" value="" > (YYYY-MM-DD)</td>
+<td><input name="district_due" id="district_due" value="" ></td>
 </tr>
 
 <tr>
