@@ -67,7 +67,6 @@ In order to meet the SMART GOAL for Student Learning the following action plans 
 <ul>
  <li style="padding: 0;">A description of the activity</li>
  <li style="padding: 0;">How progress will be measured (data-type,frequency,etc.)</li>
- <li style="padding: 0;"><span class="important">ACCREDITATION ALERT: Include DRSLs as part of Action Plans</span></li>
 </ul>
 </div>
 <?php } ?>
