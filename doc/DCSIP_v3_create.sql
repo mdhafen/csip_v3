@@ -26,10 +26,10 @@ CREATE TABLE `year` (
 	`yearid` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`year_name` VARCHAR(64) NOT NULL DEFAULT '',
 	`version` INT(10) UNSIGNED NOT NULL DEFAULT 0,
-	`sap_due_date` DATE NULL DEFAULT NULL,
-	`csip_due_date` DATE NULL DEFAULT NULL,
-	`board_due_date` DATE NULL DEFAULT NULL,
-	`district_due_date` DATE NULL DEFAULT NULL,
+	`sap_due_date` VARCHAR(64) NULL DEFAULT NULL,
+	`csip_due_date` VARCHAR(64) NULL DEFAULT NULL,
+	`board_due_date` VARCHAR(64) NULL DEFAULT NULL,
+	`district_due_date` VARCHAR(64) NULL DEFAULT NULL,
 	PRIMARY KEY (`yearid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -45,10 +45,12 @@ CREATE TABLE `csip` (
 CREATE TABLE `category` (
 	`categoryid` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`category_name` VARCHAR(64) NOT NULL DEFAULT '',
-	`category_class` ENUM( 'SAP', 'CSIP', 'MAND', 'OPT' ) NOT NULL DEFAULT 'OPT',
+	`category_class` ENUM( 'SAP', 'CSIP', 'MAND', 'OPT', 'OTHR' ) NOT NULL DEFAULT 'OTHR',
 	`category_type` INT(4) UNSIGNED NOT NULL DEFAULT 0 COMMENT '0 for Standard, 1 for Link',
 	`type_target` VARCHAR(128) NOT NULL DEFAULT '',
 	`category_group` INT(4) UNSIGNED NOT NULL DEFAULT 0,
+	`course_group` INT(10) UNSIGNED NOT NULL DEFAULT 0,
+	`course_group_order` INT(10) UNSIGNED NOT NULL DEFAULT 0,
 	`category_note` TEXT NOT NULL,
 	`version` INT(10) UNSIGNED NOT NULL DEFAULT 0,
 	`question_group` INT(10) UNSIGNED NOT NULL DEFAULT 0,
@@ -57,6 +59,7 @@ CREATE TABLE `category` (
 	`needs_principal_approve` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
 	`needs_community_approve` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
 	`needs_district_approve` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
+	`custom_goal` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
 	`custom_goal_focus` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
 	`parent_category` INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'Need this to build Previous Year Report across versions',
 	PRIMARY KEY (`categoryid`)
