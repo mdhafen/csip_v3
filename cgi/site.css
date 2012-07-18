@@ -284,12 +284,16 @@ table.category_list td.section_title {
   }
 }
 
+form li input {
+    font-weight: bold;
+}
+
 .answer_for_question {
     display: inline-block;
     min-height: 20px;
     min-width: 15px;
     /*text-decoration: underline; */
-    border: solid 1px black;
+    /*border: solid 1px black; */
     font-weight: bold;
 }
 
