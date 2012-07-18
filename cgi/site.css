@@ -289,7 +289,8 @@ table.category_list td.section_title {
     min-height: 20px;
     min-width: 15px;
     /*text-decoration: underline; */
-    border-bottom: solid 1px black;
+    border: solid 1px black;
+    font-weight: bold;
 }
 
 .important {
