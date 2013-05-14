@@ -181,6 +181,10 @@ if ( $op == 'Save' ) {
   }
 } elseif ( $op == 'Delete Subgoal' ) {
   $activityid = input( 'activityid', INPUT_PINT );
+  $activity = $goal['activity'][ $activityid ];
+  $next_op = 'Confirm Delete Subgoal';
+} elseif ( $op == 'Confirm Delete Subgoal' ) {
+  $activityid = input( 'activityid', INPUT_PINT );
   delete_activity( $activityid );
   $updated = 1;
 } elseif ( $op == 'Add a Goal' ) {
@@ -222,8 +226,10 @@ $output = array(
 	'csip' => $csip,
 	'categoryid' => $categoryid,
 	'goal' => $goal,
+        'activityid' => $activityid,
 	'focus_list' => $focus_list,
 	'updated' => $updated,
+        'next_op' => $next_op,
 		);
 
 output( $output, 'goal.tmpl' );

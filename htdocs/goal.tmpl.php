@@ -22,6 +22,7 @@ if ( $data['csip'] ) {
 <div class="important">Changes Saved</div>
 <?php } ?>
 
+<?php if ( ! ( $data['next_op'] == 'Confirm Delete Subgoal && $data['activityid'} ) ) { ?>
 <?php if ( $data['csip']['category'][ $data['categoryid'] ]['custom_goal'] ) { ?>
 <form method="post" action="<?= $data['_config']['base_url'] ?>goal.php?goalid=<?= $data['goal']['goalid'] ?>&categoryid=<?= $data['categoryid'] ?>">
 <table class="goal">
@@ -183,6 +184,84 @@ if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == '
 <div class="pad_top_bottom">
 <a href="<?= $data['_config']['base_url'] ?>goal.php?op=Add+a+Subgoal&goalid=<?= $data['goal']['goalid'] ?>&categoryid=<?= $data['categoryid'] ?>">Add an Action Plan</a>
 </div>
+<?php } ?>
+<?php } else {?>
+<h4 class="title">Delete an Action Plan</h4>
+
+<div>Are you sure you want to delete this action plan?</div>
+
+<?php
+  $activity = $goal['activity'][ $data['activityid'] ];
+?>
+<table class="subgoals">
+<tr class='highlighted'>
+<td>
+<div class="title">Action Plan <?= $plan_count ?></div>
+<?php if ( $data['csip']['category'][ $data['categoryid'] ]['custom_goal_focus'] ) { ?>
+<div>
+This Action Plan addresses: <?= $activity['focus'] ?>
+</div>
+<?php } ?>
+Description:<br>
+<div class='report_goal_activity_description'><?= $activity['activity'] ?></div>
+<table>
+<tr>
+<td>
+Expected Completion Date:<br>
+<div class='report_goal_activity_date'><?php
+if ( $activity['complete_date'] ) {
+  echo date('m/d/Y', strtotime( $activity['complete_date'] ) );
+}
+?></div> (MM/DD/YYYY)
+</td>
+<td>
+Action Plan is:<br>
+<input type="radio" name="<?= $activity['activityid'] ?>_complete" id="<?= $activity['activityid'] ?>_c_y" value="yes"<?php if ( $activity['completed'] == 1 ) { ?> checked="checked"<?php } ?> disabled="disabled">Complete<br>
+<input type="radio" name="<?= $activity['activityid'] ?>_complete" id="<?= $activity['activityid'] ?>_c_n" value="no"<?php if ( $activity['completed'] === 0 || $activity['completed'] === '0' ) { ?> checked="checked"<?php } ?> disabled="disabled">Not Complete<br>
+<input type="radio" name="<?= $activity['activityid'] ?>_complete" id="<?= $activity['activityid'] ?>_c_p" value="postponed" disabled="disabled">Postponed<br>
+</td>
+</tr>
+</table>
+</td>
+<td>
+<div class="title">Key People</div>
+<table>
+<tr><th>Name</th><th>Email Address</th></tr>
+<tbody>
+<?php
+   $people_highlight = 0;
+   foreach ( (array) $activity['activity_people'] as $people ) {
+     $people_highlight = ! $people_highlight;
+     $p_light = ( $people_highlight ) ? "highlighted" : "lowlighted";
+?>
+<tr class="<?= $p_light ?>">
+<td><div class='report_goal_activity_people_name'><?= $people['fullname'] ?></div></td>
+<td><div class='report_goal_activity_people_email'><?= $people['people_email'] ?></div></td>
+</tr>
+<?php
+     }
+?>
+</tbody>
+</table>
+
+<div>
+<div class="title">Progress Report</div>
+<div class='report_goal_activity_progress'><?= $activity['progress'] ?></div>
+</div>
+
+<div>
+<div class="title">End of Year Reflection</div>
+<div class='report_goal_activity_report'><?= $activity['report'] ?></div>
+</div>
+
+</td>
+</tr>
+</table>
+<form method="post" action="<?= $data['_config']['base_url'] ?>goal.php?goalid=<?= $data['goal']['goalid'] ?>&categoryid=<?= $data['categoryid'] ?>">
+<input type="hidden" name="activityid" value="<?= $activity['activityid'] ?>">
+<input type="hidden" name="op" value="Confirm Delete Subgoal">
+<input type="submit" name="button" value="Delete Action Plan">
+</form>
 <?php } ?>
 
 <div id="goal_csip_close">
