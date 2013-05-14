@@ -186,12 +186,12 @@ if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == '
 </div>
 <?php } ?>
 <?php } else {?>
-<h4 class="title">Delete an Action Plan</h4>
+<h4 class="title important">Delete an Action Plan</h4>
 
-<div>Are you sure you want to delete this action plan?</div>
+<p class="important">Are you sure you want to delete this action plan?</p>
 
 <?php
-  $activity = $goal['activity'][ $data['activityid'] ];
+  $activity = $data['goal']['activity'][ $data['activityid'] ];
 ?>
 <table class="subgoals">
 <tr class='highlighted'>
@@ -261,6 +261,7 @@ Action Plan is:<br>
 <input type="hidden" name="activityid" value="<?= $activity['activityid'] ?>">
 <input type="hidden" name="op" value="Confirm Delete Subgoal">
 <input type="submit" name="button" value="Delete Action Plan">
+<a href="goal.php?categoryid=<?= $data['categoryid'] ?>&goalid=<?= $data['goal']['goalid'] ?>">Cancel</a>
 </form>
 <?php } ?>
 
