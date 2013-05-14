@@ -22,7 +22,7 @@ if ( $data['csip'] ) {
 <div class="important">Changes Saved</div>
 <?php } ?>
 
-<?php if ( ! ( $data['next_op'] == 'Confirm Delete Subgoal && $data['activityid'} ) ) { ?>
+<?php if ( ! ( $data['next_op'] == 'Confirm Delete Subgoal && $data['activityid'] ) ) { ?>
 <?php if ( $data['csip']['category'][ $data['categoryid'] ]['custom_goal'] ) { ?>
 <form method="post" action="<?= $data['_config']['base_url'] ?>goal.php?goalid=<?= $data['goal']['goalid'] ?>&categoryid=<?= $data['categoryid'] ?>">
 <table class="goal">
