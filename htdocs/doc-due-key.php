@@ -1,4 +1,4 @@
-<?php if ( $data['csip'] ) { ?>
+<?php if ( $data['csip'] && ( $data['csip']['sap_due_date'] || $data['csip']['board_due_date'] || $data['csip']['csip_due_date'] || $data['csip']['district_due_date'] ) ) { ?>
 <div id="due_date_key">
 <?php if ( $data['csip']['sap_due_date'] ) { ?>
 CSIP Due: <?= $data['csip']['sap_due_date'] ?><br>
