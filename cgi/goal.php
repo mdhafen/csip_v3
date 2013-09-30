@@ -95,8 +95,8 @@ if ( $op == 'Save' ) {
   $report = input( "{$activityid}_report", INPUT_HTML_NONE );
   $people_fullname = input( "{$activityid}_fullname", INPUT_HTML_NONE );
   $people_email = input( "{$activityid}_people_email", INPUT_EMAIL );
+  $people_id = input( "{$activityid}_people_id", INPUT_PINT );
   if ( $people_fullname || $people_email ) {
-    $people_id = input( "{$activityid}_people_id", INPUT_PINT );
     if ( ! $people_id ) { $people_id = array(); }  // else this might be NULL
     foreach ( $people_fullname as $person_fullname ) {
       $person_delete = 0;
@@ -157,7 +157,7 @@ if ( $op == 'Save' ) {
     foreach ( (array) $people as $person ) {
       $person_old = $activity['activity_people'][ $person['activity_people_id'] ];
       if ( $person_old['fullname'] != $person['fullname'] ||
-	   $person_old['email'] != $person['email'] ||
+	   $person_old['people_email'] != $person['people_email'] ||
 	   $person['delete'] ) {
 	$update['people'][] = $person;
       }
