@@ -94,9 +94,9 @@ if ( $op == 'Save' ) {
   $progress = input( "{$activityid}_progress", INPUT_HTML_NONE );
   $report = input( "{$activityid}_report", INPUT_HTML_NONE );
   $people_fullname = input( "{$activityid}_fullname", INPUT_HTML_NONE );
-  if ( $people_fullname ) {
+  $people_email = input( "{$activityid}_people_email", INPUT_EMAIL );
+  if ( $people_fullname || $people_email ) {
     $people_id = input( "{$activityid}_people_id", INPUT_PINT );
-    $people_email = input( "{$activityid}_people_email", INPUT_EMAIL );
     if ( ! $people_id ) { $people_id = array(); }  // else this might be NULL
     foreach ( $people_fullname as $person_fullname ) {
       $person_delete = 0;
