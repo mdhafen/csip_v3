@@ -163,16 +163,31 @@ if ( $op == 'Save' ) {
       }
     }
   } else {
-    $update = array(
-		    'focus' => $focus,
-		    'activity' => $activity_desc,
-		    'complete_date' => $complete_date,
-		    'completed' => $completed,
-		    'progress' => $progress,
-		    'report' => $report,
-		    'people' => $people,
-		    'goalid' => $goalid,
-		    );
+    $update['goalid'] = $goalid;
+    if ( $focus ) {
+      $update['focus'] = $focus;
+    }
+    if ( $activity_desc ) {
+      $update['activity'] = $activity_desc;
+    }
+    if ( $complete_date ) {
+      $update['complete_date'] = $complete_date;
+    }
+    if ( $completed ) {
+      $update['completed'] = $completed;
+    }
+    if ( $progress ) {
+      $update['progress'] = $progress;
+    }
+    if ( $report ) {
+      $update['report'] = $report;
+    }
+    if ( $focus ) {
+      $update['focus'] = $focus;
+    }
+    if ( $people ) {
+      $update['people'] = $people;
+    }
   }
 
   if ( $update ) {

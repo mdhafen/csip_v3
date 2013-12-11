@@ -104,7 +104,15 @@ function update_activity_fields( $activityid, $update ) {
     $query = rtrim( $query, ", " );
     $query .= "WHERE activityid = ". $dbh->quote( $activityid );
   } else {
-    $query = "INSERT INTO activity (focus,activity,complete_date,completed,progress,report,goalid) VALUES (?,?,?,?,?,?,?)";
+    $query = "INSERT INTO activity (";
+    $values = '';
+    foreach ( $update as $field => $value ) {
+      $query .= "$field,";
+      $values .= "?,";
+    }
+    $query = rtrim( $query, "," );
+    $values = rtrim( $values, "," );
+    $query .= ") VALUES ($values)";
   }
   $sth = $dbh->prepare( $query );
   $sth->execute( array_values( $update ) );
