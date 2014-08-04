@@ -9,6 +9,7 @@ $updates = array(
   '0005-custom_goal_option',
   '0006-category_for_dhs',
   '0007-due_dates_as_char',
+  '0008-v6_questions',
 );
 $results = array();
 
