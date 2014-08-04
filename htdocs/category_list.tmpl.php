@@ -24,21 +24,28 @@ if ( $data['csip'] ) {
 <?php
 if ( $data['category_list']['PREVIOUS'] ) {
 ?>
-  <th>Previous Year Report</th>
+<!--  <th>Previous Year Report</th> -->
 <?php
 }
 for ( $i = 1; $i <= $data['csip']['parts']; $i++ ) {
   switch ( $i ) {
-  case 1: $part = 'Data Analysis'; break;
+/*  case 1: $part = 'Data Analysis'; break;
   case 2: $part = 'Analysis Summary'; break;
-  default : $part = ''; break;
+  case 3: $part = 'Analysis Summary'; break;
+  case 4: $part = 'Analysis Summary'; break; */
+
+  case 1: $part = 'Our Students Know'; break;
+  case 2: $part = 'Did They Learn'; break;
+  case 3: $part = 'We Respond'; break;
+  case 4: $part = 'Extension'; break;
+  default : $part = "Part $i"; break;
   }
 ?>
   <th><?= $part ?></th>
 <?php
 }
 ?>
-<th>Smart Goals</th>
+<!-- <th>Smart Goals</th> -->
 <th><img src="<?= $data['_config']['base_url'] ?>images/Principal_Approved.png" alt="Principal Approved"></th>
 <!--
 <th><img src="<?= $data['_config']['base_url'] ?>images/Community_Approved.png" alt="Community Approved"></th>
@@ -117,7 +124,7 @@ foreach ( (array) $data['category_list'] as $class => $cats ) {
 <?php } ?>
 <td class="section_title"><?php if ( $category['category_type'] == 1 ) { ?><a target="_BLANK" href="<?= $category['type_target'] ?>"><?php } ?><?= $category['category_name'] ?><?php if ( $category['category_type'] == 1 ) { ?></a><?php } ?> <?= $category['category_note'] ?></td>
 <?php if ( $data['category_list']['PREVIOUS'] ) { ?>
-<td>
+<!-- <td>
 <?php if ( in_array( 'P', (array) $category['parts'] ) ) { ?>
 <a href="previous.php?category=<?= $category['categoryid'] ?>">
 <?php
@@ -132,7 +139,7 @@ view
 <?php } ?>
 </a>
 <?php } ?>
-</td>
+</td> -->
 <?php } ?>
 <?php
         for ( $i = 1; $i <= $data['csip']['parts']; $i++ ) {
@@ -154,7 +161,7 @@ view
 ?></td>
 <?php
         }
-?><td>
+?><!-- <td>
 <?php if ( $category['category_type'] != 1 ) { ?>
 <a href="goal_list.php?category=<?= $category['categoryid'] ?>">
 <?php
@@ -169,7 +176,7 @@ view
 <?php } ?>
 </a>
 <?php } ?>
-</td>
+</td> -->
 <?php
       if ( $category['needs_principal_approve'] ) {
 	if ( $data['csip']['category'][ $category['categoryid'] ]['principal_approved'] ) {
