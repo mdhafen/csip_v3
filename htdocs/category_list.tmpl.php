@@ -271,7 +271,7 @@ view
 <td>&nbsp;</td>
 <?php } ?>
 <td class="section_title"><?php if ( $category['category_type'] == 1 ) { ?><a target="_BLANK" href="<?= $category['type_target'] ?>"><?php } ?><?= $category['category_name'] ?><?php if ( $category['category_type'] == 1 ) { ?></a><?php } ?> <?= $category['category_note'] ?></td>
-<?php if ( $data['category_list']['PREVIOUS'] ) { ?><td>
+<?php if ( $data['category_list']['PREVIOUS'] ) { ?><!-- <td>
 <?php if ( in_array( 'P', (array) $category['parts'] ) ) { ?>
 <a href="previous.php?category=<?= $category['categoryid'] ?>">
 <?php
@@ -285,7 +285,7 @@ Edit
 view
 <?php } ?>
 </a>
-<?php } ?></td><?php } ?>
+<?php } ?></td> --><?php } ?>
 <?php
     for ( $i = 1; $i <= $data['csip']['parts']; $i++ ) {
 ?><td><?php
@@ -306,7 +306,7 @@ view
 ?></td>
 <?php
     }
-?><td><?php if ( $category['category_type'] != 1 ) { ?><a href="goal_list.php?category=<?= $category['categoryid'] ?>">
+?><!-- <td><?php if ( $category['category_type'] != 1 ) { ?><a href="goal_list.php?category=<?= $category['categoryid'] ?>">
 <?php
 $class = $data['csip']['category'][ $category['categoryid'] ]['category_class'];
 if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == 'OPT' ) ) || 
@@ -317,7 +317,7 @@ Edit
 <?php } else { ?>
 view
 <?php } ?>
-</a><?php } ?></td>
+</a><?php } ?></td> -->
 <?php
       if ( $category['needs_principal_approve'] ) {
 	if ( $data['csip']['category'][ $category['categoryid'] ]['principal_approved'] ) {
