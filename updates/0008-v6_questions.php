@@ -155,7 +155,7 @@ EFFECTIVE TEAMS analyze the results of their common formative assessment (CFA) a
 [input_3]</p>
 <p>List the SPECIFIC FIRST NAMES of those students who were not proficient even after your team''s intervention.<br>
 [input_1]</p>
-<p>How did your TEAM respond to those who were still not proficient even after your team's interventions?<br>
+<p>How did your TEAM respond to those who were still not proficient even after your team''s interventions?<br>
 [input_1]</p>'),
   ( 6, 32, 3, 3, 8, 0, '<b>TEAM ACTION STEPS FOR CFA #2</b><br>
 <p>List the NUMBER of students not proficient on CFA #2.<br>
@@ -166,7 +166,7 @@ EFFECTIVE TEAMS analyze the results of their common formative assessment (CFA) a
 [input_3]</p>
 <p>List the SPECIFIC FIRST NAMES of those students who were not proficient even after your team''s intervention.<br>
 [input_1]</p>
-<p>How did your TEAM respond to those who were still not proficient even after your team's interventions?<br>
+<p>How did your TEAM respond to those who were still not proficient even after your team''s interventions?<br>
 [input_1]</p>'),
   ( 6, 32, 3, 4, 8, 0, '<b>TEAM ACTION STEPS FOR CFA #3</b><br>
 <p>List the NUMBER of students not proficient on CFA #3.<br>
@@ -177,7 +177,7 @@ EFFECTIVE TEAMS analyze the results of their common formative assessment (CFA) a
 [input_3]</p>
 <p>List the SPECIFIC FIRST NAMES of those students who were not proficient even after your team''s intervention.<br>
 [input_1]</p>
-<p>How did your TEAM respond to those who were still not proficient even after your team's interventions?<br>
+<p>How did your TEAM respond to those who were still not proficient even after your team''s interventions?<br>
 [input_1]</p>'),
   ( 6, 32, 3, 5, 8, 0, '<b>TEAM ACTION STEPS FOR CFA #4</b><br>
 <p>List the NUMBER of students not proficient on CFA #4.<br>
@@ -188,7 +188,7 @@ EFFECTIVE TEAMS analyze the results of their common formative assessment (CFA) a
 [input_3]</p>
 <p>List the SPECIFIC FIRST NAMES of those students who were not proficient even after your team''s intervention.<br>
 [input_1]</p>
-<p>How did your TEAM respond to those who were still not proficient even after your team's interventions?<br>
+<p>How did your TEAM respond to those who were still not proficient even after your team''s interventions?<br>
 [input_1]</p>'),
   ( 6, 32, 3, 6, 4, 0, '<b>INTERVENTION:</b><br>
 End of Year Reflection Date<br>
