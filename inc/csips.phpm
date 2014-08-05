@@ -155,7 +155,7 @@ LEFT JOIN location_category_links
        OR ( loc_cat_subcat = 'ALL' )
        OR ( loc_cat_subcat = 'NA' AND gradelevel = 0 )
        OR ( location_category_links.locationid = :loc_link ) )
- ORDER BY category.category_class, category.category_type, category.course_group, category.gradelevel, category.category_name
+ ORDER BY category.category_class, category.category_type, category.course_group, category.course_group_order, category.gradelevel, category.category_name
 ";
   $sth = $dbh->prepare( $query );
   $sth->bindValue( ':cid', $csipid );
