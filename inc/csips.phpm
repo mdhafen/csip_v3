@@ -147,11 +147,14 @@ CROSS JOIN year USING (yearid)
 LEFT JOIN category_specifics 
        ON category.categoryid = category_specifics.categoryid 
       AND csipid = :cid 
+LEFT JOIN location_category_links
+       ON category.categoryid = location_category_links.categoryid
     WHERE version = :ver
       AND ( ( gradelevel >= :mingrade AND gradelevel <= :maxgrade )
        OR ( loc_cat_subcat = :loc_loc OR loc_cat_subcat LIKE :loc_cat OR loc_cat_subcat LIKE :loc_subcat )
        OR ( loc_cat_subcat = 'ALL' )
-       OR ( loc_cat_subcat = 'NA' AND gradelevel = 0 ) )
+       OR ( loc_cat_subcat = 'NA' AND gradelevel = 0 )
+       OR ( location_category_links.locationid = :loc_link ) )
  ORDER BY category.category_class, category.category_type, category.course_group, category.gradelevel, category.category_name
 ";
   $sth = $dbh->prepare( $query );
@@ -162,6 +165,7 @@ LEFT JOIN category_specifics
   $sth->bindValue( ':loc_loc', $csip['locationid'] );
   $sth->bindValue( ':loc_cat', "%$csip[loc_category]%" );
   $sth->bindValue( ':loc_subcat', "%$csip[loc_subcategory]%" );
+  $sth->bindValue( ':loc_link', $csip['locationid'] );
   $sth->execute();
   while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
     $csip['category'][ $row['categoryid'] ] = stripslashes_array( $row );
