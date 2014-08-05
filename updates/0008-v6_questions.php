@@ -8,6 +8,25 @@ $table = $db_settings['schema'];
 $return = "";
 
 $dbh = db_connect();
+
+$query = "SELECT COUNT(*) AS count FROM location WHERE locationid = 118";
+$sth = $dbh->query( $query );
+$row = $sth->fetch();
+if ( $row['count'] == 0 ) {
+  $query = "INSERT INTO location (
+  locationid, name, mingrade, maxgrade, loc_category, loc_subcategory )
+VALUES
+  ( 118, 'Water Canyon, 1, 12, 'ELEM', 'HS' )";
+
+  $result = $dbh->exec( $query );
+  if ( $result !== FALSE ) {
+    $return .= "Water Canyon School";
+  } else {
+    $error = $dbh->errorInfo();
+    return "Error adding Water Canyon School: ". $error[2];
+  }
+}
+
 $query = "SELECT COUNT(*) AS count FROM category WHERE version = 6";
 $sth = $dbh->query( $query );
 $row = $sth->fetch();
@@ -260,8 +279,12 @@ if ( $row['count'] == 0 ) {
     return "Error adding version 6 location_category_links table: ". $error[2];
   }
 
-  // FIXME add Water Canyon category links here
-  $query = "";
+  $query = "INSERT INTO location_category_links (
+  locationid, categoryid )
+VALUES
+  ( SELECT 118, categoryid FROM category
+    WHERE version = 6 AND gradelevel = 0 and loc_cat_subcat NOT LIKE '%ELEM%'
+    and loc_cat_subcat NOT LIKE '%HS%' )";
 
   $result = $dbh->exec( $query );
   if ( $result !== FALSE ) {
@@ -271,7 +294,7 @@ if ( $row['count'] == 0 ) {
     $return .= "special links.";
   } else {
     $error = $dbh->errorInfo();
-    return "Error adding version 6 questions to categories: ". $error[2];
+    return "Error adding version 6 questions to categories for Water Canyon: ". $error[2];
   }
 }
 
