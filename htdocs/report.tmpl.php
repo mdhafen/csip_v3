@@ -49,6 +49,7 @@ foreach ( (array) $data['category_list'] as $categoryid => $category ) {
     case 3: echo "Interventions"; break;
     case 4: echo "Learning Enhancements"; break;
     //case -1: echo "Smart Goals"; break;
+  }
 ?></h3>
 <ol>
 <?php       foreach ( (array) $questions as $ques ) { ?>
