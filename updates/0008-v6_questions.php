@@ -107,7 +107,7 @@ if ( $row['count'] == 0 ) {
   $query = "INSERT INTO question (
   version, question_group, part, order_num, type, question_option_group, question )
  VALUES
-  ( 6, 32, 1, 1, 1, 0, '<b>What do we want OUR student to KNOW?</b><br>
+  ( 6, 32, 1, 1, 1, 0, '<b>What do we want OUR students to KNOW?</b><br>
 <p>HIGHLY EFFECTIVE TEAMS teach ALL of the standards within their discipline but engage in the work of IDENTIFYING which of the standards and skills are so critical that EVERY student MUST know. TEAMS then work to GUARANTEE that every student will demonstrate proficiency in them. The guaranteed and viable curriculum (GVC) are those standards deemed by the team to be the absolute critical skills the student must demonstrate proficiency in order to be successful in the grade level or course.</p>
 <b>ACTION STEPS</b>: With your team, identify and list which STANDARDS AND SKILLS are absolutely CRITICAL for the student to be successful in the grade level or course AND that your team will work to guarantee that EVERY student will know.<br>
 [input]'),
