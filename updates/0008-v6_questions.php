@@ -16,11 +16,35 @@ if ( $row['count'] == 0 ) {
   $query = "INSERT INTO location (
   locationid, name, mingrade, maxgrade, loc_category, loc_subcategory )
 VALUES
-  ( 118, 'Water Canyon, 1, 12, 'ELEM', 'HS' )";
+  ( 118, 'Water Canyon', 1, 12, 'ELEM', 'HS' )";
 
   $result = $dbh->exec( $query );
   if ( $result !== FALSE ) {
+    if ( $return ) {
+      $return .= ", ";
+    }
     $return .= "Water Canyon School";
+  } else {
+    $error = $dbh->errorInfo();
+    return "Error adding Water Canyon School: ". $error[2];
+  }
+}
+
+$query = "SELECT COUNT(*) AS count FROM location WHERE locationid = 500";
+$sth = $dbh->query( $query );
+$row = $sth->fetch();
+if ( $row['count'] == 0 ) {
+  $query = "INSERT INTO location (
+  locationid, name, mingrade, maxgrade, loc_category, loc_subcategory )
+VALUES
+  ( 500, 'Utah Online High School', 7, 12, 'SEC', 'MID' )";
+
+  $result = $dbh->exec( $query );
+  if ( $result !== FALSE ) {
+    if ( $return ) {
+      $return .= ", ";
+    }
+    $return .= "Utah Online High School";
   } else {
     $error = $dbh->errorInfo();
     return "Error adding Water Canyon School: ". $error[2];
@@ -60,9 +84,9 @@ VALUES
  ( 'Mathematics 6', 'OTHR', 0, '', 6, 2, 6, '', 6, 0, 6, 'NA', 1, 0, 0, 0, 217),
  ( 'Mathematics 7', 'OTHR', 0, '', 7, 2, 7, '', 6, 0, 7, 'NA', 1, 0, 0, 0, 218),
  ( 'Mathematics 8', 'OTHR', 0, '', 0, 2, 8, '', 6, 0, 0, 'MID,INT', 1, 0, 0, 0, 219),
- ( 'Secondary Mathematics I', 'OTHR', 0, '', 0, 2, 9, '', 6, 0, 0, 'SEC', 1, 0, 0, 0, 220),
- ( 'Secondary Mathematics II', 'OTHR', 0, '', 0, 2, 10, '', 6, 0, 0, 'MID,HS,AH', 1, 0, 0, 0, 221),
- ( 'Secondary Mathematics III', 'OTHR', 0, '', 0, 2, 11, '', 6, 0, 0, 'MID,HS,AH', 1, 0, 0, 0, 249),
+ ( 'Secondary Mathematics I', 'OTHR', 0, '', 0, 2, 9, '', 6, 0, 0, 'INT,MID', 1, 0, 0, 0, 220),
+ ( 'Secondary Mathematics II', 'OTHR', 0, '', 0, 2, 10, '', 6, 0, 0, 'HS,AH', 1, 0, 0, 0, 221),
+ ( 'Secondary Mathematics III', 'OTHR', 0, '', 0, 2, 11, '', 6, 0, 0, 'HS,AH', 1, 0, 0, 0, 249),
  ( 'Advanced Math', 'OTHR', 0, '', 0, 2, 12, '', 6, 0, 0, 'HS,AH', 1, 0, 0, 0, 249),
  ( 'Science 6', 'OTHR', 0, '', 6, 3, 6, '', 6, 0, 6, 'NA', 1, 0, 0, 0, 227),
  ( 'Science 7', 'OTHR', 0, '', 7, 3, 7, '', 6, 0, 7, 'NA', 1, 0, 0, 0, 228),
@@ -86,13 +110,16 @@ VALUES
  ( 'CTE-Technology', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'SEC', 1, 0, 0, 1, 238),
  ( 'CTE-Agriculture', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'SEC', 1, 0, 0, 1, 238),
  ( 'CTE-Marketing', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'SEC', 1, 0, 0, 1, 238),
- ( 'CTE-Health Schiences', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'SEC', 1, 0, 0, 1, 238),
+ ( 'CTE-Health Sciences', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'SEC', 1, 0, 0, 1, 238),
  ( 'CTE-POT', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'SEC', 1, 0, 0, 1, 238),
  ( 'CTE-IT', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'SEC', 1, 0, 0, 1, 238),
  ( 'CTE-Skilled and Technical', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'SEC', 1, 0, 0, 1, 238)";
 
   $result = $dbh->exec( $query );
   if ( $result !== FALSE ) {
+    if ( $return ) {
+      $return .= ", ";
+    }
     $return .= "Categories";
   } else {
     $error = $dbh->errorInfo();
