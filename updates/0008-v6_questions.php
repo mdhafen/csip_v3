@@ -313,6 +313,30 @@ if ( $row['count'] == 0 ) {
     and loc_cat_subcat NOT LIKE '%HS%'";
 
   $result = $dbh->exec( $query );
+  if ( $result === FALSE ) {
+    $error = $dbh->errorInfo();
+    return "Error adding version 6 location_category_links for 118: ". $error[2];
+  }
+
+  $query = "INSERT INTO location_category_links (
+  locationid, categoryid )
+  SELECT 712, categoryid FROM category
+    WHERE version = 6 AND gradelevel = 0 and loc_cat_subcat NOT LIKE '%ELEM%'
+    and loc_cat_subcat NOT LIKE '%HS%'";
+
+  $result = $dbh->exec( $query );
+  if ( $result === FALSE ) {
+    $error = $dbh->errorInfo();
+    return "Error adding version 6 location_category_links for 712: ". $error[2];
+  }
+
+  $query = "INSERT INTO location_category_links (
+  locationid, categoryid )
+  SELECT 500, categoryid FROM category
+    WHERE version = 6 AND gradelevel = 0 and loc_cat_subcat NOT LIKE '%ELEM%'
+    and loc_cat_subcat NOT LIKE '%HS%'";
+
+  $result = $dbh->exec( $query );
   if ( $result !== FALSE ) {
     if ( $return ) {
       $return .= ", and ";
