@@ -26,7 +26,7 @@ Formative Assessments<?php
   } else if ( $data['part'] == 3 ) { ?>
 Interventions<?php
   } else { ?>
-Learning Enhancements<?php
+Learning Extensions<?php
   }
 ?></h3>
 

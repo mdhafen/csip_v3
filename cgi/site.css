@@ -96,18 +96,18 @@ form.for_login {
 
 #due_date_key {
     display: inline-block;
-    margin-top: 15px;
-    margin-left: 25px;
+    vertical-align: middle;
+    margin: 15px 25px;
     background-color: inherit;
     color: #FFFFFF;
     text-align: center;
     font-size: 9pt;
     white-space: nowrap;
-    /*text-align: left; */
 }
 
 #header_center {
     display: inline-block;
+    vertical-align: middle;
     background-color: inherit;
     color: #DED716;
     text-align: left;
@@ -118,8 +118,7 @@ form.for_login {
 
 #header_right {
     display: inline-block;
-    position: relative;
-    top: -10px;
+    vertical-align: middle;
     background-color: inherit;
 }
 

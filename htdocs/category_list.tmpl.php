@@ -37,7 +37,7 @@ for ( $i = 1; $i <= $data['csip']['parts']; $i++ ) {
   case 1: $part = 'Question #1<br>Guaranteed Curriculum'; break;
   case 2: $part = 'Question #2<br>Formative Assessments'; break;
   case 3: $part = 'Question #3<br>Interventions'; break;
-  case 4: $part = 'Question #4<br>Learning Enhancements'; break;
+  case 4: $part = 'Question #4<br>Learning Extensions'; break;
   default : $part = "Part $i"; break;
   }
 ?>

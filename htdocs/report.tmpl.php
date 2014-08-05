@@ -47,7 +47,7 @@ foreach ( (array) $data['category_list'] as $categoryid => $category ) {
     case 1: echo "Guaranteed Curriculum"; break;
     case 2: echo "Formative Assessments"; break;
     case 3: echo "Interventions"; break;
-    case 4: echo "Learning Enhancements"; break;
+    case 4: echo "Learning Extensions"; break;
     //case -1: echo "Smart Goals"; break;
   }
 ?></h3>
