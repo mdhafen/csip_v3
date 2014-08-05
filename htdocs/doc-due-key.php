@@ -5,7 +5,7 @@ September 30, 2014: Teams identify GVC for their courses (Question 1)<br>
 September 30, 2014: Teams identify EXTENSION offerings (Question 4)<br>
 October 30, 2014: Teams develop and administer 2 CFA's (Questions 2 & 3)<br>
 November 2014: School Board reviews and approves CSIPs in Board Meeting<br>
-March 2, 2015: Teams develop and administer 2 aditional CFA's<br>
+March 2, 2015: Teams develop and administer 2 additional CFA's<br>
 May 1, 2015: Teams complete REFLECTION process<br>
 <?php } ?>
 <?php if ( $data['csip']['sap_due_date'] ) { ?>

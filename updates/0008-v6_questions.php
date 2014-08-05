@@ -55,7 +55,7 @@ $query = "SELECT COUNT(*) AS count FROM category WHERE version = 6";
 $sth = $dbh->query( $query );
 $row = $sth->fetch();
 if ( $row['count'] == 0 ) {
-  $query = "INSERT INTO category(
+  $query = "INSERT INTO category (
  category_name, category_class, category_type, type_target,
  category_group, course_group, course_group_order, category_note, version,
  question_group, gradelevel, loc_cat_subcat,
@@ -83,8 +83,8 @@ VALUES
  ( 'Math 5', 'OTHR', 0, '', 5, 2, 5, '', 6, 0, 5, 'NA', 1, 0, 0, 0, 216),
  ( 'Mathematics 6', 'OTHR', 0, '', 6, 2, 6, '', 6, 0, 6, 'NA', 1, 0, 0, 0, 217),
  ( 'Mathematics 7', 'OTHR', 0, '', 7, 2, 7, '', 6, 0, 7, 'NA', 1, 0, 0, 0, 218),
- ( 'Mathematics 8', 'OTHR', 0, '', 0, 2, 8, '', 6, 0, 0, 'MID,INT', 1, 0, 0, 0, 219),
- ( 'Secondary Mathematics I', 'OTHR', 0, '', 0, 2, 9, '', 6, 0, 0, 'INT,MID', 1, 0, 0, 0, 220),
+ ( 'Mathematics 8', 'OTHR', 0, '', 0, 2, 8, '', 6, 0, 0, 'MID', 1, 0, 0, 0, 219),
+ ( 'Secondary Mathematics I', 'OTHR', 0, '', 0, 2, 9, '', 6, 0, 0, 'MID', 1, 0, 0, 0, 220),
  ( 'Secondary Mathematics II', 'OTHR', 0, '', 0, 2, 10, '', 6, 0, 0, 'HS,AH', 1, 0, 0, 0, 221),
  ( 'Secondary Mathematics III', 'OTHR', 0, '', 0, 2, 11, '', 6, 0, 0, 'HS,AH', 1, 0, 0, 0, 249),
  ( 'Advanced Math', 'OTHR', 0, '', 0, 2, 12, '', 6, 0, 0, 'HS,AH', 1, 0, 0, 0, 249),
@@ -105,15 +105,16 @@ VALUES
  ( 'Band', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'SEC', 1, 0, 0, 0, 234),
  ( 'Theater', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'SEC', 1, 0, 0, 0, 234),
  ( 'Orchestra', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'SEC', 1, 0, 0, 0, 234),
- ( 'CTE-FACS', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'SEC', 1, 0, 0, 1, 238),
- ( 'CTE-Business', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'SEC', 1, 0, 0, 1, 238),
- ( 'CTE-Technology', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'SEC', 1, 0, 0, 1, 238),
- ( 'CTE-Agriculture', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'SEC', 1, 0, 0, 1, 238),
- ( 'CTE-Marketing', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'SEC', 1, 0, 0, 1, 238),
- ( 'CTE-Health Sciences', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'SEC', 1, 0, 0, 1, 238),
- ( 'CTE-POT', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'SEC', 1, 0, 0, 1, 238),
- ( 'CTE-IT', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'SEC', 1, 0, 0, 1, 238),
- ( 'CTE-Skilled and Technical', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'SEC', 1, 0, 0, 1, 238)";
+ ( 'CTE-Intro', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'INT', 1, 0, 0, 1, 238),
+ ( 'CTE-FACS', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'MID,HS,AH', 1, 0, 0, 1, 238),
+ ( 'CTE-Business', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'MID,HS,AH', 1, 0, 0, 1, 238),
+ ( 'CTE-Technology', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'MID,HS,AH', 1, 0, 0, 1, 238),
+ ( 'CTE-Agriculture', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'MID,HS,AH', 1, 0, 0, 1, 238),
+ ( 'CTE-Marketing', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'MID,HS,AH', 1, 0, 0, 1, 238),
+ ( 'CTE-Health Sciences', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'MID,HS,AH', 1, 0, 0, 1, 238),
+ ( 'CTE-POT', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'MID,HS,AH', 1, 0, 0, 1, 238),
+ ( 'CTE-IT', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'MID,HS,AH', 1, 0, 0, 1, 238),
+ ( 'CTE-Skilled and Technical', 'OTHR', 0, '', 0, 0, 0, '', 6, 0, 0, 'MID,HS,AH', 1, 0, 0, 1, 238)";
 
   $result = $dbh->exec( $query );
   if ( $result !== FALSE ) {
