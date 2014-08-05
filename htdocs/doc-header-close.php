@@ -6,7 +6,7 @@
 </div>
 
 <div id="header_right">
-<span id="header_right_dcsip">Digital CSIP</span><span id="header_right_version">v. 3.1</span>
+<span id="header_right_dcsip">Digital CSIP</span><span id="header_right_version">v. 4.14</span>
 </div>
 
 <img class="top_right" src="<?= $data['_config']['base_url'] ?>images/top_right.png">
