@@ -21,9 +21,9 @@ if ( $data['csip'] ) {
 <h3>Question <?= $data['part'] ?>: <?php
   if ( $data['part'] == 1 ) { ?>
 Guaranteed Curriculum<?php
-  else if ( $data['part'] == 2 ) { ?>
+  } else if ( $data['part'] == 2 ) { ?>
 Formative Assessments<?php
-  else if ( $data['part'] == 3 ) { ?>
+  } else if ( $data['part'] == 3 ) { ?>
 Interventions<?php
   } else { ?>
 Learning Enhancements<?php
