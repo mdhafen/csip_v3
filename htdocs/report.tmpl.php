@@ -41,7 +41,7 @@ foreach ( (array) $data['category_list'] as $categoryid => $category ) {
 <?php     foreach ( (array) $category['part'] as $part => $questions ) { ?>
 <h3><?php
   if ( $part != -1 ) {
-    echo "Question $part";
+    echo "Question $part: ";
   }
   switch ( $part ) {
     case 1: echo "Guaranteed Curriculum"; break;
