@@ -281,10 +281,9 @@ if ( $row['count'] == 0 ) {
 
   $query = "INSERT INTO location_category_links (
   locationid, categoryid )
-VALUES
-  ( SELECT 118, categoryid FROM category
+  SELECT 118, categoryid FROM category
     WHERE version = 6 AND gradelevel = 0 and loc_cat_subcat NOT LIKE '%ELEM%'
-    and loc_cat_subcat NOT LIKE '%HS%' )";
+    and loc_cat_subcat NOT LIKE '%HS%'";
 
   $result = $dbh->exec( $query );
   if ( $result !== FALSE ) {
