@@ -34,10 +34,10 @@ for ( $i = 1; $i <= $data['csip']['parts']; $i++ ) {
   case 3: $part = 'Analysis Summary'; break;
   case 4: $part = 'Analysis Summary'; break; */
 
-  case 1: $part = 'Our Students Know'; break;
-  case 2: $part = 'Did They Learn'; break;
-  case 3: $part = 'We Respond'; break;
-  case 4: $part = 'Extension'; break;
+  case 1: $part = 'Guaranteed Curriculum'; break;
+  case 2: $part = 'Formative Assessments'; break;
+  case 3: $part = 'Interventions'; break;
+  case 4: $part = 'Learning Enhancements'; break;
   default : $part = "Part $i"; break;
   }
 ?>

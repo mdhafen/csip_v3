@@ -76,6 +76,13 @@ CREATE TABLE `category_specifics` (
 	KEY (`csipid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+CREATE TABLE `location_category_links` (
+       `locationid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
+       `categoryid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
+       PRIMARY KEY (`locationid`,`categoryid`),
+       KEY (`locationid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 CREATE TABLE `question` (
 	`questionid` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`question` TEXT NOT NULL,

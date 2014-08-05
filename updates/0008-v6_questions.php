@@ -3,7 +3,10 @@
 include_once( '../lib/config.phpm' );
 include_once( '../lib/data.phpm' );
 
+$db_settings = $config['database'];
+$table = $db_settings['schema'];
 $return = "";
+
 $dbh = db_connect();
 $query = "SELECT COUNT(*) AS count FROM category WHERE version = 6";
 $sth = $dbh->query( $query );
@@ -210,7 +213,7 @@ End of Year Reflection<br>
   $result = $dbh->exec( $query );
   if ( $result !== FALSE ) {
     if ( $return ) {
-      $return .= ",";
+      $return .= ", ";
     }
     $return .= "Questions";
   } else {
@@ -229,14 +232,9 @@ if ( $row['count'] == 0 ) {
    AND question_group = 0";
 
   $result = $dbh->exec( $query );
-  if ( $result === FALSE ) {
-    $error = $dbh->errorInfo();
-    return "Error adding version 6 questions to categories: ". $error[2];
-  }
-
   if ( $result !== FALSE ) {
     if ( $return ) {
-      $return .= ", and";
+      $return .= ", ";
     }
     $return .= "question to category links";
   } else {
@@ -245,6 +243,37 @@ if ( $row['count'] == 0 ) {
   }
 }
 
+$query = "SELECT COUNT(*) AS count FROM information_schema.table WHERE table_schema = '$table' AND table_name = 'location_category_links'";
+$sth = $dbh->query( $query );
+$row = $sth->fetch();
+if ( $row['count'] == 0 ) {
+   $query = "CREATE TABLE location_category_links (
+      locationid INT(10) UNSIGNED NOT NULL DEFAULT 0,
+      categoryid INT(10) UNSIGNED NOT NULL DEFAULT 0,
+      PRIMARY KEY (locationid,categoryid),
+      KEY (locationid)
+   ) ENGINE=MyISAM DEFAULT CHARSET=utf8";
+
+  $result = $dbh->exec( $query );
+  if ( $result === FALSE ) {
+    $error = $dbh->errorInfo();
+    return "Error adding version 6 location_category_links table: ". $error[2];
+  }
+
+  // FIXME add Water Canyon category links here
+  $query = "";
+
+  $result = $dbh->exec( $query );
+  if ( $result !== FALSE ) {
+    if ( $return ) {
+      $return .= ", and ";
+    }
+    $return .= "special links.";
+  } else {
+    $error = $dbh->errorInfo();
+    return "Error adding version 6 questions to categories: ". $error[2];
+  }
+}
 
 if ( $return ) {
   return "Adding version 6 ". $return;
