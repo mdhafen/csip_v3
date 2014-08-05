@@ -39,7 +39,17 @@ foreach ( (array) $data['category_list'] as $categoryid => $category ) {
 <h3>No Part: <a target="_BLANK" href="<?= $category['type_target'] ?>">Link to another web site</a></h3>
 <?php   } else { ?>
 <?php     foreach ( (array) $category['part'] as $part => $questions ) { ?>
-<h3><?= ( $part == 1 ) ? "Part $part: Student Achievement Data Analysis" : ( ( $part == -1 ) ? "Smart Goals" : "Part $part: Analysis Summary" ) ?></h3>
+<h3><?php
+  if ( $part != -1 ) {
+    echo "Question $part";
+  }
+  switch ( $part ) {
+    case 1: echo "Guaranteed Curriculum"; break;
+    case 2: echo "Formative Assessments"; break;
+    case 3: echo "Interventions"; break;
+    case 4: echo "Learning Enhancements"; break;
+    //case -1: echo "Smart Goals"; break;
+?></h3>
 <ol>
 <?php       foreach ( (array) $questions as $ques ) { ?>
 <li>
@@ -53,7 +63,7 @@ foreach ( (array) $data['category_list'] as $categoryid => $category ) {
 	    foreach ( (array) $data['csip']['category'][ $category['categoryid'] ]['goal'] as $goal ) {
 ?>
 
-<hr size="5" noshade="noshade">
+<!-- <hr size="5" noshade="noshade">
 <?php if ( $data['csip']['category'][ $category['categoryid'] ]['custom_goal'] ) { ?>
 <table class="goal">
 <tr>
@@ -155,7 +165,7 @@ Action Plan is:<br>
 </td>
 </tr>
 <?php } ?>
-</table>
+</table> -->
 
 <?php
 	      }

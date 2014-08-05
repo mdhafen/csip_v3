@@ -18,11 +18,15 @@ if ( $data['csip'] ) {
 
 <h2><?= $data['csip']['category'][ $data['categoryid'] ]['category_name'] ?></h2>
 
-<h3>Part <?= $data['part'] ?>: <?php
+<h3>Question <?= $data['part'] ?>: <?php
   if ( $data['part'] == 1 ) { ?>
-Student Achievement Data Analysis<?php
+Guaranteed Curriculum<?php
+  else if ( $data['part'] == 2 ) { ?>
+Formative Assessments<?php
+  else if ( $data['part'] == 3 ) { ?>
+Interventions<?php
   } else { ?>
-Analysis Summary<?php
+Learning Enhancements<?php
   }
 ?></h3>
 
