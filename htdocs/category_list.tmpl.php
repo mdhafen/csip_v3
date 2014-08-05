@@ -45,7 +45,11 @@ for ( $i = 1; $i <= $data['csip']['parts']; $i++ ) {
 <?php
 }
 ?>
-<!-- <th>Smart Goals</th> -->
+<?php
+if ( $data['csip']['version'] < 6 ) {
+?>
+<th>Smart Goals</th>
+<?php } ?>
 <th><img src="<?= $data['_config']['base_url'] ?>images/Principal_Approved.png" alt="Principal Approved"></th>
 <!--
 <th><img src="<?= $data['_config']['base_url'] ?>images/Community_Approved.png" alt="Community Approved"></th>
@@ -161,7 +165,11 @@ view
 ?></td>
 <?php
         }
-?><!-- <td>
+?>
+<?php
+if ( $data['csip']['version'] < 6 ) {
+?>
+<td>
 <?php if ( $category['category_type'] != 1 ) { ?>
 <a href="goal_list.php?category=<?= $category['categoryid'] ?>">
 <?php
@@ -176,7 +184,8 @@ view
 <?php } ?>
 </a>
 <?php } ?>
-</td> -->
+</td>
+<?php } ?>
 <?php
       if ( $category['needs_principal_approve'] ) {
 	if ( $data['csip']['category'][ $category['categoryid'] ]['principal_approved'] ) {
@@ -306,7 +315,11 @@ view
 ?></td>
 <?php
     }
-?><!-- <td><?php if ( $category['category_type'] != 1 ) { ?><a href="goal_list.php?category=<?= $category['categoryid'] ?>">
+?>
+<?php
+if ( $data['csip']['version'] < 6 ) {
+?>
+<td><?php if ( $category['category_type'] != 1 ) { ?><a href="goal_list.php?category=<?= $category['categoryid'] ?>">
 <?php
 $class = $data['csip']['category'][ $category['categoryid'] ]['category_class'];
 if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == 'OPT' ) ) || 
@@ -317,7 +330,7 @@ Edit
 <?php } else { ?>
 view
 <?php } ?>
-</a><?php } ?></td> -->
+</a><?php } ?></td><?php } ?>
 <?php
       if ( $category['needs_principal_approve'] ) {
 	if ( $data['csip']['category'][ $category['categoryid'] ]['principal_approved'] ) {
