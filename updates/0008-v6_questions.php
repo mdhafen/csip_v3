@@ -262,7 +262,7 @@ if ( $row['count'] == 0 ) {
   }
 }
 
-$query = "SELECT COUNT(*) AS count FROM information_schema.table WHERE table_schema = '$table' AND table_name = 'location_category_links'";
+$query = "SELECT COUNT(*) AS count FROM information_schema.tables WHERE table_schema = '$table' AND table_name = 'location_category_links'";
 $sth = $dbh->query( $query );
 $row = $sth->fetch();
 if ( $row['count'] == 0 ) {
