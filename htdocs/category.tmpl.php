@@ -20,7 +20,7 @@ if ( $data['csip'] ) {
 
 <h3>Question <?= $data['part'] ?>: <?php
   if ( $data['part'] == 1 ) { ?>
-Guaranteed Curriculum<?php
+Guaranteed and Viable Curriculum<?php
   } else if ( $data['part'] == 2 ) { ?>
 Formative Assessments<?php
   } else if ( $data['part'] == 3 ) { ?>

@@ -9,6 +9,15 @@ include( 'doc-menu.php' );
 
 <h1>Welcome to the Digital CSIP</h1>
 
+<div class="pad_bottom">
+<p>
+OUR PURPOSE: To ensure that EVERY student learns at HIGH levels.
+</p>
+<p>
+In order to accomplish our clarifying purpose as a district, the work of highly effective teams is critical. HIGHLY EFFECTIVE TEAMS engage in the critical work that provides clarity and focus to standards, assessments, interventions, and extensions. The Consolidated School Improvement Plan (CSIP) clearly identifies the foundational work that is expected of highly effective teams.
+</p>
+</div>
+
 <p>
 <a href="<?= $data['_config']['base_url'] ?>load_csip.php">Select</a> the current CSIP report or a report from a previous year,<br>
 <!-- 

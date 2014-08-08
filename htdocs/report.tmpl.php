@@ -44,7 +44,7 @@ foreach ( (array) $data['category_list'] as $categoryid => $category ) {
     echo "Question $part: ";
   }
   switch ( $part ) {
-    case 1: echo "Guaranteed Curriculum"; break;
+    case 1: echo "Guaranteed and Viable Curriculum"; break;
     case 2: echo "Formative Assessments"; break;
     case 3: echo "Interventions"; break;
     case 4: echo "Learning Extensions"; break;
