@@ -361,6 +361,7 @@ form li input {
     min-height: 10em;
     min-width: 20em;
     overflow: auto;
+    white-space: pre-wrap;
 }
 
 .report_answer_type_2 {
