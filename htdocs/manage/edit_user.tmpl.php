@@ -50,14 +50,14 @@ Changes saved.
 <select name="location" id="location">
 <?php foreach ( $data['locations'] as $loc ) { ?>
  <option value="<?= $loc['locationid'] ?>" <?= ($loc['selected']) ? "selected='selected'" : "" ?>><?= $loc['name'] ?></option>
-<? } ?>
+<?php } ?>
 </select>
 </td>
 </tr>
 
 <tr>
 <td><label for="password">Password</label></td>
-<td><input type="password" name="password" id="password" value="<?= ( $data['user']['password'] ) ? "*****" : "" ?>" ></td>
+<td><input type="password" name="password" id="password" value="<?= ( $data['user']['password'] ) ? '*****' : '' ?>" ></td>
 </tr>
 
 <tr>
