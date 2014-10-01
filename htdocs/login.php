@@ -15,15 +15,15 @@ include( 'doc-header-close.php' );
 <input type="submit" name="button" value="login"/>
 </div>
 <?php
-  if ( $_SESSION['NOSESSION'] || $_SESSION['BADLOGIN'] || $_SESSION['NOTPERMITTED'] ) {
+  if ( isset($_SESSION['NOSESSION']) || isset($_SESSION['BADLOGIN']) || isset($_SESSION['NOTPERMITTED']) ) {
     echo "<div class='important'>\n";
-    if ( $_SESSION[ 'NOSESSION' ] ) {
+    if ( isset($_SESSION[ 'NOSESSION' ]) ) {
       echo "<!-- Not Logged In -->\n";
     }
-    if ( $_SESSION[ 'BADLOGIN' ] ) {
+    if ( isset($_SESSION[ 'BADLOGIN' ]) ) {
       echo "<span>Incorrect Login</span><br>\n";
     }
-    if ( $_SESSION[ 'NOTPERMITTED' ] ) {
+    if ( isset($_SESSION[ 'NOTPERMITTED' ]) ) {
       echo "<span>Not authorized</span><br>\n";
     }
     echo "</div>\n";

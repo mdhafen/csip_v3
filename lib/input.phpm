@@ -18,7 +18,7 @@ require_once( 'data.phpm' );
 function load_session() {
     // load $str from db
     global $config;
-    if ( $config[ 'session_store_db' ] == 1 ) {
+    if ( isset( $config[ 'session_store_db' ] ) && $config[ 'session_store_db' ] == 1 ) {
         $dbh = db_connect();
 	$query = "SELECT session_data FROM sessions WHERE session_id = :sid";
 	$sth = $dbh->prepare( $query );
@@ -35,10 +35,10 @@ function load_session() {
 function save_session() {
     // save $str in db
     global $config;
-    if ( $config[ 'session_store_db' ] == 1 ) {
+    if ( isset( $config[ 'session_store_db' ] ) && $config[ 'session_store_db' ] == 1 ) {
         $dbh = db_connect();
 	$query = '';
-	if ( $_SESSION[ 'new_session' ] ) {
+	if ( isset( $_SESSION[ 'new_session' ] ) ) {
 	    $query = "INSERT INTO sessions ( session_data, session_id ) VALUES ( :data, :sid )";
 	} else {
 	    $query = "UPDATE session SET session_data = :data WHERE session_id = :sid";
@@ -59,7 +59,7 @@ function destroy_session() {
     if ( ! session_id() ) { return; }
 
     global $config;
-    if ( $config[ 'session_store_db' ] == 1 ) {
+    if ( isset( $config[ 'session_store_db' ] ) && $config[ 'session_store_db' ] == 1 ) {
         $dbh = db_connect();
 	$sth = $dbh->prepare( "DELETE FROM sessions WHERE session_id = :sid" );
 	$sth->bindParam( ':sid', session_id() );
@@ -75,24 +75,28 @@ function destroy_session() {
 
 // Default input type set here
 function input( $name, $type=INPUT_STR ) {
-	$output;
-	$output = $_REQUEST[ $name ];
+	$output = NULL;
+	if ( isset( $_REQUEST[ $name ] ) ) {
+		$output = $_REQUEST[ $name ];
+	}
 
-	if ( $output ) {
-		input_validation( $output, $type );
+	if ( isset($output) ) {
+		$output = input_validation( $output, $type );
 	}
 
 	return $output;
 }
 
-function input_validation( &$output, $type ) {
+function input_validation( $output, $type ) {
 	if ( is_array( $output ) ) {
 		$count = count( $output );
+		$return = array();
 	} else {
 		$count = 1;
 	}
 
 	for ( $i = 0; $i < $count; $i++ ) {
+		$error = 0;
 		if ( is_array( $output ) ) {
 	  		$value = &$output[$i];
 		} else {
@@ -145,7 +149,15 @@ function input_validation( &$output, $type ) {
 		if ( $error ) {
 			$value = '';
 		}
+
+		if ( is_array( $output ) ) {
+			$return[] = $value;
+		}
+		else {
+			$return = $value;
+		}
 	}
+	return $return;
 }
 
 function clean_string( $string = '' ) {

@@ -7,6 +7,7 @@ $config = array(
 	'base_url'	    => '/', // these are set below
 	'secure_phrase'     => 'DontTreadOnMe',
 	'cookie_token_name' => 'CSIPTOKEN',
+	'trusted_proxies'   => array(),
 	'database'          => array(
 		'engine' => 'mysql',
 		'host'   => 'mysql.washk12.org',
@@ -34,11 +35,11 @@ $config = array(
 			'auth' => 69, // load,update_csip,report
 		),
 		3 => array(
-	       		'name' => 'principal',
+			'name' => 'principal',
 			'auth' => 93, // load,update_sap,approve_school,report
 		),
 		4 => array(
-	       		'name' => 'district personel',
+			'name' => 'district personel',
 			'auth' => 99, // load,load_other,app_district,report
 		),
 		5 => array(
@@ -46,22 +47,63 @@ $config = array(
 			'auth' => 67, // load,load_other,report
 		),
 		6 => array(
-	       		'name' => 'site supervisor',
+			'name' => 'site supervisor',
 			'auth' => 255, // all
 		),
 	),
 );
 
-$config['base_dir'] = realpath( dirname( __FILE__ ) . '/../' );
-$config['this_url'] = $_SERVER['SCRIPT_NAME'];
-$config['base_url'] = "/";  // A known value, just make the sys.admin. set it
+$config['base_dir'] = realpath( dirname( __FILE__ ) . '/..' );
+$config['this_url'] = $_SERVER['REQUEST_URI'];
+
+$dir = $config['base_dir'] . '/cgi/';
+$count = 1;
+$lcs = '/';
+while ( strripos( $dir, substr( $config['this_url'], 0, $count ) ) > 0 ) {
+	$lcs = substr( $config['this_url'], 0, $count );
+	if ( $count+1 > mb_strlen( $config['this_url'] ) ) { break; }
+	$count = strpos( $config['this_url'], '/', $count + 1 );
+	if ( $count < 0 ) { break; }
+}
+
+if ( isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] != 'off' ) {
+	$host = "https://". $_SERVER['SERVER_NAME'];
+	if ( $_SERVER['SERVER_PORT'] != '443' ) {
+		$host .= ':'. $_SERVER['SERVER_PORT'];
+	}
+}
 /*
-$config['base_url'] = implode( '/',
-	array_intersect(
-		explode( '/', parse_url( $config['this_url'], PHP_URL_PATH ) ),
-		explode( '/', $config['base_dir'] ."/cgi" )
-	)
-);
-if ( ! $config['base_url'] ) { $config['base_url'] = '/'; }
+ These next two are to catch load balancers (reverse proxies).
+ You may have to set X-Forwarded-Port and X-Forwarded-Proto
+ in the load balancer config
+  apache2: RequestHeader set X-Forwarded-Proto https
+
+ Also, these should be secured in the server config to be rejected in headers
+ except from certain trusted clients (the load balancers)
+  (anything from the client, like these, can be easily spoofed
  */
+else if ( ! empty($config['trusted_proxies']) && array_search($_SERVER['REMOTE_ADDR'],$config['trusted_proxies']) !== false ) {
+	if ( isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || isset($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on' ) {
+		$host = "https://". $_SERVER['HTTP_X_FORWAREDED_SERVER'];
+		if ( isset($_SERVER['HTTP_X_FORWARDED_PORT']) && $_SERVER['HTTP_X_FORWARDED_PORT'] != '443' ) {
+			$host .= ':'. $_SERVER['HTTP_X_FORWARDED_PORT'];
+		}
+	}
+	else if ( isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'http' ) {
+		$host = "http://". $_SERVER['HTTP_X_FORWAREDED_SERVER'];
+		if ( isset($_SERVER['HTTP_X_FORWARDED_PORT']) && $_SERVER['HTTP_X_FORWARDED_PORT'] != '80' ) {
+			$host .= ':'. $_SERVER['HTTP_X_FORWARDED_PORT'];
+		}
+	}
+}
+else {
+	$host = "http://". $_SERVER['SERVER_NAME'];
+	if ( $_SERVER['SERVER_PORT'] != '80' ) {
+		$host .= ':'. $_SERVER['SERVER_PORT'];
+	}
+}
+$config['base_url'] = $host . $lcs;
+if ( substr( $config['base_url'], -1, 1 ) != '/' ) {
+	$config['base_url'] .= '/';
+}
 ?>

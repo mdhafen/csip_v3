@@ -12,7 +12,7 @@ function db_connect() {
 		$engine = $settings['engine'];
 		$host = $settings['host'];
 		$schema = $settings['schema'];
-		$port = ( $settings['port'] ) ? ";port=$settings[port]" : "";
+		$port = ( ! empty($settings['port']) ) ? ";port=$settings[port]" : "";
 		$dsn = "$engine:host=$host$port;dbname=$schema";
 		try {
 			$dbh = new PDO( $dsn, $settings['user'], $settings['passwd'] );

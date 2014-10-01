@@ -3,16 +3,38 @@ require_once( 'config.phpm' );
 require_once( 'input.phpm' );
 require_once( 'security.phpm' );
 
-function output( $data, $filename ) {
+function redirect( $target = "" ) {
+	global $config;
+	if ( $target ) {
+		if ( ! preg_match( '/^http/', $target ) ) {
+			$target = $config['base_url'] . $target;
+		}
+		header( "Location: $target" );
+	}
+}
+
+function output( $data, $filename, $xml = 0 ) {
 	$output = '';
 
 	$output = output_build( $data, $filename );
-	output_transmit( $output );
+	output_transmit( $output, $xml );
 }
 
 function output_build( $data, $filename ) {
 	global $config;
 	$output = '';
+
+	$data['_config'] = $config;
+	if ( ! empty( $_SESSION[ 'loggedin_user' ] ) ) {
+		$data['_session']['username'] = $_SESSION[ 'loggedin_user' ][ 'username' ];
+	}
+	else {
+		$data['_session']['username'] = '';
+	}
+
+	foreach ( (array) get_authorizations() as $perm ) {
+		$data['_session']["CAN_$perm"] = $perm;
+	}
 
 	if ( $filename ) {
 		$filename = $config['base_dir'] .'/htdocs/'. $filename;
@@ -32,46 +54,37 @@ function output_build( $data, $filename ) {
 		}
 
 	}
+
 	return array( $data, $filename );
 }
 
-function output_transmit( $output ) {
+function output_transmit( $output, $xml ) {
 	if ( ! $output ) { return; }
-
-	// read first couple lines of file ( up to <html>? ) to guess type?
-	global $output_type;
-	if ( $output_type == 'xml' ) {
-		$type = 'application/xml';
-	} else {
-		$type = 'text/html';
-	}
-
-	$cookie = set_cookie();
-
-	if ( $type ) { header( "Content-type: $type" ); }
 
 	global $data;
 	$data = $output[0];
 	$filename = $output[1];
 
-	if ( $filename ) {
-		global $config;
-		$data['_config']['base_url'] = $config['base_url'];
-		$data['_config']['base_dir'] = $config['base_dir'];
-		$data['_session']['username'] = $_SESSION[ 'loggedin_user' ][ 'username' ];
-
-		foreach ( (array) get_authorizations() as $perm ) {
-			$data['_session']["CAN_$perm"] = $perm;
-		}
-
-		include_once( $filename );
+	if ( $xml ) {
+		$type = 'application/xml';
 	} else {
+		$type = 'text/html';
+	}
+	header( "Content-type: $type" );
+
+	if ( $filename ) {
+		include_once( $filename );
+	}
+	else if ( isset( $data ) && ! is_array( $data ) ) {
+		// read first couple lines ( up to <html>? ) to guess type?
+		if ( preg_match( '/^[\s\v]*<\?xml.*?>[\s\v]*(?:<!doctype.*?>[\s\v]*)?(?!<html.*?>/is', $data ) ) {
+			header( "Content-type: application/xml" );
+		}
 		print $data;
 	}
+	else {
+		header( "HTTP/1.1 500 Internal Server Error" );
+		print "<html><body>Page could not be generated.  Sorry.</body></html>";
+	}
 }
-
-function set_cookie() {
-	//  PHP handles the session_id
-}
-
 ?>

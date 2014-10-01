@@ -5,7 +5,7 @@
 <?php if ( $data['_session']['CAN_load_csip'] || $data['_session']['CAN_load_other_csip'] ) { ?>
 <li><a href="<?= $data['_config']['base_url'] ?>load_csip.php">Select CSIP</a></li>
 <?php } ?>
-<?php if ( $data['csip'] ) { ?>
+<?php if ( ! empty($data['csip']) ) { ?>
 <li><a href="<?= $data['_config']['base_url'] ?>category_list.php">Category Table</a></li>
 <li><a href="<?= $data['_config']['base_url'] ?>report.php">Report</a></li>
 <?php } ?>
