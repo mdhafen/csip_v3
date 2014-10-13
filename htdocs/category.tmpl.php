@@ -45,18 +45,12 @@ Learning Extensions<?php
 <?php foreach ( $data['questions'] as $question ) { ?>
 <li>
 <?= $question['input_html'] ?>
-<?php
-  if ( $can_save ) {
-?>
-<input type="submit" name="op" value="Save Answers">
-<?php
-  }
+<?php if ( $can_save ) { ?>
+<br><input type="submit" name="op" value="Save Answers">
+<?php } ?>
 </li>
 <?php } ?>
 </ol>
-<?php
-}
-?>
 </form>
 
 <?php include( 'csip-close.php' ); ?>
