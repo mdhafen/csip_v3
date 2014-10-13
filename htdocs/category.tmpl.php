@@ -9,6 +9,16 @@ include( 'doc-menu.php' );
 ?>
 
 <?php
+$class = $data['csip']['category'][ $data['categoryid'] ]['category_class'];
+$can_save = 0;
+if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == 'OPT' ) ) || 
+     ( $data['_session']['CAN_update_sap'] && ( $class == 'SAP' || $class == 'MAND' ) ) ||
+     ( $class == 'OTHR' && ( $data['_session']['CAN_update_sap'] || $data['_session']['CAN_update_csip'] ) ) ) {
+  if ( ! $data['csip']['loc_demo'] ) {
+    $can_save = 1;
+  }
+}
+
 if ( $data['csip'] ) {
 ?>
 <h1><?= $data['csip']['year_name'] ?> Plan for <?= $data['csip']['name'] ?></h1>
@@ -35,19 +45,16 @@ Learning Extensions<?php
 <?php foreach ( $data['questions'] as $question ) { ?>
 <li>
 <?= $question['input_html'] ?>
-</li>
-<?php } ?>
-</ol>
 <?php
-$class = $data['csip']['category'][ $data['categoryid'] ]['category_class'];
-if ( ( $data['_session']['CAN_update_csip'] && ( $class == 'CSIP' || $class == 'OPT' ) ) || 
-     ( $data['_session']['CAN_update_sap'] && ( $class == 'SAP' || $class == 'MAND' ) ) ||
-     ( $class == 'OTHR' && ( $data['_session']['CAN_update_sap'] || $data['_session']['CAN_update_csip'] ) ) ) {
-  if ( ! $data['csip']['loc_demo'] ) {
+  if ( $can_save ) {
 ?>
 <input type="submit" name="op" value="Save Answers">
 <?php
   }
+</li>
+<?php } ?>
+</ol>
+<?php
 }
 ?>
 </form>
