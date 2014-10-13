@@ -45,7 +45,7 @@ Learning Extensions<?php
 <?php foreach ( $data['questions'] as $question ) { ?>
 <li>
 <?= $question['input_html'] ?>
-<?php if ( $can_save ) { ?>
+<?php if ( $can_save && $question['type'] != 9 ) { ?>
 <br><input type="submit" name="op" value="Save Answers">
 <?php } ?>
 </li>
