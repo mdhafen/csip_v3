@@ -29,7 +29,9 @@ if ( $data['csip'] ) {
 <h2><?= $data['csip']['category'][ $data['categoryid'] ]['category_name'] ?></h2>
 
 <h3>Question <?= $data['part'] ?>: <?php
-  if ( $data['part'] == 1 ) { ?>
+  if ( $class == 'OPT' && $data['part'] == 1 ) { ?>
+Other Information<?php
+  } else if ( $data['part'] == 1 ) { ?>
 Guaranteed and Viable Curriculum<?php
   } else if ( $data['part'] == 2 ) { ?>
 Formative Assessments<?php

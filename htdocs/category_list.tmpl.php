@@ -74,11 +74,13 @@ foreach ( (array) $data['category_list'] as $class => $cats ) {
     break;
   }
 
+/*
   case 'OPT' : {
     $class_image = 'OPT.png';
     $class_image_alt = 'Optional';
     break;
   }
+ */
 
   case 'CSIP' : {
     $class_image = 'CSIP.png';
