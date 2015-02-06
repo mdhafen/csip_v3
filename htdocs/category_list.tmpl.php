@@ -36,7 +36,6 @@ for ( $i = 1; $i <= $data['csip']['parts']; $i++ ) {
       case 4: $part = 'Analysis Summary'; break;
     }
   }
-
   else if ( $data['csip']['version'] == 6 ) {
     switch ( $i ) {
       case 1: $part = 'Question #1<br>Guaranteed Curriculum'; break;
@@ -58,8 +57,6 @@ for ( $i = 1; $i <= $data['csip']['parts']; $i++ ) {
       case 8: $part = 'Accreditation'; break;
       default : $part = "Part $i"; break;
     }
-  }
-
   }
 ?>
   <th><?= $part ?></th>

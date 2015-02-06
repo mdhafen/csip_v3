@@ -167,6 +167,7 @@ LEFT JOIN location_category_links
   $sth->bindValue( ':loc_subcat', "%$csip[loc_subcategory]%" );
   $sth->bindValue( ':loc_link', $csip['locationid'] );
   $sth->execute();
+  $question_groups = array();
   while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
     $csip['category'][ $row['categoryid'] ] = stripslashes_array( $row );
     $question_groups[ $row['question_group'] ]++;
@@ -183,6 +184,7 @@ ORDER BY question_group,order_num
   $sth = $dbh->prepare( $query );
   $sth->bindValue( ':ver', $csip['version'] );
   $sth->execute();
+  $csip['parts'] = 0;
   while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
     $csip['question_group'][ $row['question_group'] ][] = stripslashes_array( $row );
     if ( $row['part'] > $csip['parts'] ) {

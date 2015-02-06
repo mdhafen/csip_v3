@@ -11,6 +11,10 @@ if ( ! authorized( 'load_csip' ) || ! authorized( 'load_other_csip' ) ) {
 
 $csipid = input( 'csipid', INPUT_PINT );
 
+$loaded = 0;
+$csip = array();
+$csips = array();
+$error = array();
 if ( $csipid ) {
   if ( get_csip_locationid( $csipid ) != $_SESSION['loggedin_user']['locationid'] && ! authorized( 'load_other_csip' ) ) {
     $error[] = 'NOTYOURS';
