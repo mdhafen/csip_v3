@@ -106,7 +106,7 @@ VALUES
  ( 'Dual Immersion 2', 'OTHR', 0, '', 3, 4, 3, '', 7, 0, 2, 'ELEM', 1, 0, 0, 1, 331),
  ( 'Dual Immersion 3', 'OTHR', 0, '', 4, 4, 4, '', 7, 0, 3, 'ELEM', 1, 0, 0, 1, 332),
  ( 'Dual Immersion 4', 'OTHR', 0, '', 5, 4, 5, '', 7, 0, 4, 'ELEM', 1, 0, 0, 1, 333),
- ( 'Dual Immersion 5', 'OTHR', 0, '', 6, 4, 6, '', 7, 0, 5, 'ELEM', 1, 0, 0, 1, 334),
+ ( 'Dual Immersion 5', 'OTHR', 0, '', 6, 4, 6, '', 7, 0, 5, 'ELEM', 1, 0, 0, 1, 334)
 ";
 
   $result = $dbh->exec( $query );
@@ -138,7 +138,7 @@ if ( $row['count'] == 0 ) {
   ( 7, 34, 1, 3, 4, 0, '<b>Reflection Date</b><br>
 [input]'),
   ( 7, 34, 1, 4, 1, 0, '<b>Reflection Summary</b><br>
-<p>Has your team's GVC changed?  If so, which elements did your team adjust in preparation for next year?</p>
+<p>Has your team''s GVC changed?  If so, which elements did your team adjust in preparation for next year?</p>
 [input]'),
   ( 7, 34, 2, 1, 9, 0, '<h1>Common Formative Assessment</h1>'),
   ( 7, 34, 2, 2, 9, 0, '<b>How will WE know if they LEARNED it?</b><br>
@@ -362,7 +362,7 @@ We will put something more when we know what we want this part to say.'),
     $return .= "Questions";
   } else {
     $error = $dbh->errorInfo();
-    return "Error adding version 6 questions: ". $error[2];
+    return "Error adding version 7 questions: ". $error[2];
   }
 }
 
