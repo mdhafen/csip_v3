@@ -101,12 +101,12 @@ VALUES
  ( 'Dance', 'OTHR', 0, '', 0, 0, 0, '', 7, 0, 0, 'HS,AH', 1, 0, 0, 1, 323),
  ( 'Guitar', 'OTHR', 0, '', 0, 0, 0, '', 7, 0, 0, 'MID,HS,AH', 1, 0, 0, 1, 328),
  ( 'Financial Literacy', 'OTHR', 0, '', 0, 0, 0, '', 7, 0, 0, 'HS,AH', 1, 0, 0, 1, 321),
- ( 'Dual Immersion K', 'OTHR', 0, '', 1, 4, 1, '', 7, 0, 0, 'ELEM', 1, 0, 0, 1, 329),
- ( 'Dual Immersion 1', 'OTHR', 0, '', 2, 4, 2, '', 7, 0, 1, 'ELEM', 1, 0, 0, 1, 330),
- ( 'Dual Immersion 2', 'OTHR', 0, '', 3, 4, 3, '', 7, 0, 2, 'ELEM', 1, 0, 0, 1, 331),
- ( 'Dual Immersion 3', 'OTHR', 0, '', 4, 4, 4, '', 7, 0, 3, 'ELEM', 1, 0, 0, 1, 332),
- ( 'Dual Immersion 4', 'OTHR', 0, '', 5, 4, 5, '', 7, 0, 4, 'ELEM', 1, 0, 0, 1, 333),
- ( 'Dual Immersion 5', 'OTHR', 0, '', 6, 4, 6, '', 7, 0, 5, 'ELEM', 1, 0, 0, 1, 334)
+ ( 'Dual Immersion K', 'OTHR', 0, '', 0, 4, 0, '', 7, 0, 0, 'ELEM', 1, 0, 0, 1, 329),
+ ( 'Dual Immersion 1', 'OTHR', 0, '', 1, 4, 1, '', 7, 0, 1, 'ELEM', 1, 0, 0, 1, 330),
+ ( 'Dual Immersion 2', 'OTHR', 0, '', 2, 4, 2, '', 7, 0, 2, 'ELEM', 1, 0, 0, 1, 331),
+ ( 'Dual Immersion 3', 'OTHR', 0, '', 3, 4, 3, '', 7, 0, 3, 'ELEM', 1, 0, 0, 1, 332),
+ ( 'Dual Immersion 4', 'OTHR', 0, '', 4, 4, 4, '', 7, 0, 4, 'ELEM', 1, 0, 0, 1, 333),
+ ( 'Dual Immersion 5', 'OTHR', 0, '', 5, 4, 5, '', 7, 0, 5, 'ELEM', 1, 0, 0, 1, 334)
 ";
 
   $result = $dbh->exec( $query );
