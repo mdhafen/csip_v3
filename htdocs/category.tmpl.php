@@ -29,16 +29,30 @@ if ( $data['csip'] ) {
 <h2><?= $data['csip']['category'][ $data['categoryid'] ]['category_name'] ?></h2>
 
 <h3>Question <?= $data['part'] ?>: <?php
-  if ( $class == 'OPT' && $data['part'] == 1 ) { ?>
+  if ( $data['csip']['version'] == 6 ) {
+    if ( $class == 'OPT' && $data['part'] == 1 ) { ?>
 Other Information<?php
-  } else if ( $data['part'] == 1 ) { ?>
+    } else if ( $data['part'] == 1 ) { ?>
 Guaranteed and Viable Curriculum<?php
-  } else if ( $data['part'] == 2 ) { ?>
+    } else if ( $data['part'] == 2 ) { ?>
 Formative Assessments<?php
-  } else if ( $data['part'] == 3 ) { ?>
+    } else if ( $data['part'] == 3 ) { ?>
 Interventions<?php
-  } else { ?>
+    } else { ?>
 Learning Extensions<?php
+    }
+  }
+  else if ( $data['csip']['version'] == 7 ) {
+    switch ( $data['part'] ) {
+      case 1: print "Guaranteed Curriculum"; break;
+      case 2: print "GVC 1"; break;
+      case 3: print "GVC 2"; break;
+      case 4: print "GVC 3"; break;
+      case 5: print "GVC 4"; break;
+      case 6: print "GVC 5"; break;
+      case 7: print "GVC 6"; break;
+      case 8: print "Accreditation"; break;
+    }
   }
 ?></h3>
 

@@ -10,6 +10,7 @@ $updates = array(
   '0006-category_for_dhs',
   '0007-due_dates_as_char',
   '0008-v6_questions',
+  '0009-v7_questions',
 );
 $results = array();
 

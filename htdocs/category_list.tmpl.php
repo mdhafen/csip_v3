@@ -28,17 +28,38 @@ if ( $data['category_list']['PREVIOUS'] ) {
 <?php
 }
 for ( $i = 1; $i <= $data['csip']['parts']; $i++ ) {
-  switch ( $i ) {
-/*  case 1: $part = 'Data Analysis'; break;
-  case 2: $part = 'Analysis Summary'; break;
-  case 3: $part = 'Analysis Summary'; break;
-  case 4: $part = 'Analysis Summary'; break; */
+  if ( $data['csip']['version'] < 6 ) {
+    switch ( $i ) {
+      case 1: $part = 'Data Analysis'; break;
+      case 2: $part = 'Analysis Summary'; break;
+      case 3: $part = 'Analysis Summary'; break;
+      case 4: $part = 'Analysis Summary'; break;
+    }
+  }
 
-  case 1: $part = 'Question #1<br>Guaranteed Curriculum'; break;
-  case 2: $part = 'Question #2<br>Formative Assessments'; break;
-  case 3: $part = 'Question #3<br>Interventions'; break;
-  case 4: $part = 'Question #4<br>Learning Extensions'; break;
-  default : $part = "Part $i"; break;
+  else if ( $data['csip']['version'] == 6 ) {
+    switch ( $i ) {
+      case 1: $part = 'Question #1<br>Guaranteed Curriculum'; break;
+      case 2: $part = 'Question #2<br>Formative Assessments'; break;
+      case 3: $part = 'Question #3<br>Interventions'; break;
+      case 4: $part = 'Question #4<br>Learning Extensions'; break;
+      default : $part = "Part $i"; break;
+    }
+  }
+  else if ( $data['csip']['version'] == 7 ) {
+    switch ( $i ) {
+      case 1: $part = 'Guaranteed Curriculum'; break;
+      case 2: $part = 'GVC 1'; break;
+      case 3: $part = 'GVC 2'; break;
+      case 4: $part = 'GVC 3'; break;
+      case 5: $part = 'GVC 4'; break;
+      case 6: $part = 'GVC 5'; break;
+      case 7: $part = 'GVC 6'; break;
+      case 8: $part = 'Accreditation'; break;
+      default : $part = "Part $i"; break;
+    }
+  }
+
   }
 ?>
   <th><?= $part ?></th>
