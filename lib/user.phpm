@@ -18,7 +18,6 @@ function user_by_userid( $userid ) {
 	       'role' => $row['role'],
 	       'salt' => $row['salt'],
 	       'password' => $row['password'],
-	       'locationid' => $row['locationid'],
 	       );
 }
 
@@ -38,7 +37,6 @@ function user_by_username( $username ) {
 	       'role' => $row['role'],
 	       'salt' => $row['salt'],
 	       'password' => $row['password'],
-	       'locationid' => $row['locationid'],
 	       );
 }
 
