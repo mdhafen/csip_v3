@@ -7,7 +7,7 @@ include( 'doc-header-close.php' );
 ?>
 
 <div class="for_login">
-<form class="for_login" method="post" action=<?= $data['_config']['base_url'] . $_SERVER['REQUEST_URI'] ?>">
+<form class="for_login" method="post" action=<?= $data['_config']['base_url'] ?>">
   <div id="login">
   <h1>Please Login</h1>
   <span><label for="_username">Username: </label><input id="_username" name="_username" value="<?= $_SESSION[ 'username' ] ?>" /></span><br>
