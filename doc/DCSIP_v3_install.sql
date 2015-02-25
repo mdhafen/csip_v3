@@ -1,276 +1,70 @@
-INSERT INTO category ( category_name, category_class, category_type, category_note, version, gradelevel, loc_cat_subcat, needs_principal_approve, needs_community_approve, needs_district_approve, custom_goal_focus, parent_category ) ( SELECT category_name, IF( category_class = 'OPT', 'CSIP', 'SAP' ), category_type, category_note, 2, gradelevel, loc_cat_subcat, 1, 0, 0, IF( category_class = 'OPT', 1, 0 ), categoryid FROM category WHERE version = 1 );
+INSERT INTO `question_options` (option_group,option_value,option_label) VALUES
+ (1, 'yes', 'Yes'),
+ (1, 'no', 'No');
 
-UPDATE category SET category_name = 'Kindergarten Math' WHERE category_name = 'Kindergarten' AND version = 2;
+INSERT INTO `question` (version,question_group,order_num,type,question) VALUES
+  ( 7, 1, 1, 9, '<b>What is the GVC?</b><br>
+<p>HIGHLY EFFECTIVE TEAMS teach ALL of the standards within their discipline but engage in the work of IDENTIFYING which of the standards/skills are so critical that EVERY student MUST know. TEAMS then work to ENSURE that every student will demonstrate proficiency in them. The guaranteed and viable curriculum (GVC) are those skills deemed by the team to be the absolute critical skills that ALL students must demonstrate proficiency in order to be successful in the grade level or course.</p>'),
+  ( 7, 1, 2, 1, '<b>Our Team''s GVC</b><br>
+<p>With your team, identify/list the critical standards/skills that all students need to know.</p>
+<p>Once your team has identified the skills, share with the team above and below your specific grade level.</p>
+<p>Share the guaranteed skills with your students that you have identified below</p>
+[input]'),
+  ( 7, 1, 3, 4, '<b>Reflection Date</b><br>
+[input]'),
+  ( 7, 1, 4, 1, '<b>Reflection Summary</b><br>
+<p>Has your team''s GVC changed?  If so, which elements did your team adjust in preparation for next year?</p>
+[input]'),
+  ( 7, 2, 1, 9, '<b>Essential Elements of Accreditation</b><br>
+We will put something more when we know what we want this part to say.'),
+  ( 7, 2, 2, 1, '<p>Demographics
+[input]</p>'),
+  ( 7, 2, 3, 1, '<p>Learning Data
+[input]</p>'),
+  ( 7, 2, 4, 1, '<p>Survey Results
+[input]</p>'),
+  ( 7, 2, 5, 1, '<p>IEQ-Index of Education Equality
+[input]</p>'),
+  ( 7, 2, 6, 1, '<p>Learning Environment
+[input]</p>'),
+  ( 7, 2, 7, 1, '<p>Other Information
+[input]</p>'),
+  ( 7, 3, 1, 9, '<h1>Common Formative Assessment</h1>'),
+  ( 7, 3, 2, 9, '<b>How will WE know if they LEARNED it?</b><br>
+EFFECTIVE TEAMS utilize COMMON FORMATIVE ASSESSMENTS (CFA) to diagnostically assess a student''s learning and determine which students were proficient in the guaranteed skill and those who weren''t.<br>
+TEAM ACTION STEPS: Identify a common formative assessment that your team will use to assess the GVC skill.'),
+  ( 7, 3, 3, 1, '<p>List the common formative assessment AND the guaranteed standard it aligns with (Example: Unit 1 - Fractions). FOR ELEMENTARY: Identify which questions on your existing instructional program assessments align with your GVC.
+[input]</p>'),
+  ( 7, 3, 4, 3, '<p>How many students were assessed by our team?
+[input]</p>'),
+  ( 7, 3, 5, 3, '<p>How many were not proficient the first time?
+[input]</p>'),
+  ( 7, 3, 6, 1, '<p>According to the results of this CFA and our team''s collaboration, the following teaching practices/strategies were most effective in teaching this guaranteed skill(s):
+[input]</p>'),
+  ( 7, 3, 7, 9, '<h1>Intervention</h1>'),
+  ( 7, 3, 8, 9, '<b>How will WE RESPOND to those who didn''t get it?</b><br>
+EFFECTIVE TEAMS analyze the results of their common formative assessment (CFA) and immediately intervene with those who are in need of extra time and support. (Keep in mind that if less than 75% of students didn''t get a concept, it''s not an intervention problem; the initial instruction needs to be examined.)'),
+  ( 7, 3, 9, 1, '<p>List the SPECIFIC INTERVENTIONS that your team responded with for those students who WERE NOT proficient.
+[input]</p>'),
+  ( 7, 3, 10, 3, '<p>Following your team''s INTERVENTIONS and REASSESSMENT, how many students are still not proficient?
+[input]</p>'),
+  ( 7, 3, 11, 1, '<p>List the SPECIFIC FIRST NAMES of those students who were not proficient even after your team''s intervention.</p>
+<p>(To indicate growth, include how much the student grew from the first to second assessment).</p>
+[input]'),
+  ( 7, 3, 12, 1, '<p>How did your TEAM respond to those who were still not proficient even after your team''s interventions?
+[input]</p>'),
+  ( 7, 3, 13, 9, '<h1>Learning Extension</h1>'),
+  ( 7, 3, 14, 9, '<p>EFFECTIVE TEAMS provide extension activities for those students who already know a standard or skill.</p>'),
+  ( 7, 3, 15, 1, '<p>As you review your GVC (from step #1), identify extension activities your team will use for those who already know it.
+[input]</p>'),
+  ( 7, 3, 16, 3, 'End of Year Reflection Date<br>
+[input]'),
+  ( 7, 3, 17, 1, '<b>End of Year Reflection</b><br>
+<p>Do our extension activities provide deeper learning for those students who already know it?  What adjustments can we make to provide for better extended learning opportunities?</p>
+[input]');
 
-INSERT INTO category ( category_name, category_class, category_type, category_note, version, gradelevel, loc_cat_subcat, needs_principal_approve, needs_community_approve, needs_district_approve, custom_goal_focus, parent_category ) ( SELECT 'Kindergarten Literacy', category_class, category_type, category_note, version, gradelevel, loc_cat_subcat, needs_principal_approve, needs_community_approve, needs_district_approve, custom_goal_focus, parent_category FROM category WHERE category_name = 'Kindergarten Math' AND version = 2 );
+INSERT INTO course_question_links (courseid,question_group,part) (SELECT courseid,question_group,1 FROM course WHERE question_group = 1);
 
-UPDATE category SET category_class = 'CSIP', custom_goal_focus = 1 WHERE version = 2 AND category_name LIKE '%School Wide';
+INSERT INTO course_question_links (courseid,question_group,part) (SELECT courseid,question_group,2 FROM course WHERE question_group = 2);
 
-UPDATE category SET loc_cat_subcat = 'ELEM,INT,MID' WHERE version = 2 AND ( category_name = 'Language Arts - School Wide' OR category_name = 'Math - School Wide' );
-
-INSERT INTO category ( category_name, category_class, category_type, category_note, version, gradelevel, loc_cat_subcat, needs_principal_approve, needs_community_approve, needs_district_approve, custom_goal_focus, parent_category ) ( SELECT category_name, category_class, category_type, category_note, version, gradelevel, 'HS', needs_principal_approve, needs_community_approve, needs_district_approve, custom_goal_focus, parent_category FROM category WHERE version = 2 AND ( category_name = 'Language Arts - School Wide' OR category_name = 'Math - School Wide' ) );
-
-UPDATE category SET category_class = 'SAP', needs_community_approve = 0, needs_district_approve = 0, custom_goal_focus = 0 WHERE version = 2 AND ( category_name = 'Math 1' OR category_name = 'Language Arts 1' OR category_name LIKE 'Kindergarten%' );
-
-UPDATE category SET needs_community_approve = 1, needs_district_approve = 1 WHERE version = 2 AND category_class = 'CSIP';
-
-UPDATE category SET category_type = 1, needs_principal_approve = 0, needs_community_approve = 0, needs_district_approve = 0 WHERE version = 2 AND ( category_name = 'Title One' OR category_name = 'Trust Lands' );
-UPDATE category SET type_target = 'http://www.schoollandtrust.org/' WHERE version = 2 AND category_name = 'Trust Lands';
-UPDATE category SET type_target = 'http://www.schools.utah.gov/TitleI/', loc_cat_subcat = 'ELEM' WHERE version = 2 AND category_name = 'Title One';
-
-UPDATE category SET category_note = '(Complete if applicable)' WHERE version = 2 AND ( category_name = 'Citizenship' OR category_name = 'Safety Plan' );
-
-DELETE FROM category WHERE version = 2 AND ( loc_cat_subcat = 'ELEM' OR loc_cat_subcat = 'NA' ) AND category_name IN ( 'Fine Arts', 'Health / PE', 'Social Studies', 'Reading Achievement / Intervention Plan' );
-
-UPDATE category SET category_class = 'CSIP' WHERE version = 2 AND category_name = 'Basic Skills Competency Test (BSCT)';
-
-UPDATE category SET category_name = 'Earth Systems 9', loc_cat_subcat = 'MID,AH' WHERE version = 2 AND category_name = 'Earth Systems';
-
-UPDATE category SET gradelevel = 0, loc_cat_subcat = 'HS' WHERE version = 2 AND category_name = 'Biology';
-
-UPDATE category SET category_name = 'Algebra II' WHERE version = 2 AND category_name = 'Intermediate Algebra';
-
-UPDATE category SET category_group = 1 WHERE gradelevel = 1 AND version = 2;
-UPDATE category SET category_group = 2 WHERE gradelevel = 2 AND version = 2;
-UPDATE category SET category_group = 3 WHERE gradelevel = 3 AND version = 2;
-UPDATE category SET category_group = 4 WHERE gradelevel = 4 AND version = 2;
-UPDATE category SET category_group = 5 WHERE gradelevel = 5 AND version = 2;
-UPDATE category SET category_group = 6 WHERE gradelevel = 6 AND version = 2;
-UPDATE category SET category_group = 7 WHERE gradelevel = 7 AND version = 2;
-UPDATE category SET category_group = 8 WHERE gradelevel = 8 AND version = 2;
-UPDATE category SET category_group = 9 WHERE gradelevel = 9 AND version = 2;
-UPDATE category SET category_group = 10 WHERE gradelevel = 10 AND version = 2;
-UPDATE category SET category_group = 11 WHERE gradelevel = 11 AND version = 2;
-
-INSERT INTO question ( question_group, part, version, order_num, type, question_option_group, question ) VALUES ( 1, 1, 2, 1, 2, 2, 'Our CRT outcomes will compare performance
-<table class="example"><tr><th>Example</th><th>Prior Year</th><th>This Year</th></tr><tbody>
-<tr><td>This subject/grade</td><td>Math 3</td><td>Math 3</td></tr>
-<tr><td>Of students</td><td>Math 2</td><td>Math 3</td></tr></tbody></table>' ),
-( 1, 1, 2, 2, 8, 0, 'Overall [input_3] of students, or [input_3]% were proficient on the [category_name] CRT.  The concepts and objectives on which our students preformed well were: 
-[input_1]' ),
-( 1, 1, 2, 3, 8, 0, '[input_3] of "Asian" students, or [input_3]% were proficient on the [category_name] CRT.  The concepts and objectives on which "Asian" students did not preform well were: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 1, 1, 2, 4, 8, 0, '[input_3] of "Black" students, or [input_3]% were proficient on the [category_name] CRT.  The concepts and objectives on which "Black" students did not preform well were: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 1, 1, 2, 5, 8, 0, '[input_3] of "Hispanic" students, or [input_3]% were proficient on the [category_name] CRT.  The concepts and objectives on which "Hispanic" students did not preform well were: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 1, 1, 2, 6, 8, 0, '[input_3] of "Indian" students, or [input_3]% were proficient on the [category_name] CRT.  The concepts and objectives on which "Indian" students did not preform well were: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 1, 1, 2, 7, 8, 0, '[input_3] of "Pacific Islander" students, or [input_3]% were proficient on the [category_name] CRT.  The concepts and objectives on which "Pacific Islander" students did not preform well were: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 1, 1, 2, 8, 8, 0, '[input_3] of "Low Income" students, or [input_3]% were proficient on the [category_name] CRT.  The concepts and objectives on which "Low Income" students did not preform well were: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 1, 1, 2, 9, 8, 0, '[input_3] of "L.E.P." students, or [input_3]% were proficient on the [category_name] CRT.  The concepts and objectives on which "L.E.P." students did not preform well were: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 1, 1, 2, 10, 8, 0, '[input_3] of students with disabilities, or [input_3]% were proficient on the [category_name] CRT.  The concepts and objectives on which students with disabilities did not preform well were: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 1, -1, 2, 1, 3, 0, 'Last year the overall number of students proficient on the [category_name] CRT was [[ select [answer_0] from answer cross join question using (questionid) where csipid = [csipid] and categoryid = [categoryid] and part = 1 and version = 2 and order_num = 2 ]] or [[ select [answer_1] from answer cross join question using (questionid) where csipid = [csipid] and categoryid = [categoryid] and part = 1 and version = 2 and order_num = 2 ]]%.  Our overall proficiency goal for [year_name] is: ' ),
-( 1, -1, 2, 2, 3, 0, 'Last year [[ select [answer_0] from answer cross join question using (questionid) where csipid = [csipid] and categoryid = [categoryid] and part = 1 and version = 2 and order_num = 3 ]] "Asian" students were proficient on the [category_name] CRT.  Our goal is to increase the number of proficient "Asian" students to: ' ),
-( 1, -1, 2, 3, 3, 0, 'Last year [[ select [answer_0] from answer cross join question using (questionid) where csipid = [csipid] and categoryid = [categoryid] and part = 1 and version = 2 and order_num = 4 ]] "Black" students were proficient on the [category_name] CRT.  Our goal is to increase the number of proficient "Black" students to: ' ),
-( 1, -1, 2, 4, 3, 0, 'Last year [[ select [answer_0] from answer cross join question using (questionid) where csipid = [csipid] and categoryid = [categoryid] and part = 1 and version = 2 and order_num = 5 ]] "Hispanic" students were proficient on the [category_name] CRT.  Our goal is to increase the number of proficient "Hispanic" students to: ' ),
-( 1, -1, 2, 5, 3, 0, 'Last year [[ select [answer_0] from answer cross join question using (questionid) where csipid = [csipid] and categoryid = [categoryid] and part = 1 and version = 2 and order_num = 6 ]] "Indian" students were proficient on the [category_name] CRT.  Our goal is to increase the number of proficient "Indian" students to: ' ),
-( 1, -1, 2, 6, 3, 0, 'Last year [[ select [answer_0] from answer cross join question using (questionid) where csipid = [csipid] and categoryid = [categoryid] and part = 1 and version = 2 and order_num = 7 ]] "Pacific Islander" students were proficient on the [category_name] CRT.  Our goal is to increase the number of proficient "Pacific Islander" students to: ' ),
-( 1, -1, 2, 7, 3, 0, 'Last year [[ select [answer_0] from answer cross join question using (questionid) where csipid = [csipid] and categoryid = [categoryid] and part = 1 and version = 2 and order_num = 8 ]] "Low Income" students were proficient on the [category_name] CRT.  Our goal is to increase the number of proficient "Low Income" students to: ' ),
-( 1, -1, 2, 8, 3, 0, 'Last year [[ select [answer_0] from answer cross join question using (questionid) where csipid = [csipid] and categoryid = [categoryid] and part = 1 and version = 2 and order_num = 9 ]] "L.E.P." students were proficient on the [category_name] CRT.  Our goal is to increase the number of proficient "L.E.P." students to: ' ),
-( 1, -1, 2, 9, 3, 0, 'Last year [[ select [answer_0] from answer cross join question using (questionid) where csipid = [csipid] and categoryid = [categoryid] and part = 1 and version = 2 and order_num = 10 ]] students with disabilities were proficient on the [category_name] CRT.  Our goal is to increase the number of proficient students with disabilities to: ' );
-
-UPDATE category SET question_group = 1 WHERE version = 2 AND category_class = 'SAP' AND ( gradelevel < 6 AND ( gradelevel > 0 OR loc_cat_subcat = 'ELEM' ) );
-
-UPDATE category SET question_group = 0 WHERE version = 2 AND category_class = 'SAP' AND ( category_name = 'Math 1' );
-
-INSERT INTO question ( question_group, part, version, order_num, type, question_option_group, question ) VALUES ( 2, 1, 2, 1, 8, 0, 'Overall [input_3] of students, which represents [input_3]% were proficient in [category_name].  The concepts and objectives on which our students preformed well were: 
-[input_1]' ),
-( 2, 1, 2, 2, 8, 0, '[input_3]% of our students are "Asian".  [input_3] number or  [input_3]% of "Asian" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 2, 1, 2, 3, 8, 0, '[input_3]% of our students are "Black".  [input_3] number or  [input_3]% of "Black" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 2, 1, 2, 4, 8, 0, '[input_3]% of our students are "Hispanic".  [input_3] number or  [input_3]% of "Hispanic" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 2, 1, 2, 5, 8, 0, '[input_3]% of our students are "Indian".  [input_3] number or  [input_3]% of "Indian" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 2, 1, 2, 6, 8, 0, '[input_3]% of our students are "Pacific Islander".  [input_3] number or  [input_3]% of "Pacific Islander" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 2, 1, 2, 7, 8, 0, '[input_3]% of our students are "Low Income".  [input_3] number or  [input_3]% of "Low Income" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 2, 1, 2, 8, 8, 0, '[input_3]% of our students are "L.E.P.".  [input_3] number or  [input_3]% of "L.E.P." students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 2, 1, 2, 9, 8, 0, '[input_3]% of our students are students with disabilities.  [input_3] number or  [input_3]% of students with disabilities students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 2, -1, 2, 1, 9, 0, 'The AYP Proficiency Goal for Language Arts (Grades 3-8) is 83%.
-
-To accomplish the AYP Proficiency Goals the following subgoals will be achieved:' );
-
-UPDATE category SET question_group = 2 WHERE version = 2 AND category_class = 'CSIP' AND category_name = 'Language Arts - School Wide' AND loc_cat_subcat = 'ELEM,INT,MID';
-
-INSERT INTO question ( question_group, part, version, order_num, type, question_option_group, question ) VALUES ( 3, 1, 2, 1, 8, 0, 'Overall [input_3] of students, which represents [input_3]% were proficient in [category_name].  The concepts and objectives on which our students preformed well were: 
-[input_1]' ),
-( 3, 1, 2, 2, 8, 0, '[input_3]% of our students are "Asian".  [input_3] number or  [input_3]% of "Asian" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 3, 1, 2, 3, 8, 0, '[input_3]% of our students are "Black".  [input_3] number or  [input_3]% of "Black" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 3, 1, 2, 4, 8, 0, '[input_3]% of our students are "Hispanic".  [input_3] number or  [input_3]% of "Hispanic" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 3, 1, 2, 5, 8, 0, '[input_3]% of our students are "Indian".  [input_3] number or  [input_3]% of "Indian" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 3, 1, 2, 6, 8, 0, '[input_3]% of our students are "Pacific Islander".  [input_3] number or  [input_3]% of "Pacific Islander" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 3, 1, 2, 7, 8, 0, '[input_3]% of our students are "Low Income".  [input_3] number or  [input_3]% of "Low Income" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 3, 1, 2, 8, 8, 0, '[input_3]% of our students are "L.E.P.".  [input_3] number or  [input_3]% of "L.E.P." students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 3, 1, 2, 9, 8, 0, '[input_3]% of our students are students with disabilities.  [input_3] number or  [input_3]% of students with disabilities students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 3, -1, 2, 1, 9, 0, 'The AYP Proficiency Goal for Math (Grades 3-8) is 78%.
-
-To accomplish the AYP Proficiency Goals the following subgoals will be achieved:' );
-
-UPDATE category SET question_group = 3 WHERE version = 2 AND category_class = 'CSIP' AND category_name = 'Math - School Wide' AND loc_cat_subcat = 'ELEM,INT,MID';
-
-INSERT INTO question ( question_group, part, version, order_num, type, question_option_group, question ) VALUES ( 4, 1, 2, 1, 8, 0, 'Overall [input_3] of students, which represents [input_3]% were proficient in [category_name].  The concepts and objectives on which our students preformed well were: 
-[input_1]' ),
-( 4, 1, 2, 2, 8, 0, '[input_3]% of our students are "Asian".  [input_3] number or  [input_3]% of "Asian" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 4, 1, 2, 3, 8, 0, '[input_3]% of our students are "Black".  [input_3] number or  [input_3]% of "Black" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 4, 1, 2, 4, 8, 0, '[input_3]% of our students are "Hispanic".  [input_3] number or  [input_3]% of "Hispanic" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 4, 1, 2, 5, 8, 0, '[input_3]% of our students are "Indian".  [input_3] number or  [input_3]% of "Indian" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 4, 1, 2, 6, 8, 0, '[input_3]% of our students are "Pacific Islander".  [input_3] number or  [input_3]% of "Pacific Islander" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 4, 1, 2, 7, 8, 0, '[input_3]% of our students are "Low Income".  [input_3] number or  [input_3]% of "Low Income" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 4, 1, 2, 8, 8, 0, '[input_3]% of our students are "L.E.P.".  [input_3] number or  [input_3]% of "L.E.P." students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 4, 1, 2, 9, 8, 0, '[input_3]% of our students are students with disabilities.  [input_3] number or  [input_3]% of students with disabilities students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 4, -1, 2, 1, 3, 0, 'Last year [[ select [answer_0] from answer cross join question using (questionid) where csipid = [csipid] and categoryid = [categoryid] and part = 1 and version = 2 and order_num = 1 ]] of our students or [[ select [answer_1] from answer cross join question using (questionid) where csipid = [csipid] and categoryid = [categoryid] and part = 1 and version = 2 and order_num = 1 ]]% were proficient on the Science CRT.  Our goal is to increase the number of proficient students to: ' );
-
-UPDATE category SET question_group = 4 WHERE version = 2 AND category_class = 'CSIP' AND category_name = 'Science - School Wide';
-
-INSERT INTO question ( question_group, part, version, order_num, type, question_option_group, question ) VALUES ( 5, 1, 2, 1, 8, 0, 'Overall [input_3] of students, which represents [input_3]% were proficient in [category_name].  The concepts and objectives on which our students preformed well were: 
-[input_1]' ),
-( 5, 1, 2, 2, 8, 0, '[input_3]% of our students are "Asian".  [input_3] number or  [input_3]% of "Asian" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 5, 1, 2, 3, 8, 0, '[input_3]% of our students are "Black".  [input_3] number or  [input_3]% of "Black" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 5, 1, 2, 4, 8, 0, '[input_3]% of our students are "Hispanic".  [input_3] number or  [input_3]% of "Hispanic" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 5, 1, 2, 5, 8, 0, '[input_3]% of our students are "Indian".  [input_3] number or  [input_3]% of "Indian" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 5, 1, 2, 6, 8, 0, '[input_3]% of our students are "Pacific Islander".  [input_3] number or  [input_3]% of "Pacific Islander" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 5, 1, 2, 7, 8, 0, '[input_3]% of our students are "Low Income".  [input_3] number or  [input_3]% of "Low Income" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 5, 1, 2, 8, 8, 0, '[input_3]% of our students are "L.E.P.".  [input_3] number or  [input_3]% of "L.E.P." students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 5, 1, 2, 9, 8, 0, '[input_3]% of our students are students with disabilities.  [input_3] number or  [input_3]% of students with disabilities students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 5, -1, 2, 1, 9, 0, 'The AYP Proficiency Goal for Language Arts (Grade 10) is 82%.
-
-To accomplish the AYP Proficiency Goals the following subgoals will be achieved:' );
-
-UPDATE category SET question_group = 5 WHERE version = 2 AND category_class = 'CSIP' AND category_name = 'Language Arts - School Wide' AND loc_cat_subcat = 'HS';
-
-INSERT INTO question ( question_group, part, version, order_num, type, question_option_group, question ) VALUES ( 6, 1, 2, 1, 8, 0, 'Overall [input_3] of students, which represents [input_3]% were proficient in [category_name].  The concepts and objectives on which our students preformed well were: 
-[input_1]' ),
-( 6, 1, 2, 2, 8, 0, '[input_3]% of our students are "Asian".  [input_3] number or  [input_3]% of "Asian" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 6, 1, 2, 3, 8, 0, '[input_3]% of our students are "Black".  [input_3] number or  [input_3]% of "Black" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 6, 1, 2, 4, 8, 0, '[input_3]% of our students are "Hispanic".  [input_3] number or  [input_3]% of "Hispanic" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 6, 1, 2, 5, 8, 0, '[input_3]% of our students are "Indian".  [input_3] number or  [input_3]% of "Indian" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 6, 1, 2, 6, 8, 0, '[input_3]% of our students are "Pacific Islander".  [input_3] number or  [input_3]% of "Pacific Islander" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 6, 1, 2, 7, 8, 0, '[input_3]% of our students are "Low Income".  [input_3] number or  [input_3]% of "Low Income" students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 6, 1, 2, 8, 8, 0, '[input_3]% of our students are "L.E.P.".  [input_3] number or  [input_3]% of "L.E.P." students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 6, 1, 2, 9, 8, 0, '[input_3]% of our students are students with disabilities.  [input_3] number or  [input_3]% of students with disabilities students were not proficient in [category_name].  These students did not preform well on the following concepts / objectives: 
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-[input_1]' ),
-( 6, -1, 2, 1, 9, 0, 'The AYP Proficiency Goal for Math (Grades 10-12) is 72%.
-
-To accomplish the AYP Proficiency Goals the following subgoals will be achieved:' );
-
-UPDATE category SET question_group = 6 WHERE version = 2 AND category_class = 'CSIP' AND category_name = 'Math - School Wide' AND loc_cat_subcat = 'HS';
-
-INSERT INTO question ( question_group, part, version, order_num, type, question_option_group, question ) VALUES ( 7, 1, 2, 1, 1, 0, 'We have reviewed student results from the literacy sections of last year''s K-post assessment.  A majority of our students did well on the following concepts / skills: ' ),
-( 7, 1, 2, 2, 1, 0, 'We have reviewed student results from the literacy sections of last year''s K-pre assessment.  A majority of our students will need instruction in the following concepts / skills: ' ),
-( 7, 1, 2, 3, 2, 1, 'According to the results of the literacy sections of the K-pre test, our lowest performing subgroup is: ' ),
-( 7, -1, 2, 1, 9, 0, 'Our goal is to have each student score 100% on the literacy sections of the K-post test next spring.
-To accomplish this we have set the following sub-goals: ' );
-
-UPDATE category SET question_group = 7 WHERE version = 2 AND category_class = 'SAP' AND category_name = 'Kindergarten Literacy';
-
-INSERT INTO question ( question_group, part, version, order_num, type, question_option_group, question ) VALUES ( 8, 1, 2, 1, 1, 0, 'We have reviewed student results from the math sections of last year''s K-post assessment.  A majority of our students did well on the following concepts / skills: ' ),
-( 8, 1, 2, 2, 1, 0, 'We have reviewed student results from the math sections of last year''s K-pre assessment.  A majority of our students will need instruction in the following concepts / skills: ' ),
-( 8, 1, 2, 3, 2, 1, 'According to the results of the math sections of the K-pre test, our lowest performing subgroup is: ' ),
-( 8, -1, 2, 1, 9, 0, 'Our goal is to have each student score 100% on the math sections of the K-post test next spring.
-To accomplish this we have set the following sub-goals: ' );
-
-UPDATE category SET question_group = 8 WHERE version = 2 AND category_class = 'SAP' AND category_name = 'Kindergarten Math';
-
-INSERT INTO question ( question_group, part, version, order_num, type, question_option_group, question ) VALUES ( 9, 1, 2, 1, 8, 0, 'According to the DRA assessments done at the first of the year (or end of last year) [input_3] number, or [input_3]% of 1st graders are reading on or above grade level.  The disaggregated results are as follows:
-(Type NA in # &amp; % boxes if there are no members of the subgroup)
-<table><tr><th>Subgroup</th><th># on or above</th><th>%</th></tr><tbody><tr><td>Asian</td><td>[input_3]</td><td>[input_3]%</td></tr><tr><td>Black</td><td>[input_3]</td><td>[input_3]%</td></tr><tr><td>Hispanic</td><td>[input_3]</td><td>[input_3]%</td></tr><tr><td>Indian</td><td>[input_3]</td><td>[input_3]%</td></tr><tr><td>Pacific Islander</td><td>[input_3]</td><td>[input_3]%</td></tr><tr><td>L.E.P.</td><td>[input_3]</td><td>[input_3]%</td></tr><tr><td>Low Income</td><td>[input_3]</td><td>[input_3]%</td></tr><tr><td>SPED</td><td>[input_3]</td><td>[input_3]%</td></tr></tbody></table>
-Note: 1 or less enter N/A' ),
-( 9, -1, 2, 1, 8, 0, 'At the end of the year [input_3] number of students, or [input_3]%, will read on or above level according to the DRA.' );
-
-UPDATE category SET question_group = 9 WHERE version = 2 AND category_class = 'SAP' AND category_name = 'Language Arts 1';
-
-UPDATE category SET question_group = 1 WHERE version = 2 AND category_class = 'SAP' AND ( gradelevel >= 6 OR loc_cat_subcat LIKE '%HS%' OR loc_cat_subcat LIKE '%AH%' OR loc_cat_subcat LIKE '%MID%' OR loc_cat_subcat LIKE '%INT%' OR loc_cat_subcat LIKE '%SEC%' );
-
-UPDATE category SET question_group = 0 WHERE version = 2 AND category_name = 'Algebra II';
-
-UPDATE category SET category_class = 'SAP', needs_community_approve = 0, needs_district_approve = 0 WHERE version = 2 AND loc_cat_subcat = 'SEC' AND category_name IN ( 'Career and Technology', 'Health / PE', 'Social Studies', 'Foreign Language', 'Fine Arts' );
-
+INSERT INTO course_question_links (courseid,question_group,part) (SELECT courseid,question_group,3 FROM course WHERE question_group = 3);

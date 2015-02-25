@@ -1,16 +1,6 @@
 <?php
 
 $updates = array(
-  '0001-add_course_order',
-  '0001-add_othr_category_class',
-  '0002-v3_categories',
-  '0003-v3_questions',
-  '0004-v3_link_category_questions',
-  '0005-custom_goal_option',
-  '0006-category_for_dhs',
-  '0007-due_dates_as_char',
-  '0008-v6_questions',
-  '0009-v7_questions',
 );
 $results = array();
 
