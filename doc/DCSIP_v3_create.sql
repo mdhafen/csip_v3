@@ -6,8 +6,7 @@ CREATE TABLE `user` (
 	`password` BLOB NOT NULL,
 	`salt` VARCHAR(16) NOT NULL DEFAULT 'DEADBEEF',
 	`role` INT(4) NOT NULL DEFAULT 0,
-	PRIMARY KEY (`userid`),
-	KEY (`locationid`)
+	PRIMARY KEY (`userid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `location` (
@@ -30,7 +29,7 @@ CREATE TABLE `year` (
 	`yearid` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`year_name` VARCHAR(64) NOT NULL DEFAULT '',
 	`version` INT(10) UNSIGNED NOT NULL DEFAULT 0,
-	`due_dates` TEXT NOT NULL DEFAULT '',
+	`due_dates` TEXT NOT NULL,
 	PRIMARY KEY (`yearid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -84,7 +83,7 @@ CREATE TABLE `question_options` (
 	`option_value` VARCHAR(64) NOT NULL DEFAULT '',
 	`option_label` VARCHAR(128) NOT NULL DEFAULT '',
 	PRIMARY KEY (`question_option_id`),
-	KEY (`question_option_group`,`option_value`)
+	KEY (`option_group`,`option_value`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `course_question_links` (

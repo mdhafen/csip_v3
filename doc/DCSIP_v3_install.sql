@@ -62,9 +62,3 @@ EFFECTIVE TEAMS analyze the results of their common formative assessment (CFA) a
   ( 7, 3, 17, 1, '<b>End of Year Reflection</b><br>
 <p>Do our extension activities provide deeper learning for those students who already know it?  What adjustments can we make to provide for better extended learning opportunities?</p>
 [input]');
-
-INSERT INTO course_question_links (courseid,question_group,part) (SELECT courseid,question_group,1 FROM course WHERE question_group = 1);
-
-INSERT INTO course_question_links (courseid,question_group,part) (SELECT courseid,question_group,2 FROM course WHERE question_group = 2);
-
-INSERT INTO course_question_links (courseid,question_group,part) (SELECT courseid,question_group,3 FROM course WHERE question_group = 3);
