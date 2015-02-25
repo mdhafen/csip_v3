@@ -10,10 +10,10 @@ $config = array(
 	'trusted_proxies'   => array(),
 	'database'          => array(
 		'engine' => 'mysql',
-		'host'   => 'mysql.washk12.org',
-		'schema' => 'csip_v3',
-		'user'   => 'csip',
-		'passwd' => 'w3bm@st3r',
+		'host'   => '',
+		'schema' => '',
+		'user'   => '',
+		'passwd' => '',
 	),
 	'auth' => array(
 		1   => "load_csip",
