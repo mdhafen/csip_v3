@@ -1,7 +1,7 @@
 <?php
 require_once( $config['base_dir'] ."/lib/data.phpm" );
 
-require_once( 'category.phpm' );
+require_once( 'course.phpm' );
 
 function loc_is_demo( $field, $value, $csip = null ) {
   if ( $csip && isset( $csip['loc_demo'] ) ) {
@@ -11,15 +11,12 @@ function loc_is_demo( $field, $value, $csip = null ) {
 
     $query = "
  SELECT loc_demo
-   FROM activity
-  CROSS JOIN goal USING ( goalid )
-  CROSS JOIN csip USING ( csipid )
+        FROM csip
   CROSS JOIN location USING ( locationid )
 ";
     switch ( $field ) {
-    case 'activity' : $query .= "WHERE activityid = :value"; break;
-    case 'goal'     : $query .= "WHERE goalid = :value"; break;
     case 'csip'     : $query .= "WHERE csipid = :value"; break;
+    case 'location' : $query .= "WHERE locationid = :value"; break;
     default: $field = null;
     }
 
@@ -37,14 +34,11 @@ function loc_is_demo( $field, $value, $csip = null ) {
 function new_year( $new ) {
   $dbh = db_connect();
 
-  $query = "INSERT INTO year ( year_name, version, sap_due_date, csip_due_date, board_due_date, district_due_date ) VALUES ( :name, :version, :sap_due, :csip_due, :board_due, :district_due )";
+  $query = "INSERT INTO year ( year_name, version, due_dates ) VALUES ( :name, :version, :due_dates )";
   $sth = $dbh->prepare( $query );
   $sth->bindValue( ':name', $new['year_name'] );
   $sth->bindValue( ':version', $new['version'] );
-  $sth->bindValue( ':sap_due', $new['sap_due_date'] );
-  $sth->bindValue( ':csip_due', $new['csip_due_date'] );
-  $sth->bindValue( ':board_due', $new['board_due_date'] );
-  $sth->bindValue( ':district_due', $new['district_due_date'] );
+  $sth->bindValue( ':due_dates', $new['due_dates'] );
 
   $sth->execute();
   $yearid = $dbh->lastInsertId();
@@ -52,12 +46,12 @@ function new_year( $new ) {
   return $yearid;
 }
 
-function get_csips( $locationid = 0, $district = 0, $history = 3 ) {
+function get_csips( $locations = array(), $district = 0, $history = 3 ) {
   $dbh = db_connect();
 
   $query = "SELECT * FROM csip CROSS JOIN year USING (yearid) CROSS JOIN location USING (locationid) ";
-  if ( ! $district ) {
-    $query .= "WHERE csip.locationid = ". $locationid ." ";
+  if ( ! $district && !empty($locations) ) {
+    $query .= "WHERE csip.locationid IN (". implode( ',', $locations ) .") ";
   }
   if ( $history ) {
     if ( $district ) {
@@ -120,7 +114,7 @@ function new_csip( $year, $locationid ) {
 }
 
 function load_csip( $csipid = 0 ) {
-  $cisp = array();
+  $csip = array();
   if ( ! $csipid ) {
     return;
   }
@@ -139,57 +133,44 @@ CROSS JOIN year USING (yearid)
 
   $csip = $sth->fetch( PDO::FETCH_ASSOC );
   $csip = stripslashes_array( $csip );
+  $courses = array();
 
-  // category_specifics can stomp categoryid, so make sure it comes through
   $query = "
-   SELECT *,category.categoryid 
-     FROM category 
-LEFT JOIN category_specifics 
-       ON category.categoryid = category_specifics.categoryid 
-      AND csipid = :cid 
-LEFT JOIN location_category_links
-       ON category.categoryid = location_category_links.categoryid
-    WHERE version = :ver
-      AND ( ( gradelevel >= :mingrade AND gradelevel <= :maxgrade )
-       OR ( loc_cat_subcat = :loc_loc OR loc_cat_subcat LIKE :loc_cat OR loc_cat_subcat LIKE :loc_subcat )
-       OR ( loc_cat_subcat = 'ALL' )
-       OR ( loc_cat_subcat = 'NA' AND gradelevel = 0 )
-       OR ( location_category_links.locationid = :loc_link ) )
- ORDER BY category.category_class, category.category_type, category.course_group, category.course_group_order, category.gradelevel, category.category_name
+    SELECT course.* 
+      FROM course
+ LEFT JOIN location_course_links USING (courseid)
+     WHERE version = :ver
+       AND ( ( maxgrade >= :mingrade AND mingrade <= :maxgrade )
+        OR ( location_course_links.locationid = :loc_link ) )
+  ORDER BY course.course_name
 ";
   $sth = $dbh->prepare( $query );
-  $sth->bindValue( ':cid', $csipid );
   $sth->bindValue( ':ver', $csip['version'] );
   $sth->bindValue( ':mingrade', $csip['mingrade'] );
   $sth->bindValue( ':maxgrade', $csip['maxgrade'] );
-  $sth->bindValue( ':loc_loc', $csip['locationid'] );
-  $sth->bindValue( ':loc_cat', "%$csip[loc_category]%" );
-  $sth->bindValue( ':loc_subcat', "%$csip[loc_subcategory]%" );
   $sth->bindValue( ':loc_link', $csip['locationid'] );
   $sth->execute();
-  $question_groups = array();
   while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
-    $csip['category'][ $row['categoryid'] ] = stripslashes_array( $row );
-    $question_groups[ $row['question_group'] ]++;
+    $csip['course'][ $row['courseid'] ] = stripslashes_array( $row );
+    $courses[] = $row['courseid'];
   }
 
-  $question_groups = implode( ',', array_keys( (array) $question_groups ) );
+  $courselist = implode( ',',$courses );
   $query = "
-  SELECT * 
-    FROM question 
-   WHERE question_group IN ($question_groups)
-     AND version = :ver
-ORDER BY question_group,order_num
+     SELECT *
+       FROM question 
+ CROSS JOIN course_question_links using (question_group)
+      WHERE version = :ver
+        AND courseid IN ($courselist)
+   ORDER BY question_group,order_num
 ";
   $sth = $dbh->prepare( $query );
   $sth->bindValue( ':ver', $csip['version'] );
   $sth->execute();
   $csip['parts'] = 0;
   while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
-    $csip['question_group'][ $row['question_group'] ][] = stripslashes_array( $row );
-    if ( $row['part'] > $csip['parts'] ) {
-      $csip['parts'] = $row['part'];
-    }
+    $csip['questions'][ $row['questionid'] ] = stripslashes_array( $row );
+    $csip['course'][ $row['courseid'] ]['questions'][ $row['part'] ][ $row['questionid'] ] = array();
   }
 
   $query = "SELECT * FROM answer WHERE csipid = :cid";
@@ -198,42 +179,7 @@ ORDER BY question_group,order_num
   $sth->execute();
   while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
     // can't stripslashes here because the answer might be serialized
-    $csip['category'][ $row['categoryid'] ]['answer'][ $row['answerid'] ] = $row;
-  }
-
-  $query = "SELECT * FROM goal WHERE csipid = :cid";
-  $sth = $dbh->prepare( $query );
-  $sth->bindValue( ':cid', $csipid );
-  $sth->execute();
-  while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
-    $csip['category'][ $row['categoryid'] ]['goal'][ $row['goalid'] ] = stripslashes_array( $row );
-  }
-
-  $query = "
-    SELECT activity.*,goal.categoryid 
-      FROM activity 
-CROSS JOIN goal USING (goalid) 
-     WHERE csipid = :cid
-";
-  $sth = $dbh->prepare( $query );
-  $sth->bindValue( ':cid', $csipid );
-  $sth->execute();
-  while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
-    $csip['category'][ $row['categoryid'] ]['goal'][ $row['goalid'] ]['activity'][ $row['activityid'] ] = stripslashes_array( $row );
-  }
-
-  $query = "
-    SELECT activity_people.*,goal.goalid,goal.categoryid
-      FROM activity_people
-CROSS JOIN activity USING (activityid)
-CROSS JOIN goal USING (goalid)
-     WHERE csipid = :cid
-";
-  $sth = $dbh->prepare( $query );
-  $sth->bindValue( ':cid', $csipid );
-  $sth->execute();
-  while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
-    $csip['category'][ $row['categoryid'] ]['goal'][ $row['goalid'] ]['activity'][ $row['activityid'] ]['activity_people'][ $row['activity_people_id'] ] = stripslashes_array( $row );
+    $csip['course'][ $row['courseid'] ]['questions'][ $row['part'] ][ $row['questionid'] ][ $row['answerid'] ] = $row;
   }
 
   return $csip;
@@ -260,68 +206,6 @@ function get_csip_locationid( $csipid = 0 ) {
   return $csip['locationid'];
 }
 
-function get_category_list( $csip = 0 ) {
-  if ( ! $csip ) {
-    return;
-  }
-
-  $question_groups = array();
-  $list = array();
-
-  foreach ( (array) $csip['category'] as $cat ) {
-    $parts = array();
-    if ( $question_groups[ $cat['question_group'] ] ) {
-      $parts = $question_groups[ $cat['question_group'] ];
-    } else {
-      foreach ( (array) $csip['question_group'][ $cat['question_group'] ] as $quest ) {
-	if ( $quest['part'] > 0 ) {
-	  $parts[ $quest['part'] ] = $quest['part'];
-	}
-      }
-      $question_groups[ $cat['question_group'] ] = $parts;
-    }
-
-    if ( cat_has_previous( $cat['categoryid'], $csip['csipid'] ) ) {
-      array_unshift( $parts, "P" );
-      $list['PREVIOUS'] = 1;
-    }
-
-    list( $progress, $report ) = cat_get_goal_completion( $cat['categoryid'], $csip['csipid'] );
-
-    if ( $cat['category_group'] ) {
-      $list[ $cat['category_class'] ][ 'group' ][ $cat['category_group'] ][] = array(
-		'categoryid' => $cat['categoryid'],
-		'category_name' => $cat['category_name'],
-		'category_type' => $cat['category_type'],
-		'type_target' => $cat['type_target'],
-		'category_note' => $cat['category_note'],
-		'needs_principal_approve' => $cat['needs_principal_approve'],
-		'needs_community_approve' => $cat['needs_community_approve'],
-		'needs_district_approve' => $cat['needs_district_approve'],
-		'progress_percent' => $progress,
-		'report_percent' => $report,
-		'parts' => $parts,
-      );
-    } else {
-      $list[ $cat['category_class'] ][] = array(
-		'categoryid' => $cat['categoryid'],
-		'category_name' => $cat['category_name'],
-		'category_type' => $cat['category_type'],
-		'type_target' => $cat['type_target'],
-		'category_note' => $cat['category_note'],
-		'needs_principal_approve' => $cat['needs_principal_approve'],
-		'needs_community_approve' => $cat['needs_community_approve'],
-		'needs_district_approve' => $cat['needs_district_approve'],
-		'progress_percent' => $progress,
-		'report_percent' => $report,
-		'parts' => $parts,
-      );
-    }
-  }
-
-  return $list;
-}
-
 function get_report_list( $csip = 0 ) {
   if ( ! $csip ) {
     return;
@@ -329,24 +213,14 @@ function get_report_list( $csip = 0 ) {
 
   $list = array();
 
-  foreach ( (array) $csip['category'] as $cat ) {
-    $parts = array();
-    if ( cat_completion( $cat['categoryid'], $csip ) || $cat['category_type'] == 1 ) {
-      $list[ $cat['categoryid'] ] = $cat;
-      foreach ( (array) $csip['question_group'][ $cat['question_group'] ] as $ques ) {
-	if ( ! isset( $parts[ $ques['part'] ] ) ) {
-	  $parts[ $ques['part'] ] = cat_part_completion( $cat['categoryid'], $ques['part'], $csip );
-	}
-	if ( $parts[ $ques['part'] ] ) {
-	  $answer = '';
-	  $answers = $csip['category'][ $cat['categoryid'] ]['answer'];
-	  foreach ( (array) $answers as $ans ) {
-	    if ( $ans['questionid'] == $ques['questionid'] ) {
-	      $answer = $ans;
-	      break;
-	    }
+  foreach ( (array) $csip['course'] as $course ) {
+    if ( course_completion( $course['courseid'], $csip ) ) {
+      $list[ $course['courseid'] ] = $course;
+      foreach ( (array) $course['questions'] as $part => $questions ) {
+	if ( course_part_completion($course['courseid'],$part,$csip) ) {
+          foreach ( (array) $questions as $questionid => $answer ) {
+            $list[ $course['courseid'] ]['questions'][ $part ][ $questionid ] = course_get_html_report( $csip['questions'][$questionid], $answer, $course['courseid'], $csip );
 	  }
-	  $list[ $cat['categoryid'] ]['part'][ $ques['part'] ][] = cat_get_html_report( $ques, $answer, $cat['categoryid'], $csip );
 	}
       }
     }

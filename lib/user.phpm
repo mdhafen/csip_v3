@@ -18,6 +18,7 @@ function user_by_userid( $userid ) {
 	       'role' => $row['role'],
 	       'salt' => $row['salt'],
 	       'password' => $row['password'],
+	       'locations' => user_locations( $row['userid'] ),
 	       );
 }
 
@@ -37,7 +38,127 @@ function user_by_username( $username ) {
 	       'role' => $row['role'],
 	       'salt' => $row['salt'],
 	       'password' => $row['password'],
+	       'locations' => user_locations( $row['userid'] ),
 	       );
+}
+
+function user_locations( $userid ) {
+  $result = array();
+  $dbh = db_connect();
+  $query = "SELECT * FROM user_location_links CROSS JOIN location USING (locationid) WHERE userid = :uid";
+  $sth = $dbh->prepare( $query );
+  $sth->bindParam( ':uid', $userid );
+  $sth->execute();
+
+  while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+    $row = stripslashes_array( $row );
+    $result[ $row['locationid'] ] = $row;
+  }
+
+  return $result;
+}
+
+function all_users() {
+  $dbh = db_connect();
+
+  $query = "SELECT * FROM user ORDER BY fullname,username";
+  $sth = $dbh->prepare( $query );
+  $sth->execute();
+
+  while ( $row = $sth->fetch() ) {
+    $row = stripslashes_array( $row );
+    $row['locations'] = user_locations( $row['userid'] );
+    $result[] = $row;
+  }
+
+  return $result;
+}
+
+function all_locations() {
+  $dbh = db_connect();
+
+  $query = "SELECT * FROM location ORDER BY name";
+  $sth = $dbh->prepare( $query );
+  $sth->execute();
+
+  while ( $row = $sth->fetch() ) {
+    $result[] = stripslashes_array( $row );
+  }
+
+  return $result;
+}
+
+function update_user( $userid, $update ) {
+  $dbh = db_connect();
+
+  if ( $userid ) {
+    $query = "UPDATE user SET ";
+    foreach ( $update as $field => $value ) {
+      $query .= "$field = ?, ";
+    }
+    $query = rtrim( $query, ", " );
+    $query .= "WHERE userid = ". $dbh->quote( $userid );
+  } else {
+    $query = "INSERT INTO user (username,fullname,email,role,password,salt) VALUES (?,?,?,?,?,?)";
+  }
+  $sth = $dbh->prepare( $query );
+  $sth->execute( array_values( $updated ) );
+
+  if ( ! $userid ) {
+    $userid = $dbh->lastInsertId();
+  }
+
+  return $userid;
+}
+
+function update_location( $locationid, $update ) {
+  $dbh = db_connect();
+
+  if ( $locationid ) {
+    $query = "UPDATE location SET ";
+    foreach ( $update as $field => $value ) {
+      $query .= "$field = ?, ";
+    }
+    $query = rtrim( $query, ", " );
+    $query .= "WHERE locationid = ". $dbh->quote( $locationid );
+  } else {
+    $query = "INSERT INTO location (locationid,name,mingrade,maxgrade,loc_demo) VALUES (?,?,?,?,?)";
+  }
+  $sth = $dbh->prepare( $query );
+  $sth->execute( array_values( $updated ) );
+
+  if ( ! $locationid ) {
+    $locationid = $dbh->lastInsertId();
+  }
+
+  return $locationid;
+}
+
+function delete_user( $userid ) {
+  $dbh = db_connect();
+
+  if ( $userid ) {
+    $query = "DELETE FROM user WHERE userid = :uid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':uid', $userid );
+    $sth->execute();
+  }
+}
+
+function delete_location( $locationid ) {
+  $dbh = db_connect();
+
+  if ( $locationid ) {
+    $query = "DELETE FROM user_location_links WHERE locationid = :lid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':lid', $locationid );
+    $sth->execute();
+
+    $query = "DELETE FROM location WHERE locationid = :lid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':lid', $locationid );
+    $sth->execute();
+  }
 }
 
 ?>

@@ -1,0 +1,503 @@
+<?php
+require_once( $config['base_dir'] ."/lib/data.phpm" );
+require_once( $config['base_dir'] ."/lib/input.phpm" );
+require_once( $config['base_dir'] ."/lib/security.phpm" );
+
+require_once( 'activity.phpm' );
+require_once( 'csips.phpm' );
+
+function course_get_html_input( $question = '', $answer = '', $courseid, $csip ) {
+  if ( ! $question ) {
+    return;
+  }
+
+  $html = '';
+  $type = $question['type'];
+  $questionid = $question['questionid'];
+  $q_text = mangle_question( $question, $courseid, $csip );
+  if ( $type != 8 && $answer['answer'] ) {
+    $answer['answer'] = stripslashes( $answer['answer'] );
+  }
+  switch ($type) {
+  case 1:
+    $input = "<textarea cols='60' rows='15' name='$questionid'>$answer[answer]</textarea>\n";
+    if ( ( $pos = strpos( $q_text, '[input]' ) ) !== false ) {
+      $html = substr_replace( $q_text, $input, $pos, strpos( $q_text, "]", $pos ) + 1 - $pos );
+    } else {
+      $html = "$q_text<br>\n$input";
+    }
+    break;
+
+  case 2:
+    $options = question_get_options( $question['question_option_id'] );
+    $input = "<select name='$questionid'>\n";
+    $input .= "<option value=''>(Select One)</option>\n";
+    foreach ( $options as $value => $label ) {
+      $selected = ( $value == $answer['answer'] ) ? "selected='selected'" : "";
+      $input .= "<option value='$value' $selected>$label</option>\n";
+    }
+    $input .= "</select>\n";
+    if ( ( $pos = strpos( $q_text, '[input]' ) ) !== false ) {
+      $html = substr_replace( $q_text, $input, $pos, strpos( $q_text, "]", $pos ) + 1 - $pos );
+    } else {
+      $html = "$q_text<br>\n$input";
+    }
+    break;
+
+  case 3:
+    $input = "<input type='text' size='3' name='$questionid' value='$answer[answer]'>";
+    if ( ( $pos = strpos( $q_text, '[input]' ) ) !== false ) {
+      $html = substr_replace( $q_text, $input, $pos, strpos( $q_text, "]", $pos ) + 1 - $pos );
+    } else {
+      $html = "$q_text<br>\n$input";
+    }
+    break;
+
+  case 4:
+    $input = "<input type='text' size='10' name='$questionid' value='$answer[answer]'>";
+    if ( ( $pos = strpos( $q_text, '[input]' ) ) !== false ) {
+      $html = substr_replace( $q_text, $input, $pos, strpos( $q_text, "]", $pos ) + 1 - $pos );
+    } else {
+      $html = "$q_text<br>\n$input";
+    }
+    break;
+
+  case 5:
+    $input = "<input type='text' size='40' name='$questionid' value='$answer[answer]'>";
+    if ( ( $pos = strpos( $q_text, '[input]' ) ) !== false ) {
+      $html = substr_replace( $q_text, $input, $pos, strpos( $q_text, "]", $pos ) + 1 - $pos );
+    } else {
+      $html = "$q_text<br>\n$input";
+    }
+    break;
+
+  case 6:
+    $input = "<input type='password' size='40' name='$questionid' value='$answer[answer]'>";
+    if ( ( $pos = strpos( $q_text, '[input]' ) ) !== false ) {
+      $html = substr_replace( $q_text, $input, $pos, strpos( $q_text, "]", $pos ) + 1 - $pos );
+    } else {
+      $html = "$q_text<br>\n$input";
+    }
+    break;
+
+  case 7:
+  default:
+    $selected = ( $answer['answer'] ) ? "checked='checked'" : "";
+    $input = "<input type='checkbox' name='$questionid' $selected>";
+    if ( ( $pos = strpos( $q_text, '[input]' ) ) !== false ) {
+      $html = substr_replace( $q_text, $input, $pos, strpos( $q_text, "]", $pos ) + 1 - $pos );
+    } else {
+      $html = "$input\n$q_text<br>\n";
+    }
+    break;
+
+  case 9:
+    $html = $q_text;
+    break;
+
+  case 8:
+    if ( $answer['answer'] ) {
+      $answer = unserialize( $answer['answer'] );
+      if ( ! is_array( $answer ) ) {
+        $answer = array();
+      }
+    } else {
+      $answer = array();
+    }
+    $answer = stripslashes_array( $answer );
+    $html = $q_text;
+    while ( ($pos = strpos( $html, '[input_' ) ) !== false ) {
+      $multi_type = substr( $html, $pos + 7, 2 );
+      $multi_type = rtrim( $multi_type, '] %' );
+      $ans = array_shift( $answer );
+
+      $text = "";
+
+      switch ($multi_type) {
+      case 1:
+	$text = "<textarea cols='60' rows='15' name='{$questionid}[]'>$ans</textarea>\n";
+	break;
+
+      case 2:
+	$options = question_get_options( $question['question_option_id'] );
+	$text = "<select name='{$questionid}[]'>\n";
+	$text .= "<option value=''>(Select One)</option>";
+	foreach ( $options as $value => $label ) {
+	  $selected = ( $value == $ans ) ? "selected='selected'" : "";
+	  $text .= "<option value='$value' $selected>$label</option>";
+	}
+	$text .= "</select>\n";
+	break;
+
+      case 3:
+	$text = "<input type='text' size='3' name='{$questionid}[]' value='$ans'>";
+	break;
+
+      case 4:
+	$text = "<input type='text' size='10' name='{$questionid}[]' value='$ans'>";
+	break;
+
+      case 5:
+	$text = "<input type='text' size='40' name='{$questionid}[]' value='$ans'>";
+	break;
+
+      case 7:
+      default:
+        // get value for checkbox by preg_search( '/[input_7_([^\]]+)]/' )
+        preg_match( '/\[input_7_([^\]]+)\]/', $html, $value );
+	$value = $value[1];
+        if ( $value == $ans ) {
+	  $selected = "checked='checked'";
+	} else {
+	  $selected = "";
+	  array_unshift( $answer, $ans );  // in case that answer is for the next question
+	}
+	$text = "<input type='checkbox' name='{$questionid}[]' value='$value' $selected>";
+	break;
+      }
+
+      $html = substr_replace( $html, $text, $pos, strpos( $html, "]", $pos ) + 1 - $pos );
+    }
+    break;
+  }
+
+  return $html;
+}
+
+function course_get_html_report( $question = '', $answer = '', $courseid, $csip ) {
+  if ( ! $question ) {
+    return;
+  }
+
+  $html = '';
+  $type = $question['type'];
+  $questionid = $question['questionid'];
+  $q_text = mangle_question( $question, $courseid, $csip );
+  if ( $type != 8 && $answer['answer'] ) {
+    $answer['answer'] = stripslashes( $answer['answer'] );
+  }
+  switch ($type) {
+  case 1:
+    $input = "<div class='report_answer_type_1'>$answer[answer]</div>\n";
+    if ( ( $pos = strpos( $q_text, '[input]' ) ) !== false ) {
+      $html = substr_replace( $q_text, $input, $pos, strpos( $q_text, "]", $pos ) + 1 - $pos );
+    } else {
+      $html = "$q_text<br>\n$input";
+    }
+    break;
+
+  case 2:
+    $input = "<div class='report_answer_type_2'>$answer[answer]</div>\n";
+    if ( ( $pos = strpos( $q_text, '[input]' ) ) !== false ) {
+      $html = substr_replace( $q_text, $input, $pos, strpos( $q_text, "]", $pos ) + 1 - $pos );
+    } else {
+      $html = "$q_text<br>\n$input";
+    }
+    break;
+
+  case 3:
+    $input = "<div class='report_answer_type_3'>$answer[answer]</div>\n";
+    if ( ( $pos = strpos( $q_text, '[input]' ) ) !== false ) {
+      $html = substr_replace( $q_text, $input, $pos, strpos( $q_text, "]", $pos ) + 1 - $pos );
+    } else {
+      $html = "$q_text<br>\n$input";
+    }
+    break;
+
+  case 4:
+    $input = "<div class='report_answer_type_4'>$answer[answer]</div>\n";
+    if ( ( $pos = strpos( $q_text, '[input]' ) ) !== false ) {
+      $html = substr_replace( $q_text, $input, $pos, strpos( $q_text, "]", $pos ) + 1 - $pos );
+    } else {
+      $html = "$q_text<br>\n$input";
+    }
+    break;
+
+  case 5:
+    $input = "<div class='report_answer_type_5'>$answer[answer]</div>\n";
+    if ( ( $pos = strpos( $q_text, '[input]' ) ) !== false ) {
+      $html = substr_replace( $q_text, $input, $pos, strpos( $q_text, "]", $pos ) + 1 - $pos );
+    } else {
+      $html = "$q_text<br>\n$input";
+    }
+    break;
+
+  case 6:
+    $input = "<div class='report_answer_type_6'>$answer[answer]</div>";
+    if ( ( $pos = strpos( $q_text, '[input]' ) ) !== false ) {
+      $html = substr_replace( $q_text, $input, $pos, strpos( $q_text, "]", $pos ) + 1 - $pos );
+    } else {
+      $html = "$q_text<br>\n$input";
+    }
+    break;
+
+  case 7:
+  default:
+    $selected = ( $answer['answer'] ) ? "checked='checked'" : "";
+    $input = "<input type='checkbox' disabled='disabled' $selected>";
+    if ( ( $pos = strpos( $q_text, '[input]' ) ) !== false ) {
+      $html = substr_replace( $q_text, $input, $pos, strpos( $q_text, "]", $pos ) + 1 - $pos );
+    } else {
+      $html = "$input\n$q_text<br>\n";
+    }
+    break;
+
+  case 9:
+    $html = $q_text;
+    break;
+
+  case 8:
+    $answer = unserialize( $answer['answer'] );
+    if ( ! is_array( $answer ) ) {
+      $answer = array();
+    }
+    $answer = stripslashes_array( $answer );
+    $html = $q_text;
+    while ( ($pos = strpos( $html, '[input_' ) ) !== false ) {
+      $multi_type = substr( $html, $pos + 7, 2 );
+      $multi_type = rtrim( $multi_type, '] %' );
+      $ans = array_shift( $answer );
+
+      $text = "";
+
+      switch ($multi_type) {
+      case 1:
+	$text = "<div class='report_answer_type_1'>$ans</div>\n";
+	break;
+
+      case 2:
+	$text = "<div class='report_answer_type_2'>$ans</div>";
+	break;
+
+      case 3:
+	$text = "<div class='report_answer_type_3'>$ans</div>";
+	break;
+
+      case 4:
+	$text = "<div class='report_answer_type_4'>$ans</div>";
+	break;
+
+      case 5:
+	$text = "<div class='report_answer_type_5'>$ans</div>";
+	break;
+
+      case 7:
+      default:
+        // get value for checkbox by preg_search( '/[input_7_([^\]]+)]/' )
+        preg_match( '/\[input_7_([^\]]+)\]/', $html, $value );
+	$value = $value[1];
+        if ( $value == $ans ) {
+	  $selected = "checked='checked'";
+	} else {
+	  $selected = "";
+	  array_unshift( $answer, $ans );  // in case that answer is for the next question
+	}
+	$text = "<input type='checkbox' disabled='disabled' $selected>";
+	break;
+      }
+
+      $html = substr_replace( $html, $text, $pos, strpos( $html, "]", $pos ) + 1 - $pos );
+    }
+    break;
+  }
+
+  return $html;
+}
+
+function mangle_question( $question, $courseid, $csip ) {
+  $dbh = db_connect();
+
+  $course = $csip['course'][ $courseid ];
+  $text = $question['question'];
+  $text = str_replace( "[course_name]", $course['course_name'], $text );
+  $text = str_replace( "[year_name]", $csip['year_name'], $text );
+  $text = str_replace( "[year_name-1]", mangle_num_down( $csip['year_name'] ), $text );
+  $text = str_replace( "[yearid]", $csip['yearid'], $text );
+  $text = str_replace( "[part]", $question['part'], $text );
+  $text = str_replace( "[courseid]", $course['courseid'], $text );
+  $text = str_replace( "[locationid]", $csip['locationid'], $text );
+  $text = str_replace( "[csipid]", $csip['csipid'], $text );
+
+  while ( ($pos = strpos( $text, "[[")) !== false ) {
+    $num = 0;
+    $style_it = false;
+    $pos2 = strpos( $text, "]]" );
+    $query = substr( $text, $pos + 2, ( $pos2 - $pos - 2 ) );
+    if ( strpos( $query, '[answer_' ) !== false ) {
+      preg_match( '/\[answer_(\d+)\]/', $query, $matches );
+      $num = $matches[1];
+      $query = preg_replace( '/\[answer_\d+\]/', 'answer', $query );
+    }
+    if ( strpos( $query, 'answer' ) !== false ) {
+      $style_it = true;
+    }
+    $sth = $dbh->prepare( $query );
+    $sth->execute();
+    $result = $sth->fetch( PDO::FETCH_BOTH );
+    $answer = $result[0];
+    if ( isset( $num ) ) {
+      $answer = unserialize( $answer );
+      if ( ! is_array( $answer ) ) {
+        $answer = $result[0];
+      } else {
+        $answer = $answer[ $num ];
+      }
+    }
+    $answer = stripslashes( $answer );
+    if ( ! isset( $answer ) ) { $answer = '&nbsp; &nbsp;&nbsp;'; }
+    if ( $style_it ) {
+      $class = "answer_for_question";  // small input style
+      $answer = "<span class='$class'>". $answer ."</span>";
+    }
+    $text = substr_replace( $text, $answer, $pos, ( $pos2 - $pos + 2 ) );
+  }
+
+  while ( strpos( $text, '[i_percent' ) !== false ) {
+    $style_it = 1;
+    preg_match( '/\[i_percent[^\]\d]*(\d+)[^\]]*\]/', $text, $matches );
+    $answer = $matches[1];
+    if ( isset ( $answer ) ) {
+      $answer = 100 - $answer;
+    } else {
+      $answer = '&nbsp; &nbsp;&nbsp;';
+    }
+    if ( $style_it ) {
+      $class = "answer_for_question";
+      $answer = "<span class='$class'>". $answer ."</span>";
+    }
+    $text = preg_replace( '/\[i_percent[^\]]*\d*[^\]]*\]/', $answer, $text );
+  }
+
+  $text = nl2br( $text );
+  return $text;
+}
+
+function mangle_num_down( $text ) {
+  preg_match_all( "/(\d+)/", $text, $matches );
+  $matches = $matches[1];
+  //sort( $matches, SORT_NUMERIC );
+  foreach ( $matches as $num ) {
+    $new_num = $num - 1;
+    $text = str_replace( "$num", $new_num, $text );
+  }
+  return $text;
+}
+
+function question_get_options( $option_group ) {
+  $dbh = db_connect();
+
+  $options = array();
+  $query = "
+ SELECT option_value, option_label
+   FROM question_options
+  WHERE question_option_group = :group
+";
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':group', $option_group );
+  $sth->execute();
+  while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+    $row = stripslashes_array( $row );
+    $options[ $row['option_value'] ] = $row['option_label'];
+  }
+
+  return $options;
+}
+
+function course_save_answers( $answer, $courseid, $questionid, $part, &$csip ) {
+  $dbh = db_connect();
+
+  if ( $csip['loc_demo'] == 1 ) { return; }  // location is Demo
+
+  if ( ! authorized( 'update_csip' ) ) {
+    return;
+  }
+
+  if ( is_array( $answer ) ) {
+    $answer = serialize( $answer );
+  }
+
+  if ( !empty( $csip['course'][$courseid]['questions'][$part][$questionid]['answer'] ) ) {
+    $old = $csip['course'][$courseid]['questions'][$part][$questionid]['answer'];
+  }
+
+  if ( $answer != $old['answer'] ) {
+    if ( $old ) {
+      $query = "UPDATE answer SET answer = :ans WHERE answerid = :ansid";
+      $sth = $dbh->prepare( $query );
+      $sth->bindValue( ':ans', $answer );
+      $sth->bindValue( ':ansid', $old['answerid'] );
+      $sth->execute();
+    } else {
+      $query = "INSERT INTO answer ( answer, questionid, part, courseid, csipid ) VALUES ( :ans, :ques, :part, :course, :csip )";
+      $sth = $dbh->prepare( $query );
+      $sth->bindValue( ':ans', $answer );
+      $sth->bindValue( ':ques', $questionid );
+      $sth->bindValue( ':part', $part );
+      $sth->bindValue( ':course', $courseid );
+      $sth->bindValue( ':csip', $csip['csipid'] );
+      $sth->execute();
+    }
+  }
+}
+
+function cat_reload_answers( $csip, $courseid, $part ) {
+  $dbh = db_connect();
+
+  $query = "SELECT * FROM answer WHERE csipid = :cid AND courseid = :courseid AND part = :part";
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':cid', $csip['csipid'] );
+  $sth->bindValue( ':courseid', $courseid );
+  $sth->bindValue( ':part', $part );
+  $sth->execute();
+  while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+    // can't stripslashes here because the answer might be serialized
+    $csip['course'][ $row['courseid'] ]['questions'][ $row['part'] ][ $row['questionid'] ]['answer'] = $row;
+  }
+
+  return $csip;
+}
+
+function course_completion( $courseid, $csip ) {
+  $num_questions = 0;
+  $num_answers = 0;
+
+  foreach ( $csip['course'][$courseid]['questions'] as $part => $questions ) {
+    foreach ( $questions as $questionid => $answer ) {
+      $num_questions++;
+      if ( !empty( $answer['answer']) ) {
+        $num_answers++;
+      }
+    }
+  }
+
+  if ( $num_questions > 0 ) {
+    $result = $num_answers / $num_questions;
+  } else {
+    $result = 0;
+  }
+
+  return ( $result );
+}
+
+function cat_part_completion( $courseid, $part, $csip ) {
+  $num_questions = 0;
+  $num_answers = 0;
+  if ( !empty( $csip['course'][$courseid]['questions'][$part] ) ) {
+
+  foreach ( $csip['course'][$courseid]['questions'][$part] as $questionid => $answer ) {
+    $num_questions++;
+    if ( !empty( $answer['answer']) ) {
+      $num_answers++;
+    }
+  }
+
+  if ( $num_questions > 0 ) {
+    $result = $num_answers / $num_questions;
+  } else {
+    $result = 0;
+  }
+
+  return ( $result );
+}
+
+?>
