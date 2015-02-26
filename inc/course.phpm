@@ -420,7 +420,7 @@ function course_save_answers( $answer, $courseid, $questionid, $part, &$csip ) {
     $old = $csip['course'][$courseid]['questions'][$part][$questionid]['answer'];
   }
 
-  if ( $answer != $old['answer'] ) {
+  if ( empty($old['answer']) || $answer != $old['answer'] ) {
     if ( $old ) {
       $query = "UPDATE answer SET answer = :ans WHERE answerid = :ansid";
       $sth = $dbh->prepare( $query );
@@ -483,11 +483,11 @@ function cat_part_completion( $courseid, $part, $csip ) {
   $num_questions = 0;
   $num_answers = 0;
   if ( !empty( $csip['course'][$courseid]['questions'][$part] ) ) {
-
-  foreach ( $csip['course'][$courseid]['questions'][$part] as $questionid => $answer ) {
-    $num_questions++;
-    if ( !empty( $answer['answer']) ) {
-      $num_answers++;
+    foreach ( $csip['course'][$courseid]['questions'][$part] as $questionid => $answer ) {
+      $num_questions++;
+      if ( !empty( $answer['answer']) ) {
+        $num_answers++;
+      }
     }
   }
 
