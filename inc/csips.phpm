@@ -48,6 +48,7 @@ function new_year( $new ) {
 
 function get_csips( $locations = array(), $district = 0, $history = 3 ) {
   $dbh = db_connect();
+  $result = array();
 
   $query = "SELECT * FROM csip CROSS JOIN year USING (yearid) CROSS JOIN location USING (locationid) ";
   if ( ! $district && !empty($locations) ) {

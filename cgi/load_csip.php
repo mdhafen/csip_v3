@@ -16,7 +16,7 @@ $csip = array();
 $csips = array();
 $error = array();
 if ( $csipid ) {
-  if ( get_csip_locationid( $csipid ) != $_SESSION['loggedin_user']['locationid'] && ! authorized( 'load_other_csip' ) ) {
+  if ( !in_array( get_csip_locationid( $csipid ), $_SESSION['loggedin_user']['locations'] ) && ! authorized( 'load_other_csip' ) ) {
     $error[] = 'NOTYOURS';
   } else {
     $csip = load_csip( $csipid );
@@ -27,8 +27,8 @@ if ( $csipid ) {
   }
 } else {
   $district = authorized( 'load_other_csip' );
-  $locationid = $_SESSION['loggedin_user']['locationid'];
-  $csips = get_csips( $locationid, $district, 0 );
+  $locations = $_SESSION['loggedin_user']['locations'];
+  $csips = get_csips( $locations, $district, 0 );
   // 0 is history depth, or load all csips
 }
 
