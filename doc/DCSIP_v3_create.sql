@@ -4,7 +4,7 @@ CREATE TABLE `user` (
 	`fullname` VARCHAR(128) NOT NULL DEFAULT '',
 	`email` VARCHAR(128) NOT NULL DEFAULT '',
 	`password` BLOB NOT NULL,
-	`salt` VARCHAR(16) NOT NULL DEFAULT 'DEADBEEF',
+	`salt` BLOB NOT NULL,
 	`role` INT(4) NOT NULL DEFAULT 0,
 	PRIMARY KEY (`userid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -89,14 +89,16 @@ CREATE TABLE `question_options` (
 CREATE TABLE `course_question_links` (
        courseid INT(10) UNSIGNED NOT NULL DEFAULT 0,
        question_group INT(10) UNSIGNED NOT NULL DEFAULT 0,
-       part INT(4) NOT NULL DEFAULT 0
+       part INT(4) NOT NULL DEFAULT 0,
+       title VARCHAR(64) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `csip_extra_part_links` (
        csip INT(10) UNSIGNED NOT NULL DEFAULT 0,
        courseid INT(10) UNSIGNED NOT NULL DEFAULT 0,
        question_group INT(10) UNSIGNED NOT NULL DEFAULT 0,
-       part INT(4) NOT NULL DEFAULT 0
+       part INT(4) NOT NULL DEFAULT 0,
+       title VARCHAR(64) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `answer` (
