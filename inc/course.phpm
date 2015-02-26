@@ -3,7 +3,6 @@ require_once( $config['base_dir'] ."/lib/data.phpm" );
 require_once( $config['base_dir'] ."/lib/input.phpm" );
 require_once( $config['base_dir'] ."/lib/security.phpm" );
 
-require_once( 'activity.phpm' );
 require_once( 'csips.phpm' );
 
 function course_get_html_input( $question = '', $answer = '', $courseid, $csip ) {
