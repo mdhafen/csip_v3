@@ -7,9 +7,14 @@ $config = array(
 	'base_url'	    => '/', // these are set below
 	'secure_phrase'     => 'DontTreadOnMe',
 	'cookie_token_name' => 'CSIPTOKEN',
+	'authen_modules'      => array(
+		'db'       => 1,
+		'external' => 0,
+		'ldap'     => 0,
+	),
 	'trusted_proxies'   => array(),
 	'database'          => array(
-		'engine' => 'mysql',
+		'engine' => 'mysqli',
 		'host'   => 'localhost',
 		'schema' => 'csip_v5',
 		'user'   => 'csip',
@@ -18,37 +23,34 @@ $config = array(
 	'auth' => array(
 		1   => "load_csip",
 		2   => "load_other_csip",
-		4   => "update_sap",
-		8   => "update_csip",
-		16  => "approve_school",
-		32  => "approve_district",
-		64  => "view_reports",
-		128 => "manage_users",
+		4   => "update_csip",
+		8   => "view_reports",
+		16  => "manage_users",
 	),
 	'role' => array(
 		1 => array(
 			'name' => 'community council',
-			'auth' => 65, // load,report
+			'auth' => 9, // load,report
 		),
 		2 => array(
 			'name' => 'plc member',
-			'auth' => 69, // load,update_csip,report
+			'auth' => 13, // load,update_csip,report
 		),
 		3 => array(
 			'name' => 'principal',
-			'auth' => 93, // load,update_sap,approve_school,report
+			'auth' => 9, // load,report
 		),
 		4 => array(
 			'name' => 'district personel',
-			'auth' => 99, // load,load_other,app_district,report
+			'auth' => 15, // load,load_other,report
 		),
 		5 => array(
 			'name' => 'board member',
-			'auth' => 67, // load,load_other,report
+			'auth' => 15, // load,load_other,report
 		),
 		6 => array(
 			'name' => 'site supervisor',
-			'auth' => 255, // all
+			'auth' => 31, // all
 		),
 	),
 );
@@ -56,7 +58,7 @@ $config = array(
 $config['base_dir'] = realpath( dirname( __FILE__ ) . '/..' );
 $config['this_url'] = $_SERVER['REQUEST_URI'];
 
-$dir = $config['base_dir'] . '/cgi/';
+$dir = $config['base_dir'] . '/webroot/';
 $count = 1;
 $lcs = '/';
 while ( strripos( $dir, substr( $config['this_url'], 0, $count ) ) > 0 ) {
