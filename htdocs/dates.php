@@ -4,11 +4,13 @@
 <hr>
     <ul>
         <font size="1pt">
-<li>October 2, 2015: Teams identify <strong>GVC</strong></li>
-<li>October 2, 2015: Teams identify <strong>EXTENSIONS</strong></li>
-<li>October 30, 2015: Teams administer two <strong>CFAs</strong></li>
-<li>November 2015: School Board reviews <strong>CSIPs</strong></li>
-<li>February 5, 2016: Teams administer two add'l <strong>CFAs</strong></li>
-<li>April 29, 2016: Teams complete <strong>REFLECTION</strong> process</li>
+<?php
+if ( !empty($data['csip']['due_dates']) ) {
+   $dates = explode( "\n", $data['csip']['due_dates'] );
+   foreach ( $dates as $date ) {
+      echo "<li>$date</li>";
+   }
+}
+?>
     </font></ul>
 </div>

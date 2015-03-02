@@ -12,18 +12,16 @@
             <span class="uk-align-right"><img src="http://schools.washk12.org/enterprise/wp-content/uploads/sites/23/2014/01/grey_wcsd_logo-e1395268854370.png"></span>
             <form class="uk-form">
                <h2>
-                   <select type="text" class="uk-form-large">
-            <option>Select One...</option>
-            <option>2014-2015</option>
-            <option>2015-2016</option>
-        </select>
                    Plan for 
         <select type="text" class="uk-form-large">
             <option>Select One...</option>
-            <option>Arrowhead Elementary</option>
-            <option>Tonaquint Intermediate</option>
-            <option>Desert Hills Middle</option>
-            <option>Dixie High</option>
+<?php
+if ( !empty($data['csips']) ) {
+   foreach ( $data['csips'] as $csip ) {
+       <option value="<?= $csip['csipid'] ?>"><?= $csip['year_name'] .' '. $csip['location_name'] ?></option>
+   }
+}
+?>
         </select>
     </form>
                  <hr>

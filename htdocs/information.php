@@ -5,20 +5,28 @@
     <h4><strong>Selected Course:</strong> 
         <select type="text" class="uk-form-large">
             <option>Select One...</option>
-            <option>Mathematics</option>
-            <option>Science</option>
+<?php
+if ( !empty($data['csip']['courses']) ) {
+   foreach ( $data['csip']['courses'] as $courseid => $course ) {
+      echo "<option value='$courseid'>". $course['course_name'] ."</option>\n";
+   }
+}
+?>
         </select>
     </form>
     </h4>
 <br>
 	<ul class="uk-tab" data-uk-tab>
-        <li class="uk-active" id="cfa1_tab"><a href="" onclick="activetab('cfa1');"><div class="uk-badge uk-badge-success">GVC 1</div></a></li>
-        <li class="" id="cfa2_tab"><a href="" onclick="activetab('cfa2');"><div class="uk-badge uk-badge-success">GVC 2</div></a></li>
-        <li class="" id="cfa3_tab"><a href="" onclick="activetab('cfa3');"><div class="uk-badge uk-badge-warning">GVC 3</div></a></li>
-        <li class="" id="cfa4_tab"><a href="" onclick="activetab('cfa4');"><div class="uk-badge uk-badge-warning">GVC 4</div></a></li>
-        <li class="" id="cfa5_tab"><a href="" onclick="activetab('cfa5');"><div class="uk-badge uk-badge-danger">GVC 5</div></a></li>
-        <li class="" id="cfa6_tab"><a href="" onclick="activetab('cfa6');"><div class="uk-badge uk-badge-danger">GVC 6</div></a></li>
-        <li class="" id="cfa6_tab"><a href="" onclick="activetab('cfa6');"><i class="uk-icon-plus"></i>
+<?php
+   if ( !empty($data['courseid'] && !empty( $data['csip']['courses'][ $data['courseid'] ]['questions'] ) {
+      $count = 1;
+      foreach ( $data['csip']['courses'][ $data['courseid'] ]['questions'] as $part => $questions ) { ?>
+        <li class="uk-active" id="cfa<?= $count ?>_tab"><a href="" onclick="activetab('cfa<?= $count ?>');"><div class="uk-badge uk-badge-success">GVC <?= $count ?></div></a></li>';
+<?php
+         $count++;
+      }
+ ?>
+        <li class="" id="cfa<?= $count ?>_tab"><a href="" onclick="activetab('cfa<?= $count ?>');"><i class="uk-icon-plus"></i>
         <li class="" id="accreditation_tab"><a href="" onclick="activetab('accreditation');"><div class="uk-badge uk-badge-primary">Accreditation</div></a></li>            
 </a></li>
 
@@ -30,11 +38,19 @@
     
     <!-- Load pages based on tab selected -->
     
-    <div id="cfa1_content" style="display: block;">
-	   <?php include 'cfa1.php';?>
+<?php
+      $count = 1;
+      foreach ( $data['csip']['courses'][ $data['courseid'] ]['questions'] as $part => $questions ) { ?>
+    <div id="cfa<?= $count ?>_content" style="display: block;">
+	   <?php include 'cfa.php'; ?>
     </div>
+<?php
+         $count++;
+      }
+ ?>
 
 	<div id="accreditation_content" style="display: none;">
 	   <?php include 'accreditation.php';?>
     </div>
+<?php } ?>
 </div>

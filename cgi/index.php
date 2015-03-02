@@ -3,21 +3,37 @@ include_once( '../lib/input.phpm' );
 include_once( '../lib/security.phpm' );
 include_once( '../lib/output.phpm' );
 
+include_once( '../inc/csips.phpm' );
+
 authorize( 'load_csip' );
+$district = authorized( 'load_other_csip' );
+$errors = array();
 
-// May need to set a different content type before output here.
-/*
-if ( $output_type == 'xml' ) {
-	$type = 'application/xml';
-} else {
-	$type = 'text/html';
+$csip = $_SESSION['csip'];
+if ( empty($csip) ) {
+   $csipid = input( 'csipid', INPUT_PINT );
+   if ( ! empty($csipid) ) {
+      if ( !in_array( get_csip_locationid( $csipid ), $_SESSION['loggedin_user']['locations'] ) && ! $district ) {
+         $errors[] = 'NOTYOURS';
+      }
+      else {
+         $csip = load_csip( $csipid );
+         if ( ! empty($csip) ) {
+            $_SESSION['csip'] = $csip;
+         }
+      }
+   }
 }
-header( "Content-type: $type" );
-*/
-// Or use output::output(), which will set it based on $output_type as above.
+$locations = $_SESSION['loggedin_user']['locations'];
+$csips = get_csips( $locations, $distrcit, 0 ); // 0 means load all years
 
-#include( '../htdocs/index.php' );
+$courseid = input( 'courseid', INPUT_PINT );
+
 $output = array(
+        'errors' => $errors,
+        'csips' => $csips,
+        'csip' => $csip,
+        'courseid' => $courseid,
 );
-output( $output, 'index.tmpl' );
+output( $output, 'index' );
 ?>
