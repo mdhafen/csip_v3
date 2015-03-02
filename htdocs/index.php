@@ -12,20 +12,20 @@
             <span class="uk-align-right"><img src="http://schools.washk12.org/enterprise/wp-content/uploads/sites/23/2014/01/grey_wcsd_logo-e1395268854370.png"></span>
             <form class="uk-form">
                <h2>
-                   Plan for 
+                   Plan for
         <select type="text" class="uk-form-large">
             <option>Select One...</option>
 <?php
 if ( !empty($data['csips']) ) {
    foreach ( $data['csips'] as $csip ) {
-       <option value="<?= $csip['csipid'] ?>"><?= $csip['year_name'] .' '. $csip['location_name'] ?></option>
+       echo '<option value="'. $csip['csipid'] .'">'. $csip['year_name'] .' '. $csip['location_name'] .'</option>';
    }
 }
 ?>
         </select>
     </form>
                  <hr>
-    </h2>         
+    </h2>
             <div class="uk-grid" uk-grid-divider data-uk-grid-match>
                 <div class="uk-width-medium-3-10">
                     <?php include 'leftpanel.php'; ?>
