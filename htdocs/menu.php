@@ -36,9 +36,8 @@
 			<li class=""><a href="users.php">User Management</a></li>
 			<li class=""><a href="/account.php">Account</a></li>';
 		}
-		echo '<li class=""><a href="index.php?_logout=1">Logout</a></li>
+?>
+		<li class=""><a href="index.php?_logout=1">Logout</a></li>
 		</ul>
 	</div>
-</div>';
-}
-?>
+</div>
