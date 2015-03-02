@@ -14,7 +14,7 @@ $config = array(
 	),
 	'trusted_proxies'   => array(),
 	'database'          => array(
-		'engine' => 'mysqli',
+		'engine' => 'mysql',
 		'host'   => '',
 		'schema' => '',
 		'user'   => '',
