@@ -9,6 +9,7 @@ authorize( 'load_csip' );
 $district = authorized( 'load_other_csip' );
 $errors = array();
 
+$csip = array();
 if ( empty($_SESSION['csip']) ) {
    $csipid = input( 'csipid', INPUT_PINT );
    if ( ! empty($csipid) ) {
