@@ -18,7 +18,7 @@
 <?php
 if ( !empty($data['csips']) ) {
    foreach ( $data['csips'] as $csip ) {
-       echo '<option value="'. $csip['csipid'] .'">'. $csip['year_name'] .' '. $csip['location_name'] .'</option>';
+       echo '<option value="'. $csip['csipid'] .'">'. $csip['year_name'] .' '. $csip['name'] .'</option>';
    }
 }
 ?>
