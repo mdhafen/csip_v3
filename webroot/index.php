@@ -9,8 +9,7 @@ authorize( 'load_csip' );
 $district = authorized( 'load_other_csip' );
 $errors = array();
 
-$csip = $_SESSION['csip'];
-if ( empty($csip) ) {
+if ( empty($_SESSION['csip']) ) {
    $csipid = input( 'csipid', INPUT_PINT );
    if ( ! empty($csipid) ) {
       if ( !in_array( get_csip_locationid( $csipid ), $_SESSION['loggedin_user']['locations'] ) && ! $district ) {
@@ -24,8 +23,15 @@ if ( empty($csip) ) {
       }
    }
 }
-$locations = $_SESSION['loggedin_user']['locations'];
-$csips = get_csips( $locations, $distrcit, 0 ); // 0 means load all years
+else {
+	$csip = $_SESSION['csip'];
+}
+
+$csips = array();
+if ( !empty( $_SESSION['loggedin_user']) ) {
+	$locations = $_SESSION['loggedin_user']['locations'];
+	$csips = get_csips( $locations, $district, 0 ); // 0 means load all years
+}
 
 $courseid = input( 'courseid', INPUT_PINT );
 
