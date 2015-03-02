@@ -18,7 +18,7 @@ if ( !empty($data['csip']['courses']) ) {
 <br>
 	<ul class="uk-tab" data-uk-tab>
 <?php
-   if ( !empty($data['courseid'] && !empty( $data['csip']['courses'][ $data['courseid'] ]['questions']) ) {
+   if ( !empty($data['courseid']) && !empty( $data['csip']['courses'][ $data['courseid'] ]['questions']) ) {
       $count = 1;
       foreach ( $data['csip']['courses'][ $data['courseid'] ]['questions'] as $part => $questions ) { ?>
         <li class="uk-active" id="cfa<?= $count ?>_tab"><a href="" onclick="activetab('cfa<?= $count ?>');"><div class="uk-badge uk-badge-success">GVC <?= $count ?></div></a></li>';
@@ -32,12 +32,12 @@ if ( !empty($data['csip']['courses']) ) {
 
 	</ul>
 	<!-- Tabs End -->
-	
 
 
-    
+
+
     <!-- Load pages based on tab selected -->
-    
+
 <?php
       $count = 1;
       foreach ( $data['csip']['courses'][ $data['courseid'] ]['questions'] as $part => $questions ) { ?>
