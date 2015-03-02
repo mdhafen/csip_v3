@@ -14,7 +14,7 @@ $config = array(
 	),
 	'trusted_proxies'   => array(),
 	'database'          => array(
-		'engine' => 'mysqli',
+		'engine' => 'mysql',
 		'host'   => 'localhost',
 		'schema' => 'csip_v5',
 		'user'   => 'csip',
