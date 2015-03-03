@@ -27,7 +27,6 @@ if ( !empty($data['csips']) ) {
     </form>
 
     <form class="uk-form">
-    <h4><strong>Selected Course:</strong>
         <select type="text" class="uk-form-large" name="courseid">
             <option>Select One...</option>
 <?php
@@ -39,7 +38,6 @@ if ( !empty($data['csip']['courses']) ) {
 }
 ?>
         </select>
-    </h4>
     </form>
 <br>
                  <hr>
