@@ -8,16 +8,17 @@ include_once( '../inc/csips.phpm' );
 authorize( 'load_csip' );
 $district = authorized( 'load_other_csip' );
 $errors = array();
+$locations = empty($_SESSION['loggedin_user']['locations']) ? array() : array_keys( $_SESSION['loggedin_user']['locations'] );
+$csipid = input( 'csipid', INPUT_PINT );
 
 $csip = array();
 if ( empty($_SESSION['csip']) ) {
-   $csipid = input( 'csipid', INPUT_PINT );
    if ( ! empty($csipid) ) {
-      if ( !in_array( get_csip_locationid( $csipid ), $_SESSION['loggedin_user']['locations'] ) && ! $district ) {
+      if ( !in_array( get_csip_locationid( $csipid ), $locations ) && ! $district ) {
          $errors[] = 'NOTYOURS';
       }
       else {
-         $csip = load_csip( $csipid );
+         $csip = load_csip( $csipid, $_SESSION['loggedin_user']['userid'] );
          if ( ! empty($csip) ) {
             $_SESSION['csip'] = $csip;
          }
@@ -25,7 +26,15 @@ if ( empty($_SESSION['csip']) ) {
    }
 }
 else {
-	$csip = $_SESSION['csip'];
+   $csip = $_SESSION['csip'];
+   if ( ! empty($csip) ) {
+      if ( ! empty($csipid) && $csip['csipid'] != $csipid ) {
+         $csip = load_csip( $csipid, $_SESSION['loggedin_user']['userid'] );
+         if ( ! empty($csip) ) {
+            $_SESSION['csip'] = $csip;
+         }
+      }
+   }
 }
 
 $csips = array();

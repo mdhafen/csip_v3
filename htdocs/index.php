@@ -13,26 +13,27 @@
             <form class="uk-form">
                <h2>
                    Plan for
-        <select type="text" class="uk-form-large">
+        <select type="text" class="uk-form-large" name="csipid">
             <option>Select One...</option>
 <?php
 if ( !empty($data['csips']) ) {
+   $csipid = empty($data['csip']) ? 0 : $data['csip']['csipid'];
    foreach ( $data['csips'] as $csip ) {
-       echo '<option value="'. $csip['csipid'] .'">'. $csip['year_name'] .' '. $csip['name'] .'</option>';
+       echo '<option value="'. $csip['csipid'] .'"'. ( $csip['csipid'] == $csipid ? ' selected="selected"' : "" ) .'>'. $csip['year_name'] .' '. $csip['name'] .'</option>'."\n";
    }
 }
 ?>
         </select>
-    </form>
                  <hr>
     </h2>
+    </form>
             <div class="uk-grid" uk-grid-divider data-uk-grid-match>
                 <div class="uk-width-medium-3-10">
                     <?php include 'leftpanel.php'; ?>
                     <?php include 'dates.php'; ?>
 				</div>
-				<div class="uk-width-medium-7-10"> 
-                    
+				<div class="uk-width-medium-7-10">
+
                     <?php include 'information.php'; ?>
                 </div>
             </div>

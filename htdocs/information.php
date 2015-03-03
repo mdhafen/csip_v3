@@ -3,12 +3,13 @@
 
     <form class="uk-form">
     <h4><strong>Selected Course:</strong>
-        <select type="text" class="uk-form-large">
+        <select type="text" class="uk-form-large" name="courseid">
             <option>Select One...</option>
 <?php
 if ( !empty($data['csip']['courses']) ) {
+   $selected_course = empty($data['courseid']) ? 0 : $data['courseid'];
    foreach ( $data['csip']['courses'] as $courseid => $course ) {
-      echo "<option value='$courseid'>". $course['course_name'] ."</option>\n";
+      echo "<option value='$courseid'". ($courseid == $selected_course ? " selected='selected'" : "" ) .">". $course['course_name'] ."</option>\n";
    }
 }
 ?>
@@ -21,7 +22,7 @@ if ( !empty($data['csip']['courses']) ) {
    if ( !empty($data['courseid']) && !empty( $data['csip']['courses'][ $data['courseid'] ]['questions']) ) {
       $count = 1;
       foreach ( $data['csip']['courses'][ $data['courseid'] ]['questions'] as $part => $questions ) { ?>
-        <li class="uk-active" id="cfa<?= $count ?>_tab"><a href="" onclick="activetab('cfa<?= $count ?>');"><div class="uk-badge uk-badge-success">GVC <?= $count ?></div></a></li>';
+        <li class="uk-active" id="cfa<?= $count ?>_tab"><a href="" onclick="activetab('cfa<?= $count ?>');"><div class="uk-badge uk-badge-success">GVC <?= $count ?></div></a></li>
 <?php
          $count++;
       }
