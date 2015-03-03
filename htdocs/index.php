@@ -10,8 +10,8 @@
 <br>
 
             <span class="uk-align-right"><img src="http://schools.washk12.org/enterprise/wp-content/uploads/sites/23/2014/01/grey_wcsd_logo-e1395268854370.png"></span>
-            <form class="uk-form">
                <h2>
+            <form class="uk-form">
                    Plan for
         <select type="text" class="uk-form-large" name="csipid">
             <option>Select One...</option>
@@ -24,9 +24,26 @@ if ( !empty($data['csips']) ) {
 }
 ?>
         </select>
+    </form>
+
+    <form class="uk-form">
+    <h4><strong>Selected Course:</strong>
+        <select type="text" class="uk-form-large" name="courseid">
+            <option>Select One...</option>
+<?php
+if ( !empty($data['csip']['courses']) ) {
+   $selected_course = empty($data['courseid']) ? 0 : $data['courseid'];
+   foreach ( $data['csip']['courses'] as $courseid => $course ) {
+      echo "<option value='$courseid'". ($courseid == $selected_course ? " selected='selected'" : "" ) .">". $course['course_name'] ."</option>\n";
+   }
+}
+?>
+        </select>
+    </h4>
+    </form>
+<br>
                  <hr>
     </h2>
-    </form>
             <div class="uk-grid" uk-grid-divider data-uk-grid-match>
                 <div class="uk-width-medium-3-10">
                     <?php include 'leftpanel.php'; ?>
