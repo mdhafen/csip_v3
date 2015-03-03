@@ -5,19 +5,19 @@
 		echo '
 		<div style="float:right; vertical-align:middle;" class="">
 			<ul class="uk-navbar-nav uk-hidden-small uk-navbar-attached">
-				<li class=""><a href="/account.php">Hello, ' . $data['_session']['username'] . '</a></li>
-				<li class=""><a href="/index.php?_logout=1">Logout</a></li>
+				<li class=""><a href="'. $data['_config']['base_url'] .'account.php">Hello, ' . $data['_session']['username'] . '</a></li>
+				<li class=""><a href="'. $data['_config']['base_url'] .'index.php?_logout=1">Logout</a></li>
 			</ul>
 		</div>';
 		}
 		?>
-		<a href="index.php" class="uk-navbar-brand">Digital CSIP <font size="1pt">v. 5.0.bse</font></a>
+		<a href="<?= $data['_config']['base_url'] ?>index.php" class="uk-navbar-brand">Digital CSIP <font size="1pt">v. 5.0.bse</font></a>
 		<ul class="uk-navbar-nav uk-hidden-small uk-navbar-attached">
 		<?php
 		if( !empty($data['_session']['CAN_manage_users']) ){
-				echo '<li><a href="/admin_points.php">Administration</a></li>';
+				echo '<li><a href="'. $data['_config']['base_url'] .'admin_points.php">Administration</a></li>';
 			echo '	<li><a href="#">Placeholder</a></li>
-					<li><a href="users.php">User Management</a></li>
+					<li><a href="'. $data['_config']['base_url'] .'users.php">User Management</a></li>
 				</ul>';
 		}
 		?>
@@ -31,13 +31,13 @@
 		<ul class="uk-nav uk-nav-offcanvas" data-uk-nav>
 <?php
 		if( !empty($data['_session']['CAN_manage_users']) ){
-			echo '<li class=""><a href="/admin_points.php">Administration</a></li>';
+			echo '<li class=""><a href="'. $data['_config']['base_url'] .'admin_points.php">Administration</a></li>';
 			echo '<li class=""><a href="#">Place Holder</a></li>
-			<li class=""><a href="users.php">User Management</a></li>
-			<li class=""><a href="/account.php">Account</a></li>';
+			<li class=""><a href="'. $data['_config']['base_url'] .'users.php">User Management</a></li>
+			<li class=""><a href="'. $data['_config']['base_url'] .'account.php">Account</a></li>';
 		}
 ?>
-		<li class=""><a href="index.php?_logout=1">Logout</a></li>
+		<li class=""><a href="<?= $data['_config']['base_url'] ?>index.php?_logout=1">Logout</a></li>
 		</ul>
 	</div>
 </div>
