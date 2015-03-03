@@ -114,7 +114,7 @@ function new_csip( $year, $locationid ) {
   return $csipid;
 }
 
-function load_csip( $csipid = 0 ) {
+function load_csip( $csipid = 0, $userid = 0 ) {
   $csip = array();
   if ( ! $csipid ) {
     return;
@@ -122,7 +122,7 @@ function load_csip( $csipid = 0 ) {
   $dbh = db_connect();
 
   $query = "
-    SELECT * 
+    SELECT *
       FROM csip 
 CROSS JOIN location USING (locationid) 
 CROSS JOIN year USING (yearid)
@@ -134,25 +134,44 @@ CROSS JOIN year USING (yearid)
 
   $csip = $sth->fetch( PDO::FETCH_ASSOC );
   $csip = stripslashes_array( $csip );
+
   $courses = array();
+  $query = "
+    SELECT *
+      FROM user_course_links
+     WHERE locationid = :loc
+       AND userid = :user
+";
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':loc', $csip['locationid'] );
+  $sth->bindValue( ':user', $userid );
+  $sth->execute();
+  while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+    $courses[] = $row['courseid'];
+  }
 
   $query = "
     SELECT course.* 
       FROM course
  LEFT JOIN location_course_links USING (courseid)
-     WHERE version = :ver
-       AND ( ( maxgrade >= :mingrade AND mingrade <= :maxgrade )
+     WHERE active = 1
+";
+  if ( ! empty($courses) ) {
+    $query .= "       AND courseid IN ". implode( ',',$courses ) .")";
+    $courses = array();
+  }
+  $query .= "
+       AND ( ( max_grade >= :mingrade AND min_grade <= :maxgrade )
         OR ( location_course_links.locationid = :loc_link ) )
   ORDER BY course.course_name
 ";
   $sth = $dbh->prepare( $query );
-  $sth->bindValue( ':ver', $csip['version'] );
   $sth->bindValue( ':mingrade', $csip['mingrade'] );
   $sth->bindValue( ':maxgrade', $csip['maxgrade'] );
   $sth->bindValue( ':loc_link', $csip['locationid'] );
   $sth->execute();
   while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
-    $csip['course'][ $row['courseid'] ] = stripslashes_array( $row );
+    $csip['courses'][ $row['courseid'] ] = stripslashes_array( $row );
     $courses[] = $row['courseid'];
   }
 
@@ -170,8 +189,9 @@ CROSS JOIN year USING (yearid)
   $sth->execute();
   $csip['parts'] = 0;
   while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
-    $csip['questions'][ $row['questionid'] ] = stripslashes_array( $row );
-    $csip['course'][ $row['courseid'] ]['questions'][ $row['part'] ][ $row['questionid'] ] = array();
+    $row = stripslashes_array( $row );
+    $csip['questions'][ $row['questionid'] ] = $row;
+    $csip['courses'][ $row['courseid'] ]['questions'][ $row['part'] ][ $row['questionid'] ] = array();
   }
 
   $query = "SELECT * FROM answer WHERE csipid = :cid";
@@ -180,7 +200,7 @@ CROSS JOIN year USING (yearid)
   $sth->execute();
   while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
     // can't stripslashes here because the answer might be serialized
-    $csip['course'][ $row['courseid'] ]['questions'][ $row['part'] ][ $row['questionid'] ][ $row['answerid'] ] = $row;
+    $csip['courses'][ $row['courseid'] ]['questions'][ $row['part'] ][ $row['questionid'] ][ $row['answerid'] ] = $row;
   }
 
   return $csip;
