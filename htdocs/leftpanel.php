@@ -1,6 +1,6 @@
 <div class="uk-panel uk-panel-box" uk-nav-side>
 
-<?php if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['courseid'] ]['questons'][1]) ) { ?>
+<?php if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['courseid'] ]['questions'][1]) ) { ?>
     <h4><i class="uk-icon-bars"></i> <strong>Guaranteed Curriculum</strong></h4>
 <hr>
     <ul id="leftpanel" class="uk-nav uk-nav-parent-icon" data-uk-nav>
