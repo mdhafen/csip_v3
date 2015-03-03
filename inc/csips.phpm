@@ -114,7 +114,7 @@ function new_csip( $year, $locationid ) {
   return $csipid;
 }
 
-function load_csip( $csipid = 0, $userid = 0 ) {
+function load_csip( $csipid = 0, $all_courses = 0, $userid = 0 ) {
   $csip = array();
   if ( ! $csipid ) {
     return;
@@ -136,18 +136,20 @@ CROSS JOIN year USING (yearid)
   $csip = stripslashes_array( $csip );
 
   $courses = array();
-  $query = "
+  if ( ! $all_courses ) {
+    $query = "
     SELECT *
       FROM user_course_links
      WHERE locationid = :loc
        AND userid = :user
 ";
-  $sth = $dbh->prepare( $query );
-  $sth->bindValue( ':loc', $csip['locationid'] );
-  $sth->bindValue( ':user', $userid );
-  $sth->execute();
-  while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
-    $courses[] = $row['courseid'];
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':loc', $csip['locationid'] );
+    $sth->bindValue( ':user', $userid );
+    $sth->execute();
+    while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+      $courses[] = $row['courseid'];
+    }
   }
 
   $query = "
