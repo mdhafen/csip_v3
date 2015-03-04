@@ -18,7 +18,7 @@ if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['course
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-t"><?= $data['csip']['questions'][ $questionid ]['question_clean'] ?></label>
                         <div class="uk-form-controls">
-                            <textarea id="form-h-t" cols="50" rows="8" placeholder="Type reponse here"><?= $answer['answer'] ?></textarea>
+                            <textarea id="form-h-t" cols="50" rows="8" placeholder="Type reponse here"><?= empty($answer['answer']) ? "" : $answer['answer'] ?></textarea>
                         </div>
                     </div>     
 <?php
