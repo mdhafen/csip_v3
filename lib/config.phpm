@@ -31,11 +31,11 @@ $config = array(
 	'role' => array(
 		1 => array(
 			'name' => 'community council',
-			'auth' => 9, // load,report
+			'auth' => 17, // load,report
 		),
 		2 => array(
 			'name' => 'plc member',
-			'auth' => 13, // load,update_csip,report
+			'auth' => 21, // load,update_csip,report
 		),
 		3 => array(
 			'name' => 'principal',
@@ -43,11 +43,11 @@ $config = array(
 		),
 		4 => array(
 			'name' => 'district personel',
-			'auth' => 15, // load,load_other,report
+			'auth' => 19, // load,load_other,report
 		),
 		5 => array(
 			'name' => 'board member',
-			'auth' => 15, // load,load_other,report
+			'auth' => 19, // load,load_other,report
 		),
 		6 => array(
 			'name' => 'site supervisor',

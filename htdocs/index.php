@@ -36,6 +36,23 @@ if ( !empty($data['csip']['courses']) ) {
 }
 ?>
         </select>
+<?php
+if ( !empty($data['courseid']) ) {
+  $can_approve = '';
+  if ( empty($data['_session']['CAN_approve_csip']) ) {
+    $can_approve = ' disabled';
+  }
+  if ( empty($data['csip']['courses'][ $data['courseid] ]['principal_approved']) ) {
+    $app = "Not Approved";
+    $class = "uk-button-danger";
+  }
+  else {
+    $app = "Approved";
+    $class = "uk-button-success";
+  }
+  echo "<button class='uk-button $class'$can_approve>$app</button>";
+}
+?>
                  <hr>
     </h2>
     </form>
