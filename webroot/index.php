@@ -11,6 +11,7 @@ $reporter = authorized( 'view_reports' );
 $errors = array();
 $locations = empty($_SESSION['loggedin_user']['locations']) ? array() : array_keys( $_SESSION['loggedin_user']['locations'] );
 $csipid = input( 'csipid', INPUT_PINT );
+$courseid = input( 'courseid', INPUT_PINT );
 
 $csip = array();
 if ( empty($_SESSION['csip']) ) {
@@ -30,6 +31,7 @@ else {
    $csip = $_SESSION['csip'];
    if ( ! empty($csip) ) {
       if ( ! empty($csipid) && $csip['csipid'] != $csipid ) {
+         $courseid = 0;
          $csip = load_csip( $csipid, $reporter, $_SESSION['loggedin_user']['userid'] );
          if ( ! empty($csip) ) {
             $_SESSION['csip'] = $csip;
@@ -43,8 +45,6 @@ if ( !empty( $_SESSION['loggedin_user']) ) {
 	$locations = empty($_SESSION['loggedin_user']['locations']) ? array() : array_keys( $_SESSION['loggedin_user']['locations'] );
 	$csips = get_csips( $locations, $district, 0 ); // 0 means load all years
 }
-
-$courseid = input( 'courseid', INPUT_PINT );
 
 $output = array(
         'errors' => $errors,
