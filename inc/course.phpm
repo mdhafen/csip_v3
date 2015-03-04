@@ -307,7 +307,7 @@ function clean_question( $question, $courseid, $csip ) {
   $text = $question['question'];
   $text = str_replace( "[part]", "", $text );
   $text = str_replace( "[input]", "", $text );
-  while ( ($pos = strpos( $html, '[input_' ) ) !== false ) {
+  while ( ($pos = strpos( $text, '[input_' ) ) !== false ) {
     $text = substr_replace( $text, "", $pos, strpos( $text, "]", $pos ) + 1 - $pos );
   }
 
@@ -315,7 +315,7 @@ function clean_question( $question, $courseid, $csip ) {
     $pos2 = strpos( $text, "]]" );
     $text = substr_replace( $text, "", $pos, ( $pos2 - $pos + 2 ) );
   }
-  $text = mangle_question( $text, $courseid, $csip );
+  $text = mangle_question( array('question'=>$text,'part'=>0), $courseid, $csip );
 
   return $text;
 }
