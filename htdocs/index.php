@@ -42,7 +42,7 @@ if ( !empty($data['courseid']) ) {
   if ( empty($data['_session']['CAN_approve_csip']) ) {
     $can_approve = ' disabled';
   }
-  if ( empty($data['csip']['courses'][ $data['courseid] ]['principal_approved']) ) {
+  if ( empty($data['csip']['courses'][ $data['courseid'] ]['principal_approved']) ) {
     $app = "Not Approved";
     $class = "uk-button-danger";
   }
