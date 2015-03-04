@@ -12,9 +12,9 @@
 		}
 		?>
 		<a href="<?= $data['_config']['base_url'] ?>index.php" class="uk-navbar-brand">Digital CSIP <font size="1pt">v. 5.0.bse</font></a>
-		<ul class="uk-navbar-nav uk-hidden-small uk-navbar-attached">
 		<?php
 		if( !empty($data['_session']['CAN_manage_users']) ){
+                                echo '<ul class="uk-navbar-nav uk-hidden-small uk-navbar-attached">
 				echo '<li><a href="'. $data['_config']['base_url'] .'admin_points.php">Administration</a></li>';
 			echo '	<li><a href="#">Placeholder</a></li>
 					<li><a href="'. $data['_config']['base_url'] .'users.php">User Management</a></li>
