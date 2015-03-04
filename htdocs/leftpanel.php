@@ -17,8 +17,13 @@
             Once your team has identified the skills, share with the team above and below your specific grade level.<br><br>
             Share the guaranteed skills with your students that you have identified below.<br><br>
             <li>
-                <form class="uk-form">                            
-                    <textarea id="form-h-t" cols="30" rows="8" placeholder="Define Team's GVC Here..."></textarea>
+                <form class="uk-form" action="index.php">
+                    <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
+                    <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
+                    <input type="hidden" name="part" value="1">
+                    <input type="hidden" name="questionid" value="2">
+                    <input type="hidden" name="op" value="SaveAnswer">
+                    <textarea id="form-h-t" cols="30" rows="8" name="answer" placeholder="Define Team's GVC Here..."><?= empty($data['csip']['courses'][ $data['course'] ]['questions'][1][2]['answer']) ? "" : $data['csip']['courses'][ $data['course'] ]['questions'][1][2]['answer'] ?></textarea>
                     <br><br>
                     <button class="uk-button uk-button-success uk-align-right" type="button">Save</button>     
                     <br><br>
@@ -32,8 +37,14 @@
         <ul class="uk-nav-sub">
             <li>With your team, identify and list which STANDARDS AND SKILLS are absolutely CRITICAL for the student to be successful in the grade level or course AND that your team will work to guarantee that EVERY student will know.<br><br></li>
             <li>
-                <form class="uk-form">
-                    <input type="text" data-uk-datepicker="{format:'DD.MM.YYYY'}">                     <button class="uk-button uk-button-success uk-align-right" type="button">Save</button>     
+                <form class="uk-form" action="index.php">
+                    <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
+                    <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
+                    <input type="hidden" name="part" value="1">
+                    <input type="hidden" name="questionid" value="3">
+                    <input type="hidden" name="op" value="SaveAnswer">
+                    <input type="text" data-uk-datepicker="{format:'DD.MM.YYYY'}" value="<?= empty($data['csip']['courses'][ $data['course'] ]['questions'][1][3]['answer']) ? "" : $data['csip']['courses'][ $data['course'] ]['questions'][1][3]['answer'] ?>">
+                     <button class="uk-button uk-button-success uk-align-right" type="button">Save</button>     
                     <br><br>
                 </form>
                                 <hr>
@@ -46,8 +57,13 @@
         <ul class="uk-nav-sub">
             <li>With your team, identify and list which STANDARDS AND SKILLS are absolutely CRITICAL for the student to be successful in the grade level or course AND that your team will work to guarantee that EVERY student will know.</li>
             <li>
-            <form class="uk-form">                            
-                    <textarea id="form-h-t" cols="30" rows="8" placeholder="Define Team's Reflection Summary Here..."></textarea>
+            <form class="uk-form" action="index.php">
+                    <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
+                    <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
+                    <input type="hidden" name="part" value="1">
+                    <input type="hidden" name="questionid" value="4">
+                    <input type="hidden" name="op" value="SaveAnswer">
+                    <textarea id="form-h-t" cols="30" rows="8" placeholder="Define Team's Reflection Summary Here..."><?= empty($data['csip']['courses'][ $data['course'] ]['questions'][1][4]['answer']) ? "" : $data['csip']['courses'][ $data['course'] ]['questions'][1][4]['answer'] ?></textarea>
                 <br><br>
                     <button class="uk-button uk-button-success uk-align-right" type="button">Save</button>     
                     <br><br>

@@ -1,8 +1,3 @@
-                <br>
-                <div class="uk-panel uk-panel-box uk-panel-box-primary">
-                       <p><strong>Essential Elements of Accreditation</strong></p>
-                        <p>We will put something more when we know what we want this part to say.</p>
-                    </div>
                 <form class="uk-form uk-form-horizontal">
 <?php
 if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['courseid'] ]['questions'][2]) ) {
@@ -12,7 +7,15 @@ if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['course
     if ( $count > 1 ) {
       echo "<hr>\n";
     }
+    if ( $data['csip']['questions'][ $questionid ]['type'] == 9 ) {
 ?>
+                <br>
+                <div class="uk-panel uk-panel-box uk-panel-box-primary">
+                   <?= $data['csip']['questions'][ $questionid ]['question_clean'] ?>
+                </div>
+<?php
+    }
+    else {
                 <br>
                     
                     <div class="uk-form-row">
@@ -22,6 +25,7 @@ if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['course
                         </div>
                     </div>     
 <?php
+    }
   }
 }
 ?>

@@ -10,10 +10,10 @@
 <br>
 
             <span class="uk-align-right"><img src="http://schools.washk12.org/enterprise/wp-content/uploads/sites/23/2014/01/grey_wcsd_logo-e1395268854370.png"></span>
-            <form class="uk-form">
+            <form class="uk-form" action="index.php">
                <h2>
                    Plan for
-        <select type="text" class="uk-form-large" name="csipid">
+        <select type="text" class="uk-form-large" name="csipid" onchange="this.form.submit()">
             <option>Select One...</option>
 <?php
 if ( !empty($data['csips']) ) {
@@ -25,7 +25,7 @@ if ( !empty($data['csips']) ) {
 ?>
         </select>
         Course
-        <select type="text" class="uk-form-large" name="courseid">
+        <select type="text" class="uk-form-large" name="courseid" onchange="this.form.submit()">
             <option>Select One...</option>
 <?php
 if ( !empty($data['csip']['courses']) ) {
