@@ -198,7 +198,7 @@ CROSS JOIN year USING (yearid)
   }
 
   $query = "
-     SELECT question.*
+     SELECT *
        FROM question
  CROSS JOIN csip_extra_part_links USING (question_group)
       WHERE version = :ver
