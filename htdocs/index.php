@@ -9,7 +9,7 @@
         <div class="uk-container uk-container-center uk-animation-fade">
 <br>
 
-            <span class="uk-align-right"><img src="http://schools.washk12.org/enterprise/wp-content/uploads/sites/23/2014/01/grey_wcsd_logo-e1395268854370.png"></span>
+            <span class="uk-align-right"><img src="https://schools.washk12.org/enterprise/wp-content/uploads/sites/23/2014/01/grey_wcsd_logo-e1395268854370.png"></span>
             <form class="uk-form" action="index.php">
                <h2>
                    Plan for
