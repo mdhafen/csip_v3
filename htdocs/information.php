@@ -1,14 +1,14 @@
 <!-- Tabs Begin -->
 <div class="uk-panel uk-panel-box-secondary">
 
-	<ul class="uk-tab" data-uk-tab>
+	<ul class="uk-tab" data-uk-tab id="rightpaneltabs">
 <?php
    if ( !empty($data['courseid']) && !empty( $data['csip']['courses'][ $data['courseid'] ]['questions']) ) {
       $count = 1;
       foreach ( $data['csip']['courses'][ $data['courseid'] ]['questions'] as $part => $questions ) {
         if ( $part < 3 ) { continue; }
  ?>
-        <li class="uk-active" id="cfa<?= $count ?>_tab"><a href="" onclick="activetab('cfa<?= $count ?>');"><div class="uk-badge uk-badge-success">GVC <?= $count ?></div></a></li>
+        <li class="<?= $part == 3 ? 'uk-active' : '' ?>" id="cfa<?= $count ?>_tab"><a href="" onclick="activetab('cfa<?= $count ?>');"><div class="uk-badge uk-badge-success">GVC <?= $count ?></div></a></li>
 <?php
          $count++;
       }
@@ -29,7 +29,7 @@
       foreach ( $data['csip']['courses'][ $data['courseid'] ]['questions'] as $part => $questions ) {
         if ( $part < 3 ) { continue; }
  ?>
-    <div id="cfa<?= $count ?>_content" style="display: block;">
+    <div id="cfa<?= $count ?>_content" style="display: <?= $part == 3 ? 'block' : 'none' ?>;">
 	   <?php include 'cfa.php'; ?>
     </div>
 <?php
