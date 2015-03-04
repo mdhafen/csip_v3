@@ -64,6 +64,13 @@ CREATE TABLE `location_course_links` (
        KEY (`locationid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+CREATE TABLE `course_approval` (
+       `courseid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
+       `csipid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
+       `principal_approved` DATE NULL DEFAULT NULL,
+       PRIMARY KEY (`courseid`,`csipid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 CREATE TABLE `question` (
 	`questionid` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`question` TEXT NOT NULL,

@@ -24,8 +24,9 @@ $config = array(
 		1   => "load_csip",
 		2   => "load_other_csip",
 		4   => "update_csip",
-		8   => "view_reports",
-		16  => "manage_users",
+		8   => "approve_csip",
+		16  => "view_reports",
+		32  => "manage_users",
 	),
 	'role' => array(
 		1 => array(
@@ -38,7 +39,7 @@ $config = array(
 		),
 		3 => array(
 			'name' => 'principal',
-			'auth' => 9, // load,report
+			'auth' => 25, // load,approve,report
 		),
 		4 => array(
 			'name' => 'district personel',
@@ -50,7 +51,7 @@ $config = array(
 		),
 		6 => array(
 			'name' => 'site supervisor',
-			'auth' => 31, // all
+			'auth' => 63, // all
 		),
 	),
 );
