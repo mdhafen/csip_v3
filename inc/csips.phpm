@@ -153,9 +153,10 @@ CROSS JOIN year USING (yearid)
   }
 
   $query = "
-    SELECT course.* 
+    SELECT course.*,ca.principal_approved
       FROM course
  LEFT JOIN location_course_links USING (courseid)
+ LEFT JOIN course_approval AS ca ON course.courseid = ca.courseid AND ca.csipid = :csip
      WHERE active = 1
 ";
   if ( ! empty($courses) ) {
@@ -168,6 +169,7 @@ CROSS JOIN year USING (yearid)
   ORDER BY course.course_name
 ";
   $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':csip', $csip['csipid'] );
   $sth->bindValue( ':mingrade', $csip['mingrade'] );
   $sth->bindValue( ':maxgrade', $csip['maxgrade'] );
   $sth->bindValue( ':loc_link', $csip['locationid'] );
