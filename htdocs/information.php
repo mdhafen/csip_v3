@@ -23,7 +23,7 @@
 
 
     <!-- Load pages based on tab selected -->
-
+        <div id="cfas">
 <?php
       $count = 1;
       foreach ( $data['csip']['courses'][ $data['courseid'] ]['questions'] as $part => $questions ) {
@@ -36,7 +36,7 @@
          $count++;
       }
  ?>
-
+        </div>
 	<div id="accreditation_content" style="display: none;">
 	   <?php include 'accreditation.php';?>
     </div>
