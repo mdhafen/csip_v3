@@ -69,7 +69,6 @@
                 <br>
                 </li>
             
- <li class="uk-parent">
             <li class="uk-panel uk-panel-box">
                 <form class="uk-form uk-form-horizontal" action="index.php">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
@@ -112,7 +111,6 @@
 <button class="uk-button uk-button-success uk-align-right" type="button">Save</button>
                 </form>
             </li>
-    </li>
         </ul>
     </li>
 <br>
