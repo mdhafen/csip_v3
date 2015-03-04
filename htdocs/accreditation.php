@@ -16,6 +16,7 @@ if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['course
 <?php
     }
     else {
+?>
                 <br>
                     
                     <div class="uk-form-row">

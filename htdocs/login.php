@@ -32,7 +32,7 @@
 				<h1 align="center">Digital CSIP</h1>
                 <hr>
 				<div class="uk-text-center">
-					<form class="uk-form" method="post" action="">
+					<form class="uk-form" method="post" action="index.php">
 						<div id="registered" class="uk-alert-success" style="display:none;">
 							<strong>You have successfully registered.<br>Please signin with your email and password.</strong>
 						</div>

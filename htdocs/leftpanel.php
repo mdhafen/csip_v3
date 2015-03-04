@@ -23,7 +23,7 @@
                     <input type="hidden" name="part" value="1">
                     <input type="hidden" name="questionid" value="2">
                     <input type="hidden" name="op" value="SaveAnswer">
-                    <textarea id="form-h-t" cols="30" rows="8" name="answer" placeholder="Define Team's GVC Here..."><?= empty($data['csip']['courses'][ $data['course'] ]['questions'][1][2]['answer']) ? "" : $data['csip']['courses'][ $data['course'] ]['questions'][1][2]['answer'] ?></textarea>
+                    <textarea id="form-h-t" cols="30" rows="8" name="answer" placeholder="Define Team's GVC Here..."><?= empty($data['csip']['courses'][ $data['courseid'] ]['questions'][1][2]['answer']) ? "" : $data['csip']['courses'][ $data['courseid'] ]['questions'][1][2]['answer'] ?></textarea>
                     <br><br>
                     <button class="uk-button uk-button-success uk-align-right" type="button">Save</button>     
                     <br><br>
@@ -43,7 +43,7 @@
                     <input type="hidden" name="part" value="1">
                     <input type="hidden" name="questionid" value="3">
                     <input type="hidden" name="op" value="SaveAnswer">
-                    <input type="text" data-uk-datepicker="{format:'DD.MM.YYYY'}" value="<?= empty($data['csip']['courses'][ $data['course'] ]['questions'][1][3]['answer']) ? "" : $data['csip']['courses'][ $data['course'] ]['questions'][1][3]['answer'] ?>">
+                    <input type="text" data-uk-datepicker="{format:'DD.MM.YYYY'}" value="<?= empty($data['csip']['courses'][ $data['courseid'] ]['questions'][1][3]['answer']) ? "" : $data['csip']['courses'][ $data['courseid'] ]['questions'][1][3]['answer'] ?>">
                      <button class="uk-button uk-button-success uk-align-right" type="button">Save</button>     
                     <br><br>
                 </form>
@@ -63,7 +63,7 @@
                     <input type="hidden" name="part" value="1">
                     <input type="hidden" name="questionid" value="4">
                     <input type="hidden" name="op" value="SaveAnswer">
-                    <textarea id="form-h-t" cols="30" rows="8" placeholder="Define Team's Reflection Summary Here..."><?= empty($data['csip']['courses'][ $data['course'] ]['questions'][1][4]['answer']) ? "" : $data['csip']['courses'][ $data['course'] ]['questions'][1][4]['answer'] ?></textarea>
+                    <textarea id="form-h-t" cols="30" rows="8" placeholder="Define Team's Reflection Summary Here..."><?= empty($data['csip']['courses'][ $data['courseid'] ]['questions'][1][4]['answer']) ? "" : $data['csip']['courses'][ $data['courseid'] ]['questions'][1][4]['answer'] ?></textarea>
                 <br><br>
                     <button class="uk-button uk-button-success uk-align-right" type="button">Save</button>     
                     <br><br>
