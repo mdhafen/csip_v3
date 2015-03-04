@@ -19,8 +19,8 @@ CREATE TABLE `location` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `user_location_links` (
-       userid INT(10) UNSIGNED NOT NULL DEFAULT '0',
-       locationid INT(10) UNSIGNED NOT NULL DEFAULT '0',
+       `userid` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+       `locationid` INT(10) UNSIGNED NOT NULL DEFAULT '0',
        PRIMARY KEY (`userid`,`locationid`),
        KEY `ull_userid` (`userid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -52,9 +52,9 @@ CREATE TABLE `course` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `user_course_links` (
-       userid INT(10) UNSIGNED NOT NULL DEFAULT 0,
-       locationid INT(10) UNSIGNED NOT NULL DEFAULT 0,
-       courseid INT(10) UNSIGNED NOT NULL DEFAULT 0
+       `userid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
+       `locationid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
+       `courseid` INT(10) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `location_course_links` (
@@ -94,18 +94,18 @@ CREATE TABLE `question_options` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `course_question_links` (
-       courseid INT(10) UNSIGNED NOT NULL DEFAULT 0,
-       question_group INT(10) UNSIGNED NOT NULL DEFAULT 0,
-       part INT(4) NOT NULL DEFAULT 0,
-       title VARCHAR(64) NOT NULL DEFAULT ''
+       `courseid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
+       `question_group` INT(10) UNSIGNED NOT NULL DEFAULT 0,
+       `part` INT(4) NOT NULL DEFAULT 0,
+       `title` VARCHAR(64) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `csip_extra_part_links` (
-       csip INT(10) UNSIGNED NOT NULL DEFAULT 0,
-       courseid INT(10) UNSIGNED NOT NULL DEFAULT 0,
-       question_group INT(10) UNSIGNED NOT NULL DEFAULT 0,
-       part INT(4) NOT NULL DEFAULT 0,
-       title VARCHAR(64) NOT NULL DEFAULT ''
+       `csipid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
+       `courseid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
+       `question_group` INT(10) UNSIGNED NOT NULL DEFAULT 0,
+       `part` INT(4) NOT NULL DEFAULT 0,
+       `title` VARCHAR(64) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `answer` (
