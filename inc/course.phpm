@@ -449,6 +449,12 @@ function course_save_answers( $answer, $courseid, $questionid, $part, $csip ) {
       $sth->bindValue( ':csip', $csip['csipid'] );
       $sth->execute();
     }
+
+    $query = "UPDATE course_approval SET principal_approved = NULL WHERE courseid = :course AND csipid = :csip";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':course', $courseid );
+    $sth->bindValue( ':csip', $csip['csipid'] );
+    $sth->execute();
   }
 }
 
