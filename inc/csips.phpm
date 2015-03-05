@@ -227,8 +227,8 @@ CROSS JOIN year USING (yearid)
   $sth->execute();
   while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
     // can't stripslashes here because the answer might be serialized
-    $row['question_html'] = course_get_html_input( $csip['questions'][ $row['questionid'] ]['question'], $row['answer'], $row['courseid'], $csip );
-    $csip['courses'][ $row['courseid'] ]['questions'][ $row['part'] ][ $row['questionid'] ][ $row['answerid'] ] = $row;
+    $row['question_html'] = course_get_html_input( $csip['questions'][ $row['questionid'] ], $row, $row['courseid'], $csip );
+    $csip['courses'][ $row['courseid'] ]['questions'][ $row['part'] ][ $row['questionid'] ] = $row;
   }
 
   return $csip;
