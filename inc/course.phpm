@@ -523,6 +523,7 @@ function course_approve( $courseid = 0, $csip = array() ) {
 
   if ( $csip['loc_demo'] == 1 ) { return; }  // location is Demo
 
+  $old = "";
   if ( !empty( $csip['courses'][$courseid]['principal_approved'] ) ) {
     $old = $csip['courses'][$courseid]['principal_approved'];
   }
