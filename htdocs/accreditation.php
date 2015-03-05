@@ -36,5 +36,5 @@ if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['course
 }
 ?>
             <br>
-<button class="uk-button uk-button-success uk-align-right" type="button">Save</button>        
+<button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>        
                 </form>
