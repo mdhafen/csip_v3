@@ -11,9 +11,10 @@
         $num_answers = 0;
         foreach ( $questions as $questionid => $answer ) {
           if ( $data['csip']['questions'][$questionid]['type'] != 9 ) {
-          $num_questions++;
-          if ( !empty($answer['answer']) ) {
-            $num_answers++;
+            $num_questions++;
+            if ( !empty($answer['answer']) ) {
+              $num_answers++;
+            }
           }
         }
         if ( $num_questions == $num_answers ) {
