@@ -22,32 +22,32 @@
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-t">List the common formative assessment AND the guaranteed skill it aligns with (Example: Unit 1 - Fractions). FOR ELEMENTARY: Identify which questions on your existing instructional program assessments align with your GVC.</label>
                         <div class="uk-form-controls">
-                            <input type="hidden" name="questions[]" value="12">
-                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="Textarea text"><?= empty($questions[12]['answer']) ? "" : $questions[12]['answer'] ?></textarea>
+                            <input type="hidden" name="questions[]" value="14">
+                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="Textarea text"><?= empty($questions[14]['answer']) ? "" : $questions[14]['answer'] ?></textarea>
                         </div>
                     </div>     
                     <hr>
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-it">How many students were assessed by our team?</label>
                         <div class="uk-form-controls">
-                            <input type="hidden" name="questions[]" value="13">
-                            <input type="text" id="form-h-it" name="answers[]" value="<?= empty($questions[13]['answer']) ? "" : $questions[13]['answer'] ?>" placeholder="Text input">
+                            <input type="hidden" name="questions[]" value="15">
+                            <input type="text" id="form-h-it" name="answers[]" value="<?= empty($questions[15]['answer']) ? "" : $questions[15]['answer'] ?>" placeholder="Text input">
                         </div>
                     </div>
                     <hr>                                              
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-it">How many were not proficient the first time?</label>
                         <div class="uk-form-controls">
-                            <input type="hidden" name="questions[]" value="14">
-                            <input type="text" id="form-h-it" name="answers[]" value="<?= empty($questions[14]['answer']) ? "" : $questions[14]['answer'] ?>" placeholder="Text input">
+                            <input type="hidden" name="questions[]" value="16">
+                            <input type="text" id="form-h-it" name="answers[]" value="<?= empty($questions[16]['answer']) ? "" : $questions[16]['answer'] ?>" placeholder="Text input">
                         </div>
                     </div>
                     <hr>                                              
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-t">According to the results of this CFA and our team's collaboration, the following teaching practices/strategies were most effective in teaching this guaranteed skill(s):</label>
                         <div class="uk-form-controls">
-                            <input type="hidden" name="questions[]" value="15">
-                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="Textarea text"><?= empty($questions[15]['answer']) ? "" : $questions[15]['answer'] ?></textarea>
+                            <input type="hidden" name="questions[]" value="17">
+                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="Textarea text"><?= empty($questions[17]['answer']) ? "" : $questions[17]['answer'] ?></textarea>
                         </div>
                     </div>
                     <br>
@@ -79,32 +79,32 @@
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-t">List the SPECIFIC INTERVENTIONS that your team responded with for those students who WERE NOT proficient.</label>
                         <div class="uk-form-controls">
-                            <input type="hidden" name="questions[]" value="16">
-                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="Textarea text"><?= empty($questions[16]['answer']) ? "" : $questions[16]['answer'] ?></textarea>
+                            <input type="hidden" name="questions[]" value="20">
+                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="Textarea text"><?= empty($questions[20]['answer']) ? "" : $questions[20]['answer'] ?></textarea>
                         </div>
                     </div>     
                     <hr>                                              
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-it">Following your team's INTERVENTIONS and REASSESSMENT, how many students are still not proficient?</label>
                         <div class="uk-form-controls">
-                            <input type="hidden" name="questions[]" value="17">
-                            <input type="text" id="form-h-it" name="answers[]" value="<?= empty($questions[17]['answer']) ? "" : $questions[17]['answer'] ?>" placeholder="Text input">
+                            <input type="hidden" name="questions[]" value="21">
+                            <input type="text" id="form-h-it" name="answers[]" value="<?= empty($questions[21]['answer']) ? "" : $questions[21]['answer'] ?>" placeholder="Text input">
                         </div>
                     </div>
                     <hr>                                              
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-t">List the SPECIFIC FIRST NAMES of those students who were not proficient even after your team's intervention.<br><br>(To indicate growth, include how much the student grew from the first to second assessment).</label>
                         <div class="uk-form-controls">
-                            <input type="hidden" name="questions[]" value="18">
-                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="Textarea text"><?= empty($questions[18]['answer']) ? "" : $questions[18]['answer'] ?></textarea>
+                            <input type="hidden" name="questions[]" value="22">
+                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="Textarea text"><?= empty($questions[22]['answer']) ? "" : $questions[22]['answer'] ?></textarea>
                         </div>
                     </div>
                     <hr>
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-t">How did your TEAM respond to those who were still not proficient even after your team's interventions?</label>
                         <div class="uk-form-controls">
-                            <input type="hidden" name="questions[]" value="19">
-                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="Textarea text"><?= empty($questions[19]['answer']) ? "" : $questions[19]['answer'] ?></textarea>
+                            <input type="hidden" name="questions[]" value="23">
+                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="Textarea text"><?= empty($questions[23]['answer']) ? "" : $questions[23]['answer'] ?></textarea>
                         </div>
                     </div>
                     <br>
@@ -134,16 +134,16 @@
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-t">ACTION STEPS: As you review your GVC from (step #1), identify extension activities your team will use for those who already know it.</label>
                         <div class="uk-form-controls">
-                            <input type="hidden" name="questions[]" value="20">
-                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="Textarea text"><?= empty($questions[20]['answer']) ? "" : $questions[20]['answer'] ?></textarea>
+                            <input type="hidden" name="questions[]" value="26">
+                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="Textarea text"><?= empty($questions[26]['answer']) ? "" : $questions[26]['answer'] ?></textarea>
                         </div>
                     </div>     
                     <hr>                                              
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-it">EXTENSION:</label>
                         <div class="uk-form-controls">
-                            <input type="hidden" name="questions[]" value="21">
-                            <input type="text" id="form-h-it" name="answers[]" value="<?= empty($questions[21]['answer']) ? "" : $questions[21]['answer'] ?>" placeholder="Text input">
+                            <input type="hidden" name="questions[]" value="27">
+                            <input type="text" id="form-h-it" name="answers[]" value="<?= empty($questions[27]['answer']) ? "" : $questions[27]['answer'] ?>" placeholder="Text input">
                         </div>
                     </div>
                     <hr>                                              
@@ -151,8 +151,8 @@
                         <label class="uk-form-label" for="form-h-t"><strong>End of Year Reflection</strong><br><br>Do our extension activities provide deeper learning for those students who already know it? What adjustments can we make to provide for better extended learning opportunities?
 </label>
                         <div class="uk-form-controls">
-                            <input type="hidden" name="questions[]" value="22">
-                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="Textarea text"><?= empty($questions[22]['answer']) ? "" : $questions[22]['answer'] ?></textarea>
+                            <input type="hidden" name="questions[]" value="28">
+                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="Textarea text"><?= empty($questions[28]['answer']) ? "" : $questions[28]['answer'] ?></textarea>
                         </div>
                     </div>
     <br>
