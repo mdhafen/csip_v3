@@ -428,8 +428,9 @@ function course_save_answers( $answer, $courseid, $questionid, $part, $csip ) {
     $answer = serialize( $answer );
   }
 
+  $old = array();
   if ( !empty( $csip['courses'][$courseid]['questions'][$part][$questionid]['answer'] ) ) {
-    $old = $csip['courses'][$courseid]['questions'][$part][$questionid]['answer'];
+    $old = $csip['courses'][$courseid]['questions'][$part][$questionid];
   }
 
   if ( empty($old['answer']) || $answer != $old['answer'] ) {
