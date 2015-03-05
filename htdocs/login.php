@@ -33,12 +33,13 @@
                 <hr>
 				<div class="uk-text-center">
 					<form class="uk-form" method="post" action="index.php">
-						<div id="registered" class="uk-alert-success" style="display:none;">
-							<strong>You have successfully registered.<br>Please signin with your email and password.</strong>
+
+<?php if ( !empty($data['NOTPERMITTED']) ) { ?>
+						<div id="errors" class="uk-alert-danger">
+							<strong>You do not have access to that function.</strong>
 						</div>
-						<div id="passwordchange" class="uk-alert-success" style="display:none;">
-							<strong>Your password has been successfully changed.<br>Please signin with your new password.</strong>
-						</div>
+<?php } ?>
+
 						<fieldset>
 							<label class="uk-form-label" for="_username">Username&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 							<input type="text" placeholder="username" id="_username" name="_username">
