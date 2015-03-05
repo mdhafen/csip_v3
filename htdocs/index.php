@@ -11,7 +11,7 @@
 
             <span class="uk-align-right"><img src="https://schools.washk12.org/enterprise/wp-content/uploads/sites/23/2014/01/grey_wcsd_logo-e1395268854370.png"></span>
             <h2>
-            <form class="uk-form" action="index.php">
+            <form class="uk-form uk-display-inline-block" action="index.php">
                    Plan for
             <select type="text" class="uk-form-large" name="csipid" onchange="this.form.submit()">
             <option>Select One...</option>
@@ -54,7 +54,7 @@ if ( !empty($data['courseid']) ) {
 
   if ( ! empty($data['_session']['CAN_approve_csip']) ) {
 ?>
-        <form class="uk-form" action="approve.php">
+        <form class="uk-form uk-display-inline-block" action="approve.php">
         <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
         <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
         <input type="hidden" name="op" value="ApproveCourse">
