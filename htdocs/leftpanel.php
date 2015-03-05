@@ -1,7 +1,20 @@
 <div class="uk-panel uk-panel-box" uk-nav-side>
 
-<?php if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['courseid'] ]['questions'][1]) ) { ?>
-    <h4><i class="uk-icon-bars"></i> <strong>Guaranteed Curriculum</strong></h4>
+<?php
+if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['courseid'] ]['questions'][1]) ) {
+  $answers = 0;
+  foreach ( $data['csip']['courses'][ $data['courseid'] ]['questions'][1] as $answer ) {
+    if ( !empty($answer['answer'] ) {
+      $answers++;
+    }
+    if ( $answers == 3 ) {
+      $completeness = "uk-badge-success uk-icon-check";
+    }
+    else {
+      $completeness = "uk-badge-warning uk-icon-exclamation-triangle";
+    }
+?>
+    <h4 class="uk-clearfix"><i class="uk-icon-bars"></i> <strong>Guaranteed Curriculum</strong> <span class="uk-align-right uk-badge <?= $completeness ?>"></span></h4>
 <hr>
     <ul id="leftpanel" class="uk-nav uk-nav-parent-icon" data-uk-nav>
     <li class="uk-parent">

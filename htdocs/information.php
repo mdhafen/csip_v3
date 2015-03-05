@@ -7,8 +7,23 @@
       $count = 1;
       foreach ( $data['csip']['courses'][ $data['courseid'] ]['questions'] as $part => $questions ) {
         if ( $part < 3 ) { continue; }
+        $num_questions = 0;
+        $num_answers = 0;
+        foreach ( $questions as $questionid => $answer ) {
+          if ( $data['csip']['questions'][$questionid]['type'] != 9 ) {
+          $num_questions++;
+          if ( !empty($answer['answer']) ) {
+            $num_answers++;
+          }
+        }
+        if ( $num_questions == $num_answers ) {
+          $completeness = 'uk-badge-success';
+        }
+        else {
+          $completeness = 'uk-badge-warning';
+        }
  ?>
-        <li class="<?= $part == 3 ? 'uk-active' : '' ?>" id="cfa<?= $count ?>_tab"><a href="" onclick="activetab('cfa<?= $count ?>');"><div class="uk-badge uk-badge-success">GVC <?= $count ?></div></a></li>
+        <li class="<?= $part == 3 ? 'uk-active' : '' ?>" id="cfa<?= $count ?>_tab"><a href="" onclick="activetab('cfa<?= $count ?>');"><div class="uk-badge <?= $completeness ?>">GVC <?= $count ?></div></a></li>
 <?php
          $count++;
       }
