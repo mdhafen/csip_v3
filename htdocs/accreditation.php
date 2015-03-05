@@ -1,8 +1,8 @@
                 <form class="uk-form uk-form-horizontal" action="save_answer.php">
 <?php
 if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['courseid'] ]['questions'][2]) ) {
-  echo "<input type='hidden' name='csipid' value='<?= $data['csip']['csipid'] ?>'>\n";
-  echo "<input type='hidden' name='courseid' value='<?= $data['course'] ?>'>\n";
+  echo "<input type='hidden' name='csipid' value='". $data['csip']['csipid'] ."'>\n";
+  echo "<input type='hidden' name='courseid' value='". $data['course'] ."'>\n";
   echo "<input type='hidden' name='part' value='2'>\n";
   echo "<input type='hidden' name='op' value='SaveAnswer'>\n";
   $count = 0;
