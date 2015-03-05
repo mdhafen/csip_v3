@@ -51,7 +51,7 @@
                         </div>
                     </div>
                     <br>
-<button class="uk-button uk-button-success uk-align-right" type="button">Save</button>
+<button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>
                 </form>
             </li>
         </ul>
@@ -108,7 +108,7 @@
                         </div>
                     </div>
                     <br>
-<button class="uk-button uk-button-success uk-align-right" type="button">Save</button>
+<button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>
                 </form>
             </li>
         </ul>
@@ -156,7 +156,7 @@
                         </div>
                     </div>
     <br>
-<button class="uk-button uk-button-success uk-align-right" type="button">Save</button>
+<button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>
                 </form>
             </li>
         </ul>
