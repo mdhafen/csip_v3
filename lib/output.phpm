@@ -6,6 +6,7 @@ require_once( 'security.phpm' );
 function redirect( $target = "" ) {
 	global $config;
 	if ( $target ) {
+		save_session();
 		if ( ! preg_match( '/^http/', $target ) ) {
 			$target = $config['base_url'] . $target;
 		}
@@ -14,7 +15,7 @@ function redirect( $target = "" ) {
 }
 
 function error( array $errors ) {
-	output( array('errors'=>$errors), 'error.tmpl' );
+	output( array('errors'=>$errors), 'error' );
 	exit; // Errors are fatal
 }
 

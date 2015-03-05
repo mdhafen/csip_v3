@@ -69,6 +69,16 @@ if ( !empty($data['courseid']) ) {
             <?php include 'footer.php'; ?>
         </div>
 
+<?php
+if ( !empty($data['part']) && $data['part'] > 1 ) {
+  $tab = $data['part'] == 2 ? 'accreditation' : 'cfa'. $part - 2;
+?>
+<script type="text/javascript">
+activetab('<?= $tab ?>');
+</script>
+<?php
+}
+?>
 	</body>
 </html>
 

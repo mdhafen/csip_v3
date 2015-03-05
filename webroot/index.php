@@ -8,16 +8,16 @@ include_once( '../inc/csips.phpm' );
 authorize( 'load_csip' );
 $district = authorized( 'load_other_csip' );
 $reporter = authorized( 'view_reports' );
-$errors = array();
 $locations = empty($_SESSION['loggedin_user']['locations']) ? array() : array_keys( $_SESSION['loggedin_user']['locations'] );
 $csipid = input( 'csipid', INPUT_PINT );
 $courseid = input( 'courseid', INPUT_PINT );
+$part = input( 'part', INPUT_INT );
 
 $csip = array();
 if ( empty($_SESSION['csip']) ) {
    if ( ! empty($csipid) ) {
       if ( !in_array( get_csip_locationid( $csipid ), $locations ) && ! $district ) {
-         $errors[] = 'NOTYOURS';
+         error( array('NOTYOURS' => 1 ) );
       }
       else {
          $csip = load_csip( $csipid, $reporter, $_SESSION['loggedin_user']['userid'] );
@@ -47,10 +47,10 @@ if ( !empty( $_SESSION['loggedin_user']) ) {
 }
 
 $output = array(
-        'errors' => $errors,
         'csips' => $csips,
         'csip' => $csip,
         'courseid' => $courseid,
+        'part' => $part,
 );
 output( $output, 'index' );
 ?>

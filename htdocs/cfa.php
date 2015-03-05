@@ -13,7 +13,7 @@
                 <br>
                 </li>
             <li class="uk-panel uk-panel-box">
-                <form class="uk-form uk-form-horizontal" action="index.php">
+                <form class="uk-form uk-form-horizontal" action="save_answer.php">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
                     <input type="hidden" name="part" value="<?= $part ?>">
@@ -70,7 +70,7 @@
                 </li>
             
             <li class="uk-panel uk-panel-box">
-                <form class="uk-form uk-form-horizontal" action="index.php">
+                <form class="uk-form uk-form-horizontal" action="save_answer.php">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
                     <input type="hidden" name="part" value="<?= $part ?>">
@@ -125,7 +125,7 @@
                 </li>
             
             <li class="uk-panel uk-panel-box">
-            <form class="uk-form uk-form-horizontal" action="index.php">
+            <form class="uk-form uk-form-horizontal" action="save_answer.php">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
                     <input type="hidden" name="part" value="<?= $part ?>">
@@ -152,7 +152,7 @@
 </label>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="22">
-                            <textarea id="form-h-t" cols="50" rows="8" placeholder="Textarea text"><?= empty($questions[22]['answer']) ? "" : $questions[22]['answer'] ?></textarea>
+                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="Textarea text"><?= empty($questions[22]['answer']) ? "" : $questions[22]['answer'] ?></textarea>
                         </div>
                     </div>
     <br>
