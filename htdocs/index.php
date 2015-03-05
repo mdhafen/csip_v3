@@ -10,10 +10,10 @@
 <br>
 
             <span class="uk-align-right"><img src="https://schools.washk12.org/enterprise/wp-content/uploads/sites/23/2014/01/grey_wcsd_logo-e1395268854370.png"></span>
+            <h2>
             <form class="uk-form" action="index.php">
-               <h2>
                    Plan for
-        <select type="text" class="uk-form-large" name="csipid" onchange="this.form.submit()">
+            <select type="text" class="uk-form-large" name="csipid" onchange="this.form.submit()">
             <option>Select One...</option>
 <?php
 if ( !empty($data['csips']) ) {
@@ -23,9 +23,9 @@ if ( !empty($data['csips']) ) {
    }
 }
 ?>
-        </select>
-        Course
-        <select type="text" class="uk-form-large" name="courseid" onchange="this.form.submit()">
+            </select>
+            Course
+            <select type="text" class="uk-form-large" name="courseid" onchange="this.form.submit()">
             <option>Select One...</option>
 <?php
 if ( !empty($data['csip']['courses']) ) {
@@ -35,10 +35,11 @@ if ( !empty($data['csip']['courses']) ) {
    }
 }
 ?>
-        </select>
+            </select>
+        </form>
 <?php
 if ( !empty($data['courseid']) ) {
-  $can_approve = '';
+  $can_approve = ' onclick("this.form.submit()")';
   if ( empty($data['_session']['CAN_approve_csip']) ) {
     $can_approve = ' disabled';
   }
@@ -50,12 +51,27 @@ if ( !empty($data['courseid']) ) {
     $app = "Approved";
     $class = "uk-button-success";
   }
-  echo "<button class='uk-button $class'$can_approve>$app</button>";
+
+  if ( ! empty($data['_session']['CAN_approve_csip']) ) {
+?>
+        <form class="uk-form" action="approve.php">
+        <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
+        <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
+        <input type="hidden" name="op" value="ApproveCourse">
+<?php
+  }
+?>
+        <button class='uk-button <?= $class ?>'<?= $can_approve ?>><?= $app ?></button>
+<?php
+  if ( ! empty($data['_session']['CAN_approve_csip']) ) {
+?>
+        </form>
+<?php
+  }
 }
 ?>
-                 <hr>
-    </h2>
-    </form>
+            <hr>
+        </h2>
             <div class="uk-grid" uk-grid-divider data-uk-grid-match>
                 <div class="uk-width-medium-3-10">
                     <?php include 'leftpanel.php'; ?>

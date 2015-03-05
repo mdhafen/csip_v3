@@ -25,6 +25,9 @@ else {
    if ( ! empty($csipid) && $csip['csipid'] != $csipid ) {
       error( array('NOTYOURS' => 'Loading other CSIPs not allowed here.') );
    }
+   if ( !in_array( $csip['locationid'], $locations ) && ! $district ) {
+      error( array('NOTYOURS' => 'Access to CSIP denied.' ) );
+   }
    if ( empty($csip['courses'][$courseid]) ) {
       error( array('NOTYOURS' => 'Access to course not allowed here.') );
    }

@@ -518,4 +518,28 @@ function course_part_completion( $courseid, $part, $csip ) {
   return ( $result );
 }
 
+function course_approve( $courseid = 0, $csip = array() ) {
+  $dbh = db_connect();
+
+  if ( $csip['loc_demo'] == 1 ) { return; }  // location is Demo
+
+  if ( !empty( $csip['courses'][$courseid]['principal_approved'] ) ) {
+    $old = $csip['courses'][$courseid]['principal_approved'];
+  }
+
+  if ( $old ) {
+    $query = "UPDATE course_approval SET principal_approved = CURDATE() WHERE courseid = :course AND csipid = :csip";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':course', $courseid );
+    $sth->bindValue( ':csip', $csip['csipid'] );
+    $sth->execute();
+  } else {
+    $query = "INSERT INTO course_approval ( courseid, csipid, principal_approved ) VALUES ( :course, :csip, CURDATE() )";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':course', $courseid );
+    $sth->bindValue( ':csip', $csip['csipid'] );
+    $sth->execute();
+  }
+}
+
 ?>
