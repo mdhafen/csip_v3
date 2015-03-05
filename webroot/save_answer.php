@@ -14,8 +14,8 @@ $part = input( 'part', INPUT_PINT );
 $op = input( 'op', INPUT_HTML_NONE );
 $questions = input( 'questions', INPUT_PINT );
 $answers = input( 'answers', INPUT_HTML_NONE );
-$questionid = input( 'questionid, INPUT_PINT );
-$answer = input( 'answer, INPUT_HTML_NONE );
+$questionid = input( 'questionid', INPUT_PINT );
+$answer = input( 'answer', INPUT_HTML_NONE );
 
 $csip = $_SESSION['csip'];
 if ( empty($csip) ) {
