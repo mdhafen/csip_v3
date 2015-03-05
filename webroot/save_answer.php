@@ -35,8 +35,20 @@ else {
    if ( empty($csip['courses'][$courseid]['questions'][$part]) ) {
       error( array('NOTYOURS' => 'Course does not have that tab.') );
    }
-   if ( !isset($csip['courses'][$courseid]['questions'][$part][$questionid]) ) {
-      error( array('NOTYOURS' => 'Tab does not have that question.') );
+   if ( ! empty($questionid) ) {
+      if ( !isset($csip['courses'][$courseid]['questions'][$part][$questionid]) ) {
+         error( array('NOTYOURS' => 'Tab does not have that question.') );
+      }
+   }
+   else if ( ! empty($questions) ) {
+      foreach ( $questions as $questionid ) {
+         if ( !isset($csip['courses'][$courseid]['questions'][$part][$questionid]) ) {
+            error( array('NOTYOURS' => 'Tab does not have that question.') );
+         }
+      }
+   }
+   else {
+         error( array('NOTYOURS' => 'No questions in submission.') );
    }
 }
 

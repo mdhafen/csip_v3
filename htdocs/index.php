@@ -87,7 +87,7 @@ if ( !empty($data['courseid']) ) {
 
 <?php
 if ( !empty($data['part']) && $data['part'] > 1 ) {
-  $tab = $data['part'] == 2 ? 'accreditation' : 'cfa'. $part - 2;
+  $tab = $data['part'] == 2 ? 'accreditation' : 'cfa'. ( $part - 2 );
 ?>
 <script type="text/javascript">
 activetab('<?= $tab ?>');
