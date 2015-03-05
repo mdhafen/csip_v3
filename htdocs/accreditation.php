@@ -1,6 +1,10 @@
-                <form class="uk-form uk-form-horizontal">
+                <form class="uk-form uk-form-horizontal" action="save_answer.php">
 <?php
 if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['courseid'] ]['questions'][2]) ) {
+  echo "<input type='hidden' name='csipid' value='<?= $data['csip']['csipid'] ?>'>\n";
+  echo "<input type='hidden' name='courseid' value='<?= $data['course'] ?>'>\n";
+  echo "<input type='hidden' name='part' value='2'>\n";
+  echo "<input type='hidden' name='op' value='SaveAnswer'>\n";
   $count = 0;
   foreach ( $data['csip']['courses'][ $data['courseid'] ]['questions'][2] as $questionid => $answer ) {
     $count++;
@@ -22,7 +26,8 @@ if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['course
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-t"><?= $data['csip']['questions'][ $questionid ]['question_clean'] ?></label>
                         <div class="uk-form-controls">
-                            <textarea id="form-h-t" cols="50" rows="8" placeholder="Type reponse here"><?= empty($answer['answer']) ? "" : $answer['answer'] ?></textarea>
+                            <input type="hidden" name="questions[]" value="<?= $questionid ?>">
+                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="Type reponse here"><?= empty($answer['answer']) ? "" : $answer['answer'] ?></textarea>
                         </div>
                     </div>     
 <?php

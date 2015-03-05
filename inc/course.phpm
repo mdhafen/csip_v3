@@ -419,14 +419,10 @@ function question_get_options( $option_group ) {
   return $options;
 }
 
-function course_save_answers( $answer, $courseid, $questionid, $part, &$csip ) {
+function course_save_answers( $answer, $courseid, $questionid, $part, $csip ) {
   $dbh = db_connect();
 
   if ( $csip['loc_demo'] == 1 ) { return; }  // location is Demo
-
-  if ( ! authorized( 'update_csip' ) ) {
-    return;
-  }
 
   if ( is_array( $answer ) ) {
     $answer = serialize( $answer );

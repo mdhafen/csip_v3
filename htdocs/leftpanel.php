@@ -17,7 +17,7 @@
             Once your team has identified the skills, share with the team above and below your specific grade level.<br><br>
             Share the guaranteed skills with your students that you have identified below.<br><br>
             <li>
-                <form class="uk-form" action="index.php">
+                <form class="uk-form" action="save_answer.php">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
                     <input type="hidden" name="part" value="1">
@@ -37,7 +37,7 @@
         <ul class="uk-nav-sub">
             <li>With your team, identify and list which STANDARDS AND SKILLS are absolutely CRITICAL for the student to be successful in the grade level or course AND that your team will work to guarantee that EVERY student will know.<br><br></li>
             <li>
-                <form class="uk-form" action="index.php">
+                <form class="uk-form" action="save_answer.php">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
                     <input type="hidden" name="part" value="1">
@@ -57,7 +57,7 @@
         <ul class="uk-nav-sub">
             <li>With your team, identify and list which STANDARDS AND SKILLS are absolutely CRITICAL for the student to be successful in the grade level or course AND that your team will work to guarantee that EVERY student will know.</li>
             <li>
-            <form class="uk-form" action="index.php">
+            <form class="uk-form" action="save_answer.php">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
                     <input type="hidden" name="part" value="1">
