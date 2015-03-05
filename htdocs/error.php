@@ -33,7 +33,7 @@
                 <hr>
 				<div class="uk-text-center">
 					<h2>There was an error</h2>
-					<div id="errors" class="uk-alert-danger">
+					<div id="errors" class="uk-alert uk-alert-danger">
 <?php
 if ( !empty($data['errors']) ) {
    foreach ( $data['errors'] as $flag => $text ) {

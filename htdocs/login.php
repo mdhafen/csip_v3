@@ -35,7 +35,7 @@
 					<form class="uk-form" method="post" action="index.php">
 
 <?php if ( !empty($data['NOTPERMITTED']) ) { ?>
-						<div id="errors" class="uk-alert-danger">
+						<div id="errors" class="uk-alert uk-alert-danger">
 							<strong>You do not have access to that function.</strong>
 						</div>
 <?php } ?>
