@@ -39,6 +39,6 @@ course_approve( $courseid, $csip );
 $csip['courses'][$courseid]['principal_approved'] = date('Y-m-d');
 $_SESSION['csip'] = $csip;
 
-redirect( 'index.php?csipid='. $csip['csipid'] .'&course='. $courseid .'&part='. $part );
+redirect( 'index.php?csipid='. $csip['csipid'] .'&courseid='. $courseid );
 
 ?>

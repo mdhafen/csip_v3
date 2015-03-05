@@ -57,5 +57,5 @@ else {
 $csip = course_reload_answers( $csip, $courseid, $part );
 $_SESSION['csip'] = $csip;
 
-redirect( 'index.php?csipid='. $csip['csipid'] .'&course='. $courseid .'&part='. $part );
+redirect( 'index.php?csipid='. $csip['csipid'] .'&courseid='. $courseid .'&part='. $part );
 ?>
