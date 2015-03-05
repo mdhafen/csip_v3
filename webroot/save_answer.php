@@ -4,6 +4,7 @@ include_once( '../lib/security.phpm' );
 include_once( '../lib/output.phpm' );
 
 include_once( '../inc/csips.phpm' );
+include_once( '../inc/course.phpm' );
 
 authorize( 'update_csip' );
 
@@ -34,7 +35,7 @@ else {
    if ( empty($csip['courses'][$courseid]['questions'][$part]) ) {
       error( array('NOTYOURS' => 'Course does not have that tab.') );
    }
-   if ( empty($csip['courses'][$courseid]['questions'][$part][$questionid]) ) {
+   if ( !isset($csip['courses'][$courseid]['questions'][$part][$questionid]) ) {
       error( array('NOTYOURS' => 'Tab does not have that question.') );
    }
 }
@@ -46,12 +47,12 @@ if ( $op != 'SaveAnswer' ) {
 if ( !empty($answers) ) {
    $count = 0;
    foreach ( $questions as $this_questionid ) {
-      course_save_answer( $answers[ $count ], $courseid, $this_questionid, $part, $csip );
+      course_save_answers( $answers[ $count ], $courseid, $this_questionid, $part, $csip );
       $count++;
    }
 }
 else {
-     course_save_answer( $answer, $courseid, $questionid, $part, $csip );
+     course_save_answers( $answer, $courseid, $questionid, $part, $csip );
 }
 
 $csip = course_reload_answers( $csip, $courseid, $part );
