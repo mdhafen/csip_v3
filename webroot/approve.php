@@ -4,47 +4,41 @@ include_once( '../lib/security.phpm' );
 include_once( '../lib/output.phpm' );
 
 include_once( '../inc/csips.phpm' );
-include_once( '../inc/category.phpm' );
+include_once( '../inc/course.phpm' );
 
-if ( ! authorized( 'load_csip' ) || ! authorized( 'load_other_csip' ) ) {
-  authorize( 'load_csip' );
-}
+authorize( 'approve_csip' );
 
 $csip = $_SESSION['csip'];
+$district = authorized( 'load_other_csip' );
+$locations = empty($_SESSION['loggedin_user']['locations']) ? array() : array_keys( $_SESSION['loggedin_user']['locations'] );
+$csipid = input( 'csipid', INPUT_PINT );
+$courseid = input( 'courseid', INPUT_PINT );
+$op = input( 'op', INPUT_HTML_NONE );
 
-if ( ! $csip ) {
-  $location = ( preg_match( '/^http/', $config['base_url'] ) ) ? $config['base_url'] : "http://". $_SERVER['HTTP_HOST'] . $config['base_url'];
-  header( "Location: $location" );
-  exit;
+if ( empty($csip) ) {
+   error( array('NOTYOURS' => 'No CSIP loaded.') );
+}
+else {
+   if ( ! empty($csipid) && $csip['csipid'] != $csipid ) {
+      error( array('NOTYOURS' => 'Loading other CSIPs not allowed here.') );
+   }
+   if ( !in_array( $csip['locationid'], $locations ) && ! $district ) {
+      error( array('NOTYOURS' => 'Access to CSIP denied.' ) );
+   }
+   if ( empty($csip['courses'][$courseid]) ) {
+      error( array('NOTYOURS' => 'Access to course not allowed here.') );
+   }
 }
 
-$op = input( 'op', INPUT_STR );
-$categoryid = input( 'category', INPUT_PINT );
-$level = input( 'level', INPUT_STR );
-$errors = array();
-
-switch ( $level ) {
- case 'principal':
- case 'community': $perm = 'approve_school'; break;
- case 'district' : $perm = 'approve_district'; break;
- default: $perm = ''; break;
+if ( $op != 'ApproveCourse' ) {
+   error( array('BADOP' => 'Action not recognized.') );
 }
 
-if ( $op == 'N' && $perm && $categoryid ) {
-  if ( authorized( $perm ) ) {
-    cat_approve( $csip['csipid'], $categoryid, $level );
-    $updated = 1;
-    $csip = load_csip( $csip['csipid'] );
-    $_SESSION['csip'] = $csip;
-  } else {
-    array_push( $errors, 'NOT_AUTHORIZED' );
-  }
-}
+course_approve( $courseid, $csip );
 
-$output = array(
-	'csip' => $csip,
-	'updated' => $updated,
-	'error' => $errors,
-);
-output( $output, 'approve.tmpl' );
+$csip['courses'][$courseid]['principal_approved'] = date('Y-m-d');
+$_SESSION['csip'] = $csip;
+
+redirect( 'index.php?csipid='. $csip['csipid'] .'&course='. $courseid .'&part='. $part );
+
 ?>
