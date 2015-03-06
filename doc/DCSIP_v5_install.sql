@@ -15,6 +15,9 @@ INSERT INTO `question` (version,question_group,order_num,type,question) VALUES
   ( 7, 1, 4, 1, '<b>Reflection Summary</b><br>
 <p>Has your team''s GVC changed?  If so, which elements did your team adjust in preparation for next year?</p>
 [input]'),
+  ( 7, 1, 5, 1, '<b>Teaching Practices</b><br>
+<p>As you consider your GVC, which teaching practices will help you get the results you want?</p>
+[input]'),
   ( 7, 2, 1, 9, '<b>Essential Elements of Accreditation</b><br>
 We will put something more when we know what we want this part to say.'),
   ( 7, 2, 2, 1, '<p>Demographics
