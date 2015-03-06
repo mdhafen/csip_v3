@@ -557,4 +557,15 @@ function course_approve( $courseid = 0, $csip = array() ) {
   }
 }
 
+function course_delete_extra_part( $courseid, $part, $csip ) {
+    $dbh = db_connect();
+
+    $query = "DELETE FROM csip_extra_part_links WHERE part = :part AND courseid = :course AND csipid = :csip";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':part', $part );
+    $sth->bindValue( ':course', $courseid );
+    $sth->bindValue( ':csip', $csip['csipid'] );
+    $sth->execute();
+}
+
 ?>
