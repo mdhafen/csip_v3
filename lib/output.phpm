@@ -19,7 +19,7 @@ function error( array $errors ) {
 	exit; // Errors are fatal
 }
 
-function output( $data, $filename, $xml = 0 ) {
+function output( $data, $filename='', $xml = 0 ) {
 	$output = '';
 
 	save_session();

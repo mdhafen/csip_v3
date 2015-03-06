@@ -557,8 +557,60 @@ function course_approve( $courseid = 0, $csip = array() ) {
   }
 }
 
+function course_add_extra_part( $courseid, $group, $part, $title, $csip ) {
+    $dbh = db_connect();
+
+    $query = "INSERT INTO csip_extra_part_links (csipid,courseid,question_group,part,title) VALUES ( :csip, :course, :group, :part, :title )";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':csip', $csip['csipid'] );
+    $sth->bindValue( ':course', $courseid );
+    $sth->bindValue( ':group', $group );
+    $sth->bindValue( ':part', $part );
+    $sth->bindValue( ':title', $title );
+    $sth->execute();
+
+    $query = "
+     SELECT *
+       FROM question
+ CROSS JOIN csip_extra_part_links USING (question_group)
+      WHERE version = :ver
+        AND csipid = :csip
+        AND courseid = :course
+   ORDER BY question_group,order_num
+";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':ver', $csip['version'] );
+    $sth->bindValue( ':csip', $csip['csipid'] );
+    $sth->bindValue( ':course', $courseid );
+    $sth->execute();
+    while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+        if ( empty($csip['questions'][ $row['questionid'] ]) ) {
+            $row = stripslashes_array( $row );
+            $row['question_clean'] = clean_question( $row, $row['courseid'], $csip );
+            $csip['questions'][ $row['questionid'] ] = $row;
+        }
+        $csip['courses'][ $row['courseid'] ]['questions'][ $row['part'] ][ $row['questionid'] ] = array();
+    }
+
+    $query = "UPDATE course_approval SET principal_approved = NULL WHERE courseid = :course AND csipid = :csip";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':course', $courseid );
+    $sth->bindValue( ':csip', $csip['csipid'] );
+    $sth->execute();
+    $csip['courses'][ $courseid ]['principal_approved'] = NULL;
+
+    return $csip;
+}
+
 function course_delete_extra_part( $courseid, $part, $csip ) {
     $dbh = db_connect();
+
+    $query = "DELETE FROM answer WHERE part = :part AND courseid = :course AND csipid = :csip AND answer = ''";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':part', $part );
+    $sth->bindValue( ':course', $courseid );
+    $sth->bindValue( ':csip', $csip['csipid'] );
+    $sth->execute();
 
     $query = "DELETE FROM csip_extra_part_links WHERE part = :part AND courseid = :course AND csipid = :csip";
     $sth = $dbh->prepare( $query );
