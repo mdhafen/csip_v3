@@ -475,7 +475,7 @@ function course_reload_answers( $csip, $courseid, $part ) {
   }
 
   // save_answer may change principal_approved, so reload it too
-  $query = "SELECT * FROM course_approval WHERE csipid = :cid AND courseid = :courseid"
+  $query = "SELECT * FROM course_approval WHERE csipid = :cid AND courseid = :courseid";
   $sth = $dbh->prepare( $query );
   $sth->bindValue( ':cid', $csip['csipid'] );
   $sth->bindValue( ':courseid', $courseid );
