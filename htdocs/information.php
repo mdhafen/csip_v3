@@ -44,6 +44,14 @@
       $count = 1;
       foreach ( $data['csip']['courses'][ $data['courseid'] ]['questions'] as $part => $questions ) {
         if ( $part < 3 ) { continue; }
+        $num_answers = 0;
+        foreach ( $questions as $questionid => $answer ) {
+          if ( $data['csip']['questions'][$questionid]['type'] != 9 ) {
+            if ( isset($answer['answer']) && $answer['answer'] != "" ) {
+              $num_answers++;
+            }
+          }
+        }
  ?>
     <div id="cfa<?= $count ?>_content" style="display: <?= $part == 3 ? 'block' : 'none' ?>;">
 	   <?php include 'cfa.php'; ?>
