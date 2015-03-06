@@ -96,7 +96,7 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
                     <input type="hidden" name="part" value="1">
                     <input type="hidden" name="questionid" value="5">
                     <input type="hidden" name="op" value="SaveAnswer">
-                    <textarea id="form-h-t" cols="30" rows="8" name="answer" placeholder="Define Team's Reflection Summary Here..."><?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][5]['answer']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][5]['answer'] : "" ?></textarea>
+                    <textarea id="form-h-t" cols="30" rows="8" name="answer" placeholder="Outline Team's Teaching Practices Here..."><?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][5]['answer']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][5]['answer'] : "" ?></textarea>
                 <br><br>
                     <button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>     
                     <br><br>
