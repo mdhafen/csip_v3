@@ -474,6 +474,18 @@ function course_reload_answers( $csip, $courseid, $part ) {
     $csip['courses'][ $row['courseid'] ]['questions'][ $row['part'] ][ $row['questionid'] ] = $row;
   }
 
+  // save_answer may change principal_approved, so reload it too
+  $query = "SELECT * FROM course_approval WHERE csipid = :cid AND courseid = :c
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':cid', $csip['csipid'] );
+  $sth->bindValue( ':courseid', $courseid );
+  $sth->execute();
+  while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+    if ( !empty($csip['courses'][ $row['courseid'] ]['principal_approved']) ) {
+      $csip['courses'][ $row['courseid'] ]['principal_approved'] = $row['princi
+    }
+  }
+
   return $csip;
 }
 
