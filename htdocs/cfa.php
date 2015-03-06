@@ -165,4 +165,10 @@
 
 </ul>
 <hr>
+<?php
+if ( $part > 3 && $num_answers == 0 ) {
+?>
 <div class="uk-align-right"><button class="uk-button uk-button-danger uk-button-mini" type="button">Delete this GVC</button></div>
+<?php
+}
+?>
