@@ -168,7 +168,13 @@
 <?php
 if ( $part > 3 && $num_answers == 0 ) {
 ?>
-<div class="uk-align-right"><button class="uk-button uk-button-danger uk-button-mini" type="button">Delete this GVC</button></div>
+<form class="uk-form uk-form-horizontal" action="delete_cfa.php">
+    <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
+    <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
+    <input type="hidden" name="part" value="<?= $part ?>">
+    <input type="hidden" name="op" value="DeleteCFA">
+    <div class="uk-align-right"><button class="uk-button uk-button-danger uk-button-mini" type="button" onclick="this.form.submit()">Delete this GVC</button></div>
+</form>
 <?php
 }
 ?>
