@@ -8,7 +8,7 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
       $answers++;
     }
   }
-  if ( $answers == 3 ) {
+  if ( $answers == 4 ) {
     $completeness = "uk-badge-success uk-icon-check";
   }
   else {
@@ -49,7 +49,7 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
         <li class="uk-parent">
         <a href="#">Reflection Date</a>
         <ul class="uk-nav-sub">
-            <li>With your team, identify and list which STANDARDS AND SKILLS are absolutely CRITICAL for the student to be successful in the grade level or course AND that your team will work to guarantee that EVERY student will know.<br><br></li>
+            <li>Enter the date when your team will complete the Reflection process</li>
             <li>
                 <form class="uk-form" action="save_answer.php">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
@@ -69,7 +69,7 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
      <li class="uk-parent">
         <a href="#">Reflection Summary</a>
         <ul class="uk-nav-sub">
-            <li>With your team, identify and list which STANDARDS AND SKILLS are absolutely CRITICAL for the student to be successful in the grade level or course AND that your team will work to guarantee that EVERY student will know.</li>
+            <li>Has your team's GVC changed?  If so, which elements did your team adjust in preparation for next year?</li>
             <li>
             <form class="uk-form" action="save_answer.php">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
@@ -78,6 +78,25 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
                     <input type="hidden" name="questionid" value="4">
                     <input type="hidden" name="op" value="SaveAnswer">
                     <textarea id="form-h-t" cols="30" rows="8" name="answer" placeholder="Define Team's Reflection Summary Here..."><?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][4]['answer']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][4]['answer'] : "" ?></textarea>
+                <br><br>
+                    <button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>     
+                    <br><br>
+                </form>
+            </li>
+        </ul>
+    </li>
+     <li class="uk-parent">
+        <a href="#">Teaching Practices</a>
+        <ul class="uk-nav-sub">
+            <li>As you consider your GVC, which teaching practices will help you get the results you want?</li>
+            <li>
+            <form class="uk-form" action="save_answer.php">
+                    <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
+                    <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
+                    <input type="hidden" name="part" value="1">
+                    <input type="hidden" name="questionid" value="5">
+                    <input type="hidden" name="op" value="SaveAnswer">
+                    <textarea id="form-h-t" cols="30" rows="8" name="answer" placeholder="Define Team's Reflection Summary Here..."><?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][5]['answer']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][5]['answer'] : "" ?></textarea>
                 <br><br>
                     <button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>     
                     <br><br>
