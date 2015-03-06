@@ -429,12 +429,12 @@ function course_save_answers( $answer, $courseid, $questionid, $part, $csip ) {
   }
 
   $old = array();
-  if ( !empty( $csip['courses'][$courseid]['questions'][$part][$questionid]['answer'] ) ) {
+  if ( !empty( $csip['courses'][$courseid]['questions'][$part][$questionid]['answerid'] ) ) {
     $old = $csip['courses'][$courseid]['questions'][$part][$questionid];
   }
 
   if ( empty($old['answer']) || $answer != $old['answer'] ) {
-    if ( $old ) {
+    if ( ! empty($old['answerid']) ) {
       $query = "UPDATE answer SET answer = :ans WHERE answerid = :ansid";
       $sth = $dbh->prepare( $query );
       $sth->bindValue( ':ans', $answer );

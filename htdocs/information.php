@@ -12,7 +12,7 @@
         foreach ( $questions as $questionid => $answer ) {
           if ( $data['csip']['questions'][$questionid]['type'] != 9 ) {
             $num_questions++;
-            if ( !empty($answer['answer']) ) {
+            if ( isset($answer['answer']) && $answer['answer'] != "" ) {
               $num_answers++;
             }
           }
