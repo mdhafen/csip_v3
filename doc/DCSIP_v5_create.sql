@@ -45,6 +45,7 @@ CREATE TABLE `csip` (
 CREATE TABLE `course` (
 	`courseid` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`course_name` VARCHAR(64) NOT NULL DEFAULT '',
+        `course_category` INT(10) NOT NULL DEFAULT 0,
 	`active` INT(1) UNSIGNED NOT NULL DEFAULT 1,
 	`min_grade` INT(4) NOT NULL DEFAULT 1,
 	`max_grade` INT(4) NOT NULL DEFAULT 12,
@@ -70,6 +71,12 @@ CREATE TABLE `course_approval` (
        `principal_approved` DATE NULL DEFAULT NULL,
        PRIMARY KEY (`courseid`,`csipid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE `course_categories` (
+       `categoryid` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+       `category_name` VARCHAR(64) NOT NULL DEFAULT '',
+       PRIMARY KEY (`categoryid`)
+) ENGINE=MyISAM DEFAULT CHARSET=UTF8;
 
 CREATE TABLE `question` (
 	`questionid` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,

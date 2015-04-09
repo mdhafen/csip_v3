@@ -25,13 +25,24 @@ if ( !empty($data['csips']) ) {
 ?>
             </select>
             Course
-            <select type="text" class="uk-form-large" name="courseid" onchange="this.form.submit()">
-            <option>Select One...</option>
 <?php
 if ( !empty($data['csip']['courses']) ) {
-   $selected_course = empty($data['courseid']) ? 0 : $data['courseid'];
-   foreach ( $data['csip']['courses'] as $courseid => $course ) {
-      echo "<option value='$courseid'". ($courseid == $selected_course ? " selected='selected'" : "" ) .">". $course['course_name'] ."</option>\n";
+   $selected_category = 0;
+   if ( count($data['csip']['course_categories']) > 1 ) {
+      echo '<select type="text" class="uk-form-large" name="categoryid" onchange="this.form.submit()">';
+      echo '<option>Select One...</option>'
+      $selected_category = empty($data['courseid']) ? 0 : $data['csip']['courses][ $data['courseid'] ]['course_category'];
+      foreach ( $data['csip']['course_categories'] as $categoryid => $category_name ) {
+         echo "<option value='$categoryid'". ($categoryid == $selected_category ? " selected='selected'" : "" ) .">". $category_name ."</option>\n";
+      }
+   }
+   if ( $selected_category or count($data['csip']['course_categories'] <= 1 ) {
+      echo '<select type="text" class="uk-form-large" name="courseid" onchange="this.form.submit()">';
+      echo '<option>Select One...</option>'
+      $selected_course = empty($data['courseid']) ? 0 : $data['courseid'];
+      foreach ( $data['csip']['courses'] as $courseid => $course ) {
+         echo "<option value='$courseid'". ($courseid == $selected_course ? " selected='selected'" : "" ) .">". $course['course_name'] ."</option>\n";
+      }
    }
 }
 ?>
