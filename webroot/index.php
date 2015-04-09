@@ -10,6 +10,7 @@ $district = authorized( 'load_other_csip' );
 $reporter = authorized( 'view_reports' );
 $locations = empty($_SESSION['loggedin_user']['locations']) ? array() : array_keys( $_SESSION['loggedin_user']['locations'] );
 $csipid = input( 'csipid', INPUT_PINT );
+$categoryid = input( 'categoryid', INPUT_PINT );
 $courseid = input( 'courseid', INPUT_PINT );
 $part = input( 'part', INPUT_INT );
 
@@ -49,6 +50,7 @@ if ( !empty( $_SESSION['loggedin_user']) ) {
 $output = array(
         'csips' => $csips,
         'csip' => $csip,
+        'categoryid' => $categoryid,
         'courseid' => $courseid,
         'part' => $part,
 );

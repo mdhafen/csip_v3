@@ -153,13 +153,14 @@ CROSS JOIN year USING (yearid)
   }
 
   $query = "
-    SELECT course.*,ca.principal_approved
+    SELECT course.*,ca.principal_approved,cc.category_name
       FROM course
  LEFT JOIN location_course_links USING (courseid)
  LEFT JOIN course_approval AS ca ON course.courseid = ca.courseid AND ca.csipid = :csip
+ LEFT JOIN course_categories AS cc ON course.course_category = cc.categoryid
      WHERE active = 1
 ";
-  if ( ! empty($courses) ) {
+   if ( ! empty($courses) ) {
     $query .= "       AND courseid IN ". implode( ',',$courses ) .")";
     $courses = array();
   }
@@ -176,6 +177,7 @@ CROSS JOIN year USING (yearid)
   $sth->execute();
   while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
     $csip['courses'][ $row['courseid'] ] = stripslashes_array( $row );
+    $csip['course_categories'][ $row['course_category'] ] = $row['category_name']
     $courses[] = $row['courseid'];
   }
 
