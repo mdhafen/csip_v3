@@ -180,6 +180,7 @@ CROSS JOIN year USING (yearid)
     $csip['course_categories'][ $row['course_category'] ] = $row['category_name'];
     $courses[] = $row['courseid'];
   }
+  asort( $csip['course_categories'], SORT_STRING | SORT_FLAG_CASE );
 
   $courselist = implode( ',',$courses );
   $query = "
