@@ -177,7 +177,7 @@ CROSS JOIN year USING (yearid)
   $sth->execute();
   while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
     $csip['courses'][ $row['courseid'] ] = stripslashes_array( $row );
-    $csip['course_categories'][ $row['course_category'] ] = $row['category_name']
+    $csip['course_categories'][ $row['course_category'] ] = $row['category_name'];
     $courses[] = $row['courseid'];
   }
 
