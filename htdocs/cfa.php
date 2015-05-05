@@ -10,7 +10,7 @@
                 <p>TEAM ACTION STEPS: Identify a common formative assessment that your team will use to assess the GVC skill.</p>
             </div>
             <br>
-            
+
             <li class="uk-panel uk-panel-box">
                 <form class="uk-form uk-form-horizontal" action="save_answer.php">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
@@ -24,7 +24,7 @@
                             <input type="hidden" name="questions[]" value="15">
                             <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="Textarea text"><?= isset($questions[15]['answer']) ? $questions[15]['answer'] : "" ?></textarea>
                         </div>
-                    </div>     
+                    </div>
                     <hr>
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-it">How many students were assessed by our team?</label>
@@ -33,7 +33,7 @@
                             <input type="text" id="form-h-it" name="answers[]" value="<?= isset($questions[16]['answer']) ? $questions[16]['answer'] : "" ?>" placeholder="Text input">
                         </div>
                     </div>
-                    <hr>                                              
+                    <hr>
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-it">How many were not proficient the first time?</label>
                         <div class="uk-form-controls">
@@ -41,7 +41,7 @@
                             <input type="text" id="form-h-it" name="answers[]" value="<?= isset($questions[17]['answer']) ? $questions[17]['answer'] : "" ?>" placeholder="Text input">
                         </div>
                     </div>
-                    <hr>                                              
+                    <hr>
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-t">According to the results of this CFA and our team's collaboration, the following teaching practices/strategies were most effective in teaching this guaranteed skill(s):</label>
                         <div class="uk-form-controls">
@@ -67,7 +67,7 @@
                     </div>
                 <br>
             </li>
-            
+
             <li class="uk-panel uk-panel-box">
                 <form class="uk-form uk-form-horizontal" action="save_answer.php">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
@@ -81,8 +81,8 @@
                             <input type="hidden" name="questions[]" value="21">
                             <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="Textarea text"><?= isset($questions[21]['answer']) ? $questions[21]['answer'] : "" ?></textarea>
                         </div>
-                    </div>     
-                    <hr>                                              
+                    </div>
+                    <hr>
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-it">Following your team's INTERVENTIONS and REASSESSMENT, how many students are still not proficient?</label>
                         <div class="uk-form-controls">
@@ -90,7 +90,7 @@
                             <input type="text" id="form-h-it" name="answers[]" value="<?= isset($questions[22]['answer']) ? $questions[22]['answer'] : "" ?>" placeholder="Text input">
                         </div>
                     </div>
-                    <hr>                                              
+                    <hr>
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-t">List the SPECIFIC FIRST NAMES of those students who were not proficient even after your team's intervention.<br><br>(To indicate growth, include how much the student grew from the first to second assessment).</label>
                         <div class="uk-form-controls">
@@ -122,7 +122,7 @@
                     </div>
                 <br>
                 </li>
-            
+
             <li class="uk-panel uk-panel-box">
             <form class="uk-form uk-form-horizontal" action="save_answer.php">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
@@ -136,8 +136,8 @@
                             <input type="hidden" name="questions[]" value="27">
                             <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="Textarea text"><?= isset($questions[27]['answer']) ? $questions[27]['answer'] : "" ?></textarea>
                         </div>
-                    </div>     
-                    <hr>                                              
+                    </div>
+                    <hr>
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-it">EXTENSION:</label>
                         <div class="uk-form-controls">
@@ -145,7 +145,7 @@
                             <input type="text" id="form-h-it" name="answers[]" value="<?= isset($questions[28]['answer']) ? $questions[28]['answer'] : "" ?>" placeholder="Text input">
                         </div>
                     </div>
-                    <hr>                                              
+                    <hr>
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-t"><strong>End of Year Reflection</strong><br><br>Do our extension activities provide deeper learning for those students who already know it? What adjustments can we make to provide for better extended learning opportunities?
 						</label>
