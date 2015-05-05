@@ -605,7 +605,7 @@ function course_add_extra_part( $courseid, $group, $part, $title, $csip ) {
 function course_delete_extra_part( $courseid, $part, $csip ) {
     $dbh = db_connect();
 
-    $query = "DELETE FROM answer WHERE part = :part AND courseid = :course AND csipid = :csip AND answer = ''";
+    $query = "DELETE FROM answer WHERE part = :part AND courseid = :course AND csipid = :csip";
     $sth = $dbh->prepare( $query );
     $sth->bindValue( ':part', $part );
     $sth->bindValue( ':course', $courseid );
