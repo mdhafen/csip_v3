@@ -1,17 +1,16 @@
 <br>
-    <ul id="cfa<?= $count ?>" class="uk-nav uk-nav-parent-icon" data-uk-nav="{multiple:true}">
-    <li class="uk-parent">
+    <ul id="cfa<?= $count ?>" class="uk-nav uk-nav-side uk-nav-parent-icon" data-uk-nav="{multiple:true}">
+    <li id="cfam<?= $count ?>" class="uk-parent" aria-expanded="true">
         <a href="#"><strong>Common Formative Assessment</strong></a>
         <ul class="uk-nav-sub">
-            <li class="uk-parent">
-                <div class="uk-panel uk-panel-box uk-panel-box-primary">
+            <div class="uk-panel uk-panel-box uk-panel-box-primary">
                 <p><strong>How will WE know if they LEARNED it?</strong></p>
                 <hr>
                 <p>EFFECTIVE TEAMS utilize COMMON FORMATIVE ASSESSMENTS (CFA) to diagnostically assess a student's learning and determine which students were proficient in the guaranteed skill and those who weren't.</p>
                 <p>TEAM ACTION STEPS: Identify a common formative assessment that your team will use to assess the GVC skill.</p>
-                    </div>
-                <br>
-                </li>
+            </div>
+            <br>
+            
             <li class="uk-panel uk-panel-box">
                 <form class="uk-form uk-form-horizontal" action="save_answer.php">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
@@ -51,23 +50,23 @@
                         </div>
                     </div>
                     <br>
-<button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>
+					<button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>
                 </form>
             </li>
         </ul>
     </li>
         <br>
-<li class="uk-parent">
+<li id="int<?= $count ?>" class="uk-parent">
         <a href="#"><strong>Intervention</strong></a>
         <ul class="uk-nav-sub">
-                        <li class="uk-parent">
+            <li class="uk-parent">
                 <div class="uk-panel uk-panel-box uk-panel-box-primary">
                 <p><strong>How will WE RESPOND to those who didn't get it?</strong></p>
 
                 <p>EFFECTIVE TEAMS analyze the results of their common formative assessment (CFA) and immediately intervene with those who are in need of extra time and support. (Keep in mind that if less than 75% of students didn't get a concept, it's not an intervention problem; the initial instruction needs to be examined.)</p>
                     </div>
                 <br>
-                </li>
+            </li>
             
             <li class="uk-panel uk-panel-box">
                 <form class="uk-form uk-form-horizontal" action="save_answer.php">
@@ -108,13 +107,13 @@
                         </div>
                     </div>
                     <br>
-<button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>
+					<button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>
                 </form>
             </li>
         </ul>
     </li>
 <br>
-<li class="uk-parent">
+<li id="le<?= $count ?>" class="uk-parent">
         <a href="#"><strong>Learning Extension</strong></a>
         <ul class="uk-nav-sub">
             <li class="uk-parent">
@@ -149,14 +148,14 @@
                     <hr>                                              
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-t"><strong>End of Year Reflection</strong><br><br>Do our extension activities provide deeper learning for those students who already know it? What adjustments can we make to provide for better extended learning opportunities?
-</label>
+						</label>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="29">
                             <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="Textarea text"><?= isset($questions[29]['answer']) ? $questions[29]['answer'] : "" ?></textarea>
                         </div>
                     </div>
-    <br>
-<button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>
+					<br>
+					<button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>
                 </form>
             </li>
         </ul>
