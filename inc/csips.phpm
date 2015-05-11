@@ -202,6 +202,10 @@ CROSS JOIN year USING (yearid)
     $csip['courses'][ $row['courseid'] ]['questions'][ $row['part'] ][ $row['questionid'] ] = array();
   }
 
+  foreach ( $csip['courses'] as $courseid => $questions ) {
+    ksort( $csip['courses'][ $courseid ]['questions'] );
+  }
+
   $query = "
      SELECT *
        FROM question
