@@ -93,9 +93,14 @@
                     <hr>
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-t">List the SPECIFIC FIRST NAMES of those students who were not proficient even after your team's intervention.<br><br>(To indicate growth, include how much the student grew from the first to second assessment).</label>
+<?php if ( !empty($data['_session']['CAN_view_protected_answers']) ) { ?>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="23">
                             <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="Textarea text"><?= isset($questions[23]['answer']) ? $questions[23]['answer'] : "" ?></textarea>
+<?php } else { ?>
+                        <div class="uk-form-controls uk-form-controls-text uk-panel uk-panel-box">
+                            Protected Content
+<?php } ?>
                         </div>
                     </div>
                     <hr>

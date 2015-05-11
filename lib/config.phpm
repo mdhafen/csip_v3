@@ -23,35 +23,36 @@ $config = array(
 	'auth' => array(
 		1   => "load_csip",
 		2   => "load_other_csip",
-		4   => "update_csip",
-		8   => "approve_csip",
-		16  => "view_reports",
-		32  => "manage_users",
+		4   => "view_protected_answers",
+		8   => "update_csip",
+		16   => "approve_csip",
+		32  => "view_reports",
+		64  => "manage_users",
 	),
 	'role' => array(
 		1 => array(
 			'name' => 'community council',
-			'auth' => 17, // load,report
+			'auth' => 33, // load,report
 		),
 		2 => array(
 			'name' => 'plc member',
-			'auth' => 21, // load,update_csip,report
+			'auth' => 45, // load,answers,update_csip,report
 		),
 		3 => array(
 			'name' => 'principal',
-			'auth' => 25, // load,approve,report
+			'auth' => 53, // load,answers,approve,report
 		),
 		4 => array(
 			'name' => 'district personel',
-			'auth' => 19, // load,load_other,report
+			'auth' => 39, // load,load_other,answers,report
 		),
 		5 => array(
 			'name' => 'board member',
-			'auth' => 19, // load,load_other,report
+			'auth' => 35, // load,load_other,report
 		),
 		6 => array(
 			'name' => 'site supervisor',
-			'auth' => 63, // all
+			'auth' => 127, // all
 		),
 	),
 );
