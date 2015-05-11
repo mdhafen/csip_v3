@@ -87,6 +87,7 @@ CREATE TABLE `question` (
 	`type` INT(4) NOT NULL DEFAULT 0 COMMENT '1 for textarea, 2 for select, \
 3 for small text, 4 for medium text, 5 for large text, 6 for password, 7 for checkbox, \
 8 for multi-value, 9 for non-question (just text)',
+	`protect_answer` INT(1) NOT NULL DEFAULT 0,
 	`question_option_id` INT(4) UNSIGNED NOT NULL DEFAULT 0,
 	PRIMARY KEY (`questionid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
