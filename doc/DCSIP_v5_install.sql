@@ -16,7 +16,7 @@ INSERT INTO `question` (version,question_group,order_num,type,protect_answer,que
 <p>Has your team''s GVC changed?  If so, which elements did your team adjust in preparation for next year?</p>
 [input]'),
   ( 7, 1, 5, 1, 0, '<b>Teaching Practices</b><br>
-<p>As your team considers your GVC, which teaching practices will help you get the results you want?</p>
+<p>After identifying your GVC and Individually Self-Assessing with the Utah Effective Standards...As a team determine the teaching practices you need to strengthen based on the learning needs of the students in your classroom this year.</p>
 [input]'),
   ( 7, 2, 1, 9, 0, '<b>Essential Elements of Accreditation</b><br>
 For middle and high school only-Utilize the elements of this section to support the necessary accreditation expectations and highlight the work that your school is engaged in..'),
