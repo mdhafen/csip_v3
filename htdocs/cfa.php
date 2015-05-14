@@ -165,9 +165,9 @@
             </li>
         </ul>
     </li>
-<br>
-
+    <br>
 </ul>
+
 <hr>
 <?php
 if ( $part > 3 && $num_answers == 0 ) {

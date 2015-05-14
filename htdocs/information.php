@@ -1,9 +1,10 @@
 <!-- Tabs Begin -->
 <div class="uk-panel uk-panel-box-secondary">
-
-	<ul class="uk-tab" data-uk-tab id="rightpaneltabs">
 <?php
    if ( !empty($data['courseid']) && !empty( $data['csip']['courses'][ $data['courseid'] ]['questions']) ) {
+?>
+	<ul class="uk-tab" data-uk-tab id="rightpaneltabs">
+<?php
       $count = 1;
       foreach ( $data['csip']['courses'][ $data['courseid'] ]['questions'] as $part => $questions ) {
         if ( $part < 3 ) { continue; }
@@ -63,6 +64,10 @@
         </div>
 	<div id="accreditation_content" style="display: none;">
 	   <?php include 'accreditation.php';?>
+    </div>
+
+    <div>
+        A spreadsheet for showing <a href="https://docs.google.com/spreadsheets/d/1mWaBZS9WHBgbw9gPAz-AGL71CvfkeB8Cd-SBmtq6njM/edit?usp=sharing">Teacher Effect Size</a>
     </div>
 <?php } ?>
 </div>
