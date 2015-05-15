@@ -30,13 +30,19 @@ else {
    }
 }
 
-if ( $op != 'ApproveCourse' ) {
+if ( !in_array($op, array('ApproveCourse','UnApproveCourse')) ) {
    error( array('BADOP' => 'Action not recognized.') );
 }
 
-course_approve( $courseid, $csip );
+if ( $op == 'ApproveCourse' ) {
+    course_approve( $courseid, $csip );
+    $csip['courses'][$courseid]['principal_approved'] = date('Y-m-d');
+}
+else if ( $op == 'UnApproveCourse' ) {
+    course_unapprove( $courseid, $csip );
+    $csip['courses'][$courseid]['principal_approved'] = null;
+}
 
-$csip['courses'][$courseid]['principal_approved'] = date('Y-m-d');
 $_SESSION['csip'] = $csip;
 
 redirect( 'index.php?csipid='. $csip['csipid'] .'&courseid='. $courseid );

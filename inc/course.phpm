@@ -557,6 +557,25 @@ function course_approve( $courseid = 0, $csip = array() ) {
   }
 }
 
+function course_unapprove( $courseid = 0, $csip = array() ) {
+  $dbh = db_connect();
+
+  if ( $csip['loc_demo'] == 1 ) { return; }  // location is Demo
+
+  $old = "";
+  if ( !empty( $csip['courses'][$courseid]['principal_approved'] ) ) {
+    $old = $csip['courses'][$courseid]['principal_approved'];
+  }
+
+  if ( $old ) {
+    $query = "DELETE FROM course_approval WHERE courseid = :course AND csipid = :csip";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':course', $courseid );
+    $sth->bindValue( ':csip', $csip['csipid'] );
+    $sth->execute();
+  }
+}
+
 function course_add_extra_part( $courseid, $group, $part, $title, $csip ) {
     $dbh = db_connect();
 
