@@ -45,3 +45,12 @@ function addCFATab(csipid,courseid,part){
 	
 	activetab('cfa'+tab);
 }
+
+function confirmDelete() {
+    var r = confirm("Are you sure you want to delete this?");
+    if(r == true){
+		return true;
+	}else{
+		return false;
+	}
+}
