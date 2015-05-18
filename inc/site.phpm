@@ -1,0 +1,91 @@
+<?php
+require_once( $config['base_dir'] ."/lib/data.phpm" );
+
+function delete_location_dependants( $locationid ) {
+  $dbh = db_connect();
+
+  if ( $locationid ) {
+    $query = "DELETE FROM user_course_links WHERE locationid = :lid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':lid', $locationid );
+    $sth->execute();
+
+    $query = "DELETE FROM location_course_links WHERE locationid = :lid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':lid', $locationid );
+    $sth->execute();
+
+    $query = "SELECT csipid FROM csip WHERE locationid = :lid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':lid', $locationid );
+    $sth->execute();
+    while ( $row = $sth->fetch() ) {
+      $csips[] = $row['csipid'];
+    }
+
+    if ( count( $csips ) ) {
+      $query = "DELETE FROM answer WHERE csipid IN (". implode( ',', $csips ) .")";
+      $sth = $dbh->prepare( $query );
+      $sth->execute();
+
+      $query = "DELETE FROM course_approval WHERE csipid IN (". implode( ',', $csips ) .")";
+      $sth = $dbh->prepare( $query );
+      $sth->execute();
+
+      $query = "DELETE FROM course_extra_part_links WHERE csipid IN (". implode( ',', $csips ) .")";
+      $sth = $dbh->prepare( $query );
+      $sth->execute();
+
+      $query = "DELETE FROM csip WHERE locationid = :lid";
+      $sth = $dbh->prepare( $query );
+      $sth->bindValue( ':lid', $locationid );
+      $sth->execute();
+    }
+  }
+}
+
+function get_location_num_dependants( $locationid ) {
+  $dbh = db_connect();
+
+  $result = array(
+	'user' => 0,
+	'csip' => 0,
+	'course' => 0,
+	'answer' => 0,
+		  );
+  if ( $locationid ) {
+    $query = "SELECT COUNT(*) AS users FROM user_location_links WHERE locationid = :lid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':lid', $locationid );
+    $sth->execute();
+    $row = $sth->fetch();
+    $result['user'] = $row['users'];
+
+    $query = "SELECT COUNT(*) AS courses FROM location_course_links WHERE locationid = :lid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':lid', $locationid );
+    $sth->execute();
+    $row = $sth->fetch();
+    $result['course'] = $row['courses'];
+
+    $query = "SELECT csipid FROM csip WHERE locationid = :lid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':lid', $locationid );
+    $sth->execute();
+    while ( $row = $sth->fetch() ) {
+      $csips[] = $row['csipid'];
+    }
+    $result['csip'] = count( $csips );
+
+    if ( $result['csip'] ) {
+      $query = "SELECT COUNT(*) AS answers FROM answer WHERE csipid IN (". implode( ',', $csips ) .")";
+      $sth = $dbh->prepare( $query );
+      $sth->execute();
+      $row = $sth->fetch();
+      $result['answer'] = $row['answers'];
+    }
+  }
+  return $result;
+}
+
+?>
