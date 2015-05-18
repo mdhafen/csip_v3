@@ -8,7 +8,7 @@ function activetab(tab){
     document.getElementById(tab+"_content").style.display="block";
 }
 
-function addCFATab(csipid,courseid,part){
+function addCFATab(csipid,categoryid,courseid,part){
 	var lastTAB = maxTab-1;
 	tab=maxTab;
 	maxTab=maxTab+1;
@@ -23,7 +23,6 @@ function addCFATab(csipid,courseid,part){
 		data: data,
 		type: 'post',
 		success: function(data) {
-alert("id:"+csipid+",course:"+courseid+",part:"+ part +",tab"+tab);
 			if( $(data).find("state").text() == 'Error' ){
 				var messages = "";
 				$(data).find("message").each( function(){
@@ -31,20 +30,19 @@ alert("id:"+csipid+",course:"+courseid+",part:"+ part +",tab"+tab);
 					messages = messages +" "+ t_flag.text();
 				});
 				alert("Error(s): "+ messages);
-				console.log("course_add_part errors "+ messages);
+				//console.log("course_add_part errors "+ messages);
 			}	
 			else {
-	$('<li class="uk-active" id="cfa'+tab+'_tab"><a href="" onclick="activetab(\'cfa'+tab+'\');"><div class="uk-badge uk-badge-warning">GVC '+tab+'</div></a></li>");').insertAfter("#cfa"+lastTAB+'_tab');
-	$('<div id="cfa'+tab+'_content" style="display: block">This is CFA'+tab+'</div>').insertAfter("#cfa"+lastTAB+'_content');
-	$("#cfa"+tab+"_content").load("cfa_new.php?tab="+tab+"&csipid="+csipid+"&courseid="+courseid+"&part="+part, function(response, status, xhr) {
-		if (status == "error") {
-			// alert(msg + xhr.status + " " + xhr.statusText);
-			console.log(xhr.status + " " + xhr.statusText);
-		}
-	});
-	
-	$("li#addcfa_tab a").attr("onclick","addCFATab('"+csipid+"','"+courseid+"','"+ part +"');");
-	activetab('cfa'+tab);
+				$('<li class="uk-active" id="cfa'+tab+'_tab"><a href="" onclick="activetab(\'cfa'+tab+'\');"><div class="uk-badge uk-badge-warning">GVC '+tab+'</div></a></li>");').insertAfter("#cfa"+lastTAB+'_tab');
+				$('<div id="cfa'+tab+'_content" style="display: block">This is CFA'+tab+'</div>').insertAfter("#cfa"+lastTAB+'_content');
+				$("#cfa"+tab+"_content").load("cfa_new.php?tab="+tab+"&csipid="+csipid+"&courseid="+courseid+"&part="+part, function(response, status, xhr) {
+					if (status == "error") {
+						// alert(msg + xhr.status + " " + xhr.statusText);
+						console.log(xhr.status + " " + xhr.statusText);
+					}
+				});
+				$("li#addcfa_tab a").attr("onclick","addCFATab('"+csipid+"','"+categoryid+"','"+courseid+"','"+ part +"');");
+				activetab('cfa'+tab);
 			}
 		}
 	});

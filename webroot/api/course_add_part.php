@@ -48,7 +48,7 @@ if ( empty($errors) ) {
       $questions .= "</question>";
    }
 
-   output( '<?xml version="1.0">?<result><state>Success</state><questions>'. $questions .'</questions></result>' );
+   output( '<?xml version="1.0"?><result><state>Success</state><questions>'. $questions .'</questions></result>' );
 }
 else {
    $err_string = '';

@@ -1,13 +1,22 @@
 <?php
-$tabid = $_REQUEST['tab'];
-$csipid = $_REQUEST['csipid'];
-$courseid = $_REQUEST['courseid'];
-$part = $_REQUEST['part'];
+// To rebuild this:
+//   Copy htdocs/cfa.php
+//   Remove text input value's and contents of textarea's
+//     Leave the hidden inputs alone!
+//   Collapse if/else block around 'protected-content' to just the if block
+//   Remove the if statements around the Delete button
+$data = array(
+	'csipid' => input( 'csipid', INPUT_PINT ),
+	'categoryid' => input( 'categoryid', INPUT_PINT ),
+	'courseid' => input( 'courseid', INPUT_PINT ),
+);
+$count = input( 'tab', INPUT_PINT );
+$part = input( 'part', INPUT_PINT );
 //echo '<pre>'; print_r($_REQUEST); echo '</pre>';
 ?>
 <br>
-    <ul id="cfa<?= $tabid ?>" class="uk-nav uk-nav-side uk-nav-parent-icon" data-uk-nav="{multiple:true}">
-    <li id="cfam<?= $tabid ?>" class="uk-parent" aria-expanded="false">
+    <ul id="cfa<?= $count ?>" class="uk-nav uk-nav-side uk-nav-parent-icon" data-uk-nav="{multiple:true}">
+    <li id="cfam<?= $count ?>" class="uk-parent" aria-expanded="true">
         <a href="#"><strong>Common Formative Assessment</strong></a>
         <ul class="uk-nav-sub">
             <div class="uk-panel uk-panel-box uk-panel-box-primary">
@@ -17,43 +26,44 @@ $part = $_REQUEST['part'];
                 <p>TEAM ACTION STEPS: Identify a common formative assessment that your team will use to assess the GVC skill.</p>
             </div>
             <br>
-            
+
             <li class="uk-panel uk-panel-box">
                 <form class="uk-form uk-form-horizontal" action="save_answer.php">
-                    <input type="hidden" name="csipid" value="<?= $csipid ?>">
-                    <input type="hidden" name="courseid" value="<?= $courseid ?>">
+                    <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
+                    <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
+                    <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
                     <input type="hidden" name="part" value="<?= $part ?>">
                     <input type="hidden" name="op" value="SaveAnswer">
-                    <div class="uk-badge uk-badge-notification uk-align-right"><?= $tabid ?></div>
+                    <div class="uk-badge uk-badge-notification uk-align-right"><?= $count ?></div>
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-t">List the common formative assessment AND the guaranteed skill it aligns with (Example: Unit 1 - Fractions). FOR ELEMENTARY: Identify which questions on your existing instructional program assessments align with your GVC.</label>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="15">
-                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="Textarea text"><?= isset($questions[15]['answer']) ? $questions[15]['answer'] : "" ?></textarea>
+                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="text input"></textarea>
                         </div>
-                    </div>     
+                    </div>
                     <hr>
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-it">How many students were assessed by our team?</label>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="16">
-                            <input type="text" id="form-h-it" name="answers[]" value="<?= isset($questions[16]['answer']) ? $questions[16]['answer'] : "" ?>" placeholder="Text input">
+                            <input type="text" id="form-h-it" name="answers[]" value="" placeholder="text input">
                         </div>
                     </div>
-                    <hr>                                              
+                    <hr>
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-it">How many were not proficient the first time?</label>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="17">
-                            <input type="text" id="form-h-it" name="answers[]" value="<?= isset($questions[17]['answer']) ? $questions[17]['answer'] : "" ?>" placeholder="Text input">
+                            <input type="text" id="form-h-it" name="answers[]" value="" placeholder="text input">
                         </div>
                     </div>
-                    <hr>                                              
+                    <hr>
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-t">According to the results of this CFA and our team's collaboration, the following teaching practices/strategies were most effective in teaching this guaranteed skill(s):</label>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="18">
-                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="Textarea text"><?= isset($questions[18]['answer']) ? $questions[18]['answer'] : "" ?></textarea>
+                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="text input"></textarea>
                         </div>
                     </div>
                     <br>
@@ -63,7 +73,7 @@ $part = $_REQUEST['part'];
         </ul>
     </li>
         <br>
-<li id="int<?= $tabid ?>" class="uk-parent">
+<li id="int<?= $count ?>" class="uk-parent">
         <a href="#"><strong>Intervention</strong></a>
         <ul class="uk-nav-sub">
             <li class="uk-parent">
@@ -74,43 +84,44 @@ $part = $_REQUEST['part'];
                     </div>
                 <br>
             </li>
-            
+
             <li class="uk-panel uk-panel-box">
                 <form class="uk-form uk-form-horizontal" action="save_answer.php">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
+                    <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
                     <input type="hidden" name="part" value="<?= $part ?>">
                     <input type="hidden" name="op" value="SaveAnswer">
-                    <div class="uk-badge uk-badge-notification uk-align-right"><?= $tabid ?></div>
+                    <div class="uk-badge uk-badge-notification uk-align-right"><?= $count ?></div>
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-t">List the SPECIFIC INTERVENTIONS that your team responded with for those students who WERE NOT proficient.</label>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="21">
-                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="Textarea text"><?= isset($questions[21]['answer']) ? $questions[21]['answer'] : "" ?></textarea>
-                        </div>
-                    </div>     
-                    <hr>                                              
-                    <div class="uk-form-row">
-                        <label class="uk-form-label" for="form-h-it">Following your team's INTERVENTIONS and REASSESSMENT, how many students are still not proficient?</label>
-                        <div class="uk-form-controls">
-                            <input type="hidden" name="questions[]" value="22">
-                            <input type="text" id="form-h-it" name="answers[]" value="<?= isset($questions[22]['answer']) ? $questions[22]['answer'] : "" ?>" placeholder="Text input">
-                        </div>
-                    </div>
-                    <hr>                                              
-                    <div class="uk-form-row">
-                        <label class="uk-form-label" for="form-h-t">List the SPECIFIC FIRST NAMES of those students who were not proficient even after your team's intervention.<br><br>(To indicate growth, include how much the student grew from the first to second assessment).</label>
-                        <div class="uk-form-controls">
-                            <input type="hidden" name="questions[]" value="23">
-                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="Textarea text"><?= isset($questions[23]['answer']) ? $questions[23]['answer'] : "" ?></textarea>
+                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="text input"></textarea>
                         </div>
                     </div>
                     <hr>
                     <div class="uk-form-row">
-                        <label class="uk-form-label" for="form-h-t">How did your TEAM respond to those who were still not proficient even after your team's interventions?</label>
+                        <label class="uk-form-label" for="form-h-it">Following your team's INTERVENTIONS and REASSESSMENT, how many students are still not proficient?</label>
+                        <div class="uk-form-controls">
+                            <input type="hidden" name="questions[]" value="22">
+                            <input type="text" id="form-h-it" name="answers[]" value="" placeholder="text input">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="uk-form-row">
+                        <label class="uk-form-label" for="form-h-t">List the SPECIFIC FIRST NAMES of those students who were not proficient even after your team's intervention.<br><br>(To indicate growth, include how much the student grew from the first to second assessment).</label>
+                        <div class="uk-form-controls">
+                            <input type="hidden" name="questions[]" value="23">
+                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="text input"></textarea>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="uk-form-row">
+			<label class="uk-form-label" for="form-h-t">How did your TEAM respond to those who were still not proficient even after your team&apos;s interventions?</label>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="24">
-                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="Textarea text"><?= isset($questions[24]['answer']) ? $questions[24]['answer'] : "" ?></textarea>
+                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="text input"></textarea>
                         </div>
                     </div>
                     <br>
@@ -120,7 +131,7 @@ $part = $_REQUEST['part'];
         </ul>
     </li>
 <br>
-<li id="le<?= $tabid ?>" class="uk-parent">
+<li id="le<?= $count ?>" class="uk-parent">
         <a href="#"><strong>Learning Extension</strong></a>
         <ul class="uk-nav-sub">
             <li class="uk-parent">
@@ -129,36 +140,37 @@ $part = $_REQUEST['part'];
                     </div>
                 <br>
                 </li>
-            
+
             <li class="uk-panel uk-panel-box">
             <form class="uk-form uk-form-horizontal" action="save_answer.php">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
+                    <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
                     <input type="hidden" name="part" value="<?= $part ?>">
                     <input type="hidden" name="op" value="SaveAnswer">
-                        <div class="uk-badge uk-badge-notification uk-align-right"><?= $tabid ?></div>
+                        <div class="uk-badge uk-badge-notification uk-align-right"><?= $count ?></div>
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-t">ACTION STEPS: As you review your GVC from (step #1), identify extension activities your team will use for those who already know it.</label>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="27">
-                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="Textarea text"><?= isset($questions[27]['answer']) ? $questions[27]['answer'] : "" ?></textarea>
+                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="text input"></textarea>
                         </div>
-                    </div>     
-                    <hr>                                              
+                    </div>
+                    <hr>
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-it">EXTENSION:</label>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="28">
-                            <input type="text" id="form-h-it" name="answers[]" value="<?= isset($questions[28]['answer']) ? $questions[28]['answer'] : "" ?>" placeholder="Text input">
+                            <input type="text" id="form-h-it" name="answers[]" value="" placeholder="text input">
                         </div>
                     </div>
-                    <hr>                                              
+                    <hr>
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-t"><strong>End of Year Reflection</strong><br><br>Do our extension activities provide deeper learning for those students who already know it? What adjustments can we make to provide for better extended learning opportunities?
 						</label>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="29">
-                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="Textarea text"><?= isset($questions[29]['answer']) ? $questions[29]['answer'] : "" ?></textarea>
+                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="text input"></textarea>
                         </div>
                     </div>
 					<br>
@@ -167,20 +179,15 @@ $part = $_REQUEST['part'];
             </li>
         </ul>
     </li>
-<br>
-
+    <br>
 </ul>
+
 <hr>
-<?php
-if ( $part > 3 && $num_answers == 0 ) {
-?>
-<form class="uk-form uk-form-horizontal" action="delete_cfa.php">
+<form class="uk-form uk-form-horizontal" action="delete_cfa.php" onSubmit="return confirmDelete();">
     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
+    <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
     <input type="hidden" name="part" value="<?= $part ?>">
     <input type="hidden" name="op" value="DeleteCFA">
-    <div class="uk-align-right"><button class="uk-button uk-button-danger uk-button-mini" type="button" onclick="this.form.submit()">Delete this GVC</button></div>
+    <div class="uk-align-right"><button class="uk-button uk-button-danger uk-button-mini">Delete this GVC</button></div>
 </form>
-<?php
-}
-?>
