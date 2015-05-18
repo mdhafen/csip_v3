@@ -33,11 +33,11 @@ Year created.<br>
   <textarea name="due_dates" id="due_dates" rows="7" cols="50">
 October : Teams identify GVC
 October : Teams identify EXTENSIONS
-Octover : Teams administer two CFAs
+October : Teams administer two CFAs
 November : School Board reviews CSIPs
 February : Teams administer two add&apos;l CFAs
 April : Teams complete REFLECTION process
-  </textarea>
+</textarea>
 </td>
 </tr>
 
