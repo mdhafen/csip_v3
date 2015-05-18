@@ -5,6 +5,9 @@
 //     Leave the hidden inputs alone!
 //   Collapse if/else block around 'protected-content' to just the if block
 //   Remove the if statements around the Delete button
+
+include_once( '../lib/input.phpm' );
+
 $data = array(
 	'csipid' => input( 'csipid', INPUT_PINT ),
 	'categoryid' => input( 'categoryid', INPUT_PINT ),
