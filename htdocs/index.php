@@ -69,6 +69,7 @@ if ( !empty($data['courseid']) ) {
 ?>
         <form class="uk-form uk-display-inline-block" action="approve.php">
         <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
+        <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
         <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
         <input type="hidden" name="op" value="<?= $app == 'Not Approved' ? 'ApproveCourse' : 'UnApproveCourse' ?>">
 <?php

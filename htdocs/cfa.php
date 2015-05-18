@@ -14,6 +14,7 @@
             <li class="uk-panel uk-panel-box">
                 <form class="uk-form uk-form-horizontal" action="save_answer.php">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
+                    <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
                     <input type="hidden" name="part" value="<?= $part ?>">
                     <input type="hidden" name="op" value="SaveAnswer">
@@ -71,6 +72,7 @@
             <li class="uk-panel uk-panel-box">
                 <form class="uk-form uk-form-horizontal" action="save_answer.php">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
+                    <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
                     <input type="hidden" name="part" value="<?= $part ?>">
                     <input type="hidden" name="op" value="SaveAnswer">
@@ -105,7 +107,7 @@
                     </div>
                     <hr>
                     <div class="uk-form-row">
-                        <label class="uk-form-label" for="form-h-t">How did your TEAM respond to those who were still not proficient even after your team's interventions?</label>
+			<label class="uk-form-label" for="form-h-t">How did your TEAM respond to those who were still not proficient even after your team&apos;s interventions?</label>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="24">
                             <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[24]['answer']) ? $questions[24]['answer'] : "" ?></textarea>
@@ -131,6 +133,7 @@
             <li class="uk-panel uk-panel-box">
             <form class="uk-form uk-form-horizontal" action="save_answer.php">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
+                    <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
                     <input type="hidden" name="part" value="<?= $part ?>">
                     <input type="hidden" name="op" value="SaveAnswer">
@@ -174,6 +177,7 @@ if ( $part > 3 && $num_answers == 0 ) {
 ?>
 <form class="uk-form uk-form-horizontal" action="delete_cfa.php" onSubmit="return confirmDelete();">
     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
+    <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
     <input type="hidden" name="part" value="<?= $part ?>">
     <input type="hidden" name="op" value="DeleteCFA">

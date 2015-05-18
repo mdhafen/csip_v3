@@ -25,7 +25,7 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
         </ul>
     </li>
     <li class="uk-parent">
-        <a href="#">Our Team's GVC</a>
+        <a href="#">Our Team&apos;s GVC</a>
         <ul class="uk-nav-sub">
             <li><p>With your team, identify/list the critical standards/skills that all students need to know.</p>
             <p>Once your team has identified the skills, share with the team above and below your specific grade level.</p>
@@ -34,6 +34,7 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
                 <form class="uk-form" action="save_answer.php">
                     <p class="uk-clearfix">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
+                    <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
                     <input type="hidden" name="part" value="1">
                     <input type="hidden" name="questionid" value="2">
@@ -54,6 +55,7 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
                 <form class="uk-form" action="save_answer.php">
                     <p class="uk-clearfix">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
+                    <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
                     <input type="hidden" name="part" value="1">
                     <input type="hidden" name="questionid" value="3">
@@ -70,11 +72,12 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
      <li class="uk-parent">
         <a href="#">Reflection Summary</a>
         <ul class="uk-nav-sub">
-            <li><p>Has your team's GVC changed?  If so, which elements did your team adjust in preparation for next year?</p></li>
+            <li><p>Has your team&apos;s GVC changed?  If so, which elements did your team adjust in preparation for next year?</p></li>
             <li>
                 <form class="uk-form" action="save_answer.php">
                     <p class="uk-clearfix">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
+                    <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
                     <input type="hidden" name="part" value="1">
                     <input type="hidden" name="questionid" value="4">
@@ -95,6 +98,7 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
                 <form class="uk-form" action="save_answer.php">
                     <p class="uk-clearfix">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
+                    <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
                     <input type="hidden" name="part" value="1">
                     <input type="hidden" name="questionid" value="5">
