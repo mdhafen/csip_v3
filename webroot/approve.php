@@ -12,6 +12,7 @@ $csip = $_SESSION['csip'];
 $district = authorized( 'load_other_csip' );
 $locations = empty($_SESSION['loggedin_user']['locations']) ? array() : array_keys( $_SESSION['loggedin_user']['locations'] );
 $csipid = input( 'csipid', INPUT_PINT );
+$categoryid = input( 'categoryid', INPUT_PINT );
 $courseid = input( 'courseid', INPUT_PINT );
 $op = input( 'op', INPUT_HTML_NONE );
 
@@ -45,6 +46,6 @@ else if ( $op == 'UnApproveCourse' ) {
 
 $_SESSION['csip'] = $csip;
 
-redirect( 'index.php?csipid='. $csip['csipid'] .'&courseid='. $courseid );
+redirect( 'index.php?csipid='. $csip['csipid'] .'&categoryid='. $categoryid .'&courseid='. $courseid );
 
 ?>

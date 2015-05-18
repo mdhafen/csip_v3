@@ -10,6 +10,7 @@ authorize( 'update_csip' );
 
 $locations = empty($_SESSION['loggedin_user']['locations']) ? array() : array_keys( $_SESSION['loggedin_user']['locations'] );
 $csipid = input( 'csipid', INPUT_PINT );
+$categoryid = input( 'categoryid', INPUT_PINT );
 $courseid = input( 'courseid', INPUT_PINT );
 $part = input( 'part', INPUT_PINT );
 $op = input( 'op', INPUT_HTML_NONE );
@@ -70,5 +71,5 @@ else {
 $csip = course_reload_answers( $csip, $courseid, $part );
 $_SESSION['csip'] = $csip;
 
-redirect( 'index.php?csipid='. $csip['csipid'] .'&courseid='. $courseid .'&part='. $part );
+redirect( 'index.php?csipid='. $csip['csipid'] .'&categoryid='. $categoryid .'&courseid='. $courseid .'&part='. $part );
 ?>
