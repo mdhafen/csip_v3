@@ -67,7 +67,7 @@
     </div>
 
     <div>
-        A spreadsheet for showing <a href="https://docs.google.com/spreadsheets/d/1mWaBZS9WHBgbw9gPAz-AGL71CvfkeB8Cd-SBmtq6njM/edit?usp=sharing">Teacher Effect Size</a>
+        A spreadsheet for showing <a href="https://docs.google.com/spreadsheets/d/1QvMmCNJeK1xmqlI01lqajb6nR0lPe8WmQJattI-GDyk/edit?usp=sharing">Teacher Effect Size</a>
     </div>
 <?php } ?>
 </div>
