@@ -44,7 +44,7 @@ if ( empty($errors) ) {
    foreach ( $csip['courses'][$courseid]['questions'][$part] as $questionid => $answer ) {
       $questions .= "<question>";
       $questions .= "<questionid>$questionid</questionid>";
-      $questions .= "<questiontext>". $csip['questions'][$questionid]['question_clean'] ."</questiontext>";
+      $questions .= "<questiontext>". htmlspecialchars($csip['questions'][$questionid]['question_clean'],ENT_QUOTES|ENT_XML1|ENT_SUBSTITUTE) ."</questiontext>";
       $questions .= "</question>";
    }
 
