@@ -30,7 +30,7 @@
 <td><?= $user['password']?"Yes":"No" ?></td>
 <td>
 <a href="<?= $data['_config']['base_url'] ?>manage/edit_user.php?userid=<?= $user['userid'] ?>">Edit</a> 
-<a href="<?= $data['_config']['base_url'] ?>manage/delete_user.php?userid=<?= $user['userid'] ?>">Delete</a>
+<a href="<?= $data['_config']['base_url'] ?>manage/delete_user.php?op=Delete&amp;userid=<?= $user['userid'] ?>">Delete</a>
 </td>
 </tr>
 <?php } ?>
