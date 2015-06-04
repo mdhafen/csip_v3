@@ -10,7 +10,7 @@ $userid = input( 'userid', INPUT_PINT );
 $op = input( 'op', INPUT_STR );
 
 if ( $userid ) {
-  $user = get_user_by_userid( $userid );
+  $user = user_by_userid( $userid );
   if ( ! $user ) {
     error( array('BADUSER'=>1) );
   } elseif ( $op == "Delete" ) {
