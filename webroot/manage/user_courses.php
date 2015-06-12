@@ -16,24 +16,16 @@ $courseid = input( 'courseid', INPUT_PINT );
 
 $courses = get_courses();
 $course_by_cat = array();
-$edit = 0;
 $saved = 0;
 $user = array();
 $locations = array();
-$loc_courses = array();
 $user_courses = array();
-
-foreach ( $courses as $course ) {
-  $course_by_cat[ $course['category_name'] ][ $course['courseid'] ] = $course;
-}
 
 if ( $userid ) {
   $user = user_by_userid( $userid );
   if ( $user ) {
-    $edit = 1;
     $locations = $user['locations'];
   } else {
-    $edit = 0;
     $user = array();
   }
 
@@ -41,10 +33,14 @@ if ( $userid ) {
     if ( !in_array($locationid, array_column($locations,'locationid')) ) {
       error( array('BADLOC' => 'Undefined Location') );
     }
-  }
-  else {
+
+    $loc_courses = array();
     $user_courses = get_user_courses( $userid, $locationid );
-    $loc_courses = get_location_courses( $locationid );
+    $loc_courses = get_location_courses( $locationid, $locations[$locationid]['mingrade'], $locations[$locationid]['maxgrade'] );
+    foreach ( $loc_courses as $courseid ) {
+      $course_by_cat[ $course[$courseid]['category_name'] ][ $courseid ] = $course[$courseid];
+    }
+
 
     if ( !empty($courseid) ) {
       if ( ! array_key_exists( $courseid, $courses ) ) {
@@ -69,11 +65,9 @@ $output = array(
         'courses' => $courses,
         'course_by_cat' => $courses,
         'locationid' => $locationid,
-	'edit' => $edit,
 	'saved' => $saved,
 	'locations' => $locations,
         'user_courses' => $user_courses,
-        'location_courses' => $loc_courses,
 );
 output( $output, 'manage/user_courses.tmpl' );
 ?>

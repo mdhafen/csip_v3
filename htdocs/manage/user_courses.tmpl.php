@@ -28,23 +28,25 @@ For location: <select name="locationid" id="location" onchange="this.form.submit
 </select>
 </form>
 
+<?php if ( !empty($data['locationid']) ) { ?>
 Courses:
 <ul>
 <?php foreach ( $data['user_courses'] as $courseid ) { ?>
-<form method="post" action="<?= $data['_config']['base_url'] ?>manage/user_courses.php">
-<input type="hidden" name="userid" id="userid" value="<?= $data['user']['userid'] ?>">
-<input type="hidden" name="locationid" id="locationid" value="<?= $data['locationid'] ?>">
+  <form method="post" action="<?= $data['_config']['base_url'] ?>manage/user_courses.php">
+  <input type="hidden" name="userid" value="<?= $data['user']['userid'] ?>">
+  <input type="hidden" name="locationid" value="<?= $data['locationid'] ?>">
+  <input type="hidden" name="courseid" value="<?= $courseid ?>">
   <li>
     <?= $data['courses'][$courseid]['course_name'] ?>
     <input class="uk-button" type="submit" name="op" id="op" value="Delete">
   </li>
-</form>
+  </form>
 <?php } ?>
+  <form method="post" action="<?= $data['_config']['base_url'] ?>manage/user_courses.php">
+  <input type="hidden" name="userid" value="<?= $data['user']['userid'] ?>">
+  <input type="hidden" name="locationid" value="<?= $data['locationid'] ?>">
   <li>
-<form method="post" action="<?= $data['_config']['base_url'] ?>manage/user_courses.php">
-<input type="hidden" name="userid" id="userid" value="<?= $data['user']['userid'] ?>">
-<input type="hidden" name="locationid" id="locationid" value="<?= $data['locationid'] ?>">
-    <select>
+    <select name="courseid" id="courseid">
       <option value="">Add a Course</option>
 <?php foreach ( $data['course_by_cat'] as $category => $courses ) { ?>
       <optgroup label="<?= $category ?>">
@@ -55,14 +57,13 @@ Courses:
       </optgroup>
 <?php } ?>
     </select>
-<input class="uk-button" type="submit" name="op" id="op" value="Add">
+    <input class="uk-button" type="submit" name="op" id="op" value="Add">
   </li>
+  </form>
 </ul>
-
+<?php } ?>
 
 <a class="uk-button" href="users.php">Back</a>
-
-</form>
 
 	</div>
 	<br>

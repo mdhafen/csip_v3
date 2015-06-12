@@ -109,16 +109,33 @@ function get_user_courses( $userid, $location ) {
     return $courses;
 }
 
-function get_location_courses( $locationid ) {
+function get_location_courses( $locationid, $mingrade = null, $maxgrade = null ) {
     $dbh = db_connect();
 
     $courses = array();
+
+    if ( empty($mingrade) or empty($maxgrade) ) {
+      $query = "
+    SELECT mingrade, maxgrade
+      FROM location
+     WHERE locationid = :loc";
+      $sth = $dbh->prepare( $query );
+      $sth->bindValue( ':loc', $locationid );
+      $sth->execute();
+      list( $mingrade, $maxgrade ) = $sth->fetch( PDO::FETCH_NUM );
+    }
+
     $query = "
-    SELECT *
-      FROM location_course_links
-     WHERE locationid = :loc
+    SELECT courseid
+      FROM course
+ LEFT JOIN location_course_links using (courseid)
+     WHERE active = 1
+       AND ( ( max_grade >= :mingrade AND min_grade <= :maxgrade )
+        OR ( location_course_links.locationid = :loc ) )
 ";
     $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':mingrade', $mingrade );
+    $sth->bindValue( ':maxgrade', $maxgrade );
     $sth->bindValue( ':loc', $locationid );
     $sth->execute();
     while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
