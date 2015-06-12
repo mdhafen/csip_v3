@@ -18,6 +18,7 @@ $group = 3;
 $title = 'GVC '. ($part - 2);
 
 $csip = $_SESSION['csip'];
+$courses = get_user_courses( $_SESSION['loggedin_user']['userid'], $csip['locationid'] );
 if ( empty($csip) ) {
    $errors[] = array('FLAG' => 'NOTYOURS', 'message' => 'No CSIP loaded.');
 }
@@ -27,6 +28,11 @@ else {
    }
    if ( !in_array( $csip['locationid'], $locations ) ) {
       $errors[] = array('FLAG' => 'NOTYOURS', 'message' => 'Access to CSIP denied.' );
+   }
+   if ( !empty($courses) ) {
+      if ( ! array_key_exists( $courseid, $courses ) ) {
+         $errors[] = array('FLAG' => 'NOTYOURS', 'message' => 'Access to CSIP denied.' );
+      }
    }
    if ( empty($csip['courses'][$courseid]) ) {
       $errors[] = array('FLAG' => 'NOTYOURS', 'message' => 'Access to course not allowed here.');
