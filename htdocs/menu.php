@@ -5,7 +5,7 @@
 		echo '
 		<div style="float:right; vertical-align:middle;" class="">
 			<ul class="uk-navbar-nav uk-hidden-small uk-navbar-attached">
-				<li class="">Hello, ' . $data['_session']['username'] . '</li>
+				<li class=""><a href="#">Hello, ' . $data['_session']['username'] . '</a></li>
 				<li class=""><a href="'. $data['_config']['base_url'] .'index.php?_logout=1">Logout</a></li>
 			</ul>
 		</div>';
