@@ -8,6 +8,7 @@ include_once( '../inc/csips.phpm' );
 authorize( 'load_csip' );
 $district = authorized( 'load_other_csip' );
 $reporter = authorized( 'view_reports' );
+$can_edit = authorized( 'update_csip' );
 $locations = empty($_SESSION['loggedin_user']['locations']) ? array() : array_keys( $_SESSION['loggedin_user']['locations'] );
 $csipid = input( 'csipid', INPUT_PINT );
 $categoryid = input( 'categoryid', INPUT_PINT );
@@ -41,6 +42,13 @@ else {
    }
 }
 
+$courses = get_user_courses( $_SESSION['loggedin_user']['userid'], $csip['locationid'] );
+if ( !empty($courseid) && !empty($courses) ) {
+   if ( ! array_key_exists( $courseid, $courses ) ) {
+      $can_edit = 0;
+   }
+}
+
 $csips = array();
 if ( !empty( $_SESSION['loggedin_user']) ) {
 	$locations = empty($_SESSION['loggedin_user']['locations']) ? array() : array_keys( $_SESSION['loggedin_user']['locations'] );
@@ -53,6 +61,7 @@ $output = array(
         'categoryid' => $categoryid,
         'courseid' => $courseid,
         'part' => $part,
+        'can_edit' => $can_edit,
 );
 output( $output, 'index' );
 ?>

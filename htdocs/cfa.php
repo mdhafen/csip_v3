@@ -12,7 +12,7 @@
             <br>
 
             <li class="uk-panel uk-panel-box">
-                <form class="uk-form uk-form-horizontal" action="save_answer.php">
+                <form method="post" class="uk-form uk-form-horizontal" action="save_answer.php">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
                     <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
@@ -51,7 +51,9 @@
                         </div>
                     </div>
                     <br>
+  <?php if ( !empty($data['can_edit']) ) { ?>
 					<button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>
+  <?php } ?>
                 </form>
             </li>
         </ul>
@@ -70,7 +72,7 @@
             </li>
 
             <li class="uk-panel uk-panel-box">
-                <form class="uk-form uk-form-horizontal" action="save_answer.php">
+                <form method="post" class="uk-form uk-form-horizontal" action="save_answer.php">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
                     <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
@@ -114,7 +116,9 @@
                         </div>
                     </div>
                     <br>
+  <?php if ( !empty($data['can_edit']) ) { ?>
 					<button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>
+  <?php } ?>
                 </form>
             </li>
         </ul>
@@ -131,7 +135,7 @@
                 </li>
 
             <li class="uk-panel uk-panel-box">
-            <form class="uk-form uk-form-horizontal" action="save_answer.php">
+            <form method="post" class="uk-form uk-form-horizontal" action="save_answer.php">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
                     <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
@@ -163,7 +167,9 @@
                         </div>
                     </div>
 					<br>
+  <?php if ( !empty($data['can_edit']) ) { ?>
 					<button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>
+  <?php } ?>
                 </form>
             </li>
         </ul>
@@ -175,13 +181,15 @@
 <?php
 if ( $part > 3 && $num_answers == 0 ) {
 ?>
-<form class="uk-form uk-form-horizontal" action="delete_cfa.php" onSubmit="return confirmDelete();">
+<form method="post" class="uk-form uk-form-horizontal" action="delete_cfa.php" onSubmit="return confirmDelete();">
     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
     <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
     <input type="hidden" name="part" value="<?= $part ?>">
     <input type="hidden" name="op" value="DeleteCFA">
+  <?php if ( !empty($data['can_edit']) ) { ?>
     <div class="uk-align-right"><button class="uk-button uk-button-danger uk-button-mini">Delete this GVC</button></div>
+  <?php } ?>
 </form>
 <?php
 }

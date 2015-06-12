@@ -36,7 +36,7 @@ $config = array(
 		),
 		2 => array(
 			'name' => 'plc member',
-			'auth' => 45, // load,answers,update_csip,report
+			'auth' => 13, // load,answers,update_csip
 		),
 		3 => array(
 			'name' => 'principal',

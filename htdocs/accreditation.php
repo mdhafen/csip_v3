@@ -1,4 +1,4 @@
-                <form class="uk-form uk-form-horizontal" action="save_answer.php">
+                <form method="post" class="uk-form uk-form-horizontal" action="save_answer.php">
 <?php
 if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['courseid'] ]['questions'][2]) ) {
   echo "<input type='hidden' name='csipid' value='". $data['csip']['csipid'] ."'>\n";
@@ -37,5 +37,7 @@ if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['course
 }
 ?>
             <br>
+  <?php if ( !empty($data['can_edit']) ) { ?>
 <button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>        
+  <?php } ?>
                 </form>

@@ -639,4 +639,23 @@ function course_delete_extra_part( $courseid, $part, $csip ) {
     $sth->execute();
 }
 
+function get_user_courses( $userid, $location ) {
+    $courses = array();
+    $query = "
+    SELECT *
+      FROM user_course_links
+     WHERE locationid = :loc
+       AND userid = :user
+";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':loc', $location );
+    $sth->bindValue( ':user', $userid );
+    $sth->execute();
+    while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+      $courses[ $row['courseid'] ] = $row;
+    }
+
+    return $courses;
+}
+
 ?>

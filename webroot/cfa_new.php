@@ -6,16 +6,31 @@
 //   Collapse if/else block around 'protected-content' to just the if block
 //   Remove the if statements around the Delete button
 
+include_once( '../lib/security.phpm' );
 include_once( '../lib/input.phpm' );
+include_once( '../inc/csips.phpm' );
+include_once( '../inc/course.phpm' );
 
-$data = array(
-	'csipid' => input( 'csipid', INPUT_PINT ),
-	'categoryid' => input( 'categoryid', INPUT_PINT ),
-	'courseid' => input( 'courseid', INPUT_PINT ),
-);
+$csipid = input( 'csipid', INPUT_PINT );
+$categoryid = input( 'categoryid', INPUT_PINT );
+$courseid = input( 'courseid', INPUT_PINT );
 $count = input( 'tab', INPUT_PINT );
 $part = input( 'part', INPUT_PINT );
-//echo '<pre>'; print_r($_REQUEST); echo '</pre>';
+
+$can_edit = authorized( 'update_csip' );
+$courses = get_user_courses( $_SESSION['loggedin_user']['userid'], get_csip_locationid($csipid) );
+if ( !empty($courseid) && !empty($courses) ) {
+   if ( ! array_key_exists( $courseid, $courses ) ) {
+      $can_edit = 0;
+   }
+}
+
+$data = array(
+	'csipid' => $csipid,
+	'categoryid' => $categoryid,
+	'courseid' => $courseid,
+        'can_edit' => $can_edit,
+);
 ?>
 <br>
     <ul id="cfa<?= $count ?>" class="uk-nav uk-nav-side uk-nav-parent-icon" data-uk-nav="{multiple:true}">
@@ -31,7 +46,7 @@ $part = input( 'part', INPUT_PINT );
             <br>
 
             <li class="uk-panel uk-panel-box">
-                <form class="uk-form uk-form-horizontal" action="save_answer.php">
+                <form method="post" class="uk-form uk-form-horizontal" action="save_answer.php">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
                     <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
@@ -70,7 +85,9 @@ $part = input( 'part', INPUT_PINT );
                         </div>
                     </div>
                     <br>
+  <?php if ( !empty($data['can_edit']) ) { ?>
 					<button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>
+  <?php } ?>
                 </form>
             </li>
         </ul>
@@ -89,7 +106,7 @@ $part = input( 'part', INPUT_PINT );
             </li>
 
             <li class="uk-panel uk-panel-box">
-                <form class="uk-form uk-form-horizontal" action="save_answer.php">
+                <form method="post" class="uk-form uk-form-horizontal" action="save_answer.php">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
                     <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
@@ -128,7 +145,9 @@ $part = input( 'part', INPUT_PINT );
                         </div>
                     </div>
                     <br>
+  <?php if ( !empty($data['can_edit']) ) { ?>
 					<button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>
+  <?php } ?>
                 </form>
             </li>
         </ul>
@@ -145,7 +164,7 @@ $part = input( 'part', INPUT_PINT );
                 </li>
 
             <li class="uk-panel uk-panel-box">
-            <form class="uk-form uk-form-horizontal" action="save_answer.php">
+            <form method="post" class="uk-form uk-form-horizontal" action="save_answer.php">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
                     <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
@@ -177,7 +196,9 @@ $part = input( 'part', INPUT_PINT );
                         </div>
                     </div>
 					<br>
+  <?php if ( !empty($data['can_edit']) ) { ?>
 					<button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>
+  <?php } ?>
                 </form>
             </li>
         </ul>
@@ -186,11 +207,13 @@ $part = input( 'part', INPUT_PINT );
 </ul>
 
 <hr>
-<form class="uk-form uk-form-horizontal" action="delete_cfa.php" onSubmit="return confirmDelete();">
+<form method="post" class="uk-form uk-form-horizontal" action="delete_cfa.php" onSubmit="return confirmDelete();">
     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
     <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
     <input type="hidden" name="part" value="<?= $part ?>">
     <input type="hidden" name="op" value="DeleteCFA">
+  <?php if ( !empty($data['can_edit']) ) { ?>
     <div class="uk-align-right"><button class="uk-button uk-button-danger uk-button-mini">Delete this GVC</button></div>
+  <?php } ?>
 </form>

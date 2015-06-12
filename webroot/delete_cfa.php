@@ -20,6 +20,7 @@ if ( empty($csip) ) {
    error( array('NOTYOURS' => 'No CSIP loaded.') );
 }
 else {
+   $courses = get_user_courses( $_SESSION['loggedin_user']['userid'], $csip['locationid'] );
    if ( ! empty($csipid) && $csip['csipid'] != $csipid ) {
       error( array('NOTYOURS' => 'Loading other CSIPs not allowed here.') );
    }
@@ -31,6 +32,11 @@ else {
    }
    if ( empty($csip['courses'][$courseid]['questions'][$part]) ) {
       error( array('NOTYOURS' => 'Course does not have that tab.') );
+   }
+   if ( !empty($courses) ) {
+      if ( ! array_key_exists( $courseid, $courses ) ) {
+         error( array('NOTYOURS' => 'Access to CSIP denied.' ) );
+      }
    }
 }
 

@@ -31,7 +31,7 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
             <p>Once your team has identified the skills, share with the team above and below your specific grade level.</p>
             <p>Share the guaranteed skills with your students that you have identified below.</p></li>
             <li>
-                <form class="uk-form" action="save_answer.php">
+                <form method="post" class="uk-form" action="save_answer.php">
                     <p class="uk-clearfix">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
                     <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
@@ -40,7 +40,9 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
                     <input type="hidden" name="questionid" value="2">
                     <input type="hidden" name="op" value="SaveAnswer">
                     <textarea id="form-h-t" cols="30" rows="8" name="answer" placeholder="Define Team's GVC Here..."><?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][2]['answer']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][2]['answer'] : "" ?></textarea>
+  <?php if ( !empty($data['can_edit']) ) { ?>
                     <button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>     
+  <?php } ?>
                     </p>
                 </form>
                 <hr>
@@ -52,7 +54,7 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
         <ul class="uk-nav-sub">
             <li><p>Enter the date when your team will complete the Reflection process</p></li>
             <li>
-                <form class="uk-form" action="save_answer.php">
+                <form method="post" class="uk-form" action="save_answer.php">
                     <p class="uk-clearfix">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
                     <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
@@ -74,7 +76,7 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
         <ul class="uk-nav-sub">
             <li><p>Has your team&apos;s GVC changed?  If so, which elements did your team adjust in preparation for next year?</p></li>
             <li>
-                <form class="uk-form" action="save_answer.php">
+                <form method="post" class="uk-form" action="save_answer.php">
                     <p class="uk-clearfix">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
                     <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
@@ -95,7 +97,7 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
         <ul class="uk-nav-sub">
             <li><p>After identifying your GVC and individually self assessing with the Utah Effective Teaching Standards, determine the teaching practices you need to strengthen based on the learning needs of the students in your classroom this year.</p></li>
             <li>
-                <form class="uk-form" action="save_answer.php">
+                <form method="post" class="uk-form" action="save_answer.php">
                     <p class="uk-clearfix">
                     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
                     <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">

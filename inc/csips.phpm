@@ -137,19 +137,8 @@ CROSS JOIN year USING (yearid)
 
   $courses = array();
   if ( ! $all_courses ) {
-    $query = "
-    SELECT *
-      FROM user_course_links
-     WHERE locationid = :loc
-       AND userid = :user
-";
-    $sth = $dbh->prepare( $query );
-    $sth->bindValue( ':loc', $csip['locationid'] );
-    $sth->bindValue( ':user', $userid );
-    $sth->execute();
-    while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
-      $courses[] = $row['courseid'];
-    }
+    $courses = get_user_courses( $userid, $csip['locationid'] );
+    $courses = array_keys( $courses );
   }
 
   $query = "
