@@ -6,7 +6,7 @@ include_once( '../../lib/output.phpm' );
 include_once( '../../inc/csips.phpm' );
 include_once( '../../inc/course.phpm' );
 
-authorize( 'update_csip' );
+$can_edit = authorized( 'update_csip' );
 
 $errors = array();
 $locations = empty($_SESSION['loggedin_user']['locations']) ? array() : array_keys( $_SESSION['loggedin_user']['locations'] );
@@ -27,6 +27,9 @@ else {
       $errors[] = array('FLAG' => 'NOTYOURS', 'message' => 'Loading other CSIPs not allowed here.');
    }
    if ( !in_array( $csip['locationid'], $locations ) ) {
+      $errors[] = array('FLAG' => 'NOTYOURS', 'message' => 'Access to CSIP denied.' );
+   }
+   if ( ! $can_edit ) {
       $errors[] = array('FLAG' => 'NOTYOURS', 'message' => 'Access to CSIP denied.' );
    }
    if ( !empty($courses) ) {
