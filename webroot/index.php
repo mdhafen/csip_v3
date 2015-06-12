@@ -42,10 +42,12 @@ else {
    }
 }
 
-$courses = get_user_courses( $_SESSION['loggedin_user']['userid'], $csip['locationid'] );
-if ( !empty($courseid) && !empty($courses) ) {
-   if ( ! array_key_exists( $courseid, $courses ) ) {
-      $can_edit = 0;
+if ( !empty($csip) ) {
+   $courses = get_user_courses( $_SESSION['loggedin_user']['userid'], $csip['locationid'] );
+   if ( !empty($courseid) && !empty($courses) ) {
+      if ( ! array_key_exists( $courseid, $courses ) ) {
+         $can_edit = 0;
+      }
    }
 }
 

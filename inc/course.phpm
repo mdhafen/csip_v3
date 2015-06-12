@@ -640,6 +640,8 @@ function course_delete_extra_part( $courseid, $part, $csip ) {
 }
 
 function get_user_courses( $userid, $location ) {
+    $dbh = db_connect();
+
     $courses = array();
     $query = "
     SELECT *
