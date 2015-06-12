@@ -2,7 +2,7 @@
 <?php
 if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['courseid'] ]['questions'][2]) ) {
   echo "<input type='hidden' name='csipid' value='". $data['csip']['csipid'] ."'>\n";
-  echo "<input type='hidden' name='categoryid' value='". $data['categoryid'] .">";
+  echo "<input type='hidden' name='categoryid' value='". $data['categoryid'] ."'>";
   echo "<input type='hidden' name='courseid' value='". $data['courseid'] ."'>\n";
   echo "<input type='hidden' name='part' value='2'>\n";
   echo "<input type='hidden' name='op' value='SaveAnswer'>\n";
@@ -23,7 +23,7 @@ if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['course
     else {
 ?>
                 <br>
-                    
+
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="form-h-t"><?= $data['csip']['questions'][ $questionid ]['question_clean'] ?></label>
                         <div class="uk-form-controls">
