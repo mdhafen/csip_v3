@@ -2,6 +2,7 @@
 require_once( $config['base_dir'] ."/lib/data.phpm" );
 
 require_once( 'course.phpm' );
+require_once( 'site.phpm' );
 
 function loc_is_demo( $field, $value, $csip = null ) {
   if ( $csip && isset( $csip['loc_demo'] ) ) {

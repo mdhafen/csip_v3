@@ -29,8 +29,11 @@
 <td><?= $user['role'] ?></td>
 <td><?= $user['password']?"Yes":"No" ?></td>
 <td>
-<a href="<?= $data['_config']['base_url'] ?>manage/edit_user.php?userid=<?= $user['userid'] ?>">Edit</a> 
-<a href="<?= $data['_config']['base_url'] ?>manage/delete_user.php?op=Delete&amp;userid=<?= $user['userid'] ?>">Delete</a>
+<div class="uk-button-group">
+<a href="<?= $data['_config']['base_url'] ?>manage/user_courses.php?userid=<?= $user['userid'] ?>" class="uk-button">Course Access</a>
+<a href="<?= $data['_config']['base_url'] ?>manage/edit_user.php?userid=<?= $user['userid'] ?>" class="uk-button">Edit</a> 
+<a href="<?= $data['_config']['base_url'] ?>manage/delete_user.php?op=Delete&amp;userid=<?= $user['userid'] ?>" class="uk-button">Delete</a>
+</div>
 </td>
 </tr>
 <?php } ?>

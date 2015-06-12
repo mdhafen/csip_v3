@@ -4,6 +4,7 @@ include_once( '../lib/security.phpm' );
 include_once( '../lib/output.phpm' );
 
 include_once( '../inc/csips.phpm' );
+include_once( '../inc/site.phpm' );
 
 authorize( 'load_csip' );
 $district = authorized( 'load_other_csip' );

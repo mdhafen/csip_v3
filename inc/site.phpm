@@ -88,4 +88,50 @@ function get_location_num_dependants( $locationid ) {
   return $result;
 }
 
+function get_user_courses( $userid, $location ) {
+    $dbh = db_connect();
+
+    $courses = array();
+    $query = "
+    SELECT *
+      FROM user_course_links
+     WHERE locationid = :loc
+       AND userid = :user
+";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':loc', $location );
+    $sth->bindValue( ':user', $userid );
+    $sth->execute();
+    while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+      $courses[ $row['courseid'] ] = $row;
+    }
+
+    return $courses;
+}
+
+function get_location_courses( $locationid ) {
+    $dbh = db_connect();
+
+    $courses = array();
+    $query = "
+    SELECT *
+      FROM location_course_links
+     WHERE locationid = :loc
+";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':loc', $locationid );
+    $sth->execute();
+    while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+      $courses[] = $row['courseid'];
+    }
+
+    return $courses;
+}
+
+function user_add_course( $userid, $locationid, $courseid ) {
+}
+
+function user_delete_course( $userid, $locationid, $courseid ) {
+}
+
 ?>

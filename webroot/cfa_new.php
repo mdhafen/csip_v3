@@ -10,6 +10,7 @@ include_once( '../lib/security.phpm' );
 include_once( '../lib/input.phpm' );
 include_once( '../inc/csips.phpm' );
 include_once( '../inc/course.phpm' );
+include_once( '../inc/site.phpm' );
 
 $csipid = input( 'csipid', INPUT_PINT );
 $categoryid = input( 'categoryid', INPUT_PINT );

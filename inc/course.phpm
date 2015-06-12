@@ -5,6 +5,25 @@ require_once( $config['base_dir'] ."/lib/security.phpm" );
 
 require_once( 'csips.phpm' );
 
+function get_courses() {
+    $dbh = db_connect();
+    $courses = array();
+
+    $query = "
+    SELECT course.*,cc.category_name
+      FROM course
+ LEFT JOIN course_categories AS cc ON course.course_category = cc.categoryid
+     WHERE active = 1
+  ORDER BY ca.category_name,course.course_name
+";
+    $sth = $dbh->prepare( $query );
+    $sth->execute();
+    while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+        $courses[ $row['courseid'] ] = $row;
+    }
+    return $courses;
+}
+
 function course_get_html_input( $question = '', $answer = '', $courseid, $csip ) {
   if ( ! $question ) {
     return;
@@ -637,27 +656,6 @@ function course_delete_extra_part( $courseid, $part, $csip ) {
     $sth->bindValue( ':course', $courseid );
     $sth->bindValue( ':csip', $csip['csipid'] );
     $sth->execute();
-}
-
-function get_user_courses( $userid, $location ) {
-    $dbh = db_connect();
-
-    $courses = array();
-    $query = "
-    SELECT *
-      FROM user_course_links
-     WHERE locationid = :loc
-       AND userid = :user
-";
-    $sth = $dbh->prepare( $query );
-    $sth->bindValue( ':loc', $location );
-    $sth->bindValue( ':user', $userid );
-    $sth->execute();
-    while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
-      $courses[ $row['courseid'] ] = $row;
-    }
-
-    return $courses;
 }
 
 ?>
