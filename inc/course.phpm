@@ -14,7 +14,7 @@ function get_courses() {
       FROM course
  LEFT JOIN course_categories AS cc ON course.course_category = cc.categoryid
      WHERE active = 1
-  ORDER BY ca.category_name,course.course_name
+  ORDER BY cc.category_name,course.course_name
 ";
     $sth = $dbh->prepare( $query );
     $sth->execute();

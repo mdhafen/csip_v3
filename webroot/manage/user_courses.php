@@ -37,10 +37,13 @@ if ( $userid ) {
     $loc_courses = array();
     $user_courses = get_user_courses( $userid, $locationid );
     $loc_courses = get_location_courses( $locationid, $locations[$locationid]['mingrade'], $locations[$locationid]['maxgrade'] );
-    foreach ( $loc_courses as $courseid ) {
-      $course_by_cat[ $course[$courseid]['category_name'] ][ $courseid ] = $course[$courseid];
+    foreach ( $loc_courses as $l_c_id ) {
+      $course_by_cat[ $courses[$l_c_id]['category_name'] ][ $l_c_id ] = $courses[$l_c_id];
     }
-
+    ksort( $course_by_cat, SORT_STRING | SORT_FLAG_CASE );
+    foreach ( $course_by_cat as $cat => $cat_courses ) {
+      uasort( $course_by_cat[$cat], 'cmp_course_name' );
+    }
 
     if ( !empty($courseid) ) {
       if ( ! array_key_exists( $courseid, $courses ) ) {
@@ -63,11 +66,15 @@ if ( $userid ) {
 $output = array(
 	'user' => $user,
         'courses' => $courses,
-        'course_by_cat' => $courses,
+        'course_by_cat' => $course_by_cat,
         'locationid' => $locationid,
 	'saved' => $saved,
 	'locations' => $locations,
         'user_courses' => $user_courses,
 );
 output( $output, 'manage/user_courses.tmpl' );
+
+function cmp_course_name( $a, $b ) {
+  return strcasecmp( $a['course_name'], $b['course_name'] );
+}
 ?>

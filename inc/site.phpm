@@ -146,9 +146,25 @@ function get_location_courses( $locationid, $mingrade = null, $maxgrade = null )
 }
 
 function user_add_course( $userid, $locationid, $courseid ) {
+    $dbh = db_connect();
+
+    $query = "INSERT INTO user_course_links ( userid, courseid, locationid ) VALUES ( :userid, :course, :locationid )";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':userid', $userid );
+    $sth->bindValue( ':course', $courseid );
+    $sth->bindValue( ':locationid', $locationid );
+    $sth->execute();
 }
 
 function user_delete_course( $userid, $locationid, $courseid ) {
+    $dbh = db_connect();
+
+    $query = "DELETE FROM user_course_links WHERE userid = :userid AND courseid = :course AND locationid = :locationid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':userid', $userid );
+    $sth->bindValue( ':course', $courseid );
+    $sth->bindValue( ':locationid', $locationid );
+    $sth->execute();
 }
 
 ?>
