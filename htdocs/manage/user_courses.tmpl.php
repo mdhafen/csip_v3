@@ -31,7 +31,7 @@ For location: <select name="locationid" id="location" onchange="this.form.submit
 <?php if ( !empty($data['locationid']) ) { ?>
 Courses:
 <ul>
-<?php foreach ( $data['user_courses'] as $courseid ) { ?>
+<?php foreach ( $data['user_courses'] as $courseid => $course ) { ?>
   <form method="post" action="<?= $data['_config']['base_url'] ?>manage/user_courses.php">
   <input type="hidden" name="userid" value="<?= $data['user']['userid'] ?>">
   <input type="hidden" name="locationid" value="<?= $data['locationid'] ?>">

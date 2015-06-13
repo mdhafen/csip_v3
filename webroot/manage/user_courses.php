@@ -59,6 +59,7 @@ if ( $userid ) {
       else if ( $op == "Delete" ) {
         user_delete_course( $userid, $locationid, $courseid );
       }
+      $user_courses = get_user_courses( $userid, $locationid );
     }
   }
 }
