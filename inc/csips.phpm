@@ -151,7 +151,7 @@ CROSS JOIN year USING (yearid)
      WHERE active = 1
 ";
    if ( ! empty($courses) ) {
-    $query .= "       AND courseid IN ". implode( ',',$courses ) .")";
+    $query .= "       AND course.courseid IN (". implode( ',',$courses ) .")";
     $courses = array();
   }
   $query .= "
@@ -218,7 +218,7 @@ CROSS JOIN year USING (yearid)
     $csip['courses'][ $row['courseid'] ]['questions'][ $row['part'] ][ $row['questionid'] ] = array();
   }
 
-  $query = "SELECT * FROM answer WHERE csipid = :cid";
+  $query = "SELECT * FROM answer WHERE csipid = :cid AND courseid IN ($courselist)";
   $sth = $dbh->prepare( $query );
   $sth->bindValue( ':cid', $csipid );
   $sth->execute();
