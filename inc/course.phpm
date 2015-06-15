@@ -24,6 +24,23 @@ function get_courses() {
     return $courses;
 }
 
+function get_course_categories() {
+    $dbh = db_connect();
+    $categories = array();
+
+    $query = "
+    SELECT *
+      FROM course_categories
+  ORDER BY category_name
+";
+    $sth = $dbh->prepare( $query );
+    $sth->execute();
+    while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+        $categories[ $row['categoryid'] ] = $row;
+    }
+    return $categories;
+}
+
 function course_get_html_input( $question = '', $answer = '', $courseid, $csip ) {
   if ( ! $question ) {
     return;
