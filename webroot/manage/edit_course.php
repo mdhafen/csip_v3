@@ -85,6 +85,14 @@ if ( $op == "Save" ) {  // Update/Add the location
 	if ( $crs['courseid'] == $courseid ) {
 	  $course = $crs;
 	  $edit = 1;
+          foreach ( $categories as &$cat ) {
+            if ( $cat['categoryid'] == $course['course_category'] ) {
+              $cat['selected'] = true;
+            }
+            else {
+              unset( $cat['selected'] );
+            }
+          }
 	  break;
 	}
       }
