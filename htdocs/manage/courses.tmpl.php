@@ -14,8 +14,7 @@
 
 <a href="<?= $data['_config']['base_url'] ?>manage/edit_course.php">Add Course</a>
 
-<table>
-<caption>Courses</caption>
+<table class="uk-table uk-table-striped">
 <thead>
 <tr>
 <th>Course ID</th><th>Category</th><th>Name</th><th>Minimum Grade</th><th>Maximum Grade</th><th>Active</th><th>&nbsp;</th>
@@ -27,8 +26,8 @@
 <td><?= $course['courseid'] ?></td>
 <td><?= $course['category_name'] ?></td>
 <td><?= $course['course_name'] ?></td>
-<td><?= $course['mingrade'] ?></td>
-<td><?= $course['maxgrade'] ?></td>
+<td><?= $course['min_grade'] ?></td>
+<td><?= $course['max_grade'] ?></td>
 <td><?= $course['active'] ?></td>
 <td>
 <div class="uk-button-group">
