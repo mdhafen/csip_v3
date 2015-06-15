@@ -41,6 +41,29 @@ function get_course_categories() {
     return $categories;
 }
 
+function update_course( $courseid, $update ) {
+  $dbh = db_connect();
+
+  if ( $courseid ) {
+    $query = "UPDATE course SET ";
+    foreach ( $update as $field => $value ) {
+      $query .= "$field = ?, ";
+    }
+    $query = rtrim( $query, ", " );
+    $query .= "WHERE courseid = ". $dbh->quote( $courseid );
+  } else {
+    $query = "INSERT INTO course (course_category,course_name,min_grade,max_grade,active) VALUES (?,?,?,?,?)";
+  }
+  $sth = $dbh->prepare( $query );
+  $sth->execute( array_values( $update ) );
+
+  if ( ! $courseid ) {
+    $courseid = $dbh->lastInsertId();
+  }
+
+  return $courseid;
+}
+
 function course_get_html_input( $question = '', $answer = '', $courseid, $csip ) {
   if ( ! $question ) {
     return;

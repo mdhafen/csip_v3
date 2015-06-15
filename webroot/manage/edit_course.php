@@ -27,6 +27,12 @@ if ( $courseid ) {
 
   if ( $course ) {
     $edit = 1;
+
+    foreach ( $categories as $cat ) {
+      if ( $cat['categoryid'] == $course['course_category'] ) {
+        $cat['selected'] = true;
+      }
+    }
   }
 }
 
