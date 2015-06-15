@@ -38,7 +38,7 @@ foreach ( (array) $data['error'] as $err ) {
   <select id="new_category" name="new_category">
     <option value="">Pick one</option>
 <?php foreach ( $data['categories'] as $categoryid => $category ) { ?>
-    <option value="<?= $categoryid ?>"<?= (!empty($category['selected'])? " selected='selected'" : "" ?>><?= $category['category_name'] ?></option>
+<option value="<?= $categoryid ?>"<?= ( !empty($category['selected']) ) ? " selected='selected'" : "" ?>><?= $category['category_name'] ?></option>
 <?php } ?>
   </select>
 </td>
