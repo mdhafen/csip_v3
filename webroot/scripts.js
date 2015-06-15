@@ -19,7 +19,7 @@ function addCFATab(csipid,categoryid,courseid,part){
 	data['courseid'] = courseid;
 	data['part'] = part;
 	$.ajax({
-		url: "/api/course_add_part.php",
+		url: "api/course_add_part.php",
 		data: data,
 		type: 'post',
 		success: function(data) {
