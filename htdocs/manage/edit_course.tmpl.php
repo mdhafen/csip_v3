@@ -33,20 +33,20 @@ foreach ( (array) $data['error'] as $err ) {
 <table>
 
 <tr>
-<td><label for="new_category">Category</label></td>
+<td><label for="categoryid">Category</label></td>
 <td>
-  <select id="new_category" name="new_category">
+  <select id="categoryid" name="categoryid">
     <option value="">Pick one</option>
 <?php foreach ( $data['categories'] as $categoryid => $category ) { ?>
-<option value="<?= $categoryid ?>"<?= ( !empty($category['selected']) ) ? " selected='selected'" : "" ?>><?= $category['category_name'] ?></option>
+<option value="<?= $categoryid ?>"<?= ( !empty($category['selected']) ) ? " selected" : "" ?>><?= $category['category_name'] ?></option>
 <?php } ?>
   </select>
 </td>
 </tr>
 
 <tr>
-<td><label for="name">Name</label></td>
-<td><input name="name" id="name" value="<?= $data['course']['course_name'] ?>" ></td>
+<td><label for="course_name">Name</label></td>
+<td><input name="course_name" id="course_name" value="<?= $data['course']['course_name'] ?>" ></td>
 </tr>
 
 <tr>

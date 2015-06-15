@@ -28,7 +28,7 @@ if ( $courseid ) {
   if ( $course ) {
     $edit = 1;
 
-    foreach ( $categories as $cat ) {
+    foreach ( $categories as &$cat ) {
       if ( $cat['categoryid'] == $course['course_category'] ) {
         $cat['selected'] = true;
       }
@@ -50,7 +50,7 @@ if ( $op == "Save" ) {  // Update/Add the location
 
   if ( empty($error) ) {
 
-    if ( !empty($location) ) {
+    if ( !empty($course) ) {
       if ( $categoryid != $course['course_category'] ) {
 	$updated['course_category'] = $categoryid;
       }
