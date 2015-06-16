@@ -145,6 +145,26 @@ function get_location_courses( $locationid, $mingrade = null, $maxgrade = null )
     return $courses;
 }
 
+function get_location_course_links( $locationid ) {
+    $dbh = db_connect();
+
+    $courses = array();
+
+    $query = "
+    SELECT courseid
+      FROM location_course_links
+     WHERE locationid = :loc
+";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':loc', $locationid );
+    $sth->execute();
+    while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+      $courses[] = $row['courseid'];
+    }
+
+    return $courses;
+}
+
 function user_add_course( $userid, $locationid, $courseid ) {
     $dbh = db_connect();
 
@@ -162,6 +182,26 @@ function user_delete_course( $userid, $locationid, $courseid ) {
     $query = "DELETE FROM user_course_links WHERE userid = :userid AND courseid = :course AND locationid = :locationid";
     $sth = $dbh->prepare( $query );
     $sth->bindValue( ':userid', $userid );
+    $sth->bindValue( ':course', $courseid );
+    $sth->bindValue( ':locationid', $locationid );
+    $sth->execute();
+}
+
+function location_add_course( $locationid, $courseid ) {
+    $dbh = db_connect();
+
+    $query = "INSERT INTO location_course_links ( courseid, locationid ) VALUES ( :course, :locationid )";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':course', $courseid );
+    $sth->bindValue( ':locationid', $locationid );
+    $sth->execute();
+}
+
+function location_delete_course( $locationid, $courseid ) {
+    $dbh = db_connect();
+
+    $query = "DELETE FROM location_course_links WHERE courseid = :course AND locationid = :locationid";
+    $sth = $dbh->prepare( $query );
     $sth->bindValue( ':course', $courseid );
     $sth->bindValue( ':locationid', $locationid );
     $sth->execute();
