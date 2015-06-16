@@ -11,9 +11,11 @@
 
 <h3>Site Management</h3>
 <div class="uk-panel uk-panel-box">
-   <a class="uk-button uk-width-1-1 uk-margin-bottom" href="users.php">Users</a>
+   <a class="uk-button uk-width-1-1 uk-margin-bottom" href="courses.php">Courses</a>
 
    <a class="uk-button uk-width-1-1 uk-margin-bottom" href="locations.php">Locations</a>
+
+   <a class="uk-button uk-width-1-1 uk-margin-bottom" href="users.php">Users</a>
 
    <a class="uk-button uk-width-1-1 uk-margin-bottom" href="new_year.php">Start a new year</a>
 
