@@ -10,7 +10,7 @@
             <br>
 
 <div class="uk-panel uk-panel-box uk-panel-box-primary">
-<h3>Change Special Location Course Assignments for <?= $data['locations'][ [$data['locationid'] ]['name'] ?></h3>
+<h3>Change Special Location Course Assignments for <?= $data['location']['name'] ?></h3>
 
 <?php if ( $data['saved'] ) { ?>
 <div class="uk-alert uk-alert-success">
@@ -73,7 +73,7 @@ Location already has:
 
 <?php } ?>
 </div>
-<a class="uk-button" href="users.php">Back</a>
+<a class="uk-button" href="locations.php">Back</a>
 
 	</div>
 	<br>

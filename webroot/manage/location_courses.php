@@ -13,22 +13,28 @@ $op = input( 'op', INPUT_STR );
 $locationid = input( 'locationid', INPUT_PINT );
 $courseid = input( 'courseid', INPUT_PINT );
 
+$location = array();
+$loc_links = array();
+$loc_courses = array();
+$loc_course_by_cat = array();
 $courses = get_courses();
 $course_by_cat = array();
-$loc_course_by_cat = array();
 $saved = 0;
-$locations = all_locations();
-$loc_courses = array();
-$loc_links = array();
 
 if ( !empty($locationid) ) {
-  if ( !in_array($locationid, array_column($locations,'locationid')) ) {
+  $locations = all_locations();
+  foreach ( $locations as $loc ) {
+    if ( $loc['locationid'] == $locationid ) {
+      $location = $loc;
+    }
+  }
+  if ( empty($location) ) {
     error( array('BADLOC' => 'Undefined Location') );
   }
 
   $loc_links = get_location_course_links( $locationid );
 
-  $loc_courses = get_location_courses( $locationid, $locations[$locationid]['mingrade'], $locations[$locationid]['maxgrade'] );
+  $loc_courses = get_location_courses( $locationid, $location['mingrade'], $location['maxgrade'] );
   foreach ( $loc_courses as $l_c_id ) {
     $loc_course_by_cat[ $courses[$l_c_id]['category_name'] ][ $l_c_id ] = $courses[$l_c_id];
   }
@@ -49,9 +55,6 @@ if ( !empty($locationid) ) {
     if ( ! array_key_exists( $courseid, $courses ) ) {
       error( array('BADCRS' => 'Undefined Course' ) );
     }
-    if ( ! in_array( $courseid, $loc_courses ) ) {
-      error( array('BADCRS' => 'Course not availabe at that location') );
-    }
 
     if ( $op == "Add" ) {  // Update/Add the user
       location_add_course( $locationid, $courseid );
@@ -59,8 +62,9 @@ if ( !empty($locationid) ) {
     else if ( $op == "Delete" ) {
       location_delete_course( $locationid, $courseid );
     }
+    $loc_course_by_cat = array();
     $loc_links = get_location_course_links( $locationid );
-    $loc_courses = get_location_courses( $locationid, $locations[$locationid]['mingrade'], $locations[$locationid]['maxgrade'] );
+    $loc_courses = get_location_courses( $locationid, $location['mingrade'], $location['maxgrade'] );
     foreach ( $loc_courses as $l_c_id ) {
       $loc_course_by_cat[ $courses[$l_c_id]['category_name'] ][ $l_c_id ] = $courses[$l_c_id];
     }
@@ -72,14 +76,14 @@ if ( !empty($locationid) ) {
 }
 
 $output = array(
+        'locationid' => $locationid,
+        'location' => $location,
+        'loc_links' => $loc_links,
+        'loc_courses' => $loc_courses,
+        'loc_course_by_cat' => $loc_course_by_cat,
         'courses' => $courses,
         'course_by_cat' => $course_by_cat,
-        'locationid' => $locationid,
 	'saved' => $saved,
-	'locations' => $locations,
-        'loc_courses' => $loc_courses,
-        'loc_course_by_cat' => $course_by_cat,
-        'loc_links' => $loc_links,
 );
 output( $output, 'manage/location_courses.tmpl' );
 
