@@ -151,7 +151,7 @@
                     </div>
                     <hr>
                     <div class="uk-form-row">
-                        <label class="uk-form-label" for="form-h-it">EXTENSION:</label>
+                        <label class="uk-form-label" for="form-h-it">End of Year Reflection Date:</label>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="28">
                             <input type="text" id="form-h-it" name="answers[]" value="<?= isset($questions[28]['answer']) ? $questions[28]['answer'] : "" ?>" placeholder="text input">
