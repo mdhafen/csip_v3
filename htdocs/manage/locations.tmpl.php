@@ -14,11 +14,10 @@
 
 <a href="<?= $data['_config']['base_url'] ?>manage/edit_location.php">Add Location</a>
 
-<table>
-<caption>Locations</caption>
+<table class="uk-table uk-table-striped">
 <thead>
 <tr>
-<td>Location ID</td><td>Name</td><td>Minimum Grade</td><td>Maximum Grade</td><td>Location Is For Demo</td><td>&nbsp;</td>
+<th>Location ID</th><th>Name</th><th>Minimum Grade</th><th>Maximum Grade</th><th>Location Is For Demo</th><th>&nbsp;</th>
 </tr>
 </thead>
 <tbody>

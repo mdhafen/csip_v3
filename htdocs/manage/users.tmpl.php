@@ -14,8 +14,7 @@
 
 <a href="<?= $data['_config']['base_url'] ?>manage/edit_user.php">Add User</a>
 
-<table>
-<caption>Users</caption>
+<table class="uk-table uk-table-striped">
 <thead>
 <tr>
 <td>Full Name</td><td>username</td><td>Role</td><td>Password</td><td>&nbsp;</td>
