@@ -5,15 +5,19 @@ require_once( $config['base_dir'] ."/lib/security.phpm" );
 
 require_once( 'csips.phpm' );
 
-function get_courses() {
+function get_courses( $all_courses = false ) {
     $dbh = db_connect();
     $courses = array();
 
+    $active = "WHERE active = 1";
+    if ( $all_courses ) {
+      $active = "";
+    }
     $query = "
     SELECT course.*,cc.category_name
       FROM course
  LEFT JOIN course_categories AS cc ON course.course_category = cc.categoryid
-     WHERE active = 1
+     $active
   ORDER BY cc.category_name,course.course_name
 ";
     $sth = $dbh->prepare( $query );

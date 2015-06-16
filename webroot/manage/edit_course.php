@@ -11,7 +11,7 @@ $courseid = input( 'courseid', INPUT_PINT );
 $op = input( 'op', INPUT_STR );
 
 $categories = get_course_categories();
-$courses = get_courses();
+$courses = get_courses(true);
 $edit = 0;
 $saved = 0;
 $course = array();
@@ -42,7 +42,7 @@ if ( $op == "Save" ) {  // Update/Add the location
   $mingrade = input( 'min_grade', INPUT_PINT );
   $maxgrade = input( 'max_grade', INPUT_PINT );
   $active = input( 'active', INPUT_STR );
-  $active = ( $active ) ? 1 : 0;
+  $active = ( !empty($active) ) ? 1 : 0;
 
   if ( $mingrade < 1 ) { $error[] = "LOWMIN"; }
   if ( $maxgrade > 12 ) { $error[] = "HIGHMAX"; }
@@ -80,7 +80,7 @@ if ( $op == "Save" ) {  // Update/Add the location
       $courseid = update_course( $courseid, $updated );
       $saved = 1;
 
-      $courses = get_courses();
+      $courses = get_courses(true);
       foreach ( $courses as $crs ) {
 	if ( $crs['courseid'] == $courseid ) {
 	  $course = $crs;

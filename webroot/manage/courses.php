@@ -7,7 +7,7 @@ include_once( '../../inc/course.phpm' );
 
 authorize( 'manage_users' );
 
-$courses = get_courses();
+$courses = get_courses(true);
 
 $output = array(
 	'courses' => $courses,
