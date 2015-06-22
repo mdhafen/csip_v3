@@ -10,13 +10,13 @@ INSERT INTO `question` (version,question_group,order_num,type,protect_answer,que
 <p>Once your team has identified the essential skills (GVC), share these with the team above and below your specific grade level.</p>
 <p>Write your essential skills in "student-friendly" language and share with your students.  If your team chooses, encourage students to monitor their own progress toward proficiency in these skills.</p>
 [input]'),
-  ( 7, 1, 3, 4, 0, '<b>Reflection Date</b><br/>
+  ( 7, 1, 3, 1, 0, '<b>Teaching Practices</b><br/>
+<p>After identifying your GVC and individually self assessing with the Utah Effective Teaching Standards, collectively determine the teaching practices you need to strengthen as a team, based on the learning needs of the students in your classroom this year.</p>
 [input]'),
-  ( 7, 1, 4, 1, 0, '<b>Reflection Summary</b><br/>
+  ( 7, 1, 4, 4, 0, '<b>Reflection Date</b><br/>
+[input]'),
+  ( 7, 1, 5, 1, 0, '<b>Reflection Summary</b><br/>
 <p>Has your team''s GVC changed?  If so, which elements did your team adjust in preparation for next year?</p>
-[input]'),
-  ( 7, 1, 5, 1, 0, '<b>Teaching Practices</b><br/>
-<p>After identifying your GVC and individually self assessing with the Utah Effective Teaching Standards, determine the teaching practices you need to strengthen based on the learning needs of the students in your classroom this year.</p>
 [input]'),
   ( 7, 2, 1, 9, 0, '<b>Essential Elements of Accreditation</b><br/>
 For middle and high school only-Utilize the elements of this section to support the necessary accreditation expectations and highlight the work that your school is engaged in..'),
