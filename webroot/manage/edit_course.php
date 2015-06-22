@@ -44,7 +44,7 @@ if ( $op == "Save" ) {  // Update/Add the location
   $active = input( 'active', INPUT_STR );
   $active = ( !empty($active) ) ? 1 : 0;
 
-  if ( $mingrade < 1 ) { $error[] = "LOWMIN"; }
+  if ( $mingrade < 0 ) { $error[] = "LOWMIN"; }
   if ( $maxgrade > 12 ) { $error[] = "HIGHMAX"; }
   if ( $mingrade > $maxgrade ) { $error[] = "MINABOVEMAX"; }
 

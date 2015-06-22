@@ -51,7 +51,7 @@ foreach ( (array) $data['error'] as $err ) {
 
 <tr>
 <td><label for="min_grade">First Grade</label></td>
-<td><input name="min_grade" id="min_grade" value="<?= $data['course']['min_grade'] ?>" ></td>
+<td><input name="min_grade" id="min_grade" value="<?= $data['course']['min_grade'] ?>" > <span class="uk-form-help-inline">Enter 0 for Kindergarten</span></td>
 </tr>
 
 <tr>
@@ -61,7 +61,7 @@ foreach ( (array) $data['error'] as $err ) {
 
 <tr>
 <td><label for="active">Course is active</label></td>
-<td><input type="checkbox" name="active" id="active" <?= ( $data['course']['active'] ) ? "checked='checked'" : "" ?> ></td>
+<td><input type="checkbox" name="active" id="active"<?= ( empty($data['course']) || !empty($data['course']['active']) ) ? " checked='checked'" : "" ?>></td>
 </tr>
 
 </table>
