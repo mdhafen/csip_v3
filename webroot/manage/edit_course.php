@@ -61,7 +61,7 @@ if ( $op == "Save" ) {  // Update/Add the location
       $group = $question_groups[ $count ];
 
       if ( !empty($part) && !empty($title) && !empty($group) && !empty($groups[$group]) ) {
-        $parts[] = array( 'part' => $part, 'title' => $title, 'group' => $group );
+        $parts[] = array( 'part' => $part, 'title' => $title, 'question_group' => $group );
       }
     }
 

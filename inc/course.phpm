@@ -45,7 +45,7 @@ function get_course_categories() {
     return $categories;
 }
 
-function update_course( $courseid, $update ) {
+function update_course( $courseid, $update, $parts = array() ) {
   $dbh = db_connect();
 
   if ( $courseid ) {
@@ -63,6 +63,23 @@ function update_course( $courseid, $update ) {
 
   if ( ! $courseid ) {
     $courseid = $dbh->lastInsertId();
+  }
+
+  if ( !empty($parts) ) {
+    $query = "DELETE FROM course_question_links WHERE courseid = :cid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':cid', $courseid );
+    $sth->execute();
+
+    $query = "INSERT INTO course_question_links (courseid,part,question_group,title) VALUES (:cid,:part,:group,:title)";
+    $sth = $dbh->prepare( $query );
+    foreach ( $parts as $part ) {
+      $sth->bindValue( ':cid', $courseid );
+      $sth->bindValue( ':part', $part['part'] );
+      $sth->bindValue( ':group', $part['question_group'] );
+      $sth->bindValue( ':title', $part['title'] );
+      $sth->execute();
+    }
   }
 
   return $courseid;
