@@ -19,7 +19,7 @@ Changes saved.
 <?php } ?>
 
 <form method="post" action="<?= $data['_config']['base_url'] ?>manage/edit_course.php">
-<input type="hidden" name="courseid" id="courseid" value="<?= $data['course']['courseid'] ?>">
+<input type="hidden" name="courseid" id="courseid" value="<?= (!empty($data['course']['courseid'])) ? $data['course']['courseid'] : "" ?>">
 <?php if ( $data['error'] ) { ?>
 <div class="uk-alert uk-alert-warning">
 There was an error
@@ -46,17 +46,17 @@ foreach ( (array) $data['error'] as $err ) {
 
 <tr>
 <td><label for="course_name">Name</label></td>
-<td><input name="course_name" id="course_name" value="<?= $data['course']['course_name'] ?>" ></td>
+<td><input name="course_name" id="course_name" value="<?= (!empty($data['course']['course_name'])) ? $data['course']['course_name'] : "" ?>" ></td>
 </tr>
 
 <tr>
 <td><label for="min_grade">First Grade</label></td>
-<td><input name="min_grade" id="min_grade" value="<?= $data['course']['min_grade'] ?>" > <span class="uk-form-help-inline">Enter 0 for Kindergarten</span></td>
+<td><input name="min_grade" id="min_grade" value="<?= (!empty($data['course']['min_grade'])) ? $data['course']['min_grade'] : "" ?>" > <span class="uk-form-help-inline">Enter 0 for Kindergarten</span></td>
 </tr>
 
 <tr>
 <td><label for="max_grade">Last Grade</label></td>
-<td><input name="max_grade" id="max_grade" value="<?= $data['course']['max_grade'] ?>" ></td>
+<td><input name="max_grade" id="max_grade" value="<?= (!empty($data['course']['max_grade'])) ? $data['course']['max_grade'] : "" ?>" ></td>
 </tr>
 
 <tr>
