@@ -16,6 +16,7 @@ $groups = get_question_groups();
 $edit = 0;
 $saved = 0;
 $course = array();
+$old_parts = array();
 $parts = array();
 $error = array();
 
@@ -29,7 +30,7 @@ if ( $courseid ) {
 
   if ( $course ) {
     $edit = 1;
-    $parts = get_course_question_groups( $courseid );
+    $old_parts = get_course_question_groups( $courseid );
 
     foreach ( $categories as &$cat ) {
       if ( $cat['categoryid'] == $course['course_category'] ) {
@@ -49,6 +50,7 @@ if ( $op == "Save" ) {  // Update/Add the location
   $question_parts = input( 'parts', INPUT_PINT );
   $question_titles = input( 'part_titles', INPUT_HTML_NONE );
   $question_groups = input( 'questions', INPUT_PINT );
+  $parts = array();
 
   if ( $mingrade < 0 ) { $error[] = "LOWMIN"; }
   if ( $maxgrade > 12 ) { $error[] = "HIGHMAX"; }
@@ -81,6 +83,25 @@ if ( $op == "Save" ) {  // Update/Add the location
       if ( $active != $course['active'] ) {
 	$updated['active'] = $active;
       }
+      if ( !empty($parts) ) {
+        $oldp = $newp = array();
+        foreach ( $old_parts as $part ) {
+          $oldp[ $part['part'] .'_'. $part['question_group'] .'_'. $part['title'] ] = 1;
+        }
+        foreach ( $parts as $part ) {
+          $newp[ $part['part'] .'_'. $part['question_group'] .'_'. $part['title'] ] = 1;
+        }
+        foreach ( $oldp as $key => $val ) {
+          if ( empty($newp[$key]) ) {
+            $updated['course_name'] = $name;
+          }
+        }
+        foreach ( $newp as $key => $val ) {
+          if ( empty($oldp[$key]) ) {
+            $updated['course_name'] = $name;
+          }
+        }
+      }
     } else {
       $updated = array(
 	'course_category' => $categoryid,
@@ -96,6 +117,7 @@ if ( $op == "Save" ) {  // Update/Add the location
       $saved = 1;
 
       $courses = get_courses(true);
+      $old_parts = get_course_question_groups( $courseid );
       foreach ( $courses as $crs ) {
 	if ( $crs['courseid'] == $courseid ) {
 	  $course = $crs;
@@ -119,7 +141,7 @@ $output = array(
 	'edit' => $edit,
 	'saved' => $saved,
 	'course' => $course,
-        'parts' => $parts,
+        'parts' => $old_parts,
         'categories' => $categories,
 	'error' => $error,
 );
