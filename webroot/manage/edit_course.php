@@ -12,9 +12,11 @@ $op = input( 'op', INPUT_STR );
 
 $categories = get_course_categories();
 $courses = get_courses(true);
+$groups = get_question_groups();
 $edit = 0;
 $saved = 0;
 $course = array();
+$parts = array();
 $error = array();
 
 if ( $courseid ) {
@@ -27,6 +29,7 @@ if ( $courseid ) {
 
   if ( $course ) {
     $edit = 1;
+    $parts = get_course_question_groups( $courseid );
 
     foreach ( $categories as &$cat ) {
       if ( $cat['categoryid'] == $course['course_category'] ) {
@@ -43,12 +46,24 @@ if ( $op == "Save" ) {  // Update/Add the location
   $maxgrade = input( 'max_grade', INPUT_PINT );
   $active = input( 'active', INPUT_STR );
   $active = ( !empty($active) ) ? 1 : 0;
+  $question_parts = input( 'parts', INPUT_PINT );
+  $question_titles = input( 'part_titles', INPUT_HTML_NONE );
+  $question_groups = input( 'questions', INPUT_PINT );
 
   if ( $mingrade < 0 ) { $error[] = "LOWMIN"; }
   if ( $maxgrade > 12 ) { $error[] = "HIGHMAX"; }
   if ( $mingrade > $maxgrade ) { $error[] = "MINABOVEMAX"; }
 
   if ( empty($error) ) {
+    foreach ( array_keys($question_parts) as $count ) {
+      $part = $question_parts[ $count ];
+      $title = $question_titles[ $count ];
+      $group = $question_groups[ $count ];
+
+      if ( !empty($part) && !empty($title) && !empty($group) && !empty($groups[$group]) ) {
+        $parts[] = array( 'part' => $part, 'title' => $title, 'group' => $group );
+      }
+    }
 
     if ( !empty($course) ) {
       if ( $categoryid != $course['course_category'] ) {
@@ -77,7 +92,7 @@ if ( $op == "Save" ) {  // Update/Add the location
     }
 
     if ( $updated ) {
-      $courseid = update_course( $courseid, $updated );
+      $courseid = update_course( $courseid, $updated, $parts );
       $saved = 1;
 
       $courses = get_courses(true);
@@ -104,6 +119,7 @@ $output = array(
 	'edit' => $edit,
 	'saved' => $saved,
 	'course' => $course,
+        'parts' => $parts,
         'categories' => $categories,
 	'error' => $error,
 );

@@ -64,6 +64,39 @@ foreach ( (array) $data['error'] as $err ) {
 <td><input type="checkbox" name="active" id="active"<?= ( empty($data['course']) || !empty($data['course']['active']) ) ? " checked='checked'" : "" ?>></td>
 </tr>
 
+<tr>
+<td><label for="parts1">Course Parts and Questions</label></td>
+<td>
+<?php if ( !empty($data['parts']) ) { ?>
+<?php   foreach ( $data['parts'] as $part ) { ?>
+<div class="uk-form-row">
+<div class="uk-form-controls"><input name="parts[]" type="text" value="<?= $part['part'] ?>"></div>
+<div class="uk-form-controls"><input name="questions[]" type="text" value="<?= $part['question_group'] ?>"></div>
+<div class="uk-form-controls"><input name="part_titles[]" type="text" value="<?= $part['title'] ?>"></div>
+</div>
+<?php   } ?>
+<?php } else { ?>
+<div class="uk-form-row">
+<div class="uk-form-controls"><input name="parts[]" type="text" value="1"></div>
+<div class="uk-form-controls"><input name="questions[]" type="text" value="1"></div>
+<div class="uk-form-controls"><input name="part_titles[]" type="text" value="Guaranteed Curriculum"></div>
+</div>
+
+<div class="uk-form-row">
+<div class="uk-form-controls"><input name="parts[]" type="text" value="2"></div>
+<div class="uk-form-controls"><input name="questions[]" type="text" value="2"></div>
+<div class="uk-form-controls"><input name="part_titles[]" type="text" value="Accreditation"></div>
+</div>
+
+<div class="uk-form-row">
+<div class="uk-form-controls"><input name="parts[]" type="text" value="3"></div>
+<div class="uk-form-controls"><input name="questions[]" type="text" value="3"></div>
+<div class="uk-form-controls"><input name="part_titles[]" type="text" value="GVC 1"></div>
+</div>
+<?php } ?>
+</td>
+</tr>
+
 </table>
 <input class="uk-button" type="submit" name="op" id="op" value="Save">
 

@@ -482,6 +482,49 @@ function question_get_options( $option_group ) {
   return $options;
 }
 
+function get_question_groups( $version = 0 ) {
+  $dbh = db_connect();
+
+  $groups = array();
+  $query = "
+  SELECT question_group
+    FROM question";
+  if ( $version ) {
+$query .= "
+   WHERE version = ". $dbh->quote( $version );
+  }
+  $query .= "
+GROUP BY question_group
+";
+  $sth = $dbh->prepare( $query );
+  $sth->execute();
+  while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+    groups[ $row['question_group'] ] = $row['question_group'];
+  }
+
+  return $groups;
+}
+
+function get_course_question_groups( $courseid ) {
+  $dbh = db_connect();
+
+  $groups = array();
+  $query = "
+   SELECT *
+     FROM course_question_links
+    WHERE courseid = :cid
+ ORDER BY part,question_group";
+
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':cid', $courseid );
+  $sth->execute();
+  while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+    groups[] = $row;
+  }
+
+  return $groups;
+}
+
 function course_save_answers( $answer, $courseid, $questionid, $part, $csip ) {
   $dbh = db_connect();
 
