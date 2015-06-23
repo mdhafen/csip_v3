@@ -65,33 +65,33 @@ foreach ( (array) $data['error'] as $err ) {
 </tr>
 
 <tr>
-<td><label for="parts1">Course Parts and Questions</label></td>
+<td><label>Course Parts and Questions</label></td>
 <td>
-<?php if ( !empty($data['parts']) ) { ?>
-<?php   foreach ( $data['parts'] as $part ) { ?>
+<?php if ( !empty($data['parts']) ) { $count = 0; ?>
+<?php   foreach ( $data['parts'] as $part ) { $count++; ?>
 <div class="uk-form-row">
-<div class="uk-form-controls"><input name="parts[]" type="text" value="<?= $part['part'] ?>"></div>
-<div class="uk-form-controls"><input name="questions[]" type="text" value="<?= $part['question_group'] ?>"></div>
-<div class="uk-form-controls"><input name="part_titles[]" type="text" value="<?= $part['title'] ?>"></div>
+<div class="uk-form-controls uk-grid uk-grid-collapse"><label class="uk-width-4-10" for="part<?= $count ?>">Part:</label><input class="uk-width-6-10" id="part<?= $count ?>" name="parts[]" type="text" value="<?= $part['part'] ?>"></div>
+<div class="uk-form-controls uk-grid uk-grid-collapse"><label class="uk-width-4-10" for="group<?= $count ?>">Question Group:</label><input class="uk-width-6-10" id="group<?= $count ?>" name="questions[]" type="text" value="<?= $part['question_group'] ?>"></div>
+<div class="uk-form-controls uk-grid uk-grid-collapse"><label class="uk-width-4-10" for="title<?= $count ?>">Part Title:</label><input class="uk-width-6-10" id="title<?= $count ?>" name="part_titles[]" type="text" value="<?= $part['title'] ?>"></div>
 </div>
 <?php   } ?>
 <?php } else { ?>
 <div class="uk-form-row">
-<div class="uk-form-controls"><input name="parts[]" type="text" value="1"></div>
-<div class="uk-form-controls"><input name="questions[]" type="text" value="1"></div>
-<div class="uk-form-controls"><input name="part_titles[]" type="text" value="Guaranteed Curriculum"></div>
+<div class="uk-form-controls uk-grid uk-grid-collapse"><label class="uk-width-4-10" for="part1">Part:</label><input class="uk-width-6-10" id="part1" name="parts[]" type="text" value="1"></div>
+<div class="uk-form-controls uk-grid uk-grid-collapse"><label class="uk-width-4-10" for="group1">Question Group:</label><input class="uk-width-6-10" id="group1" name="questions[]" type="text" value="1"></div>
+<div class="uk-form-controls uk-grid uk-grid-collapse"><label class="uk-width-4-10" for="title1">Part Title:</label><input class="uk-width-6-10" id="title1" name="part_titles[]" type="text" value="Guaranteed Curriculum"></div>
 </div>
 
 <div class="uk-form-row">
-<div class="uk-form-controls"><input name="parts[]" type="text" value="2"></div>
-<div class="uk-form-controls"><input name="questions[]" type="text" value="2"></div>
-<div class="uk-form-controls"><input name="part_titles[]" type="text" value="Accreditation"></div>
+<div class="uk-form-controls uk-grid uk-grid-collapse"><label class="uk-width-4-10" for="part2">Part:</label><input class="uk-width-6-10" id="part2" name="parts[]" type="text" value="2"></div>
+<div class="uk-form-controls uk-grid uk-grid-collapse"><label class="uk-width-4-10" for="group2">Question Group:</label><input class="uk-width-6-10" id="group2" name="questions[]" type="text" value="2"></div>
+<div class="uk-form-controls uk-grid uk-grid-collapse"><label class="uk-width-4-10" for="title2">Part Title:</label><input class="uk-width-6-10" id="title2" name="part_titles[]" type="text" value="Accreditation"></div>
 </div>
 
 <div class="uk-form-row">
-<div class="uk-form-controls"><input name="parts[]" type="text" value="3"></div>
-<div class="uk-form-controls"><input name="questions[]" type="text" value="3"></div>
-<div class="uk-form-controls"><input name="part_titles[]" type="text" value="GVC 1"></div>
+<div class="uk-form-controls uk-grid uk-grid-collapse"><label class="uk-width-4-10" for="part3">Part:</label><input class="uk-width-6-10" id="part3" name="parts[]" type="text" value="3"></div>
+<div class="uk-form-controls uk-grid uk-grid-collapse"><label class="uk-width-4-10" for="group3">Question Group:</label><input class="uk-width-6-10" id="group3" name="questions[]" type="text" value="3"></div>
+<div class="uk-form-controls uk-grid uk-grid-collapse"><label class="uk-width-4-10" for="title3">Part Title:</label><input class="uk-width-6-10" id="title3" name="part_titles[]" type="text" value="GVC 1"></div>
 </div>
 <?php } ?>
 </td>

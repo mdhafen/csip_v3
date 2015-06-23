@@ -499,7 +499,7 @@ GROUP BY question_group
   $sth = $dbh->prepare( $query );
   $sth->execute();
   while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
-    groups[ $row['question_group'] ] = $row['question_group'];
+    $groups[ $row['question_group'] ] = $row['question_group'];
   }
 
   return $groups;
@@ -519,7 +519,7 @@ function get_course_question_groups( $courseid ) {
   $sth->bindValue( ':cid', $courseid );
   $sth->execute();
   while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
-    groups[] = $row;
+    $groups[] = $row;
   }
 
   return $groups;
