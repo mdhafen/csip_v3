@@ -54,7 +54,7 @@ if ( !empty($data['csip']['courses']) ) {
 if ( !empty($data['courseid']) ) {
   $can_approve = ' onclick("this.form.submit()")';
   if ( empty($data['_session']['CAN_approve_csip']) ) {
-    $can_approve = ' disabled';
+    $can_approve = '';
   }
   if ( empty($data['csip']['courses'][ $data['courseid'] ]['principal_approved']) ) {
     $app = "Not Approved";

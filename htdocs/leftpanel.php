@@ -52,7 +52,7 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
      <li class="uk-parent">
         <a href="#">Teaching Practices</a>
         <ul class="uk-nav-sub">
-            <li><p>After identifying your GVC and individually self assessing with the Utah Effective Teaching Standards, collectively determine the teaching practices you need to strengthen as a team, based on the learning needs of the students in your classroom this year.</p></li>
+            <li><p>After identifying your GVC and individually self assessing with the <a href="http://www.uen.org/k12educator/uets/" target="_blank">Utah Effective Teaching Standards</a>, collectively determine the teaching practices you need to strengthen as a team, based on the learning needs of the students in your classroom this year.</p></li>
             <li>
                 <form method="post" class="uk-form" action="save_answer.php">
                     <p class="uk-clearfix">
