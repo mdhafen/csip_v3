@@ -42,6 +42,7 @@ if ( $op == "Save" ) {  // Update/Add the user
   $email = input( 'email', INPUT_EMAIL );
   $role = input( 'role', INPUT_PINT );
   $user_locations = input( 'locations', INPUT_PINT );
+  $loc_changed = false;
   $password = input( 'password', INPUT_STR );
   $password2 = input( 'password_2', INPUT_STR );
   if ( $password && $password != '*****' && $password == $password2 ) {
@@ -51,6 +52,9 @@ if ( $op == "Save" ) {  // Update/Add the user
   foreach ( $user_locations as $locid ) {
     if ( !in_array($locid, array_column($locations,'locationid')) ) {
       error( array('BADLOC' => 'Undefined Location') );
+    }
+    if ( !in_array($locid, array_keys($user['locations'])) ) {
+      $loc_changed = true;
     }
   }
 
@@ -65,6 +69,7 @@ if ( $op == "Save" ) {  // Update/Add the user
     error( array('BADROLE' => 'Undefined Role') );
   }
 
+  $updated = array();
   if ( !empty($user) ) {
     if ( $username != $user['username'] ) {
       $updated['username'] = $username;
@@ -91,11 +96,14 @@ if ( $op == "Save" ) {  // Update/Add the user
 	'password' => $user_password,
 	'salt' => $salt,
 		     );
+    $loc_changed = true;
   }
 
-  if ( !empty($updated) ) {
-    $userid = update_user( $userid, $updated );
-    if ( !empty($user_locations) ) {
+  if ( !empty($updated) || $loc_changed ) {
+    if ( !empty($updated) ) {
+      $userid = update_user( $userid, $updated );
+    }
+    if ( $loc_changed ) {
       update_user_locations( $userid, $user_locations );
     }
     $user = user_by_userid( $userid );
