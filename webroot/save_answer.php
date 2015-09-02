@@ -19,7 +19,6 @@ $questions = input( 'questions', INPUT_PINT );
 $answers = input( 'answers', INPUT_HTML_NONE );
 $questionid = input( 'questionid', INPUT_PINT );
 $answer = input( 'answer', INPUT_HTML_NONE );
-$courses = get_user_courses( $_SESSION['loggedin_user']['userid'], $csip['locationid'] );
 
 $csip = $_SESSION['csip'];
 if ( empty($csip) ) {
@@ -38,6 +37,7 @@ else {
    if ( empty($csip['courses'][$courseid]['questions'][$part]) ) {
       error( array('NOTYOURS' => 'Course does not have that tab.') );
    }
+   $courses = get_user_courses( $_SESSION['loggedin_user']['userid'], $csip['locationid'] );
    if ( ! empty($questionid) ) {
       if ( !isset($csip['courses'][$courseid]['questions'][$part][$questionid]) ) {
          error( array('NOTYOURS' => 'Tab does not have that question.') );
