@@ -8,6 +8,7 @@ include_once( '../inc/csips.phpm' );
 include_once( '../inc/course.phpm' );
 
 authorize( 'update_csip' );
+$super = authorized( 'manage_users' );
 
 $locations = empty($_SESSION['loggedin_user']['locations']) ? array() : array_keys( $_SESSION['loggedin_user']['locations'] );
 $csipid = input( 'csipid', INPUT_PINT );
@@ -28,7 +29,7 @@ else {
    if ( ! empty($csipid) && $csip['csipid'] != $csipid ) {
       error( array('NOTYOURS' => 'Loading other CSIPs not allowed here.') );
    }
-   if ( !in_array( $csip['locationid'], $locations ) && ! $district ) {
+   if ( !in_array( $csip['locationid'], $locations ) && ! $super ) {
       error( array('NOTYOURS' => 'Access to CSIP denied.' ) );
    }
    if ( empty($csip['courses'][$courseid]) ) {
