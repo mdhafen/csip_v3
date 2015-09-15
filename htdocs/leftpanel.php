@@ -24,7 +24,7 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
             <li>HIGHLY EFFECTIVE TEAMS teach ALL of the standards within their discipline but engage in the work of IDENTIFYING which of the standards/skills are so critical that EVERY student MUST know. TEAMS then work to ENSURE that every student will demonstrate proficiency in them. The guaranteed and viable curriculum (GVC) are those skills deemed by the team to be the absolute critical skills that ALL students must demonstrate proficiency in order to be successful in the grade level or course.</li>
         </ul>
     </li>
-    <li class="uk-parent">
+    <li class="uk-parent uk-active">
         <a href="#">Our Team&apos;s GVC</a>
         <ul class="uk-nav-sub">
             <li><p>With your team, identify/list the critical standards/skills that all students need to know.</p>
