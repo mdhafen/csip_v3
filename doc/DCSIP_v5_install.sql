@@ -32,36 +32,39 @@ For middle and high school only-Utilize the elements of this section to support 
 [input]</p>'),
   ( 7, 2, 7, 1, 0, '<p>Other Information
 [input]</p>'),
-  ( 7, 3, 1, 9, 0, '<h1>Common Formative Assessment</h1>'),
-  ( 7, 3, 2, 9, 0, '<b>How will WE know if they LEARNED it?</b><br/>
+  ( 7, 3, 1, 3, 0, '<p>Teacher Name[input]</p>'),
+  ( 7, 3, 2, 1, 0, '<p>Based on your stakeholder input; reflect on your individual teaching practices regarding the elements of your CSIP.
+[input]</p>'),
+  ( 7, 4, 1, 9, 0, '<h1>Common Formative Assessment</h1>'),
+  ( 7, 4, 2, 9, 0, '<b>How will WE know if they LEARNED it?</b><br/>
 EFFECTIVE TEAMS utilize COMMON FORMATIVE ASSESSMENTS (CFA) to diagnostically assess a student''s learning, determine which students were proficient in the guaranteed skill, and those who need extra time and support.<br/>
 TEAM ACTION STEPS: Identify a common formative assessment that your team will use to assess the GVC skill.'),
-  ( 7, 3, 3, 1, 0, '<p>List the common formative assessment AND the guaranteed standard it aligns with (Example: Unit 1 - Fractions). FOR ELEMENTARY: Identify which questions on your existing instructional program assessments align with your GVC.
+  ( 7, 4, 3, 1, 0, '<p>List the common formative assessment AND the guaranteed standard it aligns with (Example: Unit 1 - Fractions). FOR ELEMENTARY: Identify which questions on your existing instructional program assessments align with your GVC.
 [input]</p>'),
-  ( 7, 3, 4, 3, 0, '<p>How many students were assessed by our team?
+  ( 7, 4, 4, 3, 0, '<p>How many students were assessed by our team?
 [input]</p>'),
-  ( 7, 3, 5, 3, 0, '<p>How many students were NOT proficient the first time?
+  ( 7, 4, 5, 3, 0, '<p>How many students were NOT proficient the first time?
 [input]</p>'),
-  ( 7, 3, 6, 1, 0, '<p>According to the results of this CFA and our team''s collaboration, the following teaching practices/strategies were most effective in teaching this guaranteed skill(s):
+  ( 7, 4, 6, 1, 0, '<p>According to the results of this CFA and our team''s collaboration, the following teaching practices/strategies were most effective in teaching this guaranteed skill(s):
 [input]</p>'),
-  ( 7, 3, 7, 9, 0, '<h1>Intervention</h1>'),
-  ( 7, 3, 8, 9, 0, '<b>How will WE respond to those who didn''t get it?</b><br/>
+  ( 7, 4, 7, 9, 0, '<h1>Intervention</h1>'),
+  ( 7, 4, 8, 9, 0, '<b>How will WE respond to those who didn''t get it?</b><br/>
 EFFECTIVE TEAMS analyze the results of their common formative assessment (CFA) and immediately intervene with those who are in need of extra time and support. (Keep in mind that if less than 75% of students didn''t get a concept, it might not be an intervention issue; the initial instruction should be re-examined.)'),
-  ( 7, 3, 9, 1, 0, '<p>List the SPECIFIC INTERVENTIONS that your team responded with for those students who WERE NOT proficient.
+  ( 7, 4, 9, 1, 0, '<p>List the SPECIFIC INTERVENTIONS that your team responded with for those students who WERE NOT proficient.
 [input]</p>'),
-  ( 7, 3, 10, 3, 0, '<p>Following your team''s INTERVENTIONS and REASSESSMENT, how many students are still not proficient?
+  ( 7, 4, 10, 3, 0, '<p>Following your team''s INTERVENTIONS and REASSESSMENT, how many students are still not proficient?
 [input]</p>'),
-  ( 7, 3, 11, 1, 1, '<p>List the SPECIFIC FIRST NAMES of those students who were not proficient even after your team''s intervention.</p>
+  ( 7, 4, 11, 1, 1, '<p>List the SPECIFIC FIRST NAMES of those students who were not proficient even after your team''s intervention.</p>
 <p>(Use hyperlinks in this section to link to an outside source if needed.)</p>
 [input]'),
-  ( 7, 3, 12, 1, 0, '<p>How did your TEAM respond to those who were still not proficient even after your team''s interventions?
+  ( 7, 4, 12, 1, 0, '<p>How did your TEAM respond to those who were still not proficient even after your team''s interventions?
 [input]</p>'),
-  ( 7, 3, 13, 9, 0, '<h1>Learning Extension</h1>'),
-  ( 7, 3, 14, 9, 0, '<p>EFFECTIVE TEAMS provide extension activities for those students who already know a standard or skill.</p>'),
-  ( 7, 3, 15, 1, 0, '<p>As you review your GVC (from step #1), identify extension activities your team will use for those who already know it.
+  ( 7, 4, 13, 9, 0, '<h1>Learning Extension</h1>'),
+  ( 7, 4, 14, 9, 0, '<p>EFFECTIVE TEAMS provide extension activities for those students who already know a standard or skill.</p>'),
+  ( 7, 4, 15, 1, 0, '<p>As you review your GVC (from step #1), identify extension activities your team will use for those who already know it.
 [input]</p>'),
-  ( 7, 3, 16, 3, 0, 'End of Year Reflection Date<br/>
+  ( 7, 4, 16, 3, 0, 'End of Year Reflection Date<br/>
 [input]'),
-  ( 7, 3, 17, 1, 0, '<b>End of Year Reflection</b><br/>
+  ( 7, 4, 17, 1, 0, '<b>End of Year Reflection</b><br/>
 <p>Do our extension activities provide deeper learning for those students who already know it?  What adjustments can we make to provide for better extended learning opportunities?</p>
 [input]');

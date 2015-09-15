@@ -91,7 +91,13 @@ foreach ( (array) $data['error'] as $err ) {
 <div class="uk-form-row">
 <div class="uk-form-controls uk-grid uk-grid-collapse"><label class="uk-width-4-10" for="part3">Part:</label><input class="uk-width-6-10" id="part3" name="parts[]" type="text" value="3"></div>
 <div class="uk-form-controls uk-grid uk-grid-collapse"><label class="uk-width-4-10" for="group3">Question Group:</label><input class="uk-width-6-10" id="group3" name="questions[]" type="text" value="3"></div>
-<div class="uk-form-controls uk-grid uk-grid-collapse"><label class="uk-width-4-10" for="title3">Part Title:</label><input class="uk-width-6-10" id="title3" name="part_titles[]" type="text" value="GVC 1"></div>
+<div class="uk-form-controls uk-grid uk-grid-collapse"><label class="uk-width-4-10" for="title3">Part Title:</label><input class="uk-width-6-10" id="title3" name="part_titles[]" type="text" value="Reflection"></div>
+</div>
+
+<div class="uk-form-row">
+<div class="uk-form-controls uk-grid uk-grid-collapse"><label class="uk-width-4-10" for="part4">Part:</label><input class="uk-width-6-10" id="part4" name="parts[]" type="text" value="4"></div>
+<div class="uk-form-controls uk-grid uk-grid-collapse"><label class="uk-width-4-10" for="group4">Question Group:</label><input class="uk-width-6-10" id="group4" name="questions[]" type="text" value="4"></div>
+<div class="uk-form-controls uk-grid uk-grid-collapse"><label class="uk-width-4-10" for="title4">Part Title:</label><input class="uk-width-6-10" id="title4" name="part_titles[]" type="text" value="GVC 1"></div>
 </div>
 <?php } ?>
 </td>

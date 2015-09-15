@@ -7,7 +7,7 @@
 <?php
       $count = 1;
       foreach ( $data['csip']['courses'][ $data['courseid'] ]['questions'] as $part => $questions ) {
-        if ( $part < 3 ) { continue; }
+        if ( $part < 4 ) { continue; }
         $num_questions = 0;
         $num_answers = 0;
         foreach ( $questions as $questionid => $answer ) {
@@ -25,7 +25,7 @@
           $completeness = 'uk-badge-warning';
         }
  ?>
-        <li class="<?= $part == 3 ? 'uk-active' : '' ?>" id="cfa<?= $count ?>_tab"><a href=""><div class="uk-badge <?= $completeness ?>">GVC <?= $count ?></div></a></li>
+        <li class="<?= $part == 4 ? 'uk-active' : '' ?>" id="cfa<?= $count ?>_tab"><a href=""><div class="uk-badge <?= $completeness ?>">GVC <?= $count ?></div></a></li>
 <?php
          $count++;
       }
@@ -34,6 +34,7 @@
         <li class="" id="addcfa_tab"><a href="" onclick="addCFATab('<?= $data['csip']['csipid'] ?>','<?= $data['categoryid'] ?>','<?= $data['courseid'] ?>','<?= $part ?>');"><i class="uk-icon-plus"></i></a></li>
 <?php } ?>
         <li class="" id="accreditation_tab"><a href=""><div class="uk-badge uk-badge-primary">Accreditation</div></a></li>
+        <li class="" id="results_tab"><a href=""><div class="uk-badge uk-badge-primary">Survey Reflection</div></a></li>
 
 	</ul>
 	<!-- Tabs End -->
@@ -46,7 +47,7 @@
 <?php
       $count = 1;
       foreach ( $data['csip']['courses'][ $data['courseid'] ]['questions'] as $part => $questions ) {
-        if ( $part < 3 ) { continue; }
+        if ( $part < 4 ) { continue; }
         $num_answers = 0;
         foreach ( $questions as $questionid => $answer ) {
           if ( $data['csip']['questions'][$questionid]['type'] != 9 ) {
@@ -67,7 +68,10 @@
 	</div>
 	<div id="accreditation_content">
 	   <?php include 'accreditation.php';?>
-        </div>
+	</div>
+	<div id="results_content">
+	   <?php include 'results.php';?>
+	</div>
     </div>
 
     <div>
