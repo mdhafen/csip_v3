@@ -6,10 +6,10 @@ if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['course
   echo "<input type='hidden' name='courseid' value='". $data['courseid'] ."'>\n";
   echo "<input type='hidden' name='part' value='2'>\n";
   echo "<input type='hidden' name='op' value='SaveAnswer'>\n";
-  $count = 0;
+  $hor_rule = 0;
   foreach ( $data['csip']['courses'][ $data['courseid'] ]['questions'][2] as $questionid => $answer ) {
-    $count++;
-    if ( $count > 1 ) {
+    $hor_rule++;
+    if ( $hor_rule > 1 ) {
       echo "<hr>\n";
     }
     if ( $data['csip']['questions'][ $questionid ]['type'] == 9 ) {

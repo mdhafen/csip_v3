@@ -3,7 +3,7 @@
 <?php
    if ( !empty($data['courseid']) && !empty( $data['csip']['courses'][ $data['courseid'] ]['questions']) ) {
 ?>
-	<ul class="uk-tab" data-uk-tab id="rightpaneltabs">
+	<ul class="uk-tab" data-uk-tab="{connect:'#cfas'}" id="rightpaneltabs">
 <?php
       $count = 1;
       foreach ( $data['csip']['courses'][ $data['courseid'] ]['questions'] as $part => $questions ) {
@@ -25,7 +25,7 @@
           $completeness = 'uk-badge-warning';
         }
  ?>
-        <li class="<?= $part == 3 ? 'uk-active' : '' ?>" id="cfa<?= $count ?>_tab"><a href="" onclick="activetab('cfa<?= $count ?>');"><div class="uk-badge <?= $completeness ?>">GVC <?= $count ?></div></a></li>
+        <li class="<?= $part == 3 ? 'uk-active' : '' ?>" id="cfa<?= $count ?>_tab"><a href=""><div class="uk-badge <?= $completeness ?>">GVC <?= $count ?></div></a></li>
 <?php
          $count++;
       }
@@ -33,7 +33,7 @@
  ?>
         <li class="" id="addcfa_tab"><a href="" onclick="addCFATab('<?= $data['csip']['csipid'] ?>','<?= $data['categoryid'] ?>','<?= $data['courseid'] ?>','<?= $part ?>');"><i class="uk-icon-plus"></i></a></li>
 <?php } ?>
-        <li class="" id="accreditation_tab"><a href="" onclick="activetab('accreditation');"><div class="uk-badge uk-badge-primary">Accreditation</div></a></li>            
+        <li class="" id="accreditation_tab"><a href=""><div class="uk-badge uk-badge-primary">Accreditation</div></a></li>
 
 	</ul>
 	<!-- Tabs End -->
@@ -42,7 +42,7 @@
 
 
     <!-- Load pages based on tab selected -->
-        <div id="cfas">
+        <div id="cfas" class="uk-switcher">
 <?php
       $count = 1;
       foreach ( $data['csip']['courses'][ $data['courseid'] ]['questions'] as $part => $questions ) {
@@ -56,16 +56,18 @@
           }
         }
  ?>
-    <div id="cfa<?= $count ?>_content" style="display: <?= $part == 3 ? 'block' : 'none' ?>;">
+    <div id="cfa<?= $count ?>_content">
 	   <?php include 'cfa.php'; ?>
     </div>
 <?php
          $count++;
       }
  ?>
-        </div>
-	<div id="accreditation_content" style="display: none;">
+	<div id="addcfa_content">
+	</div>
+	<div id="accreditation_content">
 	   <?php include 'accreditation.php';?>
+        </div>
     </div>
 
     <div>
