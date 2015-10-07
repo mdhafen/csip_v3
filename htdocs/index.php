@@ -52,7 +52,7 @@ if ( !empty($data['csip']['courses']) ) {
         </form>
 <?php
 if ( !empty($data['courseid']) ) {
-  $can_approve = ' onclick("this.form.submit()")';
+  $can_approve = ' onclick="this.form.submit()"';
   if ( empty($data['_session']['CAN_approve_csip']) ) {
     $can_approve = '';
   }
