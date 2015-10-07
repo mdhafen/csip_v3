@@ -57,6 +57,11 @@ if ( $op == "Save" ) {  // Update/Add the user
       $loc_changed = true;
     }
   }
+  foreach ( $user['locations'] as $locid => $loc ) {
+    if ( !in_array($locid, $user_locations) ) {
+      $loc_changed = true;
+    }
+  }
 
   $found = 0;
   foreach ( $roles as $roleid => &$arole ) {
