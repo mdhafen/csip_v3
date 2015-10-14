@@ -31,12 +31,12 @@ if ( $locationid ) {
 if ( $op == "Save" ) {  // Update/Add the location
   $newlocationid = input( 'new_locationid', INPUT_PINT );
   $name = input( 'name', INPUT_HTML_NONE );
-  $mingrade = input( 'mingrade', INPUT_PINT );
-  $maxgrade = input( 'maxgrade', INPUT_PINT );
+  $mingrade = input( 'mingrade', INPUT_INT );
+  $maxgrade = input( 'maxgrade', INPUT_INT );
   $loc_demo = input( 'loc_demo', INPUT_STR );
   $loc_demo = ( $loc_demo ) ? 1 : 0;
 
-  if ( $mingrade < 1 ) { $error[] = "LOWMIN"; }
+  if ( $mingrade < -1 ) { $error[] = "LOWMIN"; }
   if ( $maxgrade > 12 ) { $error[] = "HIGHMAX"; }
   if ( $mingrade > $maxgrade ) { $error[] = "MINABOVEMAX"; }
   if ( $newlocationid != $locationid ) {
