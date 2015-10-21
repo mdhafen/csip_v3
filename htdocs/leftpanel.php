@@ -50,7 +50,7 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
         </ul>
     </li>
      <li class="uk-parent">
-        <a href="#">Teaching Practices</a>
+        <a href="#">Team Professional Growth Plan</a>
         <ul class="uk-nav-sub">
             <li><p>After identifying your GVC and individually self assessing with the <a href="http://www.uen.org/k12educator/uets/" target="_blank">Utah Effective Teaching Standards</a>, collectively determine the teaching practices you need to strengthen as a team, based on the learning needs of the students in your classroom this year.</p></li>
             <li>
@@ -62,8 +62,8 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
                     <input type="hidden" name="part" value="1">
                     <input type="hidden" name="questionid" value="5">
                     <input type="hidden" name="op" value="SaveAnswer">
-                    <textarea id="form-h-t" cols="30" rows="8" name="answer" placeholder="Outline Team's Teaching Practices Here..."><?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][5]['answer']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][5]['answer'] : "" ?></textarea>
-                    <button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>     
+                    <textarea id="form-h-t" cols="30" rows="8" name="answer" placeholder="Outline Team's Professional Growth Plan Here..."><?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][5]['answer']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][5]['answer'] : "" ?></textarea>
+                    <button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>
                     </p>
                 </form>
             </li>
