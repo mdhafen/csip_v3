@@ -30,6 +30,7 @@
 <td><?= $loc['loc_demo'] ?></td>
 <td>
 <div class="uk-button-group">
+<a href="<?= $data['_config']['base_url'] ?>manage/location_csips.php?locationid=<?= $loc['locationid'] ?>" class="uk-button">CSIPs</a> 
 <a href="<?= $data['_config']['base_url'] ?>manage/location_courses.php?locationid=<?= $loc['locationid'] ?>" class="uk-button">Special Course Access</a> 
 <a href="<?= $data['_config']['base_url'] ?>manage/edit_location.php?locationid=<?= $loc['locationid'] ?>" class="uk-button">Edit</a> 
 <a href="<?= $data['_config']['base_url'] ?>manage/delete_location.php?locationid=<?= $loc['locationid'] ?>" class="uk-button">Delete</a>

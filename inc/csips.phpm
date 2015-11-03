@@ -47,6 +47,22 @@ function new_year( $new ) {
   return $yearid;
 }
 
+function get_years() {
+  $dbh = db_connect();
+  $result = array();
+
+  $query = "SELECT * FROM year";
+  $sth = $dbh->prepare( $query );
+
+  $sth->execute();
+
+  while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+    $result[] = stripslashes_array( $row );
+  }
+
+  return $result;
+}
+
 function get_csips( $locations = array(), $district = 0, $history = 3 ) {
   $dbh = db_connect();
   $result = array();
@@ -113,6 +129,19 @@ function new_csip( $year, $locationid ) {
   $csipid = $dbh->lastInsertId();
 
   return $csipid;
+}
+
+function delete_csip( $csipid ) {
+  if ( ! $csipid ) { return; }
+
+  $dbh = db_connect();
+
+  $result = array();
+  $query = "DELETE FROM csip WHERE csip = :cid";
+
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':cid', $csipid );
+  $sth->execute();
 }
 
 function load_csip( $csipid = 0, $all_courses = 0, $userid = 0 ) {

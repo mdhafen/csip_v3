@@ -88,6 +88,18 @@ function get_location_num_dependants( $locationid ) {
   return $result;
 }
 
+function get_csip_num_answers( $csipid ) {
+  $dbh = db_connect();
+
+  $query = "SELECT COUNT(*) AS answers FROM answer WHERE csipid = :csipid";
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':csipid', $csipid );
+  $sth->execute();
+  $row = $sth->fetch();
+
+  return $row['answers'];
+}
+
 function get_user_courses( $userid, $location ) {
     $dbh = db_connect();
 
