@@ -36,13 +36,13 @@ if ( !empty($locationid) ) {
 
   if ( !empty($yearid) || !empty($csipid) ) {
     if ( $op == "Add" ) {
-      if ( ! in_array( $yearid, array_columns($years,'yearid') ) ) {
+      if ( ! in_array( $yearid, array_column($years,'yearid') ) ) {
         error( array('BADYR' => 'Undefined Year' ) );
       }
       new_csip( $yearid, $locationid );
     }
     else if ( $op == "Delete" ) {
-      if ( in_array( $csipid, array_columns($csips,'csipid') ) && ! get_csip_num_answers($csipid) ) {
+      if ( in_array( $csipid, array_column($csips,'csipid') ) && ! get_csip_num_answers($csipid) ) {
         delete_csip( $csipid );
       }
     }
