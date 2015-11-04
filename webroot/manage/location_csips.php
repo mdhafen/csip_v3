@@ -39,12 +39,19 @@ if ( !empty($locationid) ) {
       if ( ! in_array( $yearid, array_column($years,'yearid') ) ) {
         error( array('BADYR' => 'Undefined Year' ) );
       }
+      if ( in_array( $yearid, array_column($csips,'yearid') ) ) {
+        error( array('SAMYR' => 'CSIP already started' ) );
+      }
       new_csip( $yearid, $locationid );
     }
     else if ( $op == "Delete" ) {
       if ( in_array( $csipid, array_column($csips,'csipid') ) && ! get_csip_num_answers($csipid) ) {
         delete_csip( $csipid );
       }
+    }
+    $csips = get_csips( array($locationid), false, 0 );
+    foreach ( $csips as &$csip ) {
+      $csip['num_answers'] = get_csip_num_answers( $csip['csipid'] );
     }
   }
 }
