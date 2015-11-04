@@ -36,7 +36,7 @@ if ( !empty($locationid) ) {
 
   if ( !empty($yearid) || !empty($csipid) ) {
     if ( $op == "Add" ) {
-      if ( ! array_key_exists( $yearid, $years ) ) {
+      if ( ! in_array( $yearid, array_columns($years,'yearid') ) ) {
         error( array('BADYR' => 'Undefined Year' ) );
       }
       new_csip( $yearid, $locationid );
