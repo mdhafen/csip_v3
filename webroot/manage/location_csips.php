@@ -12,6 +12,7 @@ authorize( 'manage_users' );
 $op = input( 'op', INPUT_STR );
 $locationid = input( 'locationid', INPUT_PINT );
 $csipid = input( 'csipid', INPUT_PINT );
+$yearid = input( 'yearid', INPUT_PINT );
 
 $location = array();
 $csips = array();
@@ -33,16 +34,15 @@ if ( !empty($locationid) ) {
     $csip['num_answers'] = get_csip_num_answers( $csip['csipid'] );
   }
 
-  if ( !empty($yearid) ) {
-    if ( ! array_key_exists( $yearid, $years ) ) {
-      error( array('BADYR' => 'Undefined Year' ) );
-    }
-
+  if ( !empty($yearid) || !empty($csipid) ) {
     if ( $op == "Add" ) {
+      if ( ! array_key_exists( $yearid, $years ) ) {
+        error( array('BADYR' => 'Undefined Year' ) );
+      }
       new_csip( $yearid, $locationid );
     }
     else if ( $op == "Delete" ) {
-      if ( ! get_csip_num_answers($csipid) ) {
+      if ( in_array( $csipid, array_columns($csips,'csipid') ) && ! get_csip_num_answers($csipid) ) {
         delete_csip( $csipid );
       }
     }
