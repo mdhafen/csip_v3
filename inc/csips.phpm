@@ -137,7 +137,7 @@ function delete_csip( $csipid ) {
   $dbh = db_connect();
 
   $result = array();
-  $query = "DELETE FROM csip WHERE csip = :cid";
+  $query = "DELETE FROM csip WHERE csipid = :cid";
 
   $sth = $dbh->prepare( $query );
   $sth->bindValue( ':cid', $csipid );
