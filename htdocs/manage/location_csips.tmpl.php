@@ -25,11 +25,13 @@ CSIPs:
 <ul>
 <?php foreach ( $data['csips'] as $csip ) { ?>
   <li>
-    <?= $csip['year_name'] ?>
 <?php if ( empty($csip['num_answers']) ) { ?>
     <form method="post" action="<?= $data['_config']['base_url'] ?>manage/location_csips.php">
     <input type="hidden" name="locationid" value="<?= $data['locationid'] ?>">
     <input type="hidden" name="csipid" value="<?= $csip['csipid'] ?>">
+<?php } ?>
+    <?= $csip['year_name'] ?>
+<?php if ( empty($csip['num_answers']) ) { ?>
     <input class="uk-button" type="submit" name="op" id="op" value="Delete">
     </form>
 <?php } ?>
