@@ -36,7 +36,7 @@ CSIPs:
   </li>
 <?php } ?>
   <li>
-  <form method="post" action="<?= $data['_config']['base_url'] ?>manage/location_courses.php">
+  <form method="post" action="<?= $data['_config']['base_url'] ?>manage/location_csips.php">
   <input type="hidden" name="locationid" value="<?= $data['locationid'] ?>">
     <select name="yearid" id="yearid">
       <option value="">Add a CSIP</option>
