@@ -24,7 +24,7 @@ if ( $row['count'] == 0 ) {
   $query = "update course_question_links set part = part + 1, question_group = question_group + 1 where part >= 3";
   $dbh->exec( $query );
 
-  $query = "insert into course_question_links (courseid,question_group,part,title) ( select courseid,3,3,'Survey Reflection' from course)";
+  $query = "insert into course_question_links (courseid,question_group,part,title) ( select courseid,3,3,'Stakeholder Input' from course)";
   $dbh->exec( $query );
 
   $query = "update answer set part = part + 1 where part >= 3 order by part desc";
