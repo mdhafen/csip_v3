@@ -23,7 +23,8 @@
                         <label class="uk-form-label" for="form-h-t">List the common formative assessment AND the guaranteed skill it aligns with (Example: Unit 1 - Fractions). FOR ELEMENTARY: Identify which questions on your existing instructional program assessments align with your GVC.</label>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="15">
-                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[15]['answer']) ? $questions[15]['answer'] : "" ?></textarea>
+                            <input type="hidden" name="answerids[]" value="<?= isset($questions[15][0]['answerid']) ? $questions[15][0]['answerid'] : "" ?>">
+                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[15][0]['answer']) ? $questions[15][0]['answer'] : "" ?></textarea>
                         </div>
                     </div>
                     <hr>
@@ -31,7 +32,8 @@
                         <label class="uk-form-label" for="form-h-it">How many students were assessed by our team?</label>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="16">
-                            <input type="text" id="form-h-it" name="answers[]" value="<?= isset($questions[16]['answer']) ? $questions[16]['answer'] : "" ?>" placeholder="text input">
+                            <input type="hidden" name="answerids[]" value="<?= isset($questions[16][0]['answerid']) ? $questions[16][0]['answerid'] : "" ?>">
+                            <input type="text" id="form-h-it" name="answers[]" value="<?= isset($questions[16][0]['answer']) ? $questions[16][0]['answer'] : "" ?>" placeholder="text input">
                         </div>
                     </div>
                     <hr>
@@ -39,7 +41,8 @@
                         <label class="uk-form-label" for="form-h-it">How many were not proficient the first time?</label>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="17">
-                            <input type="text" id="form-h-it" name="answers[]" value="<?= isset($questions[17]['answer']) ? $questions[17]['answer'] : "" ?>" placeholder="text input">
+                            <input type="hidden" name="answerids[]" value="<?= isset($questions[17][0]['answerid']) ? $questions[17][0]['answerid'] : "" ?>">
+                            <input type="text" id="form-h-it" name="answers[]" value="<?= isset($questions[17][0]['answer']) ? $questions[17][0]['answer'] : "" ?>" placeholder="text input">
                         </div>
                     </div>
                     <hr>
@@ -47,7 +50,8 @@
                         <label class="uk-form-label" for="form-h-t">According to the results of this CFA and our team's collaboration, the following teaching practices/strategies were most effective in teaching this guaranteed skill(s):</label>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="18">
-                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[18]['answer']) ? $questions[18]['answer'] : "" ?></textarea>
+                            <input type="hidden" name="answerids[]" value="<?= isset($questions[18][0]['answerid']) ? $questions[18][0]['answerid'] : "" ?>">
+                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[18][0]['answer']) ? $questions[18][0]['answer'] : "" ?></textarea>
                         </div>
                     </div>
                     <br>
@@ -83,7 +87,8 @@
                         <label class="uk-form-label" for="form-h-t">List the SPECIFIC INTERVENTIONS that your team responded with for those students who WERE NOT proficient.</label>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="21">
-                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[21]['answer']) ? $questions[21]['answer'] : "" ?></textarea>
+                            <input type="hidden" name="answerids[]" value="<?= isset($questions[21][0]['answerid']) ? $questions[21][0]['answerid'] : "" ?>">
+                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[21][0]['answer']) ? $questions[21][0]['answer'] : "" ?></textarea>
                         </div>
                     </div>
                     <hr>
@@ -91,7 +96,8 @@
                         <label class="uk-form-label" for="form-h-it">Following your team's INTERVENTIONS and REASSESSMENT, how many students are still not proficient?</label>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="22">
-                            <input type="text" id="form-h-it" name="answers[]" value="<?= isset($questions[22]['answer']) ? $questions[22]['answer'] : "" ?>" placeholder="text input">
+                            <input type="hidden" name="answerids[]" value="<?= isset($questions[22][0]['answerid']) ? $questions[22][0]['answerid'] : "" ?>">
+                            <input type="text" id="form-h-it" name="answers[]" value="<?= isset($questions[22][0]['answer']) ? $questions[22][0]['answer'] : "" ?>" placeholder="text input">
                         </div>
                     </div>
                     <hr>
@@ -100,7 +106,8 @@
 <?php if ( !empty($data['_session']['CAN_view_protected_answers']) ) { ?>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="23">
-                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[23]['answer']) ? $questions[23]['answer'] : "" ?></textarea>
+                            <input type="hidden" name="answerids[]" value="<?= isset($questions[23][0]['answerid']) ? $questions[23][0]['answerid'] : "" ?>">
+                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[23][0]['answer']) ? $questions[23][0]['answer'] : "" ?></textarea>
 <?php } else { ?>
                         <div class="uk-form-controls uk-form-controls-text uk-panel uk-panel-box">
                             Protected Content
@@ -112,7 +119,8 @@
 			<label class="uk-form-label" for="form-h-t">How did your TEAM respond to those who were still not proficient even after your team&apos;s interventions?</label>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="24">
-                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[24]['answer']) ? $questions[24]['answer'] : "" ?></textarea>
+                            <input type="hidden" name="answerids[]" value="<?= isset($questions[24][0]['answerid']) ? $questions[24][0]['answerid'] : "" ?>">
+                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[24][0]['answer']) ? $questions[24][0]['answer'] : "" ?></textarea>
                         </div>
                     </div>
                     <br>
@@ -146,7 +154,8 @@
                         <label class="uk-form-label" for="form-h-t">ACTION STEPS: As you review your GVC from (step #1), identify extension activities your team will use for those who already know it.</label>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="27">
-                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[27]['answer']) ? $questions[27]['answer'] : "" ?></textarea>
+                            <input type="hidden" name="answerids[]" value="<?= isset($questions[27][0]['answerid']) ? $questions[27][0]['answerid'] : "" ?>">
+                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[27][0]['answer']) ? $questions[27][0]['answer'] : "" ?></textarea>
                         </div>
                     </div>
                     <hr>
@@ -154,7 +163,8 @@
                         <label class="uk-form-label" for="form-h-it">End of Year Reflection Date:</label>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="28">
-                            <input type="text" id="form-h-it" name="answers[]" value="<?= isset($questions[28]['answer']) ? $questions[28]['answer'] : "" ?>" placeholder="text input">
+                            <input type="hidden" name="answerids[]" value="<?= isset($questions[28][0]['answerid']) ? $questions[28][0]['answerid'] : "" ?>">
+                            <input type="text" id="form-h-it" name="answers[]" value="<?= isset($questions[28][0]['answer']) ? $questions[28][0]['answer'] : "" ?>" placeholder="text input">
                         </div>
                     </div>
                     <hr>
@@ -163,7 +173,8 @@
 						</label>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="29">
-                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[29]['answer']) ? $questions[29]['answer'] : "" ?></textarea>
+                            <input type="hidden" name="answerids[]" value="<?= isset($questions[29][0]['answerid']) ? $questions[29][0]['answerid'] : "" ?>">
+                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[29][0]['answer']) ? $questions[29][0]['answer'] : "" ?></textarea>
                         </div>
                     </div>
 					<br>

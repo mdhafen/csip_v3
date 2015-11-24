@@ -18,8 +18,10 @@ $part = input( 'part', INPUT_PINT );
 $op = input( 'op', INPUT_HTML_NONE );
 $questions = input( 'questions', INPUT_PINT );
 $answers = input( 'answers', INPUT_HTML_NONE );
+$answerids = input( 'answerids', INPUT_PINT );
 $questionid = input( 'questionid', INPUT_PINT );
 $answer = input( 'answer', INPUT_HTML_NONE );
+$answerid = input( 'answerid', INPUT_PINT );
 
 $csip = $_SESSION['csip'];
 if ( empty($csip) ) {
@@ -45,9 +47,9 @@ else {
       }
    }
    else if ( ! empty($questions) ) {
-      foreach ( $questions as $questionid ) {
-         if ( !isset($csip['courses'][$courseid]['questions'][$part][$questionid]) ) {
-            error( array('NOTYOURS' => 'Tab does not have that question.') );
+      foreach ( $questions as $questid ) {
+         if ( !isset($csip['courses'][$courseid]['questions'][$part][$questid]) ) {
+	   error( array('NOTYOURS' => 'Tab does not have that question.') );
          }
       }
    }
@@ -67,13 +69,17 @@ if ( $op != 'SaveAnswer' ) {
 
 if ( !empty($answers) ) {
    $count = 0;
-   foreach ( $questions as $this_questionid ) {
-      course_save_answers( $answers[ $count ], $courseid, $this_questionid, $part, $csip );
-      $count++;
+   for ( $count = 0; $count < count($questions); $count++ ) {
+      $questionid = $questions[ $count ];
+      $answer = $answers[ $count ];
+      $answerid = $answerids[ $count ];
+      if ( !empty($answer) || !empty($answerid) ) {
+	course_save_answers( $answerid, $answer, $courseid, $questionid, $part, $csip );
+      }
    }
 }
 else {
-     course_save_answers( $answer, $courseid, $questionid, $part, $csip );
+  course_save_answers( $answerid, $answer, $courseid, $questionid, $part, $csip );
 }
 
 $csip = course_reload_answers( $csip, $courseid, $part );

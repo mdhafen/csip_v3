@@ -4,7 +4,7 @@
 if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['courseid'] ]['questions'][1]) ) {
   $answers = 0;
   foreach ( $data['csip']['courses'][ $data['courseid'] ]['questions'][1] as $answer ) {
-    if ( isset($answer['answer']) && $answer['answer'] != "" ) {
+    if ( isset($answer[0]['answer']) && $answer[0]['answer'] != "" ) {
       $answers++;
     }
   }
@@ -38,8 +38,9 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
                     <input type="hidden" name="part" value="1">
                     <input type="hidden" name="questionid" value="2">
+                    <input type="hidden" name="answerid" value="<?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][2][0]['answerid']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][2][0]['answerid'] : "" ?>">
                     <input type="hidden" name="op" value="SaveAnswer">
-                    <textarea id="form-h-t" cols="30" rows="8" name="answer" placeholder="Define Team's GVC Here..."><?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][2]['answer']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][2]['answer'] : "" ?></textarea>
+                    <textarea id="form-h-t" cols="30" rows="8" name="answer" placeholder="Define Team's GVC Here..."><?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][2][0]['answer']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][2][0]['answer'] : "" ?></textarea>
   <?php if ( !empty($data['can_edit']) ) { ?>
                     <button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>     
   <?php } ?>
@@ -61,8 +62,9 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
                     <input type="hidden" name="part" value="1">
                     <input type="hidden" name="questionid" value="5">
+                    <input type="hidden" name="answerid" value="<?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][5][0]['answerid']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][5][0]['answerid'] : "" ?>">
                     <input type="hidden" name="op" value="SaveAnswer">
-                    <textarea id="form-h-t" cols="30" rows="8" name="answer" placeholder="Outline Team's Professional Growth Plan Here..."><?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][5]['answer']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][5]['answer'] : "" ?></textarea>
+                    <textarea id="form-h-t" cols="30" rows="8" name="answer" placeholder="Outline Team's Professional Growth Plan Here..."><?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][5][0]['answer']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][5][0]['answer'] : "" ?></textarea>
                     <button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>
                     </p>
                 </form>
@@ -81,8 +83,9 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
                     <input type="hidden" name="part" value="1">
                     <input type="hidden" name="questionid" value="3">
+                    <input type="hidden" name="answerid" value="<?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][3][0]['answerid']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][3][0]['answerid'] : "" ?>">
                     <input type="hidden" name="op" value="SaveAnswer">
-                    <input type="text" name="answer" data-uk-datepicker="{format:'DD.MM.YYYY'}" value="<?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][3]['answer']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][3]['answer'] : "" ?>">
+                    <input type="text" name="answer" data-uk-datepicker="{format:'DD.MM.YYYY'}" value="<?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][3][0]['answer']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][3][0]['answer'] : "" ?>">
                      <button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>     
                     </p>
                 </form>
@@ -103,8 +106,9 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
                     <input type="hidden" name="part" value="1">
                     <input type="hidden" name="questionid" value="4">
+                    <input type="hidden" name="answerid" value="<?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][4][0]['answerid']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][4][0]['answerid'] : "" ?>">
                     <input type="hidden" name="op" value="SaveAnswer">
-                    <textarea id="form-h-t" cols="30" rows="8" name="answer" placeholder="Define Team's Reflection Summary Here..."><?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][4]['answer']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][4]['answer'] : "" ?></textarea>
+                    <textarea id="form-h-t" cols="30" rows="8" name="answer" placeholder="Define Team's Reflection Summary Here..."><?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][4][0]['answer']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][4][0]['answer'] : "" ?></textarea>
                     <button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>     
                     </p>
                 </form>
