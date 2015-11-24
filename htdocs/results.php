@@ -13,6 +13,11 @@ if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['course
     }
   }
 
+  if ( !empty($data['csip']['loc_demo']) ) {
+    // hide the empty question set if the location is a Demo
+    $count--;
+  }
+
   for ( $c = 0; $c <= $count; $c++ ) {
     foreach ( $data['csip']['courses'][ $data['courseid'] ]['questions'][3] as $questionid => $answers ) {
       if ( $data['csip']['questions'][ $questionid ]['type'] == 9 ) {
