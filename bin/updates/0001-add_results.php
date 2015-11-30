@@ -18,7 +18,7 @@ if ( $row['count'] == 0 ) {
   $query = "insert into question ( version,question_group,type,order_num,question ) values ( 7, 3, 3, 1, '<p>Teacher Name[input]</p>' ), ( 7, 3, 1, 2, '<p>Based on your stakeholder input, reflect on your individual practices regarding the elements of your CSIP. (You may add links, blogs, etc. to this section as evidence) [input]</p>' )";
   $dbh->exec( $query );
 
-  $query = "update csip_extra_part_links set part = part + 1";
+  $query = "update csip_extra_part_links set part = part + 1, question_group = question_group + 1 where part >= 3";
   $dbh->exec( $query );
 
   $query = "update course_question_links set part = part + 1, question_group = question_group + 1 where part >= 3";
