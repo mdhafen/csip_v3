@@ -27,7 +27,7 @@ if ( !empty($courseid) && !empty($courses) ) {
 }
 
 $data = array(
-	'csipid' => $csipid,
+	'csip' => array( 'csipid' => $csipid ),
 	'categoryid' => $categoryid,
 	'courseid' => $courseid,
         'can_edit' => $can_edit,
