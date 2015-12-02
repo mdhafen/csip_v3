@@ -108,28 +108,24 @@ if ( !empty($data['part']) && $data['part'] > 1 ) {
   }
 }
 ?>
-<script type="text/javascript">
-  var tab = "<?= $tab ?>";
-
-  var answers_changed = {};
-  var answers_original = {};
+<script>
+  answers_changed = {};
+  answers_original = {};
 
   function answer_save_original(element) {
-    if ( element.value ) {
-      if ( ! answers_original{ element.id } ) {
-        answers_original{ element.id } = element.value;
-      }
+    if ( ! answers_original.hasOwnProperty( element.id ) ) {
+      answers_original[ element.id ] = element.value;
     }
   }
 
   function answer_changed(element) {
-    if ( answers_original{ element.id } ) {
-      if ( element.value == answers_original{ element.id } ) {
-        delete answers_changed{ element.id };
+    if ( answers_original.hasOwnProperty( element.id ) ) {
+      if ( element.value == answers_original[ element.id ] ) {
+        delete answers_changed[ element.id ];
         return;
       }
     }
-    answers_changed{ element.id } = 1;
+    answers_changed[ element.id ] = 1;
   }
 
   function check_unsaved_answers() {
@@ -145,8 +141,8 @@ if ( !empty($data['part']) && $data['part'] > 1 ) {
     var form = button_elm.form;
 
     $( form ).find( "input[type='text'], textarea" ).each(function(){
-        if ( answers_changed{ $(this).id } ) {
-          delete answers_changed{ $(this).id };
+        if ( answers_changed[ $(this).id ] ) {
+          delete answers_changed[ $(this).id ];
         }
       });
 
@@ -154,14 +150,14 @@ if ( !empty($data['part']) && $data['part'] > 1 ) {
   }
 
   $( document ).ready( function() {
-      if ( tab ) {
-        $("#" + tab).trigger('click');
+      var goto_tab = "<?= $tab ?>";
+      if ( goto_tab ) {
+        $("#" + goto_tab).trigger('click');
       }
 
       $("input[type='text'], textarea").blur(function(e){ answer_changed(this) });
       $("input[type='text'], textarea").focus(function(e){ answer_save_original(this) });
-      $("button").click(function(e){ save_answers(this) });
-      window.unbeforeunload=function(){
+      $( window ).on('beforeunload', function(){
         if ( check_unsaved_answers() ) {
           for ( var ans_id in answers_changed ) {
             if ( answers_changed.hasOwnProperty(ans_id) ) {  // just in case
@@ -171,7 +167,7 @@ if ( !empty($data['part']) && $data['part'] > 1 ) {
 
           return "There are unsaved answers! Are you sure you want to leave this page?";
         }
-      };
+      });
   });
 
 </script>

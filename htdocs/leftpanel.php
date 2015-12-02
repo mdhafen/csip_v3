@@ -42,7 +42,7 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
                     <input type="hidden" name="op" value="SaveAnswer">
                     <textarea id="gc-1-2" cols="30" rows="8" name="answer" placeholder="Define Team's GVC Here..."><?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][2][0]['answer']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][2][0]['answer'] : "" ?></textarea>
   <?php if ( !empty($data['can_edit']) ) { ?>
-                    <button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>     
+                    <button class="uk-button uk-button-success uk-align-right" type="button" onclick="save_answers(this)">Save</button>
   <?php } ?>
                     </p>
                 </form>
@@ -65,7 +65,7 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
                     <input type="hidden" name="answerid" value="<?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][5][0]['answerid']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][5][0]['answerid'] : "" ?>">
                     <input type="hidden" name="op" value="SaveAnswer">
                     <textarea id="gc-1-5" cols="30" rows="8" name="answer" placeholder="Outline Team's Professional Growth Plan Here..."><?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][5][0]['answer']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][5][0]['answer'] : "" ?></textarea>
-                    <button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>
+                    <button class="uk-button uk-button-success uk-align-right" type="button" onclick="save_answers(this)">Save</button>
                     </p>
                 </form>
             </li>
@@ -86,7 +86,7 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
                     <input type="hidden" name="answerid" value="<?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][3][0]['answerid']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][3][0]['answerid'] : "" ?>">
                     <input type="hidden" name="op" value="SaveAnswer">
                     <input type="text" name="answer" data-uk-datepicker="{format:'DD.MM.YYYY'}" value="<?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][3][0]['answer']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][3][0]['answer'] : "" ?>">
-                     <button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>     
+                    <button class="uk-button uk-button-success uk-align-right" type="button" onclick="save_answers(this)">Save</button>
                     </p>
                 </form>
                                 <hr>
@@ -109,7 +109,7 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
                     <input type="hidden" name="answerid" value="<?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][4][0]['answerid']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][4][0]['answerid'] : "" ?>">
                     <input type="hidden" name="op" value="SaveAnswer">
                     <textarea id="gc-1-4" cols="30" rows="8" name="answer" placeholder="Define Team's Reflection Summary Here..."><?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][4][0]['answer']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][4][0]['answer'] : "" ?></textarea>
-                    <button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>     
+                    <button class="uk-button uk-button-success uk-align-right" type="button" onclick="save_answers(this)">Save</button>
                     </p>
                 </form>
                 <hr>

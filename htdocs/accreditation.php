@@ -31,7 +31,7 @@ if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['course
                             <input type="hidden" name="answerids[]" value="<?= isset($answer[0]['answerid']) ? $answer[0]['answerid'] : "" ?>">
                             <textarea id="acc-2-<?= $questionid ?>" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($answer[0]['answer']) ? $answer[0]['answer'] : "" ?></textarea>
                         </div>
-                    </div>     
+                    </div>
 <?php
     }
   }
@@ -39,6 +39,6 @@ if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['course
 ?>
             <br>
   <?php if ( !empty($data['can_edit']) ) { ?>
-<button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>        
+<button class="uk-button uk-button-success uk-align-right" type="button" onclick="save_answers(this)">Save</button>
   <?php } ?>
                 </form>

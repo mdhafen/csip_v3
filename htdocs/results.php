@@ -63,6 +63,6 @@ if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['course
 ?>
             <br>
   <?php if ( !empty($data['can_edit']) ) { ?>
-<button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>        
+<button class="uk-button uk-button-success uk-align-right" type="button" onclick="save_answers(this)">Save</button>
   <?php } ?>
                 </form>
