@@ -101,10 +101,17 @@ if ( !empty($data['courseid']) ) {
 
 <?php
 if ( !empty($data['part']) && $data['part'] > 1 ) {
-  $tab = $data['part'] == 2 ? 'accreditation' : 'cfa'. ( $data['part'] - 2 );
+  switch ($data['part']) {
+  case 2 : $tab = 'accreditation_tab'; break;
+  case 3 : $tab = 'results_tab'; break;
+  default: $tab = 'cfa'. $data['part'] - 2 .'_tab'; break;
+  }
 ?>
 <script type="text/javascript">
-activetab('<?= $tab ?>');
+  var tab = "<?= $tab ?>";
+  if ( tab ) {
+    $("#" + tab).trigger('click');
+  }
 </script>
 <?php
 }
