@@ -104,14 +104,12 @@ if ( !empty($data['part']) && $data['part'] > 1 ) {
   switch ($data['part']) {
   case 2 : $tab = 'accreditation_tab'; break;
   case 3 : $tab = 'results_tab'; break;
-  default: $tab = 'cfa'. $data['part'] - 2 .'_tab'; break;
+  default: $tab = 'cfa'. ( $data['part'] - 2 ) .'_tab'; break;
   }
+}
 ?>
 <script type="text/javascript">
   var tab = "<?= $tab ?>";
-  if ( tab ) {
-    $("#" + tab).trigger('click');
-  }
 
   var answers_changed = {};
   var answers_original = {};
@@ -156,6 +154,10 @@ if ( !empty($data['part']) && $data['part'] > 1 ) {
   }
 
   $( document ).ready( function() {
+      if ( tab ) {
+        $("#" + tab).trigger('click');
+      }
+
       $("input[type='text'], textarea").blur(function(e){ answer_changed(this) });
       $("input[type='text'], textarea").focus(function(e){ answer_save_original(this) });
       $("button").click(function(e){ save_answers(this) });
@@ -173,9 +175,6 @@ if ( !empty($data['part']) && $data['part'] > 1 ) {
   });
 
 </script>
-<?php
-}
-?>
 	</body>
 </html>
 
