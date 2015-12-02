@@ -33,7 +33,7 @@ if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['course
                 <br>
 
                     <div class="uk-form-row">
-                        <label class="uk-form-label" for="form-h-t"><?= $data['csip']['questions'][ $questionid ]['question_clean'] ?></label>
+                        <label class="uk-form-label" for="res-3-<?= $questionid ?>"><?= $data['csip']['questions'][ $questionid ]['question_clean'] ?></label>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="<?= $questionid ?>">
                             <input type="hidden" name="answerids[]" value="<?= !empty($answers[$c]['answerid']) ? $answers[$c]['answerid'] : "" ?>">
@@ -42,12 +42,12 @@ if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['course
     switch ( $data['csip']['questions'][ $questionid ]['type'] ) {
     case 1:
 ?>
-                            <textarea id="form-h-t" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($answers[$c]['answer']) ? $answers[$c]['answer'] : "" ?></textarea>
+                            <textarea id="res-3-<?= $questionid ?>-<?= $c ?>" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($answers[$c]['answer']) ? $answers[$c]['answer'] : "" ?></textarea>
 <?php
     break;
     case 3:
 ?>
-                            <input id="form-h-t" name="answers[]" placeholder="text input" value="<?= isset($answers[$c]['answer']) ? $answers[$c]['answer'] : "" ?>">
+                            <input type="text" id="res-3-<?= $questionid ?>-<?= $c ?>" name="answers[]" placeholder="text input" value="<?= isset($answers[$c]['answer']) ? $answers[$c]['answer'] : "" ?>">
 <?php
     break;
     }
