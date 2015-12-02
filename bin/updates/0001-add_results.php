@@ -7,7 +7,7 @@ $db_settings = $config['database'];
 $table = $db_settings['schema'];
 
 $dbh = db_connect();
-$query = "SELECT COUNT(*) AS count FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '$table' AND TABLE_NAME = 'answer' AND COLUMN_NAME = 'order'";
+$query = "SELECT COUNT(*) AS count FROM question WHERE question_group = 3 AND version = 7 AND order_num = 1 AND question LIKE '<p>Teacher Name%'";
 $sth = $dbh->query( $query );
 $row = $sth->fetch();
 if ( $row['count'] == 0 ) {
@@ -15,7 +15,7 @@ if ( $row['count'] == 0 ) {
   $query = "update question set question_group = question_group + 1 where question_group >= 3";
   $dbh->exec( $query );
 
-  $query = "insert into question ( version,question_group,type,order_num,question ) values ( 7, 3, 3, 1, '<p>Teacher Name[input]</p>' ), ( 7, 3, 1, 2, '<p>Based on your stakeholder input, reflect on your individual practices regarding the elements of your CSIP. (You may add links, blogs, etc. to this section as evidence) [input]</p>' )";
+  $query = "insert into question ( version,question_group,type,order_num,question ) values ( 7, 3, 3, 1, '<p>Teacher Name[input]</p>' ), ( 7, 3, 1, 2, '<p>Reflect on your individual practices based on your stakeholder input [input]</p>' )";
   $dbh->exec( $query );
 
   $query = "update csip_extra_part_links set part = part + 1, question_group = question_group + 1 where part >= 3";
