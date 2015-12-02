@@ -33,8 +33,7 @@ For middle and high school only-Utilize the elements of this section to support 
   ( 7, 2, 7, 1, 0, '<p>Other Information
 [input]</p>'),
   ( 7, 3, 1, 3, 0, '<p>Teacher Name[input]</p>'),
-  ( 7, 3, 2, 1, 0, '<p>Based on your stakeholder input; reflect on your individual teaching practices regarding the elements of your CSIP.
-[input]</p>'),
+  ( 7, 3, 2, 1, 0, '<p>Reflect on your individual practices based on your stakeholder input [input]</p>'),
   ( 7, 4, 1, 9, 0, '<h1>Common Formative Assessment</h1>'),
   ( 7, 4, 2, 9, 0, '<b>How will WE know if they LEARNED it?</b><br/>
 EFFECTIVE TEAMS utilize COMMON FORMATIVE ASSESSMENTS (CFA) to diagnostically assess a student''s learning, determine which students were proficient in the guaranteed skill, and those who need extra time and support.<br/>
