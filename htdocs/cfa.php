@@ -12,7 +12,7 @@
             <div class="uk-panel uk-panel-box uk-panel-box-primary">
                 <p><strong>How will WE know if they LEARNED it?</strong></p>
                 <hr>
-                <p>EFFECTIVE TEAMS utilize COMMON FORMATIVE ASSESSMENTS (CFA) to diagnostically assess a student&quot;s learning and determine which students were proficient in the guaranteed skill and those who weren&quot;t.</p>
+                <p>EFFECTIVE TEAMS utilize COMMON FORMATIVE ASSESSMENTS (CFA) to diagnostically assess a student&apos;s learning and determine which students were proficient in the guaranteed skill and those who weren&apos;t.</p>
                 <p>TEAM ACTION STEPS: Identify a common formative assessment that your team will use to assess the GVC skill.</p>
             </div>
             <br>
@@ -47,7 +47,7 @@
                     </div>
                     <hr>
                     <div class="uk-form-row">
-                        <label class="uk-form-label" for="cfa-m-<?= $part ?>-18">According to the results of this CFA and our team&quot;s collaboration, the following teaching practices/strategies were most effective in teaching this guaranteed skill(s):</label>
+                        <label class="uk-form-label" for="cfa-m-<?= $part ?>-18">According to the results of this CFA and our team&apos;s collaboration, the following teaching practices/strategies were most effective in teaching this guaranteed skill(s):</label>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="18">
                             <input type="hidden" name="answerids[]" value="<?= isset($questions[18][0]['answerid']) ? $questions[18][0]['answerid'] : "" ?>">
@@ -67,9 +67,9 @@
         <ul class="uk-nav-sub">
             <li class="uk-parent">
                 <div class="uk-panel uk-panel-box uk-panel-box-primary">
-                <p><strong>How will WE RESPOND to those who didn&quot;t get it?</strong></p>
+                <p><strong>How will WE RESPOND to those who didn&apos;t get it?</strong></p>
 
-                <p>EFFECTIVE TEAMS analyze the results of their common formative assessment (CFA) and immediately intervene with those who are in need of extra time and support. (Keep in mind that if less than 75% of students didn&quot;t get a concept, it&quot;s not an intervention problem; the initial instruction needs to be examined.)</p>
+                <p>EFFECTIVE TEAMS analyze the results of their common formative assessment (CFA) and immediately intervene with those who are in need of extra time and support. (Keep in mind that if less than 75% of students didn&apos;t get a concept, it&apos;s not an intervention problem; the initial instruction needs to be examined.)</p>
                     </div>
                 <br>
             </li>
@@ -86,7 +86,7 @@
                     </div>
                     <hr>
                     <div class="uk-form-row">
-                        <label class="uk-form-label" for="cfa-i-<?= $part ?>-22">Following your team&quot;s INTERVENTIONS and REASSESSMENT, how many students are still not proficient?</label>
+                        <label class="uk-form-label" for="cfa-i-<?= $part ?>-22">Following your team&apos;s INTERVENTIONS and REASSESSMENT, how many students are still not proficient?</label>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="22">
                             <input type="hidden" name="answerids[]" value="<?= isset($questions[22][0]['answerid']) ? $questions[22][0]['answerid'] : "" ?>">
@@ -95,7 +95,7 @@
                     </div>
                     <hr>
                     <div class="uk-form-row">
-                        <label class="uk-form-label" for="cfa-i-<?= $part ?>-23">List the SPECIFIC FIRST NAMES of those students who were not proficient even after your team&quot;s intervention.<br><br>(To indicate growth, include how much the student grew from the first to second assessment).</label>
+                        <label class="uk-form-label" for="cfa-i-<?= $part ?>-23">List the SPECIFIC FIRST NAMES of those students who were not proficient even after your team&apos;s intervention.<br><br>(To indicate growth, include how much the student grew from the first to second assessment).</label>
 <?php if ( !empty($data['_session']['CAN_view_protected_answers']) ) { ?>
                         <div class="uk-form-controls">
                             <input type="hidden" name="questions[]" value="23">
