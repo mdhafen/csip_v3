@@ -146,8 +146,8 @@ if ( !empty($data['part']) && $data['part'] > 1 ) {
     var form = button_elm.form;
 
     $( form ).find( "input[type='text'], textarea" ).each(function(){
-        if ( answers_changed[ $(this).id ] ) {
-          delete answers_changed[ $(this).id ];
+        if ( answers_changed[ this.id ] ) {
+          delete answers_changed[ this.id ];
         }
       });
 
