@@ -2,7 +2,7 @@
 <?php
 if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['courseid'] ]['questions'][3]) ) {
   echo "<input type='hidden' name='csipid' value='". $data['csip']['csipid'] ."'>\n";
-  echo "<input type='hidden' name='categoryid' value='". $data['categoryid'] ."'>";
+  echo "<input type='hidden' name='categoryid' value='". $data['categoryid'] ."'>\n";
   echo "<input type='hidden' name='courseid' value='". $data['courseid'] ."'>\n";
   echo "<input type='hidden' name='part' value='3'>\n";
   echo "<input type='hidden' name='op' value='SaveAnswer'>\n";
