@@ -168,7 +168,7 @@ if ( !empty($data['part']) && $data['part'] > 1 ) {
       $("input[type='text'], textarea").blur(function(e){ answer_changed(this) });
       $("input[type='text'], textarea").focus(function(e){ answer_save_original(this) });
 
-      $('[data-uk-switcher]').on('show.uk.switcher', function(e,area){
+      $('[data-uk-tab]').on('show.uk.switcher', function(e,area){
           if ( check_unsaved_answers() ) {
             alert( 'There are unsaved answers!  Please go back and use the Save button' );
           }
