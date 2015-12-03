@@ -125,7 +125,12 @@ if ( !empty($data['part']) && $data['part'] > 1 ) {
         return;
       }
     }
+
     answers_changed[ element.id ] = 1;
+    $( element.form ).find( "input[type='button'], button" ).each(function(){
+        $(this).removeClass("uk-button-success").addClass("uk-button-danger");
+        $(this).value('Save');
+    });
   }
 
   function check_unsaved_answers() {
@@ -146,6 +151,11 @@ if ( !empty($data['part']) && $data['part'] > 1 ) {
         }
       });
 
+    $( form ).find( "input[type='button'], button" ).each(function(){
+        $(this).removeClass("uk-button-danger").addClass("uk-button-success");
+        $(this).value('Changes Saved');
+      });
+
     form.submit();
   }
 
@@ -157,6 +167,13 @@ if ( !empty($data['part']) && $data['part'] > 1 ) {
 
       $("input[type='text'], textarea").blur(function(e){ answer_changed(this) });
       $("input[type='text'], textarea").focus(function(e){ answer_save_original(this) });
+
+      $('[data-uk-switcher]').on('show.uk.switcher', function(e,area){
+          if ( check_unsaved_answers() ) {
+            alert( 'There are unsaved answers!  Please go back and use the Save button' );
+          }
+      });
+
       $( window ).on('beforeunload', function(){
         if ( check_unsaved_answers() ) {
           for ( var ans_id in answers_changed ) {
