@@ -129,7 +129,7 @@ if ( !empty($data['part']) && $data['part'] > 1 ) {
     answers_changed[ element.id ] = 1;
     $( element.form ).find( "input[type='button'], button" ).each(function(){
         $(this).removeClass("uk-button-success").addClass("uk-button-danger");
-        $(this).value('Save');
+        $(this).val('Save');
     });
 
     save_answers_ajax();
@@ -155,7 +155,7 @@ if ( !empty($data['part']) && $data['part'] > 1 ) {
 
     $( form ).find( "input[type='button'], button" ).each(function(){
         $(this).removeClass("uk-button-danger").addClass("uk-button-success");
-        $(this).value('Changes Saved');
+        $(this).val('Changes Saved');
       });
 
     form.submit();
@@ -165,18 +165,19 @@ if ( !empty($data['part']) && $data['part'] > 1 ) {
     var parts = {};
     for ( var ans_id in answers_changed ) {
       if ( answers_changed.hasOwnProperty(ans_id) ) {
-        var elm = document.getElementById( ans_id );
-        var nodes = elm.parent.getElementsByTagName( 'input' );
-        if ( parts.hasOwnProperty( elm.form.part.value ) ) {
-          parts[ elm.form.part.value].questions.push( nodes[0].value );
-          parts[ elm.form.part.value].answerids.push( nodes[1].value );
-          parts[ elm.form.part.value].answers.push( elm.value );
+        var elm = document.getElementById(ans_id);
+        var nodes = elm.parentNode.getElementsByTagName( 'input' );
+        var this_part = elm.form.elements["part"].value;
+        if ( parts.hasOwnProperty( this_part ) ) {
+          parts[ this_part ].questions.push( nodes[0].value );
+          parts[ this_part ].answerids.push( nodes[1].value );
+          parts[ this_part ].answers.push( elm.value );
         }
         else {
-          parts[ elm.form.part.value ] = {
-            "csipid" : elm.form.csip.value,
-            "courseid" : elm.form.cors.value,
-            "part" : elm.form.part.value,
+          parts[ this_part ] = {
+            "csipid" : elm.form.elements["csipid"].value,
+            "courseid" : elm.form.elements["courseid"].value,
+            "part" : this_part,
             "questions" : [ nodes[0].value ],
             "answerids" : [ nodes[1].value ],
             "answers" : [ elm.value ]
@@ -187,17 +188,17 @@ if ( !empty($data['part']) && $data['part'] > 1 ) {
     for ( var data_key in parts ) {
       if ( parts.hasOwnProperty( data_key ) ) {
         var data = parts[ data_key ];
-        $.post('<?= $data['_config']['base_url'] ?>api/save_answer_ajax.php', data, function(xml) { answer_saved_ajax(data_key,xml) }, "xml" );
+        $.post('<?= $data['_config']['base_url'] ?>api/save_answer_ajax.php', data, function(xml_result) { answer_saved_ajax(data_key,xml_result) }, "xml" );
       }
     }
   }
 
-  function answer_saved_ajax( part, xml ) {
-    if ( $(xml).find("state").text() == 'Success' ) {
-      
-      var form = $("input[type='hidden'][name='part'][value='+ part +']")[0].form;
+  function answer_saved_ajax( part, xml_result ) {
+    if ( $(xml_result).find("state").text() == 'Success' ) {
 
-      $(xml).find("answerids").each( function(){
+      var form = $("input[type='hidden'][name='part'][value='"+ part +"']")[0].form;
+
+      $(xml_result).find("answerids").each( function(){
           $(form).find( "input[type='hidden'][name='questions'][value='"+ $(this).find('questionid').text() +"'] ~ input[type='hidden'][name='answerids'][value='']" ).get(0).value = $(this).find('answerid').text();
       });
 
@@ -205,11 +206,14 @@ if ( !empty($data['part']) && $data['part'] > 1 ) {
           if ( answers_changed[ this.id ] ) {
             delete answers_changed[ this.id ];
           }
+          if ( answers_original[ this.id ] ) {
+            delete answers_original[ this.id ];
+          }
       });
 
       $( form ).find( "input[type='button'], button" ).each(function(){
           $(this).removeClass("uk-button-danger").addClass("uk-button-success");
-          $(this).value('Changes Saved');
+          $(this).val('Changes Saved');
       });
     }
   }
