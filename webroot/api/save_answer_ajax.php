@@ -1,11 +1,11 @@
 <?php
-include_once( '../lib/input.phpm' );
-include_once( '../lib/security.phpm' );
-include_once( '../lib/output.phpm' );
+include_once( '../../lib/input.phpm' );
+include_once( '../../lib/security.phpm' );
+include_once( '../../lib/output.phpm' );
 
-include_once( '../inc/site.phpm' );
-include_once( '../inc/csips.phpm' );
-include_once( '../inc/course.phpm' );
+include_once( '../../inc/site.phpm' );
+include_once( '../../inc/csips.phpm' );
+include_once( '../../inc/course.phpm' );
 
 authorize( 'update_csip' );
 $super = authorized( 'manage_users' );
@@ -75,7 +75,7 @@ if ( empty($error) ) {
       if ( !empty($answer) || !empty($answerid) ) {
 	$newanswerid = course_save_answers( $answerid, $answer, $courseid, $questionid, $part, $csip );
         if ( empty($answerid) && !empty($newanswerid) ) {
-          $answer_details .= "<answer_details><id>$newanswerid</id><question>$questionid</question><part>$part</part><course>$courseid</course><csip>".$csip['csipid']."</csip></answer_details>";
+          $answer_details .= "<answer_details><answerid>$newanswerid</answerid><questionid>$questionid</questionid><part>$part</part><courseid>$courseid</courseid><csipid>".$csip['csipid']."</csipid></answer_details>";
         }
       }
     }
@@ -87,7 +87,8 @@ if ( empty($error) ) {
   $csip = course_reload_answers( $csip, $courseid, $part );
   $_SESSION['csip'] = $csip;
 
-  output( '<?xml version="1.0"?><result><state>Success</state><answerids>'. $answer_details .'</answerids></result>' );
+  if ( !empty($answer_details) ) { $answer_details = '<answerids>'. $answer_details .'</answerids>'; }
+  output( '<?xml version="1.0"?><result><state>Success</state>'. $answer_details .'</result>' );
 }
 else {
    $err_string = '';
