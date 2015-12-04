@@ -15,7 +15,7 @@ $csipid = input( 'csipid', INPUT_PINT );
 $courseid = input( 'courseid', INPUT_PINT );
 $part = input( 'part', INPUT_PINT );
 
-$group = 3;
+$group = 4;
 $title = 'GVC '. ($part - 2);
 
 $csip = $_SESSION['csip'];
