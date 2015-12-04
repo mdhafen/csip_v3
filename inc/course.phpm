@@ -583,6 +583,22 @@ function course_save_answers( $answerid, $answer, $courseid, $questionid, $part,
     $sth->bindValue( ':course', $courseid );
     $sth->bindValue( ':csip', $csip['csipid'] );
     $sth->execute();
+
+    if ( empty($answerid) ) {
+      $query = "SELECT answerid FROM answer WHERE answer = :ans AND questionid = :ques AND part = :part AND courseid = :course AND csipid = :csip";
+      $sth = $dbh->prepare( $query );
+      $sth->bindValue( ':ans', $answer );
+      $sth->bindValue( ':ques', $questionid );
+      $sth->bindValue( ':part', $part );
+      $sth->bindValue( ':course', $courseid );
+      $sth->bindValue( ':csip', $csip['csipid'] );
+      $sth->execute();
+
+      $new_answer = $sth->fetch(PDO::FETCH_ASSOC);
+      $answerid = $new_answer['answerid'];
+    }
+
+    return $answerid;
   }
 }
 

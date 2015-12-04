@@ -131,6 +131,8 @@ if ( !empty($data['part']) && $data['part'] > 1 ) {
         $(this).removeClass("uk-button-success").addClass("uk-button-danger");
         $(this).value('Save');
     });
+
+    save_answers_ajax();
   }
 
   function check_unsaved_answers() {
@@ -159,6 +161,59 @@ if ( !empty($data['part']) && $data['part'] > 1 ) {
     form.submit();
   }
 
+  function save_answers_ajax() {
+    var parts = {};
+    for ( var ans_id in answers_changed ) {
+      if ( answers_changed.hasOwnProperty(ans_id) ) {
+        var elm = document.getElementById( ans_id );
+        var nodes = elm.parent.getElementsByTagName( 'input' );
+        if ( parts.hasOwnProperty( elm.form.part.value ) ) {
+          parts[ elm.form.part.value].questions.push( nodes[0].value );
+          parts[ elm.form.part.value].answerids.push( nodes[1].value );
+          parts[ elm.form.part.value].answers.push( elm.value );
+        }
+        else {
+          parts[ elm.form.part.value ] = {
+            "csipid" : elm.form.csip.value,
+            "courseid" : elm.form.cors.value,
+            "part" : elm.form.part.value,
+            "questions" : [ nodes[0].value ],
+            "answerids" : [ nodes[1].value ],
+            "answers" : [ elm.value ]
+          };
+        }
+      }
+    }
+    for ( var data_key in parts ) {
+      if ( parts.hasOwnProperty( data_key ) ) {
+        var data = parts[ data_key ];
+        $.post('<?= $data['_config']['base_url'] ?>api/save_answer_ajax.php', data, function(xml) { answer_saved_ajax(data_key,xml) }, "xml" );
+      }
+    }
+  }
+
+  function answer_saved_ajax( part, xml ) {
+    if ( $(xml).find("state").text() == 'Success' ) {
+      
+      var form = $("input[type='hidden'][name='part'][value='+ part +']")[0].form;
+
+      $(xml).find("answerids").each( function(){
+          $(form).find( "input[type='hidden'][name='questions'][value='"+ $(this).find('questionid').text() +"'] ~ input[type='hidden'][name='answerids'][value='']" ).get(0).value = $(this).find('answerid').text();
+      });
+
+      $( form ).find( "input[type='text'], textarea" ).each(function(){
+          if ( answers_changed[ this.id ] ) {
+            delete answers_changed[ this.id ];
+          }
+      });
+
+      $( form ).find( "input[type='button'], button" ).each(function(){
+          $(this).removeClass("uk-button-danger").addClass("uk-button-success");
+          $(this).value('Changes Saved');
+      });
+    }
+  }
+
   $( document ).ready( function() {
       var goto_tab = "<?= $tab ?>";
       if ( goto_tab ) {
@@ -168,12 +223,6 @@ if ( !empty($data['part']) && $data['part'] > 1 ) {
       $("input[type='text'], textarea").blur(function(e){ answer_changed(this) });
       $("input[type='text'], textarea").focus(function(e){ answer_save_original(this) });
 
-      $('[data-uk-tab]').on('show.uk.switcher', function(e,area){
-          if ( check_unsaved_answers() ) {
-            alert( 'There are unsaved answers!  Please go back and use the Save button' );
-          }
-      });
-
       $( window ).on('beforeunload', function(){
         if ( check_unsaved_answers() ) {
           for ( var ans_id in answers_changed ) {
@@ -181,7 +230,6 @@ if ( !empty($data['part']) && $data['part'] > 1 ) {
               $("#"+ ans_id).css( "background-color", "red" );
             }
           }
-
           return "There are unsaved answers! Are you sure you want to leave this page?";
         }
       });
