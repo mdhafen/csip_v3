@@ -4,7 +4,7 @@ INSERT INTO `question_options` (option_group,option_value,option_label) VALUES
 
 INSERT INTO `question` (version,question_group,order_num,type,protect_answer,question) VALUES
   ( 7, 1, 1, 9, 0, '<b>What is the GVC?</b><br/>
-<p>HIGHLY EFFECTIVE TEAMS teach ALL of the standards within their discipline but engage in the work of IDENTIFYING which of the standards/skills are so critical that EVERY student MUST know. TEAMS then work to ENSURE that every student will demonstrate proficiency in them. The guaranteed and viable curriculum (GVC) are those skills deemed by the team to be the absolute critical skills that ALL students must demonstrate proficiency in order to be successful in the grade level or course.</p>'),
+<p>HIGHLY EFFECTIVE TEAMS teach ALL of the standards within their discipline but engage in the work of IDENTIFYING which of the standards/skills are so critical that EVERY student MUST know. TEAMS then work to ENSURE that every student will demonstrate proficiency in them. The GVC are the agreed upon essentials within the course or grade level that teams will commit to collectively address, commonly assess and persistently provide targeted interventions for students in need.</p>'),
   ( 7, 1, 2, 1, 0, '<b>Our Team''s GVC</b><br/>
 <p>With your team, come to consensus on the essential skills (GVC) that all students need to know. (If you are a "singleton", collaborate with other teachers who teach the same subject as you.)</p>
 <p>Once your team has identified the essential skills (GVC), share these with the team above and below your specific grade level.</p>
