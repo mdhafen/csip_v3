@@ -586,6 +586,19 @@ function course_save_answers( $answerid, $answer, $courseid, $questionid, $part,
   }
 }
 
+function course_delete_answer( $answerid ) {
+  $dbh = db_connect();
+
+  if ( $csip['loc_demo'] == 1 ) { return; }  // location is Demo
+
+  if ( !empty($answerid) ) {
+    $query = "DELETE FROM answer WHERE answerid = :ansid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':ansid', $answerid );
+    $sth->execute();
+  }
+}
+
 function course_reload_answers( $csip, $courseid, $part ) {
   foreach ( $csip['courses'][ $courseid ]['questions'][ $part ] as $questid => $answers ) {
     $csip['courses'][ $courseid ]['questions'][ $part ][ $questid ] = array();

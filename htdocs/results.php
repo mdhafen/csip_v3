@@ -53,9 +53,12 @@ if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['course
     }
 ?>
                         </div>
-                    </div>     
+                    </div>
 <?php
       }
+    }
+    if ( isset($answers[$c]['answer']) ) {
+      echo "<button class=\"uk-button uk-button-danger uk-align-right\" type=\"button\" onclick=\"this.form.elements['op'].value = 'DeleteAnswer'; this.form.submit()\">Delete</button>\n";
     }
     if ( $c != $count ) { echo "<hr>\n"; }
   }
@@ -63,6 +66,6 @@ if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['course
 ?>
             <br>
   <?php if ( !empty($data['can_edit']) ) { ?>
-<button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>        
+<button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>
   <?php } ?>
                 </form>

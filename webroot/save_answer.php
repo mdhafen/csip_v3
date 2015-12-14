@@ -63,24 +63,46 @@ else {
    }
 }
 
-if ( $op != 'SaveAnswer' ) {
-   error( array('BADOP' => 'Action not recognized.') );
+if ( $op == 'SaveAnswer' ) {
+   if ( !empty($answers) ) {
+      $count = 0;
+      for ( $count = 0; $count < count($questions); $count++ ) {
+         $questionid = $questions[ $count ];
+         $answer = $answers[ $count ];
+         $answerid = $answerids[ $count ];
+         if ( !empty($answer) || !empty($answerid) ) {
+            course_save_answers( $answerid, $answer, $courseid, $questionid, $part, $csip );
+         }
+      }
+   }
+   else {
+      course_save_answers( $answerid, $answer, $courseid, $questionid, $part, $csip );
+   }
 }
+else if ( $op == 'DeleteAnswer' ) {
+   if ( !empty($answerid) ) {
+      $answerids = array($answerid);
+   }
 
-if ( !empty($answers) ) {
-   $count = 0;
-   for ( $count = 0; $count < count($questions); $count++ ) {
-      $questionid = $questions[ $count ];
-      $answer = $answers[ $count ];
-      $answerid = $answerids[ $count ];
-      if ( !empty($answer) || !empty($answerid) ) {
-	course_save_answers( $answerid, $answer, $courseid, $questionid, $part, $csip );
+   foreach ( $answerids as $answerid ) {
+      $found = 0;
+      foreach ( $csip['courses'][$courseid]['questions'][$part][$questionid] as $ans ) {
+         if ( $answerid == $ans['answerid'] ) {
+            $found = $ans;
+         }
+      }
+      if ( !empty($found) ) {
+         course_delete_answer( $answerid );
+      }
+      else {
+         error( array('BADANS' => 'Answer not found') );
       }
    }
 }
 else {
-  course_save_answers( $answerid, $answer, $courseid, $questionid, $part, $csip );
+   error( array('BADOP' => 'Action not recognized.') );
 }
+
 
 $csip = course_reload_answers( $csip, $courseid, $part );
 $_SESSION['csip'] = $csip;
