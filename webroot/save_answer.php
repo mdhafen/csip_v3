@@ -80,7 +80,7 @@ if ( $op == 'SaveAnswer' ) {
    }
 }
 else if ( $op == 'DeleteAnswer' ) {
-   if ( !empty($answerid) && !empty($questionid ) {
+   if ( !empty($answerid) && !empty($questionid) ) {
       $answerids = array($answerid);
       $questions = array($questionid);
    }
