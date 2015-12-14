@@ -84,7 +84,10 @@ else if ( $op == 'DeleteAnswer' ) {
       $answerids = array($answerid);
    }
 
-   foreach ( $answerids as $answerid ) {
+   $count = 0;
+   for ( $count = 0; $count < count($answerids); $count++ ) {
+      $questionid = $questions[ $count ];
+      $answerid = $answerids[ $count ];
       $found = 0;
       foreach ( $csip['courses'][$courseid]['questions'][$part][$questionid] as $ans ) {
          if ( $answerid == $ans['answerid'] ) {
