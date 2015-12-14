@@ -54,12 +54,12 @@ if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['course
 ?>
                         </div>
                     </div>
-  <?php if ( !empty($data['can_edit']) ) { ?>
-<button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>
-  <?php } ?>
-                </form>
 <?php
       }
+      if ( !empty($data['can_edit']) ) { ?>
+<button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>
+<?php }
+      echo "          </form>\n";
     }
     if ( isset($answers[$c]['answer']) ) {
       echo "<form method='post' class='uk-form uk-form-horizontal' action='save_answer.php'>";
