@@ -94,9 +94,6 @@ else if ( $op == 'DeleteAnswer' ) {
       if ( !empty($found) ) {
          course_delete_answer( $answerid );
       }
-      else {
-         error( array('BADANS' => 'Answer not found') );
-      }
    }
 }
 else {
