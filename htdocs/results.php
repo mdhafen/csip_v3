@@ -1,11 +1,5 @@
 <?php
 if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['courseid'] ]['questions'][3]) ) {
-  echo "<form method='post' class='uk-form uk-form-horizontal' action='save_answer.php'>";
-  echo "<input type='hidden' name='csipid' value='". $data['csip']['csipid'] ."'>\n";
-  echo "<input type='hidden' name='categoryid' value='". $data['categoryid'] ."'>";
-  echo "<input type='hidden' name='courseid' value='". $data['courseid'] ."'>\n";
-  echo "<input type='hidden' name='part' value='3'>\n";
-  echo "<input type='hidden' name='op' value='SaveAnswer'>\n";
   $count = 0;
   foreach ( $data['csip']['courses'][ $data['courseid'] ]['questions'][3] as $questionid => $answers ) {
     if ( count($answers) > $count ) {
@@ -19,6 +13,12 @@ if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['course
   }
 
   for ( $c = 0; $c <= $count; $c++ ) {
+    echo "<form method='post' class='uk-form uk-form-horizontal' action='save_answer.php'>";
+    echo "<input type='hidden' name='csipid' value='". $data['csip']['csipid'] ."'>\n";
+    echo "<input type='hidden' name='categoryid' value='". $data['categoryid'] ."'>";
+    echo "<input type='hidden' name='courseid' value='". $data['courseid'] ."'>\n";
+    echo "<input type='hidden' name='part' value='3'>\n";
+    echo "<input type='hidden' name='op' value='SaveAnswer'>\n";
     foreach ( $data['csip']['courses'][ $data['courseid'] ]['questions'][3] as $questionid => $answers ) {
       if ( $data['csip']['questions'][ $questionid ]['type'] == 9 ) {
 ?>
