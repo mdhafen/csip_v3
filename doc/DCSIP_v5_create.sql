@@ -125,5 +125,4 @@ CREATE TABLE `answer` (
         `part` INT(4) NOT NULL DEFAULT 0,
 	PRIMARY KEY (`answerid`),
 	KEY (`csipid`),
-	UNIQUE KEY (`part`,`questionid`,`courseid`,`csipid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

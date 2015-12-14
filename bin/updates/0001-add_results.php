@@ -30,6 +30,9 @@ if ( $row['count'] == 0 ) {
   $query = "update answer set part = part + 1 where part >= 3 order by part desc";
   $dbh->exec( $query );
 
+  $query = "alter table answer drop index `part`";
+  $dbh->exec( $query );
+
   return "Add Survey Reflection part and feature for multiple answer to a question.";
 }
 
