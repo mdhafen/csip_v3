@@ -14,6 +14,7 @@ if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['course
 
   for ( $c = 0; $c <= $count; $c++ ) {
     $num_answers = 0;
+    echo "<div class='uk-clearfix'>\n";
     echo "<form method='post' class='uk-form uk-form-horizontal' action='save_answer.php'>";
     echo "<input type='hidden' name='csipid' value='". $data['csip']['csipid'] ."'>\n";
     echo "<input type='hidden' name='categoryid' value='". $data['categoryid'] ."'>";
@@ -62,7 +63,7 @@ if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['course
       }
     }
     if ( !empty($data['can_edit']) ) { ?>
-<button class="uk-button uk-button-success uk-align-right" type="button" onclick="this.form.submit()">Save</button>
+<button class="uk-button uk-button-success uk-align-right uk-margin-top" type="button" onclick="this.form.submit()">Save</button>
 <?php }
     echo "          </form>\n";
     if ( $num_answers ) {
@@ -80,8 +81,9 @@ if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['course
 <?php
         }
       }
-      echo "<div class=\"uk-margin-top uk-clearfix\">\n<button class=\"uk-button uk-button-danger uk-align-right\" type=\"button\" onclick=\"this.form.submit()\">Delete</button>\n</div>\n";
+      echo "<button class=\"uk-button uk-button-danger uk-align-right uk-margin-top\" type=\"button\" onclick=\"this.form.submit()\">Delete</button>\n";
       echo "</form>\n";
+      echo "</div>\n";
     }
     if ( $c != $count ) { echo "<hr>\n"; }
   }
