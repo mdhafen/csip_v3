@@ -91,7 +91,7 @@ function get_course_num_dependants( $courseid ) {
 
     $query = "
     SELECT COUNT(*)
-      FROM answers
+      FROM answer
      WHERE courseid = :cid
 ";
     $sth = $dbh->prepare( $query );
