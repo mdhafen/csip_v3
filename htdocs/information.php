@@ -25,7 +25,7 @@
           $completeness = 'uk-badge-warning';
         }
  ?>
-        <li class="<?= $part == 4 ? 'uk-active' : '' ?>" id="cfa<?= $count ?>_tab"><a href=""><div class="uk-badge <?= $completeness ?>">GVC <?= $count ?></div></a></li>
+        <li class="<?= $part == $count ? 'uk-active' : '' ?>" id="cfa<?= $count ?>_tab"><a href=""><div class="uk-badge <?= $completeness ?>">GVC <?= $count ?></div></a></li>
 <?php
          $count++;
       }
