@@ -100,6 +100,7 @@ if ( !empty($data['courseid']) ) {
         </div>
 
 <?php
+$tab = '';
 if ( !empty($data['part']) && $data['part'] > 1 ) {
   switch ($data['part']) {
   case 2 : $tab = 'accreditation_tab'; break;
@@ -108,7 +109,7 @@ if ( !empty($data['part']) && $data['part'] > 1 ) {
   }
 ?>
 <script type="text/javascript">
-$( document ).ready( function(){
+$(window).load( function(){
   var tab = "<?= $tab ?>";
   if ( tab ) {
     $("#" + tab).trigger('click');
