@@ -63,9 +63,13 @@
 <?php
          $count++;
       }
+      if ( !empty($data['can_edit']) ) {
  ?>
 	<div id="addcfa_content">
 	</div>
+<?php
+      }
+?>
 	<div id="accreditation_content">
 	   <?php include 'accreditation.php';?>
 	</div>
