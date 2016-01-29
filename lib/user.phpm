@@ -2,8 +2,8 @@
 
 require_once( 'data.phpm' );
 
-function user_by_userid( $userid ) {
-  $dbh = db_connect();
+function user_by_userid( $userid, $module = 'core' ) {
+  $dbh = db_connect( $module );
   $query = "SELECT * FROM user WHERE userid = :uid";
   $sth = $dbh->prepare( $query );
   $sth->bindParam( ':uid', $userid );
@@ -15,17 +15,17 @@ function user_by_userid( $userid ) {
   return array(
 	       'userid' => $row['userid'],
 	       'username' => $row['username'],
-	       'fullname' => $row['fullname'],
-	       'email' => $row['email'],
+               'fullname' => $row['fullname'],
+               'email' => $row['email'],
 	       'role' => $row['role'],
 	       'salt' => $row['salt'],
 	       'password' => $row['password'],
-	       'locations' => user_locations( $row['userid'] ),
+	       'locations' => user_locations( $row['locationid'], $module ),
 	       );
 }
 
-function user_by_username( $username ) {
-  $dbh = db_connect();
+function user_by_username( $username, $module = 'core' ) {
+  $dbh = db_connect( $module );
   $query = "SELECT * FROM user WHERE username = :username";
   $sth = $dbh->prepare( $query );
   $sth->bindParam( ':username', $username );
@@ -37,18 +37,18 @@ function user_by_username( $username ) {
   return array(
 	       'userid' => $row['userid'],
 	       'username' => $row['username'],
-	       'fullname' => $row['fullname'],
-	       'email' => $row['email'],
+               'fullname' => $row['fullname'],
+               'email' => $row['email'],
 	       'role' => $row['role'],
 	       'salt' => $row['salt'],
 	       'password' => $row['password'],
-	       'locations' => user_locations( $row['userid'] ),
+	       'locations' => user_locations( $row['locationid'], $module ),
 	       );
 }
 
-function user_locations( $userid ) {
+function user_locations( $userid, $module = 'core' ) {
   $result = array();
-  $dbh = db_connect();
+  $dbh = db_connect( $module );
   $query = "SELECT * FROM user_location_links CROSS JOIN location USING (locationid) WHERE userid = :uid";
   $sth = $dbh->prepare( $query );
   $sth->bindParam( ':uid', $userid );
@@ -62,8 +62,8 @@ function user_locations( $userid ) {
   return $result;
 }
 
-function all_users() {
-  $dbh = db_connect();
+function all_users( $module = 'core') {
+  $dbh = db_connect( $module );
 
   $query = "SELECT * FROM user ORDER BY fullname,username";
   $sth = $dbh->prepare( $query );
@@ -71,15 +71,15 @@ function all_users() {
 
   while ( $row = $sth->fetch() ) {
     $row = stripslashes_array( $row );
-    $row['locations'] = user_locations( $row['userid'] );
+    $row['locations'] = user_locations( $row['userid'], $module );
     $result[] = $row;
   }
 
   return $result;
 }
 
-function all_locations() {
-  $dbh = db_connect();
+function all_locations( $module = 'core') {
+  $dbh = db_connect( $module );
 
   $query = "SELECT * FROM location ORDER BY name";
   $sth = $dbh->prepare( $query );
@@ -92,8 +92,8 @@ function all_locations() {
   return $result;
 }
 
-function update_user( $userid, $update ) {
-  $dbh = db_connect();
+function update_user( $userid, $update, $module = 'core' ) {
+  $dbh = db_connect( $module );
 
   if ( $userid ) {
     $query = "UPDATE user SET ";
@@ -115,8 +115,8 @@ function update_user( $userid, $update ) {
   return $userid;
 }
 
-function update_user_locations( $userid, $locations ) {
-  $dbh = db_connect();
+function update_user_locations( $userid, $locations, $module = 'core' ) {
+  $dbh = db_connect( $module );
 
   if ( !empty($userid) && !empty($locations) ) {
     $query = "DELETE FROM user_location_links WHERE userid = :uid";
@@ -134,8 +134,8 @@ function update_user_locations( $userid, $locations ) {
   }
 }
 
-function update_location( $locationid, $update ) {
-  $dbh = db_connect();
+function update_location( $locationid, $update, $module = 'core' ) {
+  $dbh = db_connect( $module );
 
   if ( $locationid ) {
     $query = "UPDATE location SET ";
@@ -157,8 +157,8 @@ function update_location( $locationid, $update ) {
   return $locationid;
 }
 
-function delete_user( $userid ) {
-  $dbh = db_connect();
+function delete_user( $userid, $module = 'core' ) {
+  $dbh = db_connect( $module );
 
   if ( $userid ) {
     $query = "DELETE FROM user WHERE userid = :uid";
@@ -168,8 +168,8 @@ function delete_user( $userid ) {
   }
 }
 
-function delete_location( $locationid ) {
-  $dbh = db_connect();
+function delete_location( $locationid, $module = 'core' ) {
+  $dbh = db_connect( $module );
 
   if ( $locationid ) {
     $query = "DELETE FROM user_location_links WHERE locationid = :lid";
