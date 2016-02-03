@@ -18,8 +18,18 @@ $part = input( 'part', INPUT_PINT );
 $group = 4;
 $title = 'GVC '. ($part - 2);
 
-$csip = $_SESSION['csip'];
 $courses = get_user_courses( $_SESSION['loggedin_user']['userid'], $csip['locationid'] );
+
+$csip = array();
+if ( !empty($csipid) ) {
+  if ( !in_array( get_csip_locationid($csipid), $locations ) ) {
+    error( array('NOTYOUR' => 'Access to CSIP at that location is denied.') );
+  }
+  else {
+    $csip = load_csip( $csipid, False, $_SESSION['loggedin_user']['userid'] );
+  }
+}
+
 if ( empty($csip) ) {
    $errors[] = array('FLAG' => 'NOTYOURS', 'message' => 'No CSIP loaded.');
 }
@@ -48,7 +58,6 @@ else {
 
 if ( empty($errors) ) {
    $csip = course_add_extra_part( $courseid, $group, $part, $title, $csip );
-   $_SESSION['csip'] = $csip;
 
    $questions = "";
    foreach ( $csip['courses'][$courseid]['questions'][$part] as $questionid => $answer ) {
