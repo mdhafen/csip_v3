@@ -85,6 +85,82 @@ function update_course( $courseid, $update, $parts = array() ) {
   return $courseid;
 }
 
+function get_course_num_dependants( $courseid ) {
+    $dbh = db_connect();
+    $deps = array( 'approves' => 0, 'answers' => 0 );
+
+    $query = "
+    SELECT COUNT(*)
+      FROM answer
+     WHERE courseid = :cid
+";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':cid', $courseid );
+    $sth->execute();
+    $row = $sth->fetchColumn();
+    if ( !empty($row) ) {
+      $deps[ 'answers' ] = $row;
+    }
+
+    $query = "
+    SELECT COUNT(*)
+      FROM course_approval
+     WHERE courseid = :cid
+";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':cid', $courseid );
+    $sth->execute();
+    $row = $sth->fetchColumn();
+    if ( !empty($row) ) {
+      $deps[ 'approves' ] = $row;
+    }
+
+    return $deps;
+}
+
+function delete_course( $courseid ) {
+    $dbh = db_connect();
+
+    $query = "DELETE FROM course WHERE courseid = :cid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':cid', $courseid );
+    $sth->execute();
+}
+
+function delete_course_dependants( $courseid ) {
+    $dbh = db_connect();
+
+    $query = "DELETE FROM user_course_links WHERE courseid = :cid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':cid', $courseid );
+    $sth->execute();
+
+    $query = "DELETE FROM location_course_links WHERE courseid = :cid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':cid', $courseid );
+    $sth->execute();
+
+    $query = "DELETE FROM course_approval WHERE courseid = :cid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':cid', $courseid );
+    $sth->execute();
+
+    $query = "DELETE FROM course_question_links WHERE courseid = :cid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':cid', $courseid );
+    $sth->execute();
+
+    $query = "DELETE FROM csip_extra_part_links WHERE courseid = :cid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':cid', $courseid );
+    $sth->execute();
+
+    $query = "DELETE FROM answer WHERE courseid = :cid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':cid', $courseid );
+    $sth->execute();
+}
+
 function course_get_html_input( $question = '', $answer = '', $courseid, $csip ) {
   if ( ! $question ) {
     return;

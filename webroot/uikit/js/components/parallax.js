@@ -1,4 +1,4 @@
-/*! UIkit 2.20.2 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
+/*! UIkit 2.24.3 | http://www.getuikit.com | (c) 2014 YOOtheme | MIT License */
 (function(addon) {
 
     var component;
@@ -25,11 +25,11 @@
 
             scrolltop = UI.$win.scrollTop();
 
-            window.requestAnimationFrame.apply(window, [function(){
+            window.requestAnimationFrame(function(){
                 for (var i=0; i < parallaxes.length; i++) {
                     parallaxes[i].process();
                 }
-            }]);
+            });
         };
 
 
@@ -38,7 +38,8 @@
         defaults: {
             velocity : 0.5,
             target   : false,
-            viewport : false
+            viewport : false,
+            media    : false
         },
 
         boot: function() {
@@ -84,7 +85,7 @@
                     var parallax = UI.$(this);
 
                     if (!parallax.data("parallax")) {
-                        var obj = UI.parallax(parallax, UI.Utils.options(parallax.attr("data-uk-parallax")));
+                        UI.parallax(parallax, UI.Utils.options(parallax.attr("data-uk-parallax")));
                     }
                 });
             });
@@ -96,7 +97,7 @@
             this.props    = {};
             this.velocity = (this.options.velocity || 1);
 
-            var reserved  = ['target','velocity','viewport','plugins'];
+            var reserved  = ['target','velocity','viewport','plugins','media'];
 
             Object.keys(this.options).forEach(function(prop){
 
@@ -129,6 +130,22 @@
         },
 
         process: function() {
+
+            if (this.options.media) {
+
+                switch(typeof(this.options.media)) {
+                    case 'number':
+                        if (window.innerWidth < this.options.media) {
+                            return false;
+                        }
+                        break;
+                    case 'string':
+                        if (window.matchMedia && !window.matchMedia(this.options.media).matches) {
+                            return false;
+                        }
+                        break;
+                }
+            }
 
             var percent = this.percentageInViewport();
 
@@ -168,7 +185,8 @@
 
         update: function(percent) {
 
-            var css        = {'transform':''},
+            var $this      = this,
+                css        = {'transform':''},
                 compercent = percent * (1 - (this.velocity - (this.velocity * percent))),
                 opts, val;
 
@@ -219,6 +237,12 @@
 
                     // bg image
                     case "bg":
+
+                        // don't move if image height is too small
+                        // if ($this.element.data('bgsize') && ($this.element.data('bgsize').h + val - window.innerHeight) < 0) {
+                        //     break;
+                        // }
+
                         css['background-position'] = '50% '+val+'px';
                         break;
                     case "bgp":
@@ -266,7 +290,7 @@
 
     function initBgImageParallax(obj, prop, opts) {
 
-        var img = new Image(), url, loaded, element, size, check, ratio, width, height;
+        var img = new Image(), url, element, size, check, ratio, width, height;
 
         element = obj.element.css({'background-size': 'cover',  'background-repeat': 'no-repeat'});
         url     = element.css('background-image').replace(/^url\(/g, '').replace(/\)$/g, '').replace(/("|')/g, '');
@@ -277,18 +301,29 @@
             h += extra;
             w += Math.ceil(extra * ratio);
 
+            if (w-extra > size.w && h < size.h) {
+                return obj.element.css({'background-size': ''});
+            }
+
             // if element height < parent height (gap underneath)
             if ((w / ratio) < h) {
+
                 width  = Math.ceil(h * ratio);
                 height = h;
 
+                if (h > window.innerHeight) {
+                    width  = width * 1.2;
+                    height = height * 1.2;
+                }
+
             // element width < parent width (gap to right)
             } else {
+
                 width  = w;
                 height = Math.ceil(w / ratio);
             }
 
-            obj.element.css({'background-size': (width+'px '+height+'px')});
+            element.css({'background-size': (width+'px '+height+'px')}).data('bgsize', {w:width,h:height});
         };
 
         img.onerror = function(){
@@ -296,7 +331,7 @@
         };
 
         img.onload = function(){
-            size  = {w:img.width, height:img.height};
+            size  = {w:img.width, h:img.height};
             ratio = img.width / img.height;
 
             UI.$win.on("load resize orientationchange", UI.Utils.debounce(function(){

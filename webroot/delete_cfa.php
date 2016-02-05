@@ -16,7 +16,16 @@ $courseid = input( 'courseid', INPUT_PINT );
 $part = input( 'part', INPUT_PINT );
 $op = input( 'op', INPUT_HTML_NONE );
 
-$csip = $_SESSION['csip'];
+$csip = array();
+if ( !empty($csipid) ) {
+  if ( !in_array( get_csip_locationid($csipid), $locations ) ) {
+    error( array('NOTYOUR' => 'Access to CSIP at that location is denied.') );
+  }
+  else {
+    $csip = load_csip( $csipid, False, $_SESSION['loggedin_user']['userid'] );
+  }
+}
+
 if ( empty($csip) ) {
    error( array('NOTYOURS' => 'No CSIP loaded.') );
 }
@@ -56,9 +65,6 @@ if ( $op != 'DeleteCFA' ) {
 }
 
 course_delete_extra_part( $courseid, $part, $csip );
-
-unset( $csip['courses'][$courseid]['questions'][$part] );
-$_SESSION['csip'] = $csip;
 
 redirect( 'index.php?csipid='. $csip['csipid'] .'&categoryid='. $categoryid .'&courseid='. $courseid );
 ?>

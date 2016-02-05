@@ -6,6 +6,7 @@ require_once( 'config.phpm' );
 require_once( 'input.phpm' );
 require_once( 'user.phpm' );
 require_once( 'output.phpm' );
+require_once( 'data.phpm' );
 
 $logout = input( '_logout', INPUT_STR );
 if ( $logout ) {
@@ -72,7 +73,7 @@ function get_authorizations() {
 	$auth = $config['auth'];
 	$role = $config['role'];
 
-	if ( ! authenticate() ) {
+	if ( empty($_SESSION['loggedin_user']) ) {
 		return;
 	}
 
@@ -88,7 +89,6 @@ function get_authorizations() {
 
 function authenticate() {
 	global $config;
-	load_session();
 
 	if ( ! isset( $_SESSION[ 'loggedin_user' ] ) ) {
 		$username = input( '_username', INPUT_HTML_NONE );
@@ -101,12 +101,15 @@ function authenticate() {
 			$user = 0;
 			if ( !empty( $config['authen_modules'] ) ) {
 				if ( !empty($config['authen_modules']['ldap']) ) {
-					$user = authen_ldap( $username, $password );
+					$module = $config['authen_modules']['ldap'];
+					$user = authen_ldap( $module, $username, $password );
 				}
 				if ( ! $user && !empty($config['authen_modules']['external']) ) {
+					$module = $config['authen_modules']['external'];
 				}
 				if ( ! $user && !empty($config['authen_modules']['db']) ) {
-					$user = authen_db( $username, $password );
+					$module = $config['authen_modules']['db'];
+					$user = authen_db( $module, $username, $password );
 				}
 			}
 			if ( $user && $user['username'] ) {
@@ -141,15 +144,16 @@ function authenticate() {
 	if ( $my_token == $_SESSION[ 'token' ] ) {
 		return 1;
 	} else {
-		destroy_session();
-		$_SERVER['REQUEST_URI'] = substr( $_SERVER['REQUEST_URI'], 0, strrpos( $_SERVER['REQUEST_URI'], '/' ) + 1 );
+		if ( !empty( $_SESSION['token'] ) ) {
+			destroy_session();
+		}
 		return 0;
 	}
 }
 
-function authen_db( $username, $password ) {
+function authen_db( $module, $username, $password ) {
 	global $config;
-	$user = user_by_username( $username );
+	$user = user_by_username( $username, $module );
 	if ( $user && $user['username'] && $user['password'] ) {
 		$cipher = mcrypt_module_open( 'blowfish', '', 'ecb', '' );
 		$iv = mcrypt_create_iv( mcrypt_enc_get_iv_size( $cipher ), MCRYPT_RAND );
@@ -170,22 +174,23 @@ function authen_db( $username, $password ) {
 	return 0;
 }
 
-function authen_ldap( $username, $password ) {
-	global $ldap,$config;
+function authen_ldap( $module, $username, $password ) {
+	global $config;
 	$user = 0;
 	$userdn = 0;
 	$name = '';
 	$email = '';
 
-	 if ( strcasecmp( $username, $config['ldap']['userdn'] ) == 0 ) {
+	$ldap = new LDAP_Wrapper( $module );
+	if ( strcasecmp( $username, $ldap->config['userdn'] ) == 0 ) {
 		$set = array();
 		$set[] = array( 'dn' => $username, 'cn' => array($username) );
 	}
-	else if ( strripos( $username, $config['ldap']['base'] ) > 0 ) {
-		$set = ldap_quick_search( array('objectClass'=>'*'), array(), 0, $username );
+	else if ( strripos( $username, $ldap->config['base'] ) > 0 ) {
+		$set = $ldap->quick_search( array('objectClass'=>'*'), array(), 0, $username );
 	}
 	else {
-		$set = ldap_quick_search( array( 'uid' => $username ), array() );
+		$set = $ldap->quick_search( array( 'uid' => $username ), array() );
 	}
 
 	if ( count($set) == 1 ) {
@@ -196,16 +201,17 @@ function authen_ldap( $username, $password ) {
 	}
 
 	if ( $userdn ) {
-		if ( ldap_bind( $ldap, $userdn, $password ) ) {
+		if ( $ldap->do_connect( $module, $userdn, $password ) ) {
 			$role = 1;
-			if ( ! empty($config['ldap']['roles']) ) {
-				foreach ( $config['ldap']['roles'] as $role_id => $group_dn ) {
-					$group = ldap_quick_search( array('objectClass'=>'groupOfNames'), array(), 0, $group_dn );
+			if ( ! empty($ldap->config['roles']) ) {
+				foreach ( $ldap->config['roles'] as $role_id => $group_dn ) {
+					$group = $ldap->quick_search( array('objectClass'=>'groupOfNames'), array(), 0, $group_dn );
 					if ( ! empty($group[0]) && ! empty($group[0]['member']) ) {
 						foreach ( $group[0]['member'] as $member_dn ) {
 							if ( strcasecmp($member_dn,$userdn) == 0 ) {
-								$role = $role_id;
-								break 2;
+								if ( $role_id > $role ) {
+									$role = $role_id;
+								}
 							}
 						}
 					}
@@ -223,9 +229,9 @@ function authen_ldap( $username, $password ) {
 		}
 		else {
 			// re-bind as root
-			$userdn = $config['ldap']['userdn'];
-			$password = $config['ldap']['passwd'];
-			do_ldap_connect( $userdn, $password );
+			$userdn = $ldap->config['userdn'];
+			$password = $ldap->config['passwd'];
+			$ldap->do_connect( $module, $userdn, $password );
 		}
 	}
 
@@ -259,6 +265,73 @@ function new_password( $new_password ) {
 	mcrypt_module_close( $cipher );
 
 	return array( base64_encode( $user_password ), base64_encode( $salt ) );
+}
+
+/*
+  creates a variant of the XKCD style password if a dictionary is available
+   as in 'correct horse battery staple'
+  if no dictionary is available then is a random 16 character password
+ */
+function create_password() {
+	global $config;
+	$symbol_set = '!@#$%&*()-_+\'";:/?.,'; // reduced for mobile keyboards
+	$numeric_set = '0123456789';
+	$alpha_set = 'abcdefghijklmnopqrstuvwxyz';
+	$ualpha_set = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+	#$dict_str = $symbol_set . $numeric_set . $alpha_set . $ualpha_set;
+	$dict_str = $alpha_set;
+	$dict_file = $config['base_dir'] .'/lib/word_dictionary'; # /usr/share/dict/words
+	$dictionary = array();
+	$iterations = 0;
+	$password = '';
+
+	if ( is_readable( $dict_file ) ) {
+		$dictionary = file( $dict_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES );
+		if ( !empty($dictionary) ) {
+			$dict_str = "-";
+		}
+	}
+
+	$dict_size = count($dictionary) - 1;
+	$dict_str_size = strlen($dict_str) - 1;
+	#while ( $iterations < 4 || strlen($password) < 16 ) {
+	while ( $iterations < 3 || strlen($password) < 15 ) {
+		$iterations++;
+		if ( !empty($dictionary) ) {
+			$password .= $dictionary[ rand(0,$dict_size) ];
+		}
+		if ( !empty($dict_str) ) {
+			$password .= $dict_str[ rand(0,$dict_str_size) ];
+		}
+	}
+	$password = substr($password,0,-1);  // chop last '-' off
+
+	return $password;
+}
+
+// Just in case I care that php random number generator isn't random enough
+function _rand( $min = 0, $max = 255 ) {
+	$range = $max - $min;
+
+	$num = $range;
+	$bytes = 0;
+	do {
+		$bytes++;
+		$num = $num >> 8;
+	} while ( $num > 0 );
+
+	$num = 0;
+	$iterations = 255;
+	do {
+		$iterations--;
+		$raw = mcrypt_create_iv( $bytes, MCRYPT_RAND );
+		for ( $s = 0; $s < $bytes; $s++ ) {
+			$num = ( $num << 8 ) | ( ord( $raw[$s] ) );
+		}
+		$num = $num & PHP_INT_MAX; // make sure there's no overflow
+	} while ( $num > $range && $interations );
+	if ( $num > $range ) { $num = $num % $range; } // less safe fallback
+	return $num + $min;
 }
 
 ?>

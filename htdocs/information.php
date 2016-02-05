@@ -25,7 +25,7 @@
           $completeness = 'uk-badge-warning';
         }
  ?>
-        <li class="<?= $part == 4 ? 'uk-active' : '' ?>" id="cfa<?= $count ?>_tab"><a href=""><div class="uk-badge <?= $completeness ?>">GVC <?= $count ?></div></a></li>
+        <li class="<?= $part == $count ? 'uk-active' : '' ?>" id="cfa<?= $count ?>_tab"><a href=""><div class="uk-badge <?= $completeness ?>">GVC <?= $count ?></div></a></li>
 <?php
          $count++;
       }
@@ -63,9 +63,13 @@
 <?php
          $count++;
       }
+      if ( !empty($data['can_edit']) ) {
  ?>
 	<div id="addcfa_content">
 	</div>
+<?php
+      }
+?>
 	<div id="accreditation_content">
 	   <?php include 'accreditation.php';?>
 	</div>

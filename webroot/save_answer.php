@@ -23,7 +23,16 @@ $questionid = input( 'questionid', INPUT_PINT );
 $answer = input( 'answer', INPUT_HTML_NONE );
 $answerid = input( 'answerid', INPUT_PINT );
 
-$csip = $_SESSION['csip'];
+$csip = array();
+if ( !empty($csipid) ) {
+  if ( !in_array( get_csip_locationid($csipid), $locations ) ) {
+    error( array('NOTYOUR' => 'Access to CSIP at that location is denied.') );
+  }
+  else {
+    $csip = load_csip( $csipid, False, $_SESSION['loggedin_user']['userid'] );
+  }
+}
+
 if ( empty($csip) ) {
    error( array('NOTYOURS' => 'No CSIP loaded.') );
 }
@@ -80,11 +89,15 @@ if ( $op == 'SaveAnswer' ) {
    }
 }
 else if ( $op == 'DeleteAnswer' ) {
-   if ( !empty($answerid) ) {
+   if ( !empty($answerid) && !empty($questionid) ) {
       $answerids = array($answerid);
+      $questions = array($questionid);
    }
 
-   foreach ( $answerids as $answerid ) {
+   $count = 0;
+   for ( $count = 0; $count < count($answerids); $count++ ) {
+      $questionid = $questions[ $count ];
+      $answerid = $answerids[ $count ];
       $found = 0;
       foreach ( $csip['courses'][$courseid]['questions'][$part][$questionid] as $ans ) {
          if ( $answerid == $ans['answerid'] ) {
@@ -94,18 +107,12 @@ else if ( $op == 'DeleteAnswer' ) {
       if ( !empty($found) ) {
          course_delete_answer( $answerid );
       }
-      else {
-         error( array('BADANS' => 'Answer not found') );
-      }
    }
 }
 else {
    error( array('BADOP' => 'Action not recognized.') );
 }
 
-
-$csip = course_reload_answers( $csip, $courseid, $part );
-$_SESSION['csip'] = $csip;
 
 redirect( 'index.php?csipid='. $csip['csipid'] .'&categoryid='. $categoryid .'&courseid='. $courseid .'&part='. $part );
 ?>

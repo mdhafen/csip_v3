@@ -8,13 +8,22 @@ include_once( '../inc/course.phpm' );
 
 authorize( 'approve_csip' );
 
-$csip = $_SESSION['csip'];
 $district = authorized( 'load_other_csip' );
 $locations = empty($_SESSION['loggedin_user']['locations']) ? array() : array_keys( $_SESSION['loggedin_user']['locations'] );
 $csipid = input( 'csipid', INPUT_PINT );
 $categoryid = input( 'categoryid', INPUT_PINT );
 $courseid = input( 'courseid', INPUT_PINT );
 $op = input( 'op', INPUT_HTML_NONE );
+
+$csip = array();
+if ( ! empty($csipid) ) {
+    if ( !in_array( get_csip_locationid( $csipid ), $locations ) && ! $district ) {
+        error( array('NOTYOURS' => 'Access to CSIP at that location is denied.' ) );
+    }
+    else {
+        $csip = load_csip( $csipid, False, $_SESSION['loggedin_user']['userid'] );
+    }
+}
 
 if ( empty($csip) ) {
    error( array('NOTYOURS' => 'No CSIP loaded.') );
@@ -43,8 +52,6 @@ else if ( $op == 'UnApproveCourse' ) {
     course_unapprove( $courseid, $csip );
     $csip['courses'][$courseid]['principal_approved'] = null;
 }
-
-$_SESSION['csip'] = $csip;
 
 redirect( 'index.php?csipid='. $csip['csipid'] .'&categoryid='. $categoryid .'&courseid='. $courseid );
 
