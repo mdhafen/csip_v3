@@ -71,6 +71,7 @@ if ( !empty($data['courseid']) ) {
         <button class='uk-button <?= $class ?>' onclick="this.form.submit()"><?= $app ?></button>
         </form>
 <?php
+  }
 }
 ?>
             <hr>
