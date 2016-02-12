@@ -52,36 +52,25 @@ if ( !empty($data['csip']['courses']) ) {
         </form>
 <?php
 if ( !empty($data['courseid']) ) {
-  $can_approve = ' onclick="this.form.submit()"';
-  if ( empty($data['_session']['CAN_approve_csip']) ) {
-    $can_approve = '';
-  }
-  if ( empty($data['csip']['courses'][ $data['courseid'] ]['principal_approved']) ) {
-    $app = "Not Approved";
-    $class = "uk-button-danger";
-  }
-  else {
-    $app = "Approved";
-    $class = "uk-button-success";
-  }
+  if ( !empty($data['_session']['CAN_approve_csip']) ) {
+    if ( empty($data['csip']['courses'][ $data['courseid'] ]['principal_approved']) ) {
+      $app = "Not Approved";
+      $class = "uk-button-danger";
+    }
+    else {
+      $app = "Approved";
+      $class = "uk-button-success";
+    }
 
-  if ( ! empty($data['_session']['CAN_approve_csip']) ) {
 ?>
         <form method="post" class="uk-form uk-display-inline-block" action="approve.php">
         <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
         <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
         <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
         <input type="hidden" name="op" value="<?= $app == 'Not Approved' ? 'ApproveCourse' : 'UnApproveCourse' ?>">
-<?php
-  }
-?>
-        <button class='uk-button <?= $class ?>'<?= $can_approve ?>><?= $app ?></button>
-<?php
-  if ( ! empty($data['_session']['CAN_approve_csip']) ) {
-?>
+        <button class='uk-button <?= $class ?>' onclick="this.form.submit()"><?= $app ?></button>
         </form>
 <?php
-  }
 }
 ?>
             <hr>
