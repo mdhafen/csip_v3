@@ -1,10 +1,5 @@
 <?php
 if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['courseid'] ]['questions'][3]) ) {
-  echo "<input type='hidden' name='csipid' value='". $data['csip']['csipid'] ."'>\n";
-  echo "<input type='hidden' name='categoryid' value='". $data['categoryid'] ."'>\n";
-  echo "<input type='hidden' name='courseid' value='". $data['courseid'] ."'>\n";
-  echo "<input type='hidden' name='part' value='3'>\n";
-  echo "<input type='hidden' name='op' value='SaveAnswer'>\n";
   $count = 0;
   foreach ( $data['csip']['courses'][ $data['courseid'] ]['questions'][3] as $questionid => $answers ) {
     if ( count($answers) > $count ) {
@@ -22,7 +17,7 @@ if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['course
     echo "<div class='uk-clearfix'>\n";
     echo "<form method='post' class='uk-form uk-form-horizontal' action='save_answer.php'>";
     echo "<input type='hidden' name='csipid' value='". $data['csip']['csipid'] ."'>\n";
-    echo "<input type='hidden' name='categoryid' value='". $data['categoryid'] ."'>";
+    echo "<input type='hidden' name='categoryid' value='". $data['categoryid'] ."'>\n";
     echo "<input type='hidden' name='courseid' value='". $data['courseid'] ."'>\n";
     echo "<input type='hidden' name='part' value='3'>\n";
     echo "<input type='hidden' name='op' value='SaveAnswer'>\n";
@@ -68,13 +63,13 @@ if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['course
       }
     }
     if ( !empty($data['can_edit']) ) { ?>
-<button class="uk-button uk-button-success uk-align-right uk-margin-top" type="button" onclick="this.form.submit()">Save</button>
+<button class="uk-button uk-button-success uk-align-right uk-margin-top" type="button" onclick="save_answers(this)">Save</button>
 <?php }
     echo "          </form>\n";
     if ( $num_answers ) {
-      echo "<form method='post' class='uk-form uk-form-horizontal' action='save_answer.php'>";
+      echo "<form method='post' class='uk-form uk-form-horizontal' action='save_answer.php'>\n";
       echo "<input type='hidden' name='csipid' value='". $data['csip']['csipid'] ."'>\n";
-      echo "<input type='hidden' name='categoryid' value='". $data['categoryid'] ."'>";
+      echo "<input type='hidden' name='categoryid' value='". $data['categoryid'] ."'>\n";
       echo "<input type='hidden' name='courseid' value='". $data['courseid'] ."'>\n";
       echo "<input type='hidden' name='part' value='3'>\n";
       echo "<input type='hidden' name='op' value='DeleteAnswer'>\n";
@@ -95,7 +90,3 @@ if ( !empty($data['courseid']) && !empty($data['csip']['courses'][ $data['course
 }
 ?>
             <br>
-  <?php if ( !empty($data['can_edit']) ) { ?>
-<button class="uk-button uk-button-success uk-align-right" type="button" onclick="save_answers(this)">Save</button>
-  <?php } ?>
-                </form>
