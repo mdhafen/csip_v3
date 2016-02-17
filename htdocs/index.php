@@ -105,6 +105,7 @@ $(window).load( function(){
   if ( tab ) {
     $("#" + tab).trigger('click');
   }
+});
 
   answers_changed = {};
   answers_original = {};
@@ -129,7 +130,7 @@ $(window).load( function(){
         $(this).val('Save');
     });
 
-    save_answers_ajax();
+    //save_answers_ajax();
   }
 
   function check_unsaved_answers() {
