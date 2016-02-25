@@ -618,7 +618,7 @@ function get_course_question_groups( $courseid ) {
   return $groups;
 }
 
-function course_save_answers( $answerid, $answer, $courseid, $questionid, $part, $csip ) {
+function course_save_answers( $answerid, $answer, $courseid, $questionid, $seq, $part, $csip ) {
   $dbh = db_connect();
 
   if ( $csip['loc_demo'] == 1 ) { return; }  // location is Demo
@@ -628,26 +628,28 @@ function course_save_answers( $answerid, $answer, $courseid, $questionid, $part,
   }
 
   $old = array();
-  if ( !empty($answerid) && !empty($csip['courses'][$courseid]['questions'][$part][$questionid]) ) {
-    foreach ( $csip['courses'][$courseid]['questions'][$part][$questionid] as $ans ) {
-      if ( $answerid == $ans['answerid'] ) {
-	$old = $ans;
-      }
-    }
+  if ( !empty($answerid) ) {
+    $query = "SELECT answer FROM answer WHERE answerid = :ans";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':ans', $answerid );
+    $sth->execute();
+
+    $old = $sth->fetch(PDO::FETCH_ASSOC);
   }
 
   if ( empty($old['answer']) || $answer != $old['answer'] ) {
-    if ( ! empty($old['answerid']) ) {
+    if ( ! empty($answerid) ) {
       $query = "UPDATE answer SET answer = :ans WHERE answerid = :ansid";
       $sth = $dbh->prepare( $query );
       $sth->bindValue( ':ans', $answer );
-      $sth->bindValue( ':ansid', $old['answerid'] );
+      $sth->bindValue( ':ansid', $answerid );
       $sth->execute();
     } else {
-      $query = "INSERT INTO answer ( answer, questionid, part, courseid, csipid ) VALUES ( :ans, :ques, :part, :course, :csip )";
+      $query = "INSERT INTO answer ( answer, questionid, group_sequence, part, courseid, csipid ) VALUES ( :ans, :ques, :seq, :part, :course, :csip )";
       $sth = $dbh->prepare( $query );
       $sth->bindValue( ':ans', $answer );
       $sth->bindValue( ':ques', $questionid );
+      $sth->bindValue( ':seq', $seq );
       $sth->bindValue( ':part', $part );
       $sth->bindValue( ':course', $courseid );
       $sth->bindValue( ':csip', $csip['csipid'] );
@@ -661,10 +663,11 @@ function course_save_answers( $answerid, $answer, $courseid, $questionid, $part,
     $sth->execute();
 
     if ( empty($answerid) ) {
-      $query = "SELECT answerid FROM answer WHERE answer = :ans AND questionid = :ques AND part = :part AND courseid = :course AND csipid = :csip";
+      $query = "SELECT answerid FROM answer WHERE answer = :ans AND questionid = :ques AND group_sequence = :seq AND part = :part AND courseid = :course AND csipid = :csip";
       $sth = $dbh->prepare( $query );
       $sth->bindValue( ':ans', $answer );
       $sth->bindValue( ':ques', $questionid );
+      $sth->bindValue( ':seq', $seq );
       $sth->bindValue( ':part', $part );
       $sth->bindValue( ':course', $courseid );
       $sth->bindValue( ':csip', $csip['csipid'] );
@@ -678,7 +681,7 @@ function course_save_answers( $answerid, $answer, $courseid, $questionid, $part,
   }
 }
 
-function course_delete_answer( $answerid ) {
+function course_delete_answer( $answerid, $csip ) {
   $dbh = db_connect();
 
   if ( $csip['loc_demo'] == 1 ) { return; }  // location is Demo
@@ -691,10 +694,71 @@ function course_delete_answer( $answerid ) {
   }
 }
 
-function course_reload_answers( $csip, $courseid, $part ) {
-  foreach ( $csip['courses'][ $courseid ]['questions'][ $part ] as $questid => $answers ) {
-    $csip['courses'][ $courseid ]['questions'][ $part ][ $questid ] = array();
+function part_get_next_sequence( $csipid, $courseid, $part, $questionid) {
+  $sequence = 0;
+  $repeatableid = 0;
+  $dbh = db_connect();
+
+  $query = "SELECT group_repeatableid FROM question WHERE questionid = :quest";
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':quest', $questionid );
+  $sth->execute();
+  $repeatableid = $sth->fetchColumn();
+
+  $dbh->exec("LOCK TABLES answer_group_sequence WRITE, answer READ");
+
+  $query = "SELECT sequence_value FROM answer_group_sequence WHERE csipid = :csip AND courseid = :course AND part = :part AND group_repeatableid = :repeat";
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':csip', $csipid );
+  $sth->bindValue( ':course', $courseid );
+  $sth->bindValue( ':part', $part );
+  $sth->bindValue( ':repeat', $repeatableid );
+  $sth->execute();
+  $count = $sth->fetchColumn();
+
+  if ( $count === false ) {
+    $query = "SELECT count(*) FROM answer WHERE csipid = :csip AND courseid = :course AND part = :part AND questionid = :question";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':csip', $csipid );
+    $sth->bindValue( ':course', $courseid );
+    $sth->bindValue( ':part', $part );
+    $sth->bindValue( ':question', $questionid );
+    $sth->execute();
+    $count = $sth->fetchColumn();
+
+    if ( $count > 0 ) {
+      $sequence = $count + 1;
+
+      $query = "INSERT INTO answer_group_sequence ( sequence_value, csipid, courseid, part, group_repeatableid ) VALUES ( :seq, :csip, :course, :part, :repeat )";
+      $sth = $dbh->prepare( $query );
+      $sth->bindValue( ':seq', $sequence );
+      $sth->bindValue( ':csip', $csipid );
+      $sth->bindValue( ':course', $courseid );
+      $sth->bindValue( ':part', $part );
+      $sth->bindValue( ':repeat', $repeatableid );
+      $sth->execute();
+    }
   }
+  else {
+    $sequence = $count + 1;
+
+    $query = "UPDATE FROM answer_group_sequence SET sequence_value = :seq WHERE csipid = :csip AND courseid = :course AND part = :part AND group_repeatableid = :repeat";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':seq', $sequence );
+    $sth->bindValue( ':csip', $csipid );
+    $sth->bindValue( ':course', $courseid );
+    $sth->bindValue( ':part', $part );
+    $sth->bindValue( ':repeat', $repeatableid );
+    $sth->execute();
+  }
+
+  $dbh->exec("UNLOCK TABLES");
+
+  return $sequence;
+}
+
+function course_reload_answers( $csip, $courseid, $part ) {
+  $csip['form'][ $courseid ][ $part ] = array();
 
   $dbh = db_connect();
 
@@ -707,7 +771,13 @@ function course_reload_answers( $csip, $courseid, $part ) {
   while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
     // can't stripslashes here because the answer might be serialized
     $row['question_html'] = course_get_html_input( $csip['questions'][ $row['questionid'] ], $row, $row['courseid'], $csip );
-    $csip['courses'][ $row['courseid'] ]['questions'][ $row['part'] ][ $row['questionid'] ][] = $row;
+    $index = array_search( $row['questionid'], array_column($csip['form'][ $row['courseid'] ][ $row['part'] ],'questionid') );
+    if ( !empty($csip['questions'][ $row['questionid'] ]['group_repeatableid']) ) {
+      $csip['form'][ $row['courseid'] ][ $row['part'] ][ $index ]['answers'][] = $row;
+    }
+    else {
+      $csip['form'][ $row['courseid'] ][ $row['part'] ][ $index ]['answer'] = $row;
+    }
   }
 
   // save_answer may change principal_approved, so reload it too
@@ -729,11 +799,21 @@ function course_completion( $courseid, $csip ) {
   $num_questions = 0;
   $num_answers = 0;
 
-  foreach ( $csip['courses'][$courseid]['questions'] as $part => $questions ) {
-    foreach ( $questions as $questionid => $answer ) {
-      $num_questions++;
-      if ( !empty( $answer['answer']) ) {
-        $num_answers++;
+  foreach ( $csip['form'][$courseid] as $part => $questions ) {
+    $questionid = $questions['questionid'];
+    $num_questions++;
+    foreach ( $questions as $question ) {
+      if ( !empty($question['answer']['answer']) ) {
+	$num_answers++;
+      }
+      if ( !empty($question['answers']) ) {
+	$num_questions--;
+	foreach ( $question['answers'] as $answer ) {
+	  $num_questions++;
+	  if ( !empty($answer['answer']) ) {
+	    $num_answers++;
+	  }
+	}
       }
     }
   }
@@ -750,11 +830,19 @@ function course_completion( $courseid, $csip ) {
 function course_part_completion( $courseid, $part, $csip ) {
   $num_questions = 0;
   $num_answers = 0;
-  if ( !empty( $csip['courses'][$courseid]['questions'][$part] ) ) {
-    foreach ( $csip['courses'][$courseid]['questions'][$part] as $questionid => $answer ) {
-      $num_questions++;
-      if ( !empty( $answer['answer']) ) {
-        $num_answers++;
+  if ( !empty( $csip['form'][$courseid][$part] ) ) {
+    foreach ( $csip['form'][$courseid][$part] as $answer ) {
+      if ( !empty($answer['answer']['answer']) ) {
+	$num_answers++;
+      }
+      if ( !empty($answer['answers']) ) {
+	$num_questions--;
+	foreach ( $answer['answers'] as $this_answer ) {
+	  $num_questions++;
+	  if ( !empty($this_answer['answer']) ) {
+	    $num_answers++;
+	  }
+	}
       }
     }
   }
@@ -840,7 +928,7 @@ function course_add_extra_part( $courseid, $group, $part, $title, $csip ) {
             $row['question_clean'] = clean_question( $row, $row['courseid'], $csip );
             $csip['questions'][ $row['questionid'] ] = $row;
         }
-        $csip['courses'][ $row['courseid'] ]['questions'][ $row['part'] ][ $row['questionid'] ] = array();
+        $csip['form'][ $row['courseid'] ][ $row['part'] ][] = array('questionid' => $row['questionid']);
     }
 
     $query = "UPDATE course_approval SET principal_approved = NULL WHERE courseid = :course AND csipid = :csip";

@@ -1,10 +1,10 @@
 <div class="uk-panel uk-panel-box" uk-nav-side>
 
 <?php
-if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['courseid'] ]['questions'][1]) ) {
+if ( ! empty($data['courseid']) && ! empty($data['csip']['form'][ $data['courseid'] ][1]) ) {
   $answers = 0;
-  foreach ( $data['csip']['courses'][ $data['courseid'] ]['questions'][1] as $answer ) {
-    if ( isset($answer[0]['answer']) && $answer[0]['answer'] != "" ) {
+  foreach ( $data['csip']['form'][ $data['courseid'] ][1] as $answer ) {
+    if ( isset($answer['answer']) && $answer['answer'] != "" ) {
       $answers++;
     }
   }
@@ -13,6 +13,11 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
   }
   else {
     $completeness = "uk-badge-warning uk-icon-exclamation-triangle";
+  }
+
+  $questions = array();
+  foreach ( $data['csip']['form'][ $data['courseid'] ][1] as $quest ) {
+    $questions[ $quest['questionid'] ] = !empty($quest['answer'])?$quest['answer']:array();
   }
 ?>
     <h4 class="uk-clearfix"><i class="uk-icon-bars"></i> <strong>Guaranteed Curriculum</strong> <span class="uk-align-right uk-badge <?= $completeness ?>"></span></h4>
@@ -37,10 +42,11 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
                     <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
                     <input type="hidden" name="part" value="1">
+                    <input type="hidden" name="sequence" value="0">
                     <input type="hidden" name="questionid" value="2">
-                    <input type="hidden" name="answerid" value="<?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][2][0]['answerid']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][2][0]['answerid'] : "" ?>">
+                    <input type="hidden" name="answerid" value="<?= isset($questions[2]['answerid']) ? $questions[2]['answerid'] : "" ?>">
                     <input type="hidden" name="op" value="SaveAnswer">
-                    <textarea id="gc-1-2" cols="30" rows="8" name="answer" placeholder="Define Team's GVC Here..."><?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][2][0]['answer']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][2][0]['answer'] : "" ?></textarea>
+                    <textarea id="gc-1-2" cols="30" rows="8" name="answer" placeholder="Define Team's GVC Here..."><?= isset($questions[2]['answer']) ? $questions[2]['answer'] : "" ?></textarea>
   <?php if ( !empty($data['can_edit']) ) { ?>
                     <button class="uk-button uk-button-success uk-align-right" type="button" onclick="save_answers(this)">Save</button>
   <?php } ?>
@@ -61,10 +67,11 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
                     <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
                     <input type="hidden" name="part" value="1">
+                    <input type="hidden" name="sequence" value="0">
                     <input type="hidden" name="questionid" value="5">
-                    <input type="hidden" name="answerid" value="<?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][5][0]['answerid']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][5][0]['answerid'] : "" ?>">
+                    <input type="hidden" name="answerid" value="<?= isset($questions[5]['answerid']) ? $questions[5]['answerid'] : "" ?>">
                     <input type="hidden" name="op" value="SaveAnswer">
-                    <textarea id="gc-1-5" cols="30" rows="8" name="answer" placeholder="Outline Team's Professional Growth Plan Here..."><?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][5][0]['answer']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][5][0]['answer'] : "" ?></textarea>
+                    <textarea id="gc-1-5" cols="30" rows="8" name="answer" placeholder="Outline Team's Professional Growth Plan Here..."><?= isset($questions[5]['answer']) ? $questions[5]['answer'] : "" ?></textarea>
                     <button class="uk-button uk-button-success uk-align-right" type="button" onclick="save_answers(this)">Save</button>
                     </p>
                 </form>
@@ -82,10 +89,11 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
                     <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
                     <input type="hidden" name="part" value="1">
+                    <input type="hidden" name="sequence" value="0">
                     <input type="hidden" name="questionid" value="3">
-                    <input type="hidden" name="answerid" value="<?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][3][0]['answerid']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][3][0]['answerid'] : "" ?>">
+                    <input type="hidden" name="answerid" value="<?= isset($questions[3]['answerid']) ? $questions[3]['answerid'] : "" ?>">
                     <input type="hidden" name="op" value="SaveAnswer">
-                    <input type="text" name="answer" data-uk-datepicker="{format:'DD.MM.YYYY'}" value="<?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][3][0]['answer']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][3][0]['answer'] : "" ?>">
+                    <input type="text" name="answer" data-uk-datepicker="{format:'DD.MM.YYYY'}" value="<?= isset($questions[3]['answer']) ? $questions[3]['answer'] : "" ?>">
                     <button class="uk-button uk-button-success uk-align-right" type="button" onclick="save_answers(this)">Save</button>
                     </p>
                 </form>
@@ -105,10 +113,11 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['courses'][ $data['cour
                     <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
                     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
                     <input type="hidden" name="part" value="1">
+                    <input type="hidden" name="sequence" value="0">
                     <input type="hidden" name="questionid" value="4">
-                    <input type="hidden" name="answerid" value="<?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][4][0]['answerid']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][4][0]['answerid'] : "" ?>">
+                    <input type="hidden" name="answerid" value="<?= isset($questions[4]['answerid']) ? $questions[4]['answerid'] : "" ?>">
                     <input type="hidden" name="op" value="SaveAnswer">
-                    <textarea id="gc-1-4" cols="30" rows="8" name="answer" placeholder="Define Team's Reflection Summary Here..."><?= isset($data['csip']['courses'][ $data['courseid'] ]['questions'][1][4][0]['answer']) ? $data['csip']['courses'][ $data['courseid'] ]['questions'][1][4][0]['answer'] : "" ?></textarea>
+                    <textarea id="gc-1-4" cols="30" rows="8" name="answer" placeholder="Define Team's Reflection Summary Here..."><?= isset($questions[4]['answer']) ? $questions[4]['answer'] : "" ?></textarea>
                     <button class="uk-button uk-button-success uk-align-right" type="button" onclick="save_answers(this)">Save</button>
                     </p>
                 </form>

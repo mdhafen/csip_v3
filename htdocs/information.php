@@ -1,23 +1,28 @@
 <!-- Tabs Begin -->
 <div class="uk-panel uk-panel-box-secondary">
 <?php
-   if ( !empty($data['courseid']) && !empty( $data['csip']['courses'][ $data['courseid'] ]['questions']) ) {
+   if ( !empty($data['courseid']) && !empty( $data['csip']['form'][ $data['courseid'] ][4]) ) {
 ?>
 	<ul class="uk-tab" data-uk-tab="{connect:'#cfas'}" id="rightpaneltabs">
 <?php
       $count = 1;
-      foreach ( $data['csip']['courses'][ $data['courseid'] ]['questions'] as $part => $questions ) {
+      foreach ( $data['csip']['form'][ $data['courseid'] ] as $part => $questions ) {
         if ( $part < 4 ) { continue; }
         $num_questions = 0;
         $num_answers = 0;
-        foreach ( $questions as $questionid => $answer ) {
+        foreach ( $questions as &$question ) {
+	  $questionid = $question['questionid'];
           if ( $data['csip']['questions'][$questionid]['type'] != 9 ) {
             $num_questions++;
-            if ( isset($answer[0]['answer']) && $answer[0]['answer'] != "" ) {
+            if ( !empty($question['answer']['answer']) ) {
+              $num_answers++;
+            }
+            if ( !empty($question['answers']) ) {
               $num_answers++;
             }
           }
         }
+	$data['csip']['form'][ $data['courseid'] ][ $part ][0]['num_answers'] = $num_answers;
         if ( $num_questions == $num_answers ) {
           $completeness = 'uk-badge-success';
         }
@@ -46,22 +51,19 @@
         <div id="cfas" class="uk-switcher">
 <?php
       $count = 1;
-      foreach ( $data['csip']['courses'][ $data['courseid'] ]['questions'] as $part => $questions ) {
+      foreach ( $data['csip']['form'][ $data['courseid'] ] as $part => $these_questions ) {
+	$questions = array();
         if ( $part < 4 ) { continue; }
-        $num_answers = 0;
-        foreach ( $questions as $questionid => $answer ) {
-          if ( $data['csip']['questions'][$questionid]['type'] != 9 ) {
-            if ( isset($answer[0]['answer']) && $answer[0]['answer'] != "" ) {
-              $num_answers++;
-            }
-          }
-        }
+	foreach ( $these_questions as $quest ) {
+	  $questions[ $quest['questionid'] ] = !empty($quest['answer'])?$quest['answer']:array();
+	}
+	$num_answers = $these_questions[0]['num_answers'];
  ?>
     <div id="cfa<?= $count ?>_content">
 	   <?php include 'cfa.php'; ?>
     </div>
 <?php
-         $count++;
+        $count++;
       }
       if ( !empty($data['can_edit']) ) {
  ?>

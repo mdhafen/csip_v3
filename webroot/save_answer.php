@@ -19,9 +19,11 @@ $op = input( 'op', INPUT_HTML_NONE );
 $questions = input( 'questions', INPUT_PINT );
 $answers = input( 'answers', INPUT_HTML_NONE );
 $answerids = input( 'answerids', INPUT_PINT );
+$sequences = input( 'sequences', INPUT_PINT );
 $questionid = input( 'questionid', INPUT_PINT );
 $answer = input( 'answer', INPUT_HTML_NONE );
 $answerid = input( 'answerid', INPUT_PINT );
+$sequence = input( 'sequence', INPUT_PINT ) || 0;
 
 $csip = array();
 if ( !empty($csipid) ) {
@@ -46,18 +48,18 @@ else {
    if ( empty($csip['courses'][$courseid]) ) {
       error( array('NOTYOURS' => 'Access to course not allowed here.') );
    }
-   if ( empty($csip['courses'][$courseid]['questions'][$part]) ) {
+   if ( empty($csip['form'][$courseid][$part]) ) {
       error( array('NOTYOURS' => 'Course does not have that tab.') );
    }
    $courses = get_user_courses( $_SESSION['loggedin_user']['userid'], $csip['locationid'] );
    if ( ! empty($questionid) ) {
-      if ( !isset($csip['courses'][$courseid]['questions'][$part][$questionid]) ) {
+      if ( ! in_array( $questionid, array_column($csip['form'][$courseid][$part],'questionid') ) ) {
          error( array('NOTYOURS' => 'Tab does not have that question.') );
       }
    }
    else if ( ! empty($questions) ) {
       foreach ( $questions as $questid ) {
-         if ( !isset($csip['courses'][$courseid]['questions'][$part][$questid]) ) {
+         if ( ! in_array( $questid, array_column($csip['form'][$courseid][$part],'questionid') ) ) {
 	   error( array('NOTYOURS' => 'Tab does not have that question.') );
          }
       }
@@ -75,17 +77,30 @@ else {
 if ( $op == 'SaveAnswer' ) {
    if ( !empty($answers) ) {
       $count = 0;
+      $new_seq = 0;
       for ( $count = 0; $count < count($questions); $count++ ) {
          $questionid = $questions[ $count ];
          $answer = $answers[ $count ];
          $answerid = $answerids[ $count ];
+         $sequence = $sequences[ $count ];
          if ( !empty($answer) || !empty($answerid) ) {
-            course_save_answers( $answerid, $answer, $courseid, $questionid, $part, $csip );
+            if ( empty($sequence) ) {
+               if ( empty($new_seq) ) {
+                  $new_seq = $sequence = part_get_next_sequence( $csipid, $courseid, $part, $questionid);
+               }
+               else {
+                  $sequence = $new_seq;
+               }
+            }
+            course_save_answers( $answerid, $answer, $courseid, $questionid, $sequence, $part, $csip );
          }
       }
    }
    else {
-      course_save_answers( $answerid, $answer, $courseid, $questionid, $part, $csip );
+      if ( empty($answerid) ) {
+         $sequence = part_get_next_sequence( $csipid, $courseid, $part, $questionid);
+      }
+      course_save_answers( $answerid, $answer, $courseid, $questionid, $sequence, $part, $csip );
    }
 }
 else if ( $op == 'DeleteAnswer' ) {
@@ -99,13 +114,16 @@ else if ( $op == 'DeleteAnswer' ) {
       $questionid = $questions[ $count ];
       $answerid = $answerids[ $count ];
       $found = 0;
-      foreach ( $csip['courses'][$courseid]['questions'][$part][$questionid] as $ans ) {
-         if ( $answerid == $ans['answerid'] ) {
-            $found = $ans;
+      foreach ( $csip['form'][$courseid][$part] as $question ) {
+         if ( $question['questionid'] != $questionid ) { continue; }
+         foreach ( $question['answers'] as $answer ) {
+	    if ( $answerid == $answer['answerid'] ) {
+               $found = $answer;
+            }
          }
       }
       if ( !empty($found) ) {
-         course_delete_answer( $answerid );
+         course_delete_answer( $answerid, $csip );
       }
    }
 }

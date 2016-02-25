@@ -51,7 +51,7 @@ else {
    if ( empty($csip['courses'][$courseid]) ) {
       $errors[] = array('FLAG' => 'NOTYOURS', 'message' => 'Access to course not allowed here.');
    }
-   else if ( ! empty($csip['courses'][$courseid]['questions'][$part]) ) {
+   else if ( ! empty($csip['form'][$courseid][$part]) ) {
       $errors[] = array('FLAG' => 'NOTYOURS', 'message' => 'Course already has that tab.');
    }
 }
@@ -60,7 +60,8 @@ if ( empty($errors) ) {
    $csip = course_add_extra_part( $courseid, $group, $part, $title, $csip );
 
    $questions = "";
-   foreach ( $csip['courses'][$courseid]['questions'][$part] as $questionid => $answer ) {
+   foreach ( $csip['form'][$courseid][$part] as $question ) {
+      $questionid = $question['questionid'];
       $questions .= "<question>";
       $questions .= "<questionid>$questionid</questionid>";
       $questions .= "<questiontext>". htmlspecialchars($csip['questions'][$questionid]['question_clean'],ENT_QUOTES|ENT_XML1|ENT_SUBSTITUTE) ."</questiontext>";
