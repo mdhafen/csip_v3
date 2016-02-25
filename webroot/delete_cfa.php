@@ -40,7 +40,7 @@ else {
    if ( empty($csip['courses'][$courseid]) ) {
       error( array('NOTYOURS' => 'Access to course not allowed here.') );
    }
-   if ( empty($csip['courses'][$courseid]['questions'][$part]) ) {
+   if ( empty($csip['form'][$courseid][$part]) ) {
       error( array('NOTYOURS' => 'Course does not have that tab.') );
    }
    if ( !empty($courses) ) {
@@ -51,9 +51,16 @@ else {
 }
 
 $num_answers = 0;
-foreach ( $csip['courses'][$courseid]['questions'][$part] as $questionid => $answer ) {
-   if ( isset($answer['answer']) && $answer['answer'] != "" ) {
+foreach ( $csip['form'][$courseid][$part] as $answer ) {
+   if ( !empty($answer['answer']['answer']) ) {
       $num_answers++;
+   }
+   if ( !empty($answer['answers']) ) {
+      foreach ( $answer['answers'] as $answer ) {
+         if ( !empty($answer['answer']) ) {
+            $num_answers++;
+	 }
+      }
    }
 }
 if ( $num_answers ) {

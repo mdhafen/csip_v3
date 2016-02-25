@@ -2,6 +2,7 @@
 
 $updates = array(
   '0001-add_results',
+  '0002-add_answer_group_sequence',
 );
 $results = array();
 

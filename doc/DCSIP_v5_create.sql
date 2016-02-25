@@ -82,6 +82,7 @@ CREATE TABLE `question` (
 	`questionid` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`question` TEXT NOT NULL,
 	`question_group` INT(10) UNSIGNED NOT NULL DEFAULT 0,
+	`group_repeatableid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
 	`version` INT(10) UNSIGNED NOT NULL DEFAULT 0,
 	`order_num` INT(10) NOT NULL DEFAULT 0,
 	`type` INT(4) NOT NULL DEFAULT 0 COMMENT '1 for textarea, 2 for select, \
@@ -116,13 +117,23 @@ CREATE TABLE `csip_extra_part_links` (
        `title` VARCHAR(64) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+CREATE TABLE `answer_group_sequence` (
+	`csipid` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+	`courseid` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+	`part` INT(4) NOT NULL DEFAULT '0',
+	`group_repeatableid` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+	`sequence_value` INT(10) UNSIGNED NOT NULL DEFAULT '1',
+	PRIMARY KEY (`csipid`,`courseid`,`part`,`group_repeatableid`)
+) ENGINE MyISAM DEFAULT CHARSET=utf8
+
 CREATE TABLE `answer` (
 	`answerid` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`answer` TEXT NOT NULL,
 	`csipid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
 	`courseid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
 	`questionid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
-        `part` INT(4) NOT NULL DEFAULT 0,
+	`part` INT(4) NOT NULL DEFAULT 0,
+	`group_sequence` INT(10) UNSIGNED NOT NULL DEFAULT 0,
 	PRIMARY KEY (`answerid`),
 	KEY (`csipid`),
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

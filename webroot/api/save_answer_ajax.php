@@ -18,9 +18,11 @@ $part = input( 'part', INPUT_PINT );
 $questions = input( 'questions', INPUT_PINT );
 $answers = input( 'answers', INPUT_HTML_NONE );
 $answerids = input( 'answerids', INPUT_PINT );
+$sequences = input( 'sequences', INPUT_PINT );
 $questionid = input( 'questionid', INPUT_PINT );
 $answer = input( 'answer', INPUT_HTML_NONE );
 $answerid = input( 'answerid', INPUT_PINT );
+$sequence = input( 'sequence', INPUT_PINT ) || 0;
 
 $error = array();
 
@@ -38,18 +40,18 @@ else {
    if ( empty($csip['courses'][$courseid]) ) {
       $error[] = array('NOTYOURS' => 'Access to course not allowed here.');
    }
-   if ( empty($csip['courses'][$courseid]['questions'][$part]) ) {
+   if ( empty($csip['form'][$courseid][$part]) ) {
       $error[] = array('NOTYOURS' => 'Course does not have that tab.');
    }
    $courses = get_user_courses( $_SESSION['loggedin_user']['userid'], $csip['locationid'] );
    if ( ! empty($questionid) ) {
-      if ( !isset($csip['courses'][$courseid]['questions'][$part][$questionid]) ) {
+      if ( ! in_array($questionid,array_column($csip['form'][$courseid][$part],'questionid')) ) {
          $error[] = array('NOTYOURS' => 'Tab does not have that question.');
       }
    }
    else if ( ! empty($questions) ) {
       foreach ( $questions as $questid ) {
-         if ( !isset($csip['courses'][$courseid]['questions'][$part][$questid]) ) {
+	 if ( ! in_array($questid,array_column($csip['form'][$courseid][$part],'questionid')) ) {
 	   $error[] = array('NOTYOURS' => 'Tab does not have that question.');
          }
       }
@@ -68,24 +70,32 @@ if ( empty($error) ) {
   $answer_details = '';
   if ( !empty($answers) ) {
     $count = 0;
+    $new_seq = 0;
     for ( $count = 0; $count < count($questions); $count++ ) {
       $questionid = $questions[ $count ];
       $answer = $answers[ $count ];
       $answerid = $answerids[ $count ];
+      $sequence = $sequences[ $count ];
       if ( !empty($answer) || !empty($answerid) ) {
-	$newanswerid = course_save_answers( $answerid, $answer, $courseid, $questionid, $part, $csip );
+	if ( empty($sequence) ) {
+	  if ( empty($new_seq) ) {
+	    $new_seq = $sequence = part_get_next_sequence( $csipid, $courseid, $part, $questionid);
+	  }
+	  else {
+	    $sequence = $new_seq;
+	  }
+	}
+	$newanswerid = course_save_answers( $answerid, $answer, $courseid, $questionid, $sequence, $part, $csip );
         if ( empty($answerid) && !empty($newanswerid) ) {
-          $answer_details .= "<answer_details><answerid>$newanswerid</answerid><questionid>$questionid</questionid><part>$part</part><courseid>$courseid</courseid><csipid>".$csip['csipid']."</csipid></answer_details>";
+          $answer_details .= "<answer_details><answerid>".(!empty($answerid)?$answerid:$newanswerid)."</answerid><questionid>$questionid</questionid><group_sequence>$sequence</group_sequence><part>$part</part><courseid>$courseid</courseid><csipid>".$csip['csipid']."</csipid></answer_details>";
         }
       }
     }
   }
   else {
-    course_save_answers( $answerid, $answer, $courseid, $questionid, $part, $csip );
+    $newanswerid = course_save_answers( $answerid, $answer, $courseid, $questionid, $sequence, $part, $csip );
+    $answer_details .= "<answer_details><answerid>".(!empty($answerid)?$answerid:$newanswerid)."</answerid><questionid>$questionid</questionid><group_sequence>$sequence</group_sequence><part>$part</part><courseid>$courseid</courseid><csipid>".$csip['csipid']."</csipid></answer_details>";
   }
-
-  $csip = course_reload_answers( $csip, $courseid, $part );
-  $_SESSION['csip'] = $csip;
 
   if ( !empty($answer_details) ) { $answer_details = '<answerids>'. $answer_details .'</answerids>'; }
   output( '<?xml version="1.0"?><result><state>Success</state>'. $answer_details .'</result>' );

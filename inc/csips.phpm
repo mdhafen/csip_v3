@@ -197,6 +197,7 @@ CROSS JOIN year USING (yearid)
   while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
     $csip['courses'][ $row['courseid'] ] = stripslashes_array( $row );
     $csip['course_categories'][ $row['course_category'] ] = $row['category_name'];
+    $csip['form'][ $row['courseid'] ] = array();
     $courses[] = $row['courseid'];
   }
   asort( $csip['course_categories'], SORT_STRING | SORT_FLAG_CASE );
@@ -208,7 +209,7 @@ CROSS JOIN year USING (yearid)
  CROSS JOIN course_question_links USING (question_group)
       WHERE version = :ver
         AND courseid IN ($courselist)
-   ORDER BY question_group,order_num
+   ORDER BY order_num
 ";
   $sth = $dbh->prepare( $query );
   $sth->bindValue( ':ver', $csip['version'] );
@@ -218,7 +219,7 @@ CROSS JOIN year USING (yearid)
     $row = stripslashes_array( $row );
     $row['question_clean'] = clean_question( $row, $row['courseid'], $csip );
     $csip['questions'][ $row['questionid'] ] = $row;
-    $csip['courses'][ $row['courseid'] ]['questions'][ $row['part'] ][ $row['questionid'] ] = array();
+    $csip['form'][ $row['courseid'] ][ $row['part'] ][] = array('questionid' => $row['questionid']);
   }
 
   $query = "
@@ -228,7 +229,7 @@ CROSS JOIN year USING (yearid)
       WHERE version = :ver
         AND csipid = :csip
         AND courseid IN ($courselist)
-   ORDER BY question_group,order_num
+   ORDER BY order_num
 ";
   $sth = $dbh->prepare( $query );
   $sth->bindValue( ':ver', $csip['version'] );
@@ -240,11 +241,7 @@ CROSS JOIN year USING (yearid)
       $row['question_clean'] = clean_question( $row, $row['courseid'], $csip );
       $csip['questions'][ $row['questionid'] ] = $row;
     }
-    $csip['courses'][ $row['courseid'] ]['questions'][ $row['part'] ][ $row['questionid'] ] = array();
-  }
-
-  foreach ( $csip['courses'] as $courseid => $questions ) {
-    ksort( $csip['courses'][ $courseid ]['questions'] );
+    $csip['form'][ $row['courseid'] ][ $row['part'] ][] = array('questionid' => $row['questionid']);
   }
 
   $query = "SELECT * FROM answer WHERE csipid = :cid AND courseid IN ($courselist)";
@@ -254,7 +251,13 @@ CROSS JOIN year USING (yearid)
   while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
     // can't stripslashes here because the answer might be serialized
     $row['question_html'] = course_get_html_input( $csip['questions'][ $row['questionid'] ], $row, $row['courseid'], $csip );
-    $csip['courses'][ $row['courseid'] ]['questions'][ $row['part'] ][ $row['questionid'] ][] = $row;
+    $index = array_search( $row['questionid'], array_column($csip['form'][ $row['courseid'] ][ $row['part'] ],'questionid') );
+    if ( !empty($csip['questions'][ $row['questionid'] ]['group_repeatableid']) ) {
+      $csip['form'][ $row['courseid'] ][ $row['part'] ][ $index ]['answers'][] = $row;
+    }
+    else {
+      $csip['form'][ $row['courseid'] ][ $row['part'] ][ $index ]['answer'] = $row;
+    }
   }
 
   return $csip;
@@ -279,28 +282,5 @@ function get_csip_locationid( $csipid = 0 ) {
   $csip = $sth->fetch( PDO::FETCH_ASSOC );
 
   return $csip['locationid'];
-}
-
-function get_report_list( $csip = 0 ) {
-  if ( ! $csip ) {
-    return;
-  }
-
-  $list = array();
-
-  foreach ( (array) $csip['course'] as $course ) {
-    if ( course_completion( $course['courseid'], $csip ) ) {
-      $list[ $course['courseid'] ] = $course;
-      foreach ( (array) $course['questions'] as $part => $questions ) {
-	if ( course_part_completion($course['courseid'],$part,$csip) ) {
-          foreach ( (array) $questions as $questionid => $answer ) {
-            $list[ $course['courseid'] ]['questions'][ $part ][ $questionid ] = course_get_html_report( $csip['questions'][$questionid], $answer, $course['courseid'], $csip );
-	  }
-	}
-      }
-    }
-  }
-
-  return $list;
 }
 ?>
