@@ -16,11 +16,13 @@ if ( !empty($data['courseid']) && !empty($data['csip']['form'][ $data['courseid'
       $sequences = array();
       $blank_answers = array();
       while ( !empty($questions[$i]) && $data['csip']['questions'][ $questions[$i]['questionid'] ]['group_repeatableid'] == $quest['group_repeatableid'] ) {
-	foreach ( $questions[$i]['answers'] as $answer ) {
-	  $sequence = $answer['group_sequence'];
-	  $new_quest = array( 'questionid' => $questions[$i]['questionid'] );
-	  $new_quest['answer'] = $answer;
-	  $sequences[ $sequence ][] = $new_quest;
+	if ( !empty($questions[$i]['answers']) ) {
+	  foreach ( $questions[$i]['answers'] as $answer ) {
+	    $sequence = $answer['group_sequence'];
+	    $new_quest = array( 'questionid' => $questions[$i]['questionid'] );
+	    $new_quest['answer'] = $answer;
+	    $sequences[ $sequence ][] = $new_quest;
+	  }
 	}
 	if ( !empty($data['can_edit']) ) {
 	  $blank_answers[] = array( 'questionid' => $questions[$i]['questionid'], 'answer' => array() );
