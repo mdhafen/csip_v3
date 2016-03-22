@@ -31,6 +31,10 @@ if ( $row['count'] == 0 ) {
   $query = "ALTER TABLE answer ADD COLUMN group_sequence INT(10) UNSIGNED NOT NULL DEFAULT '0' AFTER part";
   $dbh->exec( $query );
 
+  $dbh->exec("ALTER TABLE answer ADD UNIQUE KEY `unique_answers` (csipid,courseid,part,questionid,group_sequence)");
+
+  $dbh->exec("ALTER TABLE csip_extra_part_links ADD UNIQUE KEY `unique_parts` (csipid,courseid,part)");
+
   $answerid = $count = $prev_csip = $prev_course = $prev_part = 0;
   $query = "SELECT answerid,csipid,courseid,part,questionid FROM answer WHERE questionid IN (30,31) ORDER BY csipid,courseid,part,answerid";
   $sth = $dbh->prepare( $query );
