@@ -1,3 +1,10 @@
+            <div class="uk-grid" uk-grid-divider data-uk-grid-match>
+                <div class="uk-width-medium-3-10">
+                    <?php include 'leftpanel.php'; ?>
+                    <?php include 'dates.php'; ?>
+				</div>
+				<div class="uk-width-medium-7-10">
+
 <!-- Tabs Begin -->
 <div class="uk-panel uk-panel-box-secondary">
 <?php
@@ -85,3 +92,16 @@
     </div>
 <?php } ?>
 </div>
+
+                </div>
+            </div>
+
+<?php
+if ( !empty($data['part']) && $data['part'] > 1 ) {
+  switch ($data['part']) {
+  case 2 : $tab = 'accreditation_tab'; break;
+  case 3 : $tab = 'results_tab'; break;
+  default: $tab = 'cfa'. ( $data['part'] - 3 ) .'_tab'; break;
+  }
+}
+?>

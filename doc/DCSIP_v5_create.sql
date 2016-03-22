@@ -19,10 +19,10 @@ CREATE TABLE `location` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `user_location_links` (
-       `userid` INT(10) UNSIGNED NOT NULL DEFAULT '0',
-       `locationid` INT(10) UNSIGNED NOT NULL DEFAULT '0',
-       PRIMARY KEY (`userid`,`locationid`),
-       KEY `ull_userid` (`userid`)
+	`userid` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+	`locationid` INT(10) UNSIGNED NOT NULL DEFAULT '0',
+	PRIMARY KEY (`userid`,`locationid`),
+	KEY `ull_userid` (`userid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `year` (
@@ -45,7 +45,7 @@ CREATE TABLE `csip` (
 CREATE TABLE `course` (
 	`courseid` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`course_name` VARCHAR(64) NOT NULL DEFAULT '',
-        `course_category` INT(10) NOT NULL DEFAULT 0,
+	`course_category` INT(10) NOT NULL DEFAULT 0,
 	`active` INT(1) UNSIGNED NOT NULL DEFAULT 1,
 	`min_grade` INT(4) NOT NULL DEFAULT 1,
 	`max_grade` INT(4) NOT NULL DEFAULT 12,
@@ -53,33 +53,33 @@ CREATE TABLE `course` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `user_course_links` (
-       `userid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
-       `locationid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
-       `courseid` INT(10) UNSIGNED NOT NULL DEFAULT 0
+	`userid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
+	`locationid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
+	`courseid` INT(10) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `location_course_links` (
-       `locationid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
-       `courseid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
-       PRIMARY KEY (`locationid`,`courseid`),
-       KEY (`locationid`)
+	`locationid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
+	`courseid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
+	PRIMARY KEY (`locationid`,`courseid`),
+	KEY (`locationid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `course_approval` (
-       `courseid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
-       `csipid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
-       `principal_approved` DATE NULL DEFAULT NULL,
-       PRIMARY KEY (`courseid`,`csipid`)
+	`courseid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
+	`csipid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
+	`principal_approved` DATE NULL DEFAULT NULL,
+	PRIMARY KEY (`courseid`,`csipid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `course_categories` (
-       `categoryid` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-       `category_name` VARCHAR(64) NOT NULL DEFAULT '',
-       PRIMARY KEY (`categoryid`)
+	`categoryid` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`category_name` VARCHAR(64) NOT NULL DEFAULT '',
+	PRIMARY KEY (`categoryid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=UTF8;
 
 CREATE TABLE `question` (
-	`questionid` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`questionid` INT(10) UNSIGNED NOT NULL,
 	`question` TEXT NOT NULL,
 	`question_group` INT(10) UNSIGNED NOT NULL DEFAULT 0,
 	`group_repeatableid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
@@ -95,7 +95,7 @@ CREATE TABLE `question` (
 
 CREATE TABLE `question_options` (
 	`question_option_id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-        `option_group` INT(10) UNSIGNED NOT NULL DEFAULT 1,
+	`option_group` INT(10) UNSIGNED NOT NULL DEFAULT 1,
 	`option_value` VARCHAR(64) NOT NULL DEFAULT '',
 	`option_label` VARCHAR(128) NOT NULL DEFAULT '',
 	PRIMARY KEY (`question_option_id`),
@@ -103,18 +103,19 @@ CREATE TABLE `question_options` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `course_question_links` (
-       `courseid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
-       `question_group` INT(10) UNSIGNED NOT NULL DEFAULT 0,
-       `part` INT(4) NOT NULL DEFAULT 0,
-       `title` VARCHAR(64) NOT NULL DEFAULT ''
+	`courseid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
+	`question_group` INT(10) UNSIGNED NOT NULL DEFAULT 0,
+	`part` INT(4) NOT NULL DEFAULT 0,
+	`title` VARCHAR(64) NOT NULL DEFAULT ''
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `csip_extra_part_links` (
-       `csipid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
-       `courseid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
-       `question_group` INT(10) UNSIGNED NOT NULL DEFAULT 0,
-       `part` INT(4) NOT NULL DEFAULT 0,
-       `title` VARCHAR(64) NOT NULL DEFAULT ''
+	`csipid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
+	`courseid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
+	`question_group` INT(10) UNSIGNED NOT NULL DEFAULT 0,
+	`part` INT(4) NOT NULL DEFAULT 0,
+	`title` VARCHAR(64) NOT NULL DEFAULT '',
+	UNIQUE KEY `unique_parts` (csipid,courseid,part)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `answer_group_sequence` (
@@ -136,4 +137,5 @@ CREATE TABLE `answer` (
 	`group_sequence` INT(10) UNSIGNED NOT NULL DEFAULT 0,
 	PRIMARY KEY (`answerid`),
 	KEY (`csipid`),
+	UNIQUE KEY `unique_answers` (csipid,courseid,part,questionid,group_sequence)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

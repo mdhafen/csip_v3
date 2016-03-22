@@ -76,29 +76,22 @@ if ( !empty($data['courseid']) ) {
 ?>
             <hr>
         </h2>
-            <div class="uk-grid" uk-grid-divider data-uk-grid-match>
-                <div class="uk-width-medium-3-10">
-                    <?php include 'leftpanel.php'; ?>
-                    <?php include 'dates.php'; ?>
-				</div>
-				<div class="uk-width-medium-7-10">
-
-                    <?php include 'information.php'; ?>
-                </div>
-            </div>
-            <?php include 'footer.php'; ?>
-        </div>
 
 <?php
 $tab = '';
-if ( !empty($data['part']) && $data['part'] > 1 ) {
-  switch ($data['part']) {
-  case 2 : $tab = 'accreditation_tab'; break;
-  case 3 : $tab = 'results_tab'; break;
-  default: $tab = 'cfa'. ( $data['part'] - 3 ) .'_tab'; break;
+
+if ( !empty($data['csip']['version']) ) {
+  switch ( $data['csip']['version'] ) {
+    case 7:  include 'v7/information.php'; break;
+    case 8:  include 'v8/information.php'; break;
+    default: print '<h1>Alpha Code!  Form version '. $data['csip']['version'] .' has not been created yet!</h1>' ."\n"; break;
   }
 }
+
+include 'footer.php';
 ?>
+        </div>
+
 <script type="text/javascript">
 $(window).load( function(){
   var tab = "<?= $tab ?>";

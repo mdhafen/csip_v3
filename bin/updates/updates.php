@@ -3,6 +3,7 @@
 $updates = array(
   '0001-add_results',
   '0002-add_answer_group_sequence',
+  '0003-add_v8_form',
 );
 $results = array();
 
