@@ -82,9 +82,10 @@ $tab = '';
 
 if ( !empty($data['csip']['version']) ) {
   switch ( $data['csip']['version'] ) {
-  case 7:  include 'v7/information.php'; break;
-  case 8:  include 'v8/information.php'; break;
-  default: print '<h1>Alpha Code!  Form version '. $data['csip']['version'] .' has not been created yet!</h1>' ."\n"; break;
+    case 7:  include 'v7/information.php'; break;
+    case 8:  include 'v8/information.php'; break;
+    default: print '<h1>Alpha Code!  Form version '. $data['csip']['version'] .' has not been created yet!</h1>' ."\n"; break;
+  }
 }
 
 include 'footer.php';
