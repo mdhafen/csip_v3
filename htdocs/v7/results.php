@@ -4,6 +4,11 @@ if ( !empty($data['courseid']) && !empty($data['csip']['form'][ $data['courseid'
   $index = 0;
   $prev_repeatableid = 0;
   $repeated_questions = array();
+  $repeatable_questions = array();
+  foreach( $questions as $question ) {
+    $quest = $data['csip']['questions'][ $question['questionid'] ];
+    $repeatable_questions[ $quest['group_repeatableid'] ][] = $quest['questionid'];
+  }
   foreach( $questions as $question ) {
     $quest = $data['csip']['questions'][ $question['questionid'] ];
     if ( !empty($quest['group_repeatableid']) ) {
@@ -19,9 +24,17 @@ if ( !empty($data['courseid']) && !empty($data['csip']['form'][ $data['courseid'
 	if ( !empty($questions[$i]['answers']) ) {
 	  foreach ( $questions[$i]['answers'] as $answer ) {
 	    $sequence = $answer['group_sequence'];
-	    $new_quest = array( 'questionid' => $questions[$i]['questionid'] );
-	    $new_quest['answer'] = $answer;
-	    $sequences[ $sequence ][] = $new_quest;
+	    if ( empty($sequences[$sequence]) ) {
+	      foreach ( $repeatable_questions as $rep_quests ) {
+		if ( in_array($questions[$i]['questionid'],$rep_quests) ) {
+		  foreach ( $rep_quests as $qid ) {
+		    $sequences[ $sequence ][$qid] = array( 'questionid' => $qid );
+		  }
+		}
+	      }
+	    }
+	    $qid = $questions[$i]['questionid'];
+	    $sequences[ $sequence ][ $qid ]['answer'] = $answer;
 	  }
 	}
 	if ( !empty($data['can_edit']) ) {
