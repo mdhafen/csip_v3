@@ -30,16 +30,16 @@ $reporter = authorized( 'view_reports' );
 $csip = load_csip( $csipid, $reporter, $_SESSION['loggedin_user']['userid'] );
 
 $data = array(
-	'csip' => array( 'csipid' => $csipid ),
+	'csip' => $csip,
 	'categoryid' => $categoryid,
 	'courseid' => $courseid,
         'can_edit' => $can_edit,
 );
 
 if ( !empty($csip['version']) ) {
-  switch ( $data['csip']['version'] ) {
+  switch ( $csip['version'] ) {
     case 7:  include '../htdocs/v7/cfa_new.php'; break;
     case 8:  include '../htdocs/v8/cfa_new.php'; break;
-    default: return '<h1>Alpha Code!  Form version '. $data['csip']['version'] .' has not been created yet!</h1>'; break;
+    default: return '<h1>Alpha Code!  Form version '. $csip['version'] .' has not been created yet!</h1>'; break;
   }
 }
