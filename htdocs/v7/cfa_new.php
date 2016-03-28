@@ -8,8 +8,8 @@
 
 ?>
 <br>
-    <ul id="cfa<?= $count ?>" class="uk-nav uk-nav-side uk-nav-parent-icon" data-uk-nav="{multiple:true}">
-    <li id="cfam<?= $count ?>" class="uk-parent" aria-expanded="true">
+    <ul id="cfa<?= $part ?>" class="uk-nav uk-nav-side uk-nav-parent-icon" data-uk-nav="{multiple:true}">
+    <li id="cfam<?= $part ?>" class="uk-parent" aria-expanded="true">
         <a href="#"><strong>Common Formative Assessment</strong></a>
         <ul class="uk-nav-sub">
             <div class="uk-panel uk-panel-box uk-panel-box-primary">
@@ -71,8 +71,8 @@
             </li>
         </ul>
     </li>
-        <br>
-<li id="int<?= $count ?>" class="uk-parent">
+
+<li id="int<?= $part ?>" class="uk-parent">
         <a href="#"><strong>Intervention</strong></a>
         <ul class="uk-nav-sub">
             <li class="uk-parent">
@@ -136,7 +136,7 @@
         </ul>
     </li>
 <br>
-<li id="le<?= $count ?>" class="uk-parent">
+<li id="le<?= $part ?>" class="uk-parent">
         <a href="#"><strong>Learning Extension</strong></a>
         <ul class="uk-nav-sub">
             <li class="uk-parent">
