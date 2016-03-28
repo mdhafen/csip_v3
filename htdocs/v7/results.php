@@ -47,7 +47,7 @@ if ( !empty($data['courseid']) && !empty($data['csip']['form'][ $data['courseid'
 	$ids = array();
 	foreach ( $new_quests as $repeat_question ) {
 	  $ids[] = array(
-	    'questionid' => $repeat_question['answer']['questionid'],
+	    'questionid' => $repeat_question['questionid'],
 	    'answerid' => !empty($repeat_question['answer']['answerid'])?$repeat_question['answer']['answerid']:"",
 	    'group_sequence' => !empty($repeat_question['answer']['group_sequence'])?$repeat_question['answer']['group_sequence']:"",
 	  );
