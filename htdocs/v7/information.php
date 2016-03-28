@@ -45,15 +45,13 @@
       }
       if ( !empty($data['can_edit']) ) {
  ?>
-        <li class="" id="addcfa_tab"><a href="" onclick="addCFATab('<?= $data['csip']['csipid'] ?>','<?= $data['categoryid'] ?>','<?= $data['courseid'] ?>','<?= $part ?>');"><i class="uk-icon-plus"></i></a></li>
+        <li class="" id="addcfa_tab"><a href="" onclick="addCFATab('<?= $data['csip']['csipid'] ?>','<?= $data['categoryid'] ?>','<?= $data['courseid'] ?>','<?= $max_tab ?>','<?= $count ?>','<?= $part ?>');"><i class="uk-icon-plus"></i></a></li>
 <?php } ?>
         <li class="" id="accreditation_tab"><a href=""><div class="uk-badge uk-badge-primary">Accreditation</div></a></li>
         <li class="" id="results_tab"><a href=""><div class="uk-badge uk-badge-primary">Stakeholder Input</div></a></li>
 
 	</ul>
 	<!-- Tabs End -->
-	<script>maxTab=<?=$max_tab ?>;</script>
-
 
 
     <!-- Load pages based on tab selected -->

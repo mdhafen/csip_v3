@@ -40,6 +40,6 @@ if ( !empty($csip['version']) ) {
   switch ( $csip['version'] ) {
     case 7:  include '../htdocs/v7/cfa_new.php'; break;
     case 8:  include '../htdocs/v8/cfa_new.php'; break;
-    default: return '<h1>Alpha Code!  Form version '. $csip['version'] .' has not been created yet!</h1>'; break;
+    default: print '<h1>Alpha Code!  Form version '. $csip['version'] .' has not been created yet!</h1>'; break;
   }
 }

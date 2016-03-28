@@ -1,10 +1,7 @@
-var maxTab;
-function addCFATab(csipid,categoryid,courseid,part){
-	var lastTAB = maxTab-1;
-	tab=maxTab;
-	maxTab=maxTab+1;
+function addCFATab(csipid,categoryid,courseid,part,label,last){
+	var lastTAB = last;
+	if ( ! lastTAB ) { lastTAB = part; }
 	part=(part*1.0)+1;
-	//alert(maxTab+':'+tab+':'+lastTAB);
 	var data = {};
 	data['csipid'] = csipid;
 	data['courseid'] = courseid;
@@ -21,29 +18,22 @@ function addCFATab(csipid,categoryid,courseid,part){
 					messages = messages +" "+ t_flag.text();
 				});
 				alert("Error(s): "+ messages);
-				//console.log("course_add_part errors "+ messages);
 			}	
 			else {
-				$('<li class="uk-active" id="cfa'+tab+'_tab"><a href=""><div class="uk-badge uk-badge-warning">GVC '+tab+'</div></a></li>");').insertAfter("#cfa"+lastTAB+'_tab');
-				$('<div id="cfa'+tab+'_content">This is CFA'+tab+'</div>').insertAfter("#cfa"+lastTAB+'_content');
-				$("#cfa"+tab+"_content").load("cfa_new.php?tab="+tab+"&csipid="+csipid+"&courseid="+courseid+"&part="+part, function(response, status, xhr) {
+				$('<li id="cfa'+part+'_tab"><a href=""><div class="uk-badge uk-badge-warning">GVC '+label+'</div></a></li>");').insertAfter("#cfa"+lastTAB+'_tab');
+				$('<div id="cfa'+part+'_content">This is CFA'+part+'</div>').insertAfter("#cfa"+lastTAB+'_content');
+				$("#cfa"+part+"_content").load("cfa_new.php?tab="+label+"&csipid="+csipid+"&courseid="+courseid+"&part="+part, function(response, status, xhr) {
 					if (status == "error") {
-						// alert(msg + xhr.status + " " + xhr.statusText);
 						console.log(xhr.status + " " + xhr.statusText);
 					}
 				});
-				$("li#addcfa_tab a").attr("onclick","addCFATab('"+csipid+"','"+categoryid+"','"+courseid+"','"+ part +"');");
-				var cfa_tabs = $.UIkit.switcher('#rightpaneltabs',{connect:'#cfas',active:tab});
+				$("li#addcfa_tab a").attr("onclick","addCFATab('"+csipid+"','"+categoryid+"','"+courseid+"','"+ part +"','"+ ( (label*1.0)+1 ) +"','"+ part +"');");
+				var cfa_tabs = $.UIkit.switcher('#rightpaneltabs',{connect:'#cfas'});
 				cfa_tabs.init();
+				$("#cfa"+part+"_tab").trigger('click');
 			}
 		}
 	});
-	/*var cfa1 = $("div#cfa1_content").html();
-	var data = cfa1.replace("cfa1","cfa"+tab);
-	data = data.replace("cfam1","cfam"+tab)
-	data = data.replace("int1","int"+tab)
-	data = data.replace("le1","le"+tab)
-	$("div#cfa"+tab+"_content").html(data);*/
 }
 
 function confirmDelete() {
