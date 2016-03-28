@@ -18,8 +18,6 @@ $part = input( 'part', INPUT_PINT );
 $group = 4;
 $title = 'GVC '. ($part - 2);
 
-$courses = get_user_courses( $_SESSION['loggedin_user']['userid'], $csip['locationid'] );
-
 $csip = array();
 if ( !empty($csipid) ) {
   if ( !in_array( get_csip_locationid($csipid), $locations ) ) {
@@ -43,6 +41,8 @@ else {
    if ( ! $can_edit ) {
       $errors[] = array('FLAG' => 'NOTYOURS', 'message' => 'Access to CSIP denied.' );
    }
+
+   $courses = get_user_courses( $_SESSION['loggedin_user']['userid'], $csip['locationid'] );
    if ( !empty($courses) ) {
       if ( ! array_key_exists( $courseid, $courses ) ) {
          $errors[] = array('FLAG' => 'NOTYOURS', 'message' => 'Access to CSIP denied.' );
