@@ -140,7 +140,7 @@ if ( !empty($data['courseid']) && !empty($data['csip']['form'][ $data['courseid'
 <?php }
     echo "          </form>\n";
 
-    if ( ! $num_answers && count(array_column($question['end_group'],'answerid')) ) {
+    if ( count(array_column($question['end_group'],'answerid')) ) {
 	echo "<form method='post' class='uk-form uk-form-horizontal uk-clearfix' action='save_answer.php'>";
 	echo "<input type='hidden' name='csipid' value='". $data['csip']['csipid'] ."'>\n";
 	echo "<input type='hidden' name='categoryid' value='". $data['categoryid'] ."'>";
