@@ -636,6 +636,21 @@ function course_save_answers( $answerid, $answer, $courseid, $questionid, $seq, 
 
     $old = $sth->fetch(PDO::FETCH_ASSOC);
   }
+  else {
+    $query = "SELECT answer FROM answer WHERE questionid = :ques AND group_sequence = :seq AND part = :part AND courseid = :course AND csipid = :csip";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':ques', $questionid );
+    $sth->bindValue( ':seq', $seq );
+    $sth->bindValue( ':part', $part );
+    $sth->bindValue( ':course', $courseid );
+    $sth->bindValue( ':csip', $csip['csipid'] );
+    $sth->execute();
+
+    $old = $sth->fetch(PDO::FETCH_ASSOC);
+    if ( !empty($old['answerid']) ) {
+      $answerid = $old['answerid'];
+    }
+  }
 
   if ( empty($old['answer']) || $answer != $old['answer'] ) {
     if ( ! empty($answerid) ) {
@@ -704,6 +719,10 @@ function part_get_next_sequence( $csipid, $courseid, $part, $questionid) {
   $sth->bindValue( ':quest', $questionid );
   $sth->execute();
   $repeatableid = $sth->fetchColumn();
+
+  if ( empty($repeatableid) ) {
+    return 0;
+  }
 
   $dbh->exec("LOCK TABLES answer_group_sequence WRITE, answer READ");
 
