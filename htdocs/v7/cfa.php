@@ -1,5 +1,5 @@
 <br>
-    <ul id="cfa<?= $count ?>" class="uk-nav uk-nav-side uk-nav-parent-icon" data-uk-nav="{multiple:true}">
+    <ul id="cfa<?= $part ?>" class="uk-nav uk-nav-side uk-nav-parent-icon" data-uk-nav="{multiple:true}">
     <form method="post" class="uk-form uk-form-horizontal" action="save_answer.php">
     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
     <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
@@ -7,7 +7,7 @@
     <input type="hidden" name="part" value="<?= $part ?>">
     <input type="hidden" name="sequence" value="0">
     <input type="hidden" name="op" value="SaveAnswer">
-    <li id="cfam<?= $count ?>" class="uk-parent" aria-expanded="true">
+    <li id="cfam<?= $part ?>" class="uk-parent" aria-expanded="true">
         <a href="#"><strong>Common Formative Assessment</strong></a>
         <ul class="uk-nav-sub">
             <div class="uk-panel uk-panel-box uk-panel-box-primary">
@@ -67,7 +67,7 @@
         </ul>
     </li>
         <br>
-<li id="int<?= $count ?>" class="uk-parent">
+<li id="int<?= $part ?>" class="uk-parent">
         <a href="#"><strong>Intervention</strong></a>
         <ul class="uk-nav-sub">
             <li class="uk-parent">
@@ -133,7 +133,7 @@
         </ul>
     </li>
 <br>
-<li id="le<?= $count ?>" class="uk-parent">
+<li id="le<?= $part ?>" class="uk-parent">
         <a href="#"><strong>Learning Extension</strong></a>
         <ul class="uk-nav-sub">
             <li class="uk-parent">
