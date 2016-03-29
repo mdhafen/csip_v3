@@ -669,6 +669,10 @@ function course_save_answers( $answerid, $answer, $courseid, $questionid, $seq, 
       $sth->bindValue( ':course', $courseid );
       $sth->bindValue( ':csip', $csip['csipid'] );
       $sth->execute();
+      if ( $sth->errorCode() !== '00000' ) {
+	$db_error = $sth->errorInfo();
+	error_log("DB Error! ". $db_error[0] ." : ". $db_error[2]);
+      }
     }
 
     $query = "UPDATE course_approval SET principal_approved = NULL WHERE courseid = :course AND csipid = :csip";
