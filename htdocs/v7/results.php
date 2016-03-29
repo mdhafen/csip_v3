@@ -28,7 +28,7 @@ if ( !empty($data['courseid']) && !empty($data['csip']['form'][ $data['courseid'
 	      foreach ( $repeatable_questions as $rep_quests ) {
 		if ( in_array($questions[$i]['questionid'],$rep_quests) ) {
 		  foreach ( $rep_quests as $qid ) {
-		    $sequences[ $sequence ][$qid] = array( 'questionid' => $qid );
+		    $sequences[ $sequence ][$qid] = array( 'questionid' => $qid, 'answer' => array( 'group_sequence' => $sequence) );
 		  }
 		}
 	      }
