@@ -13,10 +13,12 @@
 	<ul class="uk-tab" data-uk-tab="{connect:'#cfas'}" id="rightpaneltabs">
 <?php
       $count = 1;
+      $max_tab = 0;
       foreach ( $data['csip']['form'][ $data['courseid'] ] as $part => $questions ) {
         if ( $part < 4 ) { continue; }
         $num_questions = 0;
         $num_answers = 0;
+        if ( $part > $max_tab ) { $max_tab = $part; }
         foreach ( $questions as &$question ) {
 	  $questionid = $question['questionid'];
           if ( $data['csip']['questions'][$questionid]['type'] != 9 ) {
@@ -37,21 +39,19 @@
           $completeness = 'uk-badge-warning';
         }
  ?>
-        <li class="<?= $part == $count ? 'uk-active' : '' ?>" id="cfa<?= $count ?>_tab"><a href=""><div class="uk-badge <?= $completeness ?>">GVC <?= $count ?></div></a></li>
+        <li class="" id="cfa<?= $part ?>_tab"><a href=""><div class="uk-badge <?= $completeness ?>">GVC <?= $count ?></div></a></li>
 <?php
          $count++;
       }
       if ( !empty($data['can_edit']) ) {
  ?>
-        <li class="" id="addcfa_tab"><a href="" onclick="addCFATab('<?= $data['csip']['csipid'] ?>','<?= $data['categoryid'] ?>','<?= $data['courseid'] ?>','<?= $part ?>');"><i class="uk-icon-plus"></i></a></li>
+        <li class="" id="addcfa_tab"><a href="" onclick="addCFATab('<?= $data['csip']['csipid'] ?>','<?= $data['categoryid'] ?>','<?= $data['courseid'] ?>','<?= $max_tab ?>','<?= $count ?>','<?= $part ?>');"><i class="uk-icon-plus"></i></a></li>
 <?php } ?>
         <li class="" id="accreditation_tab"><a href=""><div class="uk-badge uk-badge-primary">Accreditation</div></a></li>
         <li class="" id="results_tab"><a href=""><div class="uk-badge uk-badge-primary">Stakeholder Input</div></a></li>
 
 	</ul>
 	<!-- Tabs End -->
-	<script>maxTab=<?=$count ?>;</script>
-
 
 
     <!-- Load pages based on tab selected -->
@@ -66,7 +66,7 @@
 	}
 	$num_answers = $these_questions[0]['num_answers'];
  ?>
-    <div id="cfa<?= $count ?>_content">
+    <div id="cfa<?= $part ?>_content">
 	   <?php include 'cfa.php'; ?>
     </div>
 <?php
@@ -101,7 +101,7 @@ if ( !empty($data['part']) && $data['part'] > 1 ) {
   switch ($data['part']) {
   case 2 : $tab = 'accreditation_tab'; break;
   case 3 : $tab = 'results_tab'; break;
-  default: $tab = 'cfa'. ( $data['part'] - 3 ) .'_tab'; break;
+  default: $tab = 'cfa'. ( $data['part'] ) .'_tab'; break;
   }
 }
 ?>

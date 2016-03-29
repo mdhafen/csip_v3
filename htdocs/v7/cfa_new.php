@@ -1,41 +1,15 @@
 <?php
 // To rebuild this:
-//   Copy htdocs/cfa.php
+//   Copy htdocs/v7/cfa.php
 //   Remove text input value's and contents of textarea's
 //     Leave the hidden inputs alone!
 //   Collapse if/else block around 'protected-content' to just the if block
 //   Remove the if statements around the Delete button
 
-include_once( '../../lib/security.phpm' );
-include_once( '../../lib/input.phpm' );
-include_once( '../../inc/csips.phpm' );
-include_once( '../../inc/course.phpm' );
-include_once( '../../inc/site.phpm' );
-
-$csipid = input( 'csipid', INPUT_PINT );
-$categoryid = input( 'categoryid', INPUT_PINT );
-$courseid = input( 'courseid', INPUT_PINT );
-$count = input( 'tab', INPUT_PINT );
-$part = input( 'part', INPUT_PINT );
-
-$can_edit = authorized( 'update_csip' );
-$courses = get_user_courses( $_SESSION['loggedin_user']['userid'], get_csip_locationid($csipid) );
-if ( !empty($courseid) && !empty($courses) ) {
-   if ( ! array_key_exists( $courseid, $courses ) ) {
-      $can_edit = 0;
-   }
-}
-
-$data = array(
-	'csip' => array( 'csipid' => $csipid ),
-	'categoryid' => $categoryid,
-	'courseid' => $courseid,
-        'can_edit' => $can_edit,
-);
 ?>
 <br>
-    <ul id="cfa<?= $count ?>" class="uk-nav uk-nav-side uk-nav-parent-icon" data-uk-nav="{multiple:true}">
-    <li id="cfam<?= $count ?>" class="uk-parent" aria-expanded="true">
+    <ul id="cfa<?= $part ?>" class="uk-nav uk-nav-side uk-nav-parent-icon" data-uk-nav="{multiple:true}">
+    <li id="cfam<?= $part ?>" class="uk-parent" aria-expanded="true">
         <a href="#"><strong>Common Formative Assessment</strong></a>
         <ul class="uk-nav-sub">
             <div class="uk-panel uk-panel-box uk-panel-box-primary">
@@ -97,8 +71,8 @@ $data = array(
             </li>
         </ul>
     </li>
-        <br>
-<li id="int<?= $count ?>" class="uk-parent">
+
+<li id="int<?= $part ?>" class="uk-parent">
         <a href="#"><strong>Intervention</strong></a>
         <ul class="uk-nav-sub">
             <li class="uk-parent">
@@ -162,7 +136,7 @@ $data = array(
         </ul>
     </li>
 <br>
-<li id="le<?= $count ?>" class="uk-parent">
+<li id="le<?= $part ?>" class="uk-parent">
         <a href="#"><strong>Learning Extension</strong></a>
         <ul class="uk-nav-sub">
             <li class="uk-parent">
