@@ -40,7 +40,7 @@ else {
    }
 }
 
-if ( !in_array($op, array('ApproveCourse','UnApproveCourse')) ) {
+if ( !in_array($op, array('ApproveCourse','UnApproveCourse','Comment')) ) {
    error( array('BADOP' => 'Action not recognized.') );
 }
 
@@ -51,6 +51,13 @@ if ( $op == 'ApproveCourse' ) {
 else if ( $op == 'UnApproveCourse' ) {
     course_unapprove( $courseid, $csip );
     $csip['courses'][$courseid]['principal_approved'] = null;
+}
+else if ( $op == 'Comment' ) {
+    $comment = input( 'comment', INPUT_HTML_NONE );
+    if ( !is_null($comment) ) {
+      course_principal_comment( $comment, $courseid, $csip );
+    }
+    $csip['courses'][$courseid]['principal_comment'] = $comment;
 }
 
 redirect( 'index.php?csipid='. $csip['csipid'] .'&categoryid='. $categoryid .'&courseid='. $courseid );

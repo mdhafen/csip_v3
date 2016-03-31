@@ -67,6 +67,22 @@ function get_years() {
   return $result;
 }
 
+function get_versions() {
+  $dbh = db_connect();
+  $result = array();
+
+  $query = "SELECT version FROM question GROUP BY version ORDER BY version";
+  $sth = $dbh->prepare( $query );
+
+  $sth->execute();
+
+  while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+    $result[] = $row['version'];
+  }
+
+  return $result;
+}
+
 function get_csips( $locations = array(), $district = 0, $history = 3 ) {
   $dbh = db_connect();
   $result = array();
@@ -184,7 +200,7 @@ CROSS JOIN year USING (yearid)
   }
 
   $query = "
-    SELECT course.*,ca.principal_approved,cc.category_name
+    SELECT course.*,ca.principal_approved,ca.principal_comment,cc.category_name
       FROM course
  LEFT JOIN location_course_links USING (courseid)
  LEFT JOIN course_approval AS ca ON course.courseid = ca.courseid AND ca.csipid = :csip

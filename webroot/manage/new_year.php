@@ -8,6 +8,7 @@ include_once( '../../inc/csips.phpm' );
 
 authorize( 'manage_users' );
 
+$versions = get_versions();
 $op = input( 'op', INPUT_STR );
 
 if ( $op == 'Save Year' ) {
@@ -37,6 +38,7 @@ if ( $op == 'Save Year' ) {
 }
 
 $output = array(
+		'versions' => $versions,
 		'created' => $created,
 		'new_csips' => $new_csips,
 );

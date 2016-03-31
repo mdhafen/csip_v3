@@ -43,7 +43,13 @@ April : Teams complete REFLECTION process
 
 <tr>
 <td><label for="version">Question Version</label></td>
-<td><input name="version" id="version" value="7" readonly="readonly" ></td>
+<td>
+<select name="version" id="version">
+<?php foreach ( $data['versions'] as $version ) {
+  <option value="<?= $version ?>"><?= $version ?></option>
+<?php } ?>
+</select>
+</td>
 </tr>
 
 </table>
