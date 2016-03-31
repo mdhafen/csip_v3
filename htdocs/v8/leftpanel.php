@@ -102,12 +102,12 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['form'][ $data['coursei
 </div>
 
 <?php
-if ( !empty($data['courseid']) {
+if ( !empty($data['courseid']) ) {
 ?>
 <div class="uk-panel uk-panel-box">
     <h4 class="uk-clearfix"><i class="uk-icon-comment"></i> <strong>Principal&apos;s Comment</strong></h4>
 <hr>
-<?php if ( !empty($data['_session']['CAN_approve_csip']) ) {
+<?php if ( !empty($data['_session']['CAN_approve_csip']) ) { ?>
     <form method="post" class="uk-form uk-display-inline-block" action="approve.php">
         <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
         <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
