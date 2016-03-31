@@ -10,6 +10,8 @@ authorize( 'manage_users' );
 
 $versions = get_versions();
 $op = input( 'op', INPUT_STR );
+$created = 0;
+$new_csips = 0;
 
 if ( $op == 'Save Year' ) {
   $year_name = input( 'year_name', INPUT_HTML_NONE );

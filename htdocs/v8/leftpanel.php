@@ -44,7 +44,7 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['form'][ $data['coursei
                     <input type="hidden" name="questionid" value="33">
                     <input type="hidden" name="answerid" value="<?= isset($questions[33]['answerid']) ? $questions[33]['answerid'] : "" ?>">
                     <input type="hidden" name="op" value="SaveAnswer">
-                    <textarea id="gc-1-5" cols="30" rows="8" name="answer" placeholder="Outline Team's Professional Growth Plan Here..."><?= isset($questions[5]['answer']) ? $questions[5]['answer'] : "" ?></textarea>
+                    <textarea id="gc-1-5" cols="30" rows="8" name="answer" placeholder="Outline Team's Professional Growth Plan Here..."><?= isset($questions[5]['answer']) ? $questions[5]['answer'] : "" ?></textarea><br><br>
                     <button class="uk-button uk-button-success uk-align-right" type="button" onclick="save_answers(this)">Save</button>
                     </p>
                 </form>
@@ -89,7 +89,7 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['form'][ $data['coursei
                     <input type="hidden" name="questionid" value="35">
                     <input type="hidden" name="answerid" value="<?= isset($questions[35]['answerid']) ? $questions[35]['answerid'] : "" ?>">
                     <input type="hidden" name="op" value="SaveAnswer">
-                    <textarea id="gc-1-4" cols="30" rows="8" name="answer" placeholder="Define Team's Reflection Summary Here..."><?= isset($questions[35]['answer']) ? $questions[35]['answer'] : "" ?></textarea>
+                    <textarea id="gc-1-4" cols="30" rows="8" name="answer" placeholder="Define Team's Reflection Summary Here..."><?= isset($questions[35]['answer']) ? $questions[35]['answer'] : "" ?></textarea><br><br>
                     <button class="uk-button uk-button-success uk-align-right" type="button" onclick="save_answers(this)">Save</button>
                     </p>
                 </form>
@@ -102,19 +102,28 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['form'][ $data['coursei
 </div>
 
 <?php
-if ( !empty($data['courseid']) && !empty($data['_session']['CAN_approve_csip']) ) {
+if ( !empty($data['courseid']) {
 ?>
 <div class="uk-panel uk-panel-box">
+    <h4 class="uk-clearfix"><i class="uk-icon-comment"></i> <strong>Principal&apos;s Comment</strong></h4>
+<hr>
+<?php if ( !empty($data['_session']['CAN_approve_csip']) ) {
     <form method="post" class="uk-form uk-display-inline-block" action="approve.php">
         <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
         <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
         <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
         <input type="hidden" name="op" value="Comment">
-        <textarea id="a-c" cols="30" rows="8" name="comment" placeholder="Place comments Here..."><?= isset($data['csip']['courses'][ $data['courseid'] ]['principal_comment']) ? $data['csip']['courses'][ $data['courseid'] ]['principal_comment'] : "" ?></textarea>
-        <button class='uk-button <?= $class ?>' onclick="this.form.submit()">Save Comment</button>
+        <textarea id="a-c" cols="30" rows="8" name="comment" placeholder="Place comments Here..."><?= isset($data['csip']['courses'][ $data['courseid'] ]['principal_comment']) ? $data['csip']['courses'][ $data['courseid'] ]['principal_comment'] : "" ?></textarea><br><br>
+        <button class='uk-button uk-button-success' onclick="this.form.submit()">Save Comment</button>
     </form>
+<?php } else { ?>
+    <div class="uk-panel uk-panel-box-secondary">
+<?= isset($data['csip']['courses'][ $data['courseid'] ]['principal_comment']) ? $data['csip']['courses'][ $data['courseid'] ]['principal_comment'] : "" ?>
+    </div>
+<?php
+      }
+?>
 </div>
 <?php
-  }
 }
 ?>

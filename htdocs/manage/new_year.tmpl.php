@@ -45,7 +45,7 @@ April : Teams complete REFLECTION process
 <td><label for="version">Question Version</label></td>
 <td>
 <select name="version" id="version">
-<?php foreach ( $data['versions'] as $version ) {
+<?php foreach ( $data['versions'] as $version ) { ?>
   <option value="<?= $version ?>"><?= $version ?></option>
 <?php } ?>
 </select>

@@ -15,7 +15,7 @@ if ( $row['count'] == 0 ) {
   $query = "ALTER TABLE course_approval ADD COLUMN principal_comment TEXT NULL AFTER principal_approved";
   $dbh->exec( $query );
 
-  $sth = $dbh->prepare("INSERT INTO question (questionid,version,question_group,type,order_num,question) VALUES (:qid,8,:group,:type,:order,:quest");
+  $sth = $dbh->prepare("INSERT INTO question (questionid,version,question_group,type,order_num,question) VALUES (:qid,8,:group,:type,:order,:quest)");
 
   // type 1:text 2:select 3:sm-text 4:md-text 5:lg-text 7:check 8:multi 9:info
   $sth->bindValue(':qid','32');
@@ -132,7 +132,7 @@ For middle and high school only-Utilize the elements of this section to support 
   $sth->bindValue(':type','9');
   $sth->bindValue(':order','3');
   $sth->bindValue(':quest','<b>How will WE know if they LEARNED it?</b><br/>
-EFFECTIVE TEAMS utilize COMMON FORMATIVE ASSESSMENTS (CFA) to diagnostically assess a student''s learning, determine which students were proficient in the guaranteed skill, and those who need extra time and support.<br/>
+EFFECTIVE TEAMS utilize COMMON FORMATIVE ASSESSMENTS (CFA) to diagnostically assess a student\'s learning, determine which students were proficient in the guaranteed skill, and those who need extra time and support.<br/>
 TEAM ACTION STEPS: Identify a common formative assessment that your team will use to assess the GVC skill.');
   $sth->execute();
 
@@ -183,7 +183,7 @@ TEAM ACTION STEPS: Identify a common formative assessment that your team will us
   $sth->bindValue(':type','9');
   $sth->bindValue(':order','10');
   $sth->bindValue(':quest','<b>How will WE respond to those who didn\'t get it?</b><br/>
-EFFECTIVE TEAMS analyze the results of their common formative assessment (CFA) and immediately intervene with those who are in need of extra time and support. (Keep in mind that if less than 75% of students didn''t get a concept, it might not be an intervention issue; the initial instruction should be re-examined.)');
+EFFECTIVE TEAMS analyze the results of their common formative assessment (CFA) and immediately intervene with those who are in need of extra time and support. (Keep in mind that if less than 75% of students didn\'t get a concept, it might not be an intervention issue; the initial instruction should be re-examined.)');
   $sth->execute();
 
   $sth->bindValue(':qid','55');

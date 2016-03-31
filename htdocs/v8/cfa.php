@@ -25,9 +25,10 @@
                 <textarea id="cfa-l-<?= $part ?>-45" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[45]['answer']) ? $questions[45]['answer'] : "" ?></textarea>
             </div>
         </div>
+        <br>
     </li>
     <li id="cfac<?= $part ?>" class="uk-parent" aria-expanded="true">
-        <a href="#"><strong>Learning Targets and Common Formative Assessment</strong></a>
+        <h2><span class="uk-text-primary">Learning Targets and Common Formative Assessment</span></h2>
         <div class="uk-panel uk-panel-box">
             <div class="uk-badge uk-badge-notification uk-align-right"><?= $count ?></div>
             <div class="uk-form-row">
@@ -47,7 +48,7 @@
                         <input type="hidden" name="questions[]" value="49">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[49]['answerid']) ? $questions[49]['answerid'] : "" ?>">
                         <input type="hidden" name="sequences[]" value="0">
-                        <input type="text" id="cfa-c-<?= $part ?>-16" name="answers[]" value="<?= isset($questions[49]['answer']) ? $questions[49]['answer'] : "" ?>" placeholder="text input">
+                        <textarea id="cfa-c-<?= $part ?>-49" cols="25" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[49]['answer']) ? $questions[49]['answer'] : "" ?></textarea>
                     </div>
                 </div>
 
@@ -57,7 +58,7 @@
                         <input type="hidden" name="questions[]" value="50">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[50]['answerid']) ? $questions[50]['answerid'] : "" ?>">
                         <input type="hidden" name="sequences[]" value="0">
-                        <input type="text" id="cfa-c-<?= $part ?>-50" name="answers[]" value="<?= isset($questions[50]['answer']) ? $questions[50]['answer'] : "" ?>" placeholder="text input">
+                        <textarea id="cfa-c-<?= $part ?>-50" cols="25" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[50]['answer']) ? $questions[50]['answer'] : "" ?></textarea>
                     </div>
                 </div>
             </div>
@@ -68,7 +69,7 @@
                     <input type="hidden" name="questions[]" value="51">
                     <input type="hidden" name="answerids[]" value="<?= isset($questions[51]['answerid']) ? $questions[51]['answerid'] : "" ?>">
                     <input type="hidden" name="sequences[]" value="0">
-                    <input type="text" id="cfa-c-<?= $part ?>-51" name="answers[]" value="<?= isset($questions[51]['answer']) ? $questions[51]['answer'] : "" ?>" placeholder="text input">
+                    <textarea id="cfa-c-<?= $part ?>-51" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[51]['answer']) ? $questions[51]['answer'] : "" ?></textarea>
                 </div>
             </div>
             <hr>
@@ -86,10 +87,10 @@
             <button class="uk-button uk-button-success uk-align-right" type="button" onclick="save_answers(this)">Save</button>
   <?php } ?>
         </div>
+        <br>
     </li>
-    <br>
     <li id="int<?= $part ?>" class="uk-parent">
-        <a href="#"><strong>Intervention</strong></a>
+        <h2><span class="uk-text-primary">Intervention</span></h2>
         <div class="uk-parent">
             <div class="uk-panel uk-panel-box uk-panel-box-primary">
                 <p><strong>How will WE RESPOND to those who didn&apos;t get it?</strong></p>
@@ -149,10 +150,10 @@
   <?php } ?>
             </div>
         </div>
+        <br>
     </li>
-    <br>
     <li id="le<?= $part ?>" class="uk-parent">
-        <a href="#"><strong>Learning Extension</strong></a>
+        <h2><span class="uk-text-primary">Learning Extension</span></h2>
         <div class="uk-nav-sub">
             <div class="uk-panel uk-panel-box uk-panel-box-primary">
                 <p><strong>EFFECTIVE TEAMS provide extension activities for those students who already know a standard or skill.</strong></p>
