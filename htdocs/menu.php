@@ -11,7 +11,7 @@
 		</div>';
 		}
 		?>
-		<a href="<?= $data['_config']['base_url'] ?>index.php" class="uk-navbar-brand">Digital CSIP <font size="1pt">v. 5.0.bse</font></a>
+		<a href="<?= $data['_config']['base_url'] ?>index.php" class="uk-navbar-brand">Digital CSIP <font size="1pt">v. 8.0.bse</font></a>
 		<?php
 		if( !empty($data['_session']['CAN_manage_users']) ){
                                 echo '<ul class="uk-navbar-nav uk-hidden-small uk-navbar-attached">';
