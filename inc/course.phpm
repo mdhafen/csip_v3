@@ -795,7 +795,7 @@ function part_get_next_sequence( $csipid, $courseid, $part, $questionid) {
   else {
     $sequence = $count + 1;
 
-    $query = "UPDATE FROM answer_group_sequence SET sequence_value = :seq WHERE csipid = :csip AND courseid = :course AND part = :part AND group_repeatableid = :repeat";
+    $query = "UPDATE answer_group_sequence SET sequence_value = :seq WHERE csipid = :csip AND courseid = :course AND part = :part AND group_repeatableid = :repeat";
     $sth = $dbh->prepare( $query );
     $sth->bindValue( ':seq', $sequence );
     $sth->bindValue( ':csip', $csipid );
