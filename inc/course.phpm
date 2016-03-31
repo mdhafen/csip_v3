@@ -60,6 +60,10 @@ function update_course( $courseid, $update, $parts = array() ) {
   }
   $sth = $dbh->prepare( $query );
   $sth->execute( array_values( $update ) );
+  if ( $sth->errorCode() !== '00000' ) {
+    $db_error = $sth->errorInfo();
+    error_log("Save Course DB Error! ". $db_error[0] ." : ". $db_error[2]);
+  }
 
   if ( ! $courseid ) {
     $courseid = $dbh->lastInsertId();
@@ -79,6 +83,10 @@ function update_course( $courseid, $update, $parts = array() ) {
       $sth->bindValue( ':group', $part['question_group'] );
       $sth->bindValue( ':title', $part['title'] );
       $sth->execute();
+      if ( $sth->errorCode() !== '00000' ) {
+        $db_error = $sth->errorInfo();
+        error_log("Save Course Parts DB Error on Insert! ". $db_error[0] ." : ". $db_error[2]);
+      }
     }
   }
 
@@ -659,6 +667,10 @@ function course_save_answers( $answerid, $answer, $courseid, $questionid, $seq, 
       $sth->bindValue( ':ans', $answer );
       $sth->bindValue( ':ansid', $answerid );
       $sth->execute();
+      if ( $sth->errorCode() !== '00000' ) {
+	$db_error = $sth->errorInfo();
+	error_log("Save Answer DB Error on Update! ". $db_error[0] ." : ". $db_error[2]);
+      }
     } else {
       $query = "INSERT INTO answer ( answer, questionid, group_sequence, part, courseid, csipid ) VALUES ( :ans, :ques, :seq, :part, :course, :csip )";
       $sth = $dbh->prepare( $query );
@@ -671,7 +683,7 @@ function course_save_answers( $answerid, $answer, $courseid, $questionid, $seq, 
       $sth->execute();
       if ( $sth->errorCode() !== '00000' ) {
 	$db_error = $sth->errorInfo();
-	error_log("DB Error! ". $db_error[0] ." : ". $db_error[2]);
+	error_log("Save Answer DB Error on Insert! ". $db_error[0] ." : ". $db_error[2]);
       }
     }
 
@@ -716,6 +728,7 @@ function course_delete_answer( $answerid, $csip ) {
 function part_get_next_sequence( $csipid, $courseid, $part, $questionid) {
   $sequence = 0;
   $repeatableid = 0;
+  $questions = array();
   $dbh = db_connect();
 
   $query = "SELECT group_repeatableid FROM question WHERE questionid = :quest";
@@ -726,6 +739,15 @@ function part_get_next_sequence( $csipid, $courseid, $part, $questionid) {
 
   if ( empty($repeatableid) ) {
     return 0;
+  }
+  else {
+    $query = "SELECT questionid FROM question WHERE group_repeatableid = :repeat";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':repeat', $repeatableid );
+    $sth->execute();
+    while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+      $questions[] = $row['questionid'];
+    }
   }
 
   $dbh->exec("LOCK TABLES answer_group_sequence WRITE, answer READ");
@@ -740,14 +762,18 @@ function part_get_next_sequence( $csipid, $courseid, $part, $questionid) {
   $count = $sth->fetchColumn();
 
   if ( $count === false ) {
-    $query = "SELECT count(*) FROM answer WHERE csipid = :csip AND courseid = :course AND part = :part AND questionid = :question";
+    $query = "SELECT max(group_sequence) FROM answer WHERE csipid = :csip AND courseid = :course AND part = :part AND questionid IN (:questions)";
     $sth = $dbh->prepare( $query );
     $sth->bindValue( ':csip', $csipid );
     $sth->bindValue( ':course', $courseid );
     $sth->bindValue( ':part', $part );
-    $sth->bindValue( ':question', $questionid );
+    $sth->bindValue( ':questions', implode(',',$questions) );
     $sth->execute();
     $count = $sth->fetchColumn();
+    if ( $sth->errorCode() !== '00000' ) {
+      $db_error = $sth->errorInfo();
+      error_log("Create Sequence DB Error getting value! ". $db_error[0] ." : ". $db_error[2]);
+    }
 
     if ( $count > 0 ) {
       $sequence = $count + 1;
@@ -760,6 +786,10 @@ function part_get_next_sequence( $csipid, $courseid, $part, $questionid) {
       $sth->bindValue( ':part', $part );
       $sth->bindValue( ':repeat', $repeatableid );
       $sth->execute();
+      if ( $sth->errorCode() !== '00000' ) {
+        $db_error = $sth->errorInfo();
+        error_log("Create Sequence DB Error on Insert! ". $db_error[0] ." : ". $db_error[2]);
+      }
     }
   }
   else {
@@ -773,6 +803,10 @@ function part_get_next_sequence( $csipid, $courseid, $part, $questionid) {
     $sth->bindValue( ':part', $part );
     $sth->bindValue( ':repeat', $repeatableid );
     $sth->execute();
+    if ( $sth->errorCode() !== '00000' ) {
+      $db_error = $sth->errorInfo();
+      error_log("Update Sequence DB Error! ". $db_error[0] ." : ". $db_error[2]);
+    }
   }
 
   $dbh->exec("UNLOCK TABLES");
@@ -898,12 +932,20 @@ function course_approve( $courseid = 0, $csip = array() ) {
     $sth->bindValue( ':course', $courseid );
     $sth->bindValue( ':csip', $csip['csipid'] );
     $sth->execute();
+    if ( $sth->errorCode() !== '00000' ) {
+      $db_error = $sth->errorInfo();
+      error_log("Approve Course DB Error on Update! ". $db_error[0] ." : ". $db_error[2]);
+    }
   } else {
     $query = "INSERT INTO course_approval ( courseid, csipid, principal_approved ) VALUES ( :course, :csip, CURDATE() )";
     $sth = $dbh->prepare( $query );
     $sth->bindValue( ':course', $courseid );
     $sth->bindValue( ':csip', $csip['csipid'] );
     $sth->execute();
+    if ( $sth->errorCode() !== '00000' ) {
+      $db_error = $sth->errorInfo();
+      error_log("Approve Course DB Error on Insert! ". $db_error[0] ." : ". $db_error[2]);
+    }
   }
 }
 
@@ -930,6 +972,10 @@ function course_add_extra_part( $courseid, $group, $part, $title, $csip ) {
     $sth->bindValue( ':part', $part );
     $sth->bindValue( ':title', $title );
     $sth->execute();
+    if ( $sth->errorCode() !== '00000' ) {
+      $db_error = $sth->errorInfo();
+      error_log("Course Add Part DB Error on Insert! ". $db_error[0] ." : ". $db_error[2]);
+    }
 
     $query = "
      SELECT *
@@ -960,6 +1006,10 @@ function course_add_extra_part( $courseid, $group, $part, $title, $csip ) {
     $sth->bindValue( ':csip', $csip['csipid'] );
     $sth->execute();
     $csip['courses'][ $courseid ]['principal_approved'] = NULL;
+    if ( $sth->errorCode() !== '00000' ) {
+      $db_error = $sth->errorInfo();
+      error_log("Course Add Part DB Error Updating Approval! ". $db_error[0] ." : ". $db_error[2]);
+    }
 
     return $csip;
 }
@@ -973,6 +1023,10 @@ function course_delete_extra_part( $courseid, $part, $csip ) {
     $sth->bindValue( ':course', $courseid );
     $sth->bindValue( ':csip', $csip['csipid'] );
     $sth->execute();
+    if ( $sth->errorCode() !== '00000' ) {
+      $db_error = $sth->errorInfo();
+      error_log("Course Delete Part DB Error deleting answers! ". $db_error[0] ." : ". $db_error[2]);
+    }
 
     $query = "DELETE FROM csip_extra_part_links WHERE part = :part AND courseid = :course AND csipid = :csip";
     $sth = $dbh->prepare( $query );
@@ -980,6 +1034,10 @@ function course_delete_extra_part( $courseid, $part, $csip ) {
     $sth->bindValue( ':course', $courseid );
     $sth->bindValue( ':csip', $csip['csipid'] );
     $sth->execute();
+    if ( $sth->errorCode() !== '00000' ) {
+      $db_error = $sth->errorInfo();
+      error_log("Course Delete Part DB Error! ". $db_error[0] ." : ". $db_error[2]);
+    }
 }
 
 ?>
