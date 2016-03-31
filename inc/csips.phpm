@@ -42,6 +42,10 @@ function new_year( $new ) {
   $sth->bindValue( ':due_dates', $new['due_dates'] );
 
   $sth->execute();
+  if ( $sth->errorCode() !== '00000' ) {
+    $db_error = $sth->errorInfo();
+    error_log("Add Year DB Error! ". $db_error[0] ." : ". $db_error[2]);
+  }
   $yearid = $dbh->lastInsertId();
 
   return $yearid;
@@ -125,6 +129,10 @@ function new_csip( $year, $locationid ) {
   $sth->bindValue( ':lid', $locationid );
   $sth->bindValue( ':yid', $year );
   $sth->execute();
+  if ( $sth->errorCode() !== '00000' ) {
+    $db_error = $sth->errorInfo();
+    error_log("Add CSIP DB Error! ". $db_error[0] ." : ". $db_error[2]);
+  }
 
   $csipid = $dbh->lastInsertId();
 
@@ -142,6 +150,10 @@ function delete_csip( $csipid ) {
   $sth = $dbh->prepare( $query );
   $sth->bindValue( ':cid', $csipid );
   $sth->execute();
+  if ( $sth->errorCode() !== '00000' ) {
+    $db_error = $sth->errorInfo();
+    error_log("Delete CSIP DB Error! ". $db_error[0] ." : ". $db_error[2]);
+  }
 }
 
 function load_csip( $csipid = 0, $all_courses = 0, $userid = 0 ) {
