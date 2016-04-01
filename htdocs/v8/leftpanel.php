@@ -114,7 +114,7 @@ if ( !empty($data['courseid']) ) {
         <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
         <input type="hidden" name="op" value="Comment">
         <textarea id="a-c" cols="30" rows="8" name="comment" placeholder="Place comments Here..."><?= isset($data['csip']['courses'][ $data['courseid'] ]['principal_comment']) ? $data['csip']['courses'][ $data['courseid'] ]['principal_comment'] : "" ?></textarea><br><br>
-        <button class='uk-button uk-button-success' onclick="this.form.submit()">Save Comment</button>
+        <button class='uk-button uk-button-success' onclick="save_answers(this)">Save Comment</button>
     </form>
 <?php } else { ?>
     <div class="uk-panel uk-panel-box-secondary">
