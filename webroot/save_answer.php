@@ -77,15 +77,15 @@ else {
 if ( $op == 'SaveAnswer' ) {
    if ( !empty($answers) ) {
       $count = 0;
-      $new_seq = 0;
+      $new_seq = null;
       for ( $count = 0; $count < count($questions); $count++ ) {
          $questionid = $questions[ $count ];
          $answer = $answers[ $count ];
          $answerid = $answerids[ $count ];
          $sequence = $sequences[ $count ];
          if ( !empty($answer) || !empty($answerid) ) {
-            if ( empty($sequence) ) {
-               if ( empty($new_seq) ) {
+            if ( empty($sequence) && !empty($csip['questions'][$questionid]['group_repeatableid']) ) {
+               if ( is_null($new_seq) ) {
                   $new_seq = $sequence = part_get_next_sequence( $csipid, $courseid, $part, $questionid);
                }
                else {
@@ -97,7 +97,7 @@ if ( $op == 'SaveAnswer' ) {
       }
    }
    else {
-      if ( empty($answerid) ) {
+      if ( empty($answerid) && !empty($csip['questions'][$questionid]['group_repeatableid']) ) {
          $sequence = part_get_next_sequence( $csipid, $courseid, $part, $questionid);
       }
       course_save_answers( $answerid, $answer, $courseid, $questionid, $sequence, $part, $csip );
