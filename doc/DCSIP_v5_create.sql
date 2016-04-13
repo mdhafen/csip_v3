@@ -125,7 +125,7 @@ CREATE TABLE `answer_group_sequence` (
 	`group_repeatableid` INT(10) UNSIGNED NOT NULL DEFAULT '0',
 	`sequence_value` INT(10) UNSIGNED NOT NULL DEFAULT '1',
 	PRIMARY KEY (`csipid`,`courseid`,`part`,`group_repeatableid`)
-) ENGINE MyISAM DEFAULT CHARSET=utf8
+) ENGINE MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `answer` (
 	`answerid` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
