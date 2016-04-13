@@ -1,6 +1,6 @@
 <br>
-    <ul id="cfa<?= $part ?>" class="uk-nav uk-nav-side uk-nav-parent-icon" data-uk-nav="{multiple:true}">
     <form method="post" class="uk-form uk-form-horizontal" action="save_answer.php">
+    <ul id="cfa<?= $part ?>" class="uk-nav uk-nav-side uk-nav-parent-icon" data-uk-nav="{multiple:true}">
     <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
     <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
     <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
@@ -183,8 +183,8 @@
         </ul>
     </li>
     <br>
-</form>
 </ul>
+</form>
 
 <hr>
 <?php
