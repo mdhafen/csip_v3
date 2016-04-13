@@ -95,7 +95,7 @@ For middle and high school only-Utilize the elements of this section to support 
 (42,8,6,1,7,'Other Information'),
 (43,8,3,3,1,'Teacher Name'),
 (44,8,3,1,2,'Reflect on your individual practices based on your stakeholder input'),
-(45,8,4,1,1,'List the common formative assessment AND the guaranteed skill/learning target it aligns with. FOR ELEMENTARY: Identify which questions on your existing instructional program assessments align with your GVC.'),
+(45,8,4,1,1,'List the common formative assessment. FOR ELEMENTARY: Identify which questions on your existing instructional program assessments align with your GVC.'),
 (46,8,4,9,2,'<h1>Learning Targets and Common Formative Assessments</h1>'),
 (47,8,4,9,3,'<b>How will WE know if they LEARNED it?</b><br/>
 EFFECTIVE TEAMS utilize COMMON FORMATIVE ASSESSMENTS (CFA) to diagnostically assess a student''s learning, determine which students were proficient in the guaranteed skill, and those who need extra time and support.<br/>

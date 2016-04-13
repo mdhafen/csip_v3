@@ -117,7 +117,7 @@ For middle and high school only-Utilize the elements of this section to support 
   $sth->bindValue(':group','4');
   $sth->bindValue(':type','1');
   $sth->bindValue(':order','1');
-  $sth->bindValue(':quest','List the common formative assessment AND the guaranteed skill/learning target it aligns with. FOR ELEMENTARY: Identify which questions on your existing instructional program assessments align with your GVC.');
+  $sth->bindValue(':quest','List the common formative assessment.  FOR ELEMENTARY: Identify which questions on your existing instructional program assessments align with your GVC.');
   $sth->execute();
 
   $sth->bindValue(':qid','46');

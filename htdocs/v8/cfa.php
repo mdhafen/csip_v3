@@ -17,7 +17,7 @@
         <br>
 
         <div class="uk-form-row uk-panel uk-panel-box">
-            <label class="uk-form-label" for="cfa-l-<?= $part ?>-45">List the common formative assessment AND the guaranteed skill/learning target it aligns with (Example: Unit 1 - Fractions). FOR ELEMENTARY: Identify which questions on your existing instructional program assessments align with your GVC.</label>
+            <label class="uk-form-label" for="cfa-l-<?= $part ?>-45">List the common formative assessment. FOR ELEMENTARY: Identify which questions on your existing instructional program assessments align with your GVC.</label>
             <div class="uk-form-controls">
                 <input type="hidden" name="questions[]" value="45">
                 <input type="hidden" name="answerids[]" value="<?= isset($questions[45]['answerid']) ? $questions[45]['answerid'] : "" ?>">
@@ -31,34 +31,34 @@
         <h2><span class="uk-text-primary">Learning Targets and Common Formative Assessment</span></h2>
         <div class="uk-panel uk-panel-box">
             <div class="uk-badge uk-badge-notification uk-align-right"><?= $count ?></div>
-            <div class="uk-form-row">
-                <label class="uk-form-label" for="cfa-c-<?= $part ?>-48">List the Learning Targets that will be part of this standard</label>
-                <div class="uk-form-controls">
-                    <input type="hidden" name="questions[]" value="48">
-                    <input type="hidden" name="answerids[]" value="<?= isset($questions[48]['answerid']) ? $questions[48]['answerid'] : "" ?>">
-                    <input type="hidden" name="sequences[]" value="0">
-                    <textarea id="cfa-c-<?= $part ?>-48" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[48]['answer']) ? $questions[48]['answer'] : "" ?></textarea>
+            <div class="uk-form-row uk-flex uk-flex-wrap uk-margin-top">
+                <div class="uk-flex-item-auto uk-margin-right" style="width: 45%">
+                    <label class="uk-form-label" for="cfa-c-<?= $part ?>-48">List the Learning Targets that will be part of this standard</label>
+                    <span class="">
+                        <input type="hidden" name="questions[]" value="48">
+                        <input type="hidden" name="answerids[]" value="<?= isset($questions[48]['answerid']) ? $questions[48]['answerid'] : "" ?>">
+                        <input type="hidden" name="sequences[]" value="0">
+                        <textarea id="cfa-c-<?= $part ?>-48" cols="41" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[48]['answer']) ? $questions[48]['answer'] : "" ?></textarea>
+                    </span>
                 </div>
-            </div>
-            <hr>
-            <div class="uk-form-row uk-grid">
-                <div class="uk-width-1-2">
+
+                <div class="uk-flex-item-auto uk-margin-right" style="width: 20%">
                     <label class="uk-form-label" for="cfa-c-<?= $part ?>-49">How many students were assessed by our team?</label>
-                    <div class="uk-form-controls">
+                    <div class="">
                         <input type="hidden" name="questions[]" value="49">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[49]['answerid']) ? $questions[49]['answerid'] : "" ?>">
                         <input type="hidden" name="sequences[]" value="0">
-                        <textarea id="cfa-c-<?= $part ?>-49" cols="25" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[49]['answer']) ? $questions[49]['answer'] : "" ?></textarea>
+                        <textarea id="cfa-c-<?= $part ?>-49" cols="15" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[49]['answer']) ? $questions[49]['answer'] : "" ?></textarea>
                     </div>
                 </div>
 
-                <div class="uk-width-1-2">
+                <div class="uk-flex-item-auto" style="width: 20%">
                     <label class="uk-form-label" for="cfa-c-<?= $part ?>-50">How many students were NOT proficient the first time?</label>
-                    <div class="uk-form-controls">
+                    <div class="">
                         <input type="hidden" name="questions[]" value="50">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[50]['answerid']) ? $questions[50]['answerid'] : "" ?>">
                         <input type="hidden" name="sequences[]" value="0">
-                        <textarea id="cfa-c-<?= $part ?>-50" cols="25" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[50]['answer']) ? $questions[50]['answer'] : "" ?></textarea>
+                        <textarea id="cfa-c-<?= $part ?>-50" cols="15" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[50]['answer']) ? $questions[50]['answer'] : "" ?></textarea>
                     </div>
                 </div>
             </div>
@@ -100,24 +100,25 @@
             <br>
             <div class="uk-panel uk-panel-box">
                 <div class="uk-badge uk-badge-notification uk-align-right"><?= $count ?></div>
-                <div class="uk-form-row">
+            <div class="uk-form-row uk-flex">
+                <div class="uk-flex-item-auto uk-margin-right" style="">
                     <label class="uk-form-label" for="cfa-i-<?= $part ?>-55">List the SPECIFIC INTERVENTIONS that your team responded with for those students who WERE NOT proficient.</label>
-                    <div class="uk-form-controls">
+                    <div class="">
                         <input type="hidden" name="questions[]" value="55">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[55]['answerid']) ? $questions[55]['answerid'] : "" ?>">
                         <input type="hidden" name="sequences[]" value="0">
-                        <textarea id="cfa-i-<?= $part ?>-55" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[55]['answer']) ? $questions[55]['answer'] : "" ?></textarea>
+                        <textarea id="cfa-i-<?= $part ?>-55" cols="40" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[55]['answer']) ? $questions[55]['answer'] : "" ?></textarea>
                     </div>
                 </div>
-                <hr>
-                <div class="uk-form-row">
+                <div class="uk-flex-item-auto uk-margin-right" style="">
                     <label class="uk-form-label" for="cfa-i-<?= $part ?>-56">Following your team&apos;s INTERVENTIONS and REASSESSMENT, how many students are still not proficient?</label>
-                    <div class="uk-form-controls">
+                    <div class="">
                         <input type="hidden" name="questions[]" value="56">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[56]['answerid']) ? $questions[56]['answerid'] : "" ?>">
                         <input type="hidden" name="sequences[]" value="0">
-                        <input type="text" id="cfa-i-<?= $part ?>-56" name="answers[]" value="<?= isset($questions[56]['answer']) ? $questions[56]['answer'] : "" ?>" placeholder="text input">
+                        <textarea id="cfa-i-<?= $part ?>-56" cols="40" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[56]['answer']) ? $questions[56]['answer'] : "" ?></textarea>
                     </div>
+                </div>
                 </div>
                 <hr>
                 <div class="uk-form-row">
