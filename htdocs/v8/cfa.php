@@ -7,7 +7,7 @@
     <input type="hidden" name="part" value="<?= $part ?>">
     <input type="hidden" name="sequence" value="0">
     <input type="hidden" name="op" value="SaveAnswer">
-    <li id="cfal<?= $part ?>" class="uk-parent" aria-expanded="true">
+    <li id="cfal<?= $part ?>">
         <div class="uk-panel uk-panel-box uk-panel-box-primary">
             <p><strong>Our Team&apos;s GVC</strong></p>
             <hr>
@@ -19,7 +19,7 @@
 
         <div class="uk-form-row uk-panel uk-panel-box">
             <div class="uk-badge uk-badge-notification uk-align-right"><?= $count ?></div>
-            <label class="uk-form-label" for="cfa-l-<?= $part ?>-46">List the common formative assessment. FOR ELEMENTARY: Identify which questions on your existing instructional program assessments align with your GVC.</label>
+            <label class="uk-form-label" for="cfa-l-<?= $part ?>-46">List your GVC here:</label>
             <div class="uk-form-controls">
                 <input type="hidden" name="questions[]" value="46">
                 <input type="hidden" name="answerids[]" value="<?= isset($questions[46]['answerid']) ? $questions[46]['answerid'] : "" ?>">
@@ -30,7 +30,8 @@
         <br>
     </li>
     <li id="cfac<?= $part ?>" class="uk-parent" aria-expanded="true">
-        <h2><span class="uk-text-primary">Learning Targets and Common Formative Assessment</span></h2>
+        <a href="#"><strong>Learning Targets and Common Formative Assessment</strong></a>
+        <ul class="uk-nav-sub"><li>
         <div class="uk-panel uk-panel-box uk-panel-box-primary">
             <p><strong>How will WE know if they LEARNED it?</strong></p>
             <hr>
@@ -99,10 +100,11 @@
   <?php } ?>
         </div>
         <br>
+        </li></ul>
     </li>
     <li id="int<?= $part ?>" class="uk-parent">
-        <h2><span class="uk-text-primary">Intervention</span></h2>
-        <div class="uk-parent">
+        <a href="#"><strong>Intervention</strong></a>
+        <ul class="uk-nav-sub"><li>
             <div class="uk-panel uk-panel-box uk-panel-box-primary">
                 <p><strong>How will WE RESPOND to those who didn&apos;t get it?</strong></p>
 
@@ -161,12 +163,12 @@
                 <button class="uk-button uk-button-success uk-align-right" type="button" onclick="save_answers(this)">Save</button>
   <?php } ?>
             </div>
-        </div>
         <br>
+        </li></ul>
     </li>
     <li id="le<?= $part ?>" class="uk-parent">
-        <h2><span class="uk-text-primary">Learning Extension</span></h2>
-        <div class="uk-nav-sub">
+        <a href="#"><strong>Learning Extension</strong></a>
+        <ul class="uk-nav-sub"><li>
             <div class="uk-panel uk-panel-box uk-panel-box-primary">
                 <p><strong>EFFECTIVE TEAMS provide extension activities for those students who already know a standard or skill.</strong></p>
             </div>
@@ -209,7 +211,7 @@
                 <button class="uk-button uk-button-success uk-align-right" type="button" onclick="save_answers(this)">Save</button>
   <?php } ?>
             </div>
-        </div>
+        </li></ul>
     </li>
     <br>
 </ul>

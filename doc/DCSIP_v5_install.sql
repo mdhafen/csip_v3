@@ -99,7 +99,7 @@ For middle and high school only-Utilize the elements of this section to support 
 With your team, identify/list the critical standards/skills that all students need to know.<br>
 Once your team has identified the skills, share with the team above and below your specific grade level.<br>
 Share the guaranteed skills with your students that you have identified below.'),
-(46,8,4,1,2,'List the common formative assessment. FOR ELEMENTARY: Identify which questions on your existing instructional program assessments align with your GVC.'),
+(46,8,4,1,2,'List your GVC here:'),
 (47,8,4,9,3,'<h1>Learning Targets and Common Formative Assessments</h1>'),
 (48,8,4,9,4,'<b>How will WE know if they LEARNED it?</b><br/>
 A learning target is any achievement expectation for students <i>on the path</i> toward mastery of a standard. It clearly states what we want the students to learn and should be understood by teachers and students. Learning targets should be formatively assessed to monitor progress toward a standard.<br>

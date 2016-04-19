@@ -127,7 +127,7 @@ Share the guaranteed skills with your students that you have identified below.')
   $sth->bindValue(':group','4');
   $sth->bindValue(':type','1');
   $sth->bindValue(':order','2');
-  $sth->bindValue(':quest','List the common formative assessment.  FOR ELEMENTARY: Identify which questions on your existing instructional program assessments align with your GVC.');
+  $sth->bindValue(':quest','List your GVC here:');
   $sth->execute();
 
   $sth->bindValue(':qid','47');
