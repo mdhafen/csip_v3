@@ -92,33 +92,38 @@ For middle and high school only-Utilize the elements of this section to support 
 (39,8,2,1,4,'Survey Results'),
 (40,8,2,1,5,'IEQ-Index of Education Equality'),
 (41,8,2,1,6,'Learning Environment'),
-(42,8,6,1,7,'Other Information'),
+(42,8,2,1,7,'Other Information'),
 (43,8,3,3,1,'Teacher Name'),
 (44,8,3,1,2,'Reflect on your individual practices based on your stakeholder input'),
-(45,8,4,1,1,'List the common formative assessment. FOR ELEMENTARY: Identify which questions on your existing instructional program assessments align with your GVC.'),
-(46,8,4,9,2,'<h1>Learning Targets and Common Formative Assessments</h1>'),
-(47,8,4,9,3,'<b>How will WE know if they LEARNED it?</b><br/>
+(45,8,4,9,1,'<b>Our Team''s GVC</b><br/>
+With your team, identify/list the critical standards/skills that all students need to know.<br>
+Once your team has identified the skills, share with the team above and below your specific grade level.<br>
+Share the guaranteed skills with your students that you have identified below.'),
+(46,8,4,1,2,'List the common formative assessment. FOR ELEMENTARY: Identify which questions on your existing instructional program assessments align with your GVC.'),
+(47,8,4,9,3,'<h1>Learning Targets and Common Formative Assessments</h1>'),
+(48,8,4,9,4,'<b>How will WE know if they LEARNED it?</b><br/>
+A learning target is any achievement expectation for students <i>on the path</i> toward mastery of a standard. It clearly states what we want the students to learn and should be understood by teachers and students. Learning targets should be formatively assessed to monitor progress toward a standard.<br>
 EFFECTIVE TEAMS utilize COMMON FORMATIVE ASSESSMENTS (CFA) to diagnostically assess a student''s learning, determine which students were proficient in the guaranteed skill, and those who need extra time and support.<br/>
 TEAM ACTION STEPS: Identify a common formative assessment that your team will use to assess the GVC skill.'),
-(48,8,4,1,4,'List the Learning Targets that will be part of this standard'),
-(49,8,4,1,5,'How many students were assessed by our team?'),
-(50,8,4,1,6,'How many students were NOT proficient the first time?'),
-(51,8,4,1,7,'Enter any website links to online documents which support this assessment'),
-(52,8,4,1,8,'According to the results of this CFA and our team''s collaboration, the following teaching practices/strategies were most effective in teaching this guaranteed skill(s):'),
-(53,8,4,9,9,'<h1>Intervention</h1>'),
-(54,8,4,9,10,'<b>How will WE respond to those who didn''t get it?</b><br/>
+(49,8,4,1,5,'List the Learning Targets that will be part of this standard'),
+(50,8,4,1,6,'How many students were assessed by our team?'),
+(51,8,4,1,7,'How many students were NOT proficient the first time?'),
+(52,8,4,1,8,'Enter any website links to online documents which support this assessment'),
+(53,8,4,1,9,'According to the results of this CFA and our team''s collaboration, the following teaching practices/strategies were most effective in teaching this guaranteed skill(s):'),
+(54,8,4,9,10,'<h1>Intervention</h1>'),
+(55,8,4,9,11,'<b>How will WE respond to those who didn''t get it?</b><br/>
 EFFECTIVE TEAMS analyze the results of their common formative assessment (CFA) and immediately intervene with those who are in need of extra time and support. (Keep in mind that if less than 75% of students didn''t get a concept, it might not be an intervention issue; the initial instruction should be re-examined.)'),
-(55,8,4,1,11,'List the SPECIFIC INTERVENTIONS that your team responded with for those students who WERE NOT proficient.'),
-(56,8,4,3,12,'Following your team''s INTERVENTIONS and REASSESSMENT, how many students are still not proficient?'),
-(57,8,4,1,13,'List the SPECIFIC FIRST NAMES of those students who were not proficient even after your team''s intervention. (Use hyperlinks in this section to link to an outside source if needed.)'),
-(58,8,4,1,14,'How did your TEAM respond to those who were still not proficient even after your team''s interventions?'),
-(59,8,4,9,15,'<h1>Learning Extensions</h1>'),
-(60,8,4,9,16,'EFFECTIVE TEAMS provide extension activities for those students who already know a standard or skill.'),
-(61,8,4,1,17,'ACTION STEPS: As you review your GVC (from step #1), identify extension activities your team will use for those who already know it.'),
-(62,8,4,3,18,'End of Year Reflection Date'),
-(63,8,4,1,19,'<b>End of Year Reflection</b><br/>
+(56,8,4,1,12,'List the SPECIFIC INTERVENTIONS your team responded with for students who WERE NOT proficient.'),
+(57,8,4,3,13,'Following your team''s INTERVENTIONS and REASSESSMENT, how many students are still not proficient?'),
+(58,8,4,1,14,'List the SPECIFIC FIRST NAMES of those students who were not proficient even after your team''s intervention. (Use hyperlinks in this section to link to an outside source if needed.)'),
+(59,8,4,1,15,'How did your TEAM respond to those who were still not proficient even after your team''s interventions?'),
+(60,8,4,9,16,'<h1>Learning Extensions</h1>'),
+(61,8,4,9,17,'EFFECTIVE TEAMS provide extension activities for those students who already know a standard or skill.'),
+(62,8,4,1,18,'ACTION STEPS: As you review your GVC (from step #1), identify extension activities your team will use for those who already know it.'),
+(63,8,4,3,19,'End of Year Reflection Date'),
+(64,8,4,1,20,'<b>End of Year Reflection</b><br/>
 Do our extension activities provide deeper learning for those students who already know it?  What adjustments can we make to provide for better extended learning opportunities?');
 
 UPDATE question SET group_repeatableid = 1 WHERE questionid in (43,44);
 
-UPDATE question SET protect_answer = 1 WHERE questionid in (57);
+UPDATE question SET protect_answer = 1 WHERE questionid in (58);
