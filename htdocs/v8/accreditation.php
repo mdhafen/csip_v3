@@ -32,7 +32,7 @@ if ( !empty($data['courseid']) && !empty($data['csip']['form'][ $data['courseid'
                             <input type="hidden" name="questions[]" value="<?= $questionid ?>">
                             <input type="hidden" name="answerids[]" value="<?= isset($answer['answerid']) ? $answer['answerid'] : "" ?>">
                             <input type="hidden" name="sequences[]" value='0'>
-                            <textarea id="acc-2-<?= $questionid ?>" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($answer['answer']) ? $answer['answer'] : "" ?></textarea>
+                            <textarea id="acc-2-<?= $questionid ?>" cols="113" rows="8" name="answers[]" placeholder="text input"><?= isset($answer['answer']) ? $answer['answer'] : "" ?></textarea>
                         </div>
                     </div>
 <?php

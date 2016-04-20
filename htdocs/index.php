@@ -50,32 +50,29 @@ if ( !empty($data['csip']['courses']) ) {
 }
 ?>
         </form>
+        </h2>
 <?php
 if ( !empty($data['courseid']) ) {
-  if ( !empty($data['_session']['CAN_approve_csip']) ) {
-    if ( empty($data['csip']['courses'][ $data['courseid'] ]['principal_approved']) ) {
-      $app = "Not Approved";
-      $class = "uk-button-danger";
-    }
-    else {
-      $app = "Approved";
-      $class = "uk-button-success";
-    }
-
-?>
-        <form method="post" class="uk-form uk-display-inline-block" action="approve.php">
+ if ( !empty($data['_session']['CAN_approve_csip']) ) {
+ ?>
+    <form method="post" class="uk-form uk-display-inline-block" action="approve.php">
         <input type="hidden" name="csipid" value="<?= $data['csip']['csipid'] ?>">
         <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
         <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
-        <input type="hidden" name="op" value="<?= $app == 'Not Approved' ? 'ApproveCourse' : 'UnApproveCourse' ?>">
-        <button class='uk-button <?= $class ?>' onclick="this.form.submit()"><?= $app ?></button>
-        </form>
+        <input type="hidden" name="op" value="Comment">
+        <textarea id="a-c" cols="115" rows="3" name="comment" placeholder="Principal&apos;s feedback"><?= isset($data['csip']['courses'][ $data['courseid'] ]['principal_comment']) ? $data['csip']['courses'][ $data['courseid'] ]['principal_comment'] : "" ?></textarea>
+        <button class='uk-button uk-button-success' onclick="save_answers(this)">Save Feedback</button>
+    </form>
+<?php } else { ?>
+   <span class="uk-alert uk-alert-warning"><span class="uk-text-large uk-text-bold">Principal&apos;s Feedback:</span>
+<?= isset($data['csip']['courses'][ $data['courseid'] ]['principal_comment']) ? $data['csip']['courses'][ $data['courseid'] ]['principal_comment'] : "" ?>
+    </span>
 <?php
-  }
-}
+      }
+   }
 ?>
+
             <hr>
-        </h2>
 
 <?php
 $tab = '';

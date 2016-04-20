@@ -1,16 +1,24 @@
-            <div class="uk-grid" uk-grid-divider data-uk-grid-match>
-                <div class="uk-width-medium-3-10">
-                    <?php include 'leftpanel.php'; ?>
-                    <?php include 'dates.php'; ?>
-				</div>
-				<div class="uk-width-medium-7-10">
-
 <!-- Tabs Begin -->
 <div class="uk-panel uk-panel-box-secondary">
 <?php
    if ( !empty($data['courseid']) && !empty( $data['csip']['form'][ $data['courseid'] ][4]) ) {
 ?>
 	<ul class="uk-tab" data-uk-tab="{connect:'#cfas'}" id="rightpaneltabs">
+<?php
+  $answers = 0;
+  foreach ( $data['csip']['form'][ $data['courseid'] ][1] as $answer ) {
+    if ( isset($answer['answer']) && $answer['answer'] != "" ) {
+      $answers++;
+    }
+  }
+  if ( $answers == 1 ) {
+    $completeness = "uk-badge-success";
+  }
+  else {
+    $completeness = "uk-badge-warning";
+  }
+?>
+        <li class="" id="growth_tab"><a href=""><div class="uk-badge <?= $completeness ?>">Team PGP</div></a></li>
 <?php
       $count = 1;
       $max_tab = 0;
@@ -56,6 +64,9 @@
 
     <!-- Load pages based on tab selected -->
         <div id="cfas" class="uk-switcher">
+	<div id="growth_content">
+	   <?php include 'leftpanel.php';?>
+	</div>
 <?php
       $count = 1;
       foreach ( $data['csip']['form'][ $data['courseid'] ] as $part => $these_questions ) {
@@ -91,14 +102,10 @@
         A spreadsheet for showing <a target="_blank" href="https://docs.google.com/spreadsheets/d/1QvMmCNJeK1xmqlI01lqajb6nR0lPe8WmQJattI-GDyk/edit?usp=sharing">Teacher Effect Size</a>
     </div>
 <?php } ?>
-</div>
-
-                </div>
-            </div>
-
 <?php
-if ( !empty($data['part']) && $data['part'] > 1 ) {
+if ( !empty($data['part']) ) {
   switch ($data['part']) {
+  case 1 : $tab = 'growth_tab'; break;
   case 2 : $tab = 'accreditation_tab'; break;
   case 3 : $tab = 'results_tab'; break;
   default: $tab = 'cfa'. ( $data['part'] ) .'_tab'; break;

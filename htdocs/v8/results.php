@@ -118,12 +118,12 @@ if ( !empty($data['courseid']) && !empty($data['csip']['form'][ $data['courseid'
     switch ( $data['csip']['questions'][ $questionid ]['type'] ) {
     case 1:
 ?>
-                            <textarea id="res-3-<?= $questionid ?>-<?= $c ?>" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($answer['answer']) ? $answer['answer'] : "" ?></textarea>
+                            <textarea id="res-3-<?= $questionid ?>-<?= $c ?>" cols="113" rows="8" name="answers[]" placeholder="text input"><?= isset($answer['answer']) ? $answer['answer'] : "" ?></textarea>
 <?php
     break;
     case 3:
 ?>
-                            <input type="text" id="res-3-<?= $questionid ?>-<?= $c ?>" name="answers[]" placeholder="text input" value="<?= isset($answer['answer']) ? $answer['answer'] : "" ?>">
+                            <input type="text" id="res-3-<?= $questionid ?>-<?= $c ?>" size="113" name="answers[]" placeholder="text input" value="<?= isset($answer['answer']) ? $answer['answer'] : "" ?>">
 <?php
     break;
     }

@@ -19,12 +19,12 @@
 
         <div class="uk-form-row uk-panel uk-panel-box">
             <div class="uk-badge uk-badge-notification uk-align-right"><?= $count ?></div>
-            <label class="uk-form-label" for="cfa-l-<?= $part ?>-46">List your GVC here:</label>
+            <label class="uk-form-label" for="cfa-l-<?= $part ?>-46">Enter your GVC <?= $count ?> here:</label>
             <div class="uk-form-controls">
                 <input type="hidden" name="questions[]" value="46">
                 <input type="hidden" name="answerids[]" value="<?= isset($questions[46]['answerid']) ? $questions[46]['answerid'] : "" ?>">
                 <input type="hidden" name="sequences[]" value="0">
-                <textarea id="cfa-l-<?= $part ?>-46" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[46]['answer']) ? $questions[46]['answer'] : "" ?></textarea>
+                <textarea id="cfa-l-<?= $part ?>-46" cols="113" rows="3" name="answers[]" placeholder="text input"><?= isset($questions[46]['answer']) ? $questions[46]['answer'] : "" ?></textarea>
             </div>
         </div>
         <br>
@@ -50,7 +50,7 @@
                         <input type="hidden" name="questions[]" value="49">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[49]['answerid']) ? $questions[49]['answerid'] : "" ?>">
                         <input type="hidden" name="sequences[]" value="0">
-                        <textarea id="cfa-c-<?= $part ?>-49" cols="41" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[49]['answer']) ? $questions[49]['answer'] : "" ?></textarea>
+                        <textarea id="cfa-c-<?= $part ?>-49" cols="65" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[49]['answer']) ? $questions[49]['answer'] : "" ?></textarea>
                     </span>
                 </div>
 
@@ -60,7 +60,7 @@
                         <input type="hidden" name="questions[]" value="50">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[50]['answerid']) ? $questions[50]['answerid'] : "" ?>">
                         <input type="hidden" name="sequences[]" value="0">
-                        <textarea id="cfa-c-<?= $part ?>-50" cols="15" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[50]['answer']) ? $questions[50]['answer'] : "" ?></textarea>
+                        <textarea id="cfa-c-<?= $part ?>-50" cols="30" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[50]['answer']) ? $questions[50]['answer'] : "" ?></textarea>
                     </div>
                 </div>
 
@@ -70,7 +70,7 @@
                         <input type="hidden" name="questions[]" value="51">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[51]['answerid']) ? $questions[51]['answerid'] : "" ?>">
                         <input type="hidden" name="sequences[]" value="0">
-                        <textarea id="cfa-c-<?= $part ?>-51" cols="15" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[51]['answer']) ? $questions[51]['answer'] : "" ?></textarea>
+                        <textarea id="cfa-c-<?= $part ?>-51" cols="30" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[51]['answer']) ? $questions[51]['answer'] : "" ?></textarea>
                     </div>
                 </div>
             </div>
@@ -81,7 +81,7 @@
                     <input type="hidden" name="questions[]" value="52">
                     <input type="hidden" name="answerids[]" value="<?= isset($questions[52]['answerid']) ? $questions[52]['answerid'] : "" ?>">
                     <input type="hidden" name="sequences[]" value="0">
-                    <textarea id="cfa-c-<?= $part ?>-52" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[52]['answer']) ? $questions[52]['answer'] : "" ?></textarea>
+                    <textarea id="cfa-c-<?= $part ?>-52" cols="113" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[52]['answer']) ? $questions[52]['answer'] : "" ?></textarea>
                 </div>
             </div>
             <hr>
@@ -91,7 +91,7 @@
                     <input type="hidden" name="questions[]" value="53">
                     <input type="hidden" name="answerids[]" value="<?= isset($questions[53]['answerid']) ? $questions[53]['answerid'] : "" ?>">
                     <input type="hidden" name="sequences[]" value="0">
-                    <textarea id="cfa-c-<?= $part ?>-53" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[53]['answer']) ? $questions[53]['answer'] : "" ?></textarea>
+                    <textarea id="cfa-c-<?= $part ?>-53" cols="113" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[53]['answer']) ? $questions[53]['answer'] : "" ?></textarea>
                 </div>
             </div>
             <br>
@@ -115,21 +115,21 @@
                 <div class="uk-badge uk-badge-notification uk-align-right"><?= $count ?></div>
             <div class="uk-form-row uk-flex">
                 <div class="uk-flex-item-auto uk-margin-right" style="width: 50%">
-                    <label class="uk-form-label" for="cfa-i-<?= $part ?>-56">List the SPECIFIC INTERVENTIONS your team responded with for students who WERE NOT proficient.</label>
+                    <label class="" for="cfa-i-<?= $part ?>-56">List the SPECIFIC INTERVENTIONS your team responded with for students who WERE NOT proficient.</label>
                     <div class="">
                         <input type="hidden" name="questions[]" value="56">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[56]['answerid']) ? $questions[56]['answerid'] : "" ?>">
                         <input type="hidden" name="sequences[]" value="0">
-                        <textarea id="cfa-i-<?= $part ?>-56" cols="40" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[56]['answer']) ? $questions[56]['answer'] : "" ?></textarea>
+                        <textarea id="cfa-i-<?= $part ?>-56" cols="70" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[56]['answer']) ? $questions[56]['answer'] : "" ?></textarea>
                     </div>
                 </div>
                 <div class="uk-flex-item-auto uk-margin-right" style="width: 50%">
-                    <label class="uk-form-label" for="cfa-i-<?= $part ?>-57">Following your team&apos;s INTERVENTIONS and REASSESSMENT, how many students are still not proficient?</label>
+                    <label class="" for="cfa-i-<?= $part ?>-57">Following your team&apos;s INTERVENTIONS and REASSESSMENT, how many students are still not proficient?</label>
                     <div class="">
                         <input type="hidden" name="questions[]" value="57">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[57]['answerid']) ? $questions[57]['answerid'] : "" ?>">
                         <input type="hidden" name="sequences[]" value="0">
-                        <textarea id="cfa-i-<?= $part ?>-57" cols="40" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[57]['answer']) ? $questions[57]['answer'] : "" ?></textarea>
+                        <textarea id="cfa-i-<?= $part ?>-57" cols="70" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[57]['answer']) ? $questions[57]['answer'] : "" ?></textarea>
                     </div>
                 </div>
                 </div>
@@ -141,7 +141,7 @@
                         <input type="hidden" name="questions[]" value="58">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[58]['answerid']) ? $questions[58]['answerid'] : "" ?>">
                         <input type="hidden" name="sequences[]" value="0">
-                        <textarea id="cfa-i-<?= $part ?>-58" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[58]['answer']) ? $questions[58]['answer'] : "" ?></textarea>
+                        <textarea id="cfa-i-<?= $part ?>-58" cols="113" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[58]['answer']) ? $questions[58]['answer'] : "" ?></textarea>
 <?php } else { ?>
                     <div class="uk-form-controls uk-form-controls-text uk-panel uk-panel-box">
                         Protected Content
@@ -155,7 +155,7 @@
                         <input type="hidden" name="questions[]" value="59">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[59]['answerid']) ? $questions[59]['answerid'] : "" ?>">
                         <input type="hidden" name="sequences[]" value="0">
-                        <textarea id="cfa-i-<?= $part ?>-59" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[59]['answer']) ? $questions[59]['answer'] : "" ?></textarea>
+                        <textarea id="cfa-i-<?= $part ?>-59" cols="113" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[59]['answer']) ? $questions[59]['answer'] : "" ?></textarea>
                     </div>
                 </div>
                 <br>
@@ -182,28 +182,7 @@
                         <input type="hidden" name="questions[]" value="62">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[62]['answerid']) ? $questions[62]['answerid'] : "" ?>">
                         <input type="hidden" name="sequences[]" value="0">
-                        <textarea id="cfa-l-<?= $part ?>-62" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[62]['answer']) ? $questions[62]['answer'] : "" ?></textarea>
-                    </div>
-                </div>
-                <hr>
-                <div class="uk-form-row">
-                    <label class="uk-form-label" for="cfa-l-<?= $part ?>-63">End of Year Reflection Date:</label>
-                    <div class="uk-form-controls">
-                        <input type="hidden" name="questions[]" value="63">
-                        <input type="hidden" name="answerids[]" value="<?= isset($questions[63]['answerid']) ? $questions[63]['answerid'] : "" ?>">
-                        <input type="hidden" name="sequences[]" value="0">
-                        <input type="text" id="cfa-l-<?= $part ?>-63" name="answers[]" value="<?= isset($questions[63]['answer']) ? $questions[63]['answer'] : "" ?>" placeholder="text input">
-                    </div>
-                </div>
-                <hr>
-                <div class="uk-form-row">
-                    <label class="uk-form-label" for="cfa-l-<?= $part ?>-64"><strong>End of Year Reflection</strong><br><br>Do our extension activities provide deeper learning for those students who already know it? What adjustments can we make to provide for better extended learning opportunities?
-                    </label>
-                    <div class="uk-form-controls">
-                        <input type="hidden" name="questions[]" value="64">
-                        <input type="hidden" name="answerids[]" value="<?= isset($questions[64]['answerid']) ? $questions[64]['answerid'] : "" ?>">
-                        <input type="hidden" name="sequences[]" value="0">
-                        <textarea id="cfa-l-<?= $part ?>-64" cols="50" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[64]['answer']) ? $questions[64]['answer'] : "" ?></textarea>
+                        <textarea id="cfa-l-<?= $part ?>-62" cols="113" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[62]['answer']) ? $questions[62]['answer'] : "" ?></textarea>
                     </div>
                 </div>
                 <br>
@@ -212,6 +191,37 @@
   <?php } ?>
             </div>
         </li></ul>
+        <br>
+    </li>
+
+    <li id="re<?= $part ?>">
+        <div class="uk-panel uk-panel-box">
+            <div class="uk-form-row uk-flex">
+                <div class="uk-flex-item-auto uk-margin-right" style="width: 50%">
+                    <label class="" for="cfa-r-<?= $part ?>-63">Reflect on what worked:</label>
+                    <div class="">
+                        <input type="hidden" name="questions[]" value="63">
+                        <input type="hidden" name="answerids[]" value="<?= isset($questions[63]['answerid']) ? $questions[63]['answerid'] : "" ?>">
+                        <input type="hidden" name="sequences[]" value="0">
+                        <textarea id="cfa-r-<?= $part ?>-64" cols="70" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[63]['answer']) ? $questions[63]['answer'] : "" ?></textarea>
+                    </div>
+                </div>
+                <hr>
+                <div class="uk-flex-item-auto uk-margin-right" style="width: 50%">
+		    <label class="uk-form-label" for="cfa-l-<?= $part ?>-64">Reflect on what didn&apos;t work:</label>
+                    <div class="">
+                        <input type="hidden" name="questions[]" value="64">
+                        <input type="hidden" name="answerids[]" value="<?= isset($questions[64]['answerid']) ? $questions[64]['answerid'] : "" ?>">
+                        <input type="hidden" name="sequences[]" value="0">
+                        <textarea id="cfa-l-<?= $part ?>-64" cols="70" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[64]['answer']) ? $questions[64]['answer'] : "" ?></textarea>
+                    </div>
+                </div>
+            </div>
+                <br>
+  <?php if ( !empty($data['can_edit']) ) { ?>
+                <button class="uk-button uk-button-success uk-align-right" type="button" onclick="save_answers(this)">Save</button>
+  <?php } ?>
+        </div>
     </li>
     <br>
 </ul>
