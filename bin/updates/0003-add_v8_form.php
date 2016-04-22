@@ -34,21 +34,6 @@ HIGHLY EFFECTIVE TEAMS teach ALL of the standards within their discipline but en
 After identifying your GVC and individually self assessing with the <a class="uk-display-inline" target="_blank" href="http://www.uen.org/k12educator/uets/">Utah Effective Teaching Standards</a>, collectively determine the teaching practices you need to strengthen as a team, based on the learning needs of the students in your classroom this year.');
   $sth->execute();
 
-  $sth->bindValue(':qid','34');
-  $sth->bindValue(':group','1');
-  $sth->bindValue(':type','4');
-  $sth->bindValue(':order','3');
-  $sth->bindValue(':quest','<b>Reflection Date</b><br/>Enter the date when your team will complete the Reflection process');
-  $sth->execute();
-
-  $sth->bindValue(':qid','35');
-  $sth->bindValue(':group','1');
-  $sth->bindValue(':type','1');
-  $sth->bindValue(':order','4');
-  $sth->bindValue(':quest','<b>Reflection Summary</b><br/>
-<p>Has your team\'s GVC changed?  If so, which elements did your team adjust in preparation for next year?</p>');
-  $sth->execute();
-
   $sth->bindValue(':qid','36');
   $sth->bindValue(':group','2');
   $sth->bindValue(':type','9');
@@ -127,7 +112,7 @@ Share the guaranteed skills with your students that you have identified below.')
   $sth->bindValue(':group','4');
   $sth->bindValue(':type','1');
   $sth->bindValue(':order','2');
-  $sth->bindValue(':quest','List your GVC here:');
+  $sth->bindValue(':quest','Enter your GVC here:');
   $sth->execute();
 
   $sth->bindValue(':qid','47');
@@ -249,15 +234,14 @@ EFFECTIVE TEAMS analyze the results of their common formative assessment (CFA) a
   $sth->bindValue(':group','4');
   $sth->bindValue(':type','3');
   $sth->bindValue(':order','19');
-  $sth->bindValue(':quest','End of Year Reflection Date');
+  $sth->bindValue(':quest','Reflect on what worked:');
   $sth->execute();
 
   $sth->bindValue(':qid','64');
   $sth->bindValue(':group','4');
   $sth->bindValue(':type','1');
   $sth->bindValue(':order','20');
-  $sth->bindValue(':quest','<b>End of Year Reflection</b><br/>
-Do our extension activities provide deeper learning for those students who already know it?  What adjustments can we make to provide for better extended learning opportunities?');
+  $sth->bindValue(':quest','Reflect on what didn\'t work:');
   $sth->execute();
 
   $dbh->exec( 'UPDATE question SET group_repeatableid = 1 WHERE questionid in (43,44)' );

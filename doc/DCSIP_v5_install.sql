@@ -72,7 +72,7 @@ UPDATE `question` SET protect_answer = 1 WHERE questionid IN (23);
 
 UPDATE `question` SET group_repeatableid = 1 WHERE questionid IN (30,31);
 
-INSERT INTO course_question_links (courseid,question_group,part,title) (SELECT courseid,1,1,'Guaranteed Curriculum' from course);
+INSERT INTO course_question_links (courseid,question_group,part,title) (SELECT courseid,1,1,'Team Professional Growth Plan' from course);
 INSERT INTO course_question_links (courseid,question_group,part,title) (SELECT courseid,2,2,'Accreditation' from course);
 INSERT INTO course_question_links (courseid,question_group,part,title) (SELECT courseid,3,3,'Stakeholder Input' from course);
 INSERT INTO course_question_links (courseid,question_group,part,title) (SELECT courseid,4,4,'GVC 1' from course);
@@ -82,9 +82,6 @@ INSERT INTO question (questionid,version,question_group,type,order_num,question)
 HIGHLY EFFECTIVE TEAMS teach ALL of the standards within their discipline but engage in the work of IDENTIFYING which of the standards/skills are so critical that EVERY student MUST know. TEAMS then work to ENSURE that every student will demonstrate proficiency in them. The <a class="uk-display-inline" target="_blank" href="http://prodev.washk12.org/site_file/prodev/files/Learning_Graphics/gvc.pdf">GVC</a> are the agreed upon essentials within the course or grade level that teams will commit to collectively address, commonly assess and persistently provide targeted interventions for students in need.'),
 (33,8,1,1,2,'<b>Team Professional Growth Plan</b><br/>
 After identifying your GVC and individually self assessing with the <a class="uk-display-inline" target="_blank" href="http://www.uen.org/k12educator/uets/">Utah Effective Teaching Standards</a>, collectively determine the teaching practices you need to strengthen as a team, based on the learning needs of the students in your classroom this year.'),
-(34,8,1,4,3,'<b>Reflection Date</b><br/>enter the date when your team will complete the Reflection process'),
-(35,8,1,1,4,'<b>Reflection Summary</b><br/>
-Has your team''s GVC changed?  If so, which elements did your team adjust in preparation for next year?'),
 (36,8,2,9,1,'<b>Essential Elements of Accreditation</b><br/>
 For middle and high school only-Utilize the elements of this section to support the necessary accreditation expectations and highlight the work that your school is engaged in..'),
 (37,8,2,1,2,'Demographics'),
@@ -99,7 +96,7 @@ For middle and high school only-Utilize the elements of this section to support 
 With your team, identify/list the critical standards/skills that all students need to know.<br>
 Once your team has identified the skills, share with the team above and below your specific grade level.<br>
 Share the guaranteed skills with your students that you have identified below.'),
-(46,8,4,1,2,'List your GVC here:'),
+(46,8,4,1,2,'Enter your GVC here:'),
 (47,8,4,9,3,'<h1>Learning Targets and Common Formative Assessments</h1>'),
 (48,8,4,9,4,'<b>How will WE know if they LEARNED it?</b><br/>
 A learning target is any achievement expectation for students <i>on the path</i> toward mastery of a standard. It clearly states what we want the students to learn and should be understood by teachers and students. Learning targets should be formatively assessed to monitor progress toward a standard.<br>
@@ -120,9 +117,8 @@ EFFECTIVE TEAMS analyze the results of their common formative assessment (CFA) a
 (60,8,4,9,16,'<h1>Learning Extensions</h1>'),
 (61,8,4,9,17,'EFFECTIVE TEAMS provide extension activities for those students who already know a standard or skill.'),
 (62,8,4,1,18,'ACTION STEPS: As you review your GVC (from step #1), identify extension activities your team will use for those who already know it.'),
-(63,8,4,3,19,'End of Year Reflection Date'),
-(64,8,4,1,20,'<b>End of Year Reflection</b><br/>
-Do our extension activities provide deeper learning for those students who already know it?  What adjustments can we make to provide for better extended learning opportunities?');
+(63,8,4,3,19,'Reflect on what worked:'),
+(64,8,4,1,20,'Reflect on what didn''t work:');
 
 UPDATE question SET group_repeatableid = 1 WHERE questionid in (43,44);
 
