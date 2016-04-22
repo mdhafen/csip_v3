@@ -72,10 +72,10 @@ UPDATE `question` SET protect_answer = 1 WHERE questionid IN (23);
 
 UPDATE `question` SET group_repeatableid = 1 WHERE questionid IN (30,31);
 
-INSERT INTO course_question_links (courseid,question_group,part,title) (SELECT courseid,1,1,'Guaranteed Curriculum' from course)
-INSERT INTO course_question_links (courseid,question_group,part,title) (SELECT courseid,2,2,'Accreditation' from course)
-INSERT INTO course_question_links (courseid,question_group,part,title) (SELECT courseid,3,3,'Stakeholder Input' from course)
-INSERT INTO course_question_links (courseid,question_group,part,title) (SELECT courseid,4,4,'GVC 1' from course)
+INSERT INTO course_question_links (courseid,question_group,part,title) (SELECT courseid,1,1,'Guaranteed Curriculum' from course);
+INSERT INTO course_question_links (courseid,question_group,part,title) (SELECT courseid,2,2,'Accreditation' from course);
+INSERT INTO course_question_links (courseid,question_group,part,title) (SELECT courseid,3,3,'Stakeholder Input' from course);
+INSERT INTO course_question_links (courseid,question_group,part,title) (SELECT courseid,4,4,'GVC 1' from course);
 
 INSERT INTO question (questionid,version,question_group,type,order_num,question) VALUES
 (32,8,1,9,1,'<b>What is the GVC?</b><br/>
