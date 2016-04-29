@@ -34,21 +34,6 @@ HIGHLY EFFECTIVE TEAMS teach ALL of the standards within their discipline but en
 After identifying your GVC and individually self assessing with the <a class="uk-display-inline" target="_blank" href="http://www.uen.org/k12educator/uets/">Utah Effective Teaching Standards</a>, collectively determine the teaching practices you need to strengthen as a team, based on the learning needs of the students in your classroom this year.');
   $sth->execute();
 
-  $sth->bindValue(':qid','34');
-  $sth->bindValue(':group','1');
-  $sth->bindValue(':type','4');
-  $sth->bindValue(':order','3');
-  $sth->bindValue(':quest','<b>Reflection Date</b><br/>Enter the date when your team will complete the Reflection process');
-  $sth->execute();
-
-  $sth->bindValue(':qid','35');
-  $sth->bindValue(':group','1');
-  $sth->bindValue(':type','1');
-  $sth->bindValue(':order','4');
-  $sth->bindValue(':quest','<b>Reflection Summary</b><br/>
-<p>Has your team\'s GVC changed?  If so, which elements did your team adjust in preparation for next year?</p>');
-  $sth->execute();
-
   $sth->bindValue(':qid','36');
   $sth->bindValue(':group','2');
   $sth->bindValue(':type','9');

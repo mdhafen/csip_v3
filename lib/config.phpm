@@ -5,11 +5,11 @@ session_start();
 $config = array(
 	'base_dir'          => '/var/www/',  // sane defaults
 	'base_url'	    => '/', // these are set below
-	'secure_phrase'     => 'DontTreadOnMe',
+	'secure_phrase'     => 'SetYourOwnHashSaltHere',
 	'cookie_token_name' => 'CSIPTOKEN',
 	'authen_modules'      => array(
 		'db'       => 'core',
-		'external' => 'PS',
+		'external' => '',
 		'ldap'     => 0,
 	),
 	'trusted_proxies'   => array(),
@@ -18,18 +18,18 @@ $config = array(
 			'write' => array(
 				'engine' => 'mysql',
 				'host'   => 'localhost',
-				'schema' => 'csip_v5',
+				'schema' => 'csip',
 				'user'   => 'csip',
-				'passwd' => 'w3bm@st3r',
+				'passwd' => 'password',
 			),
 		),
 		'PS' => array(
 			'write' => array(
 				'engine' => 'oci',
-				'host'   => 'psdb.washk12.org',
-				'schema' => 'PSProdDB',
-				'user'   => 'psnavigator',
-				'passwd' => 'ps2008n',
+				'host'   => 'psdb',
+				'schema' => '',
+				'user'   => '',
+				'passwd' => '',
 			),
 		),
 	),
