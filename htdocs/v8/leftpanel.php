@@ -26,7 +26,7 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['form'][ $data['coursei
                         <label class="uk-form-label" for="grow-1-33"><strong>Team Professional Growth Plan:</strong><br>
 After identifying your GVC and individually self assessing with the <a href="http://www.uen.org/k12educator/uets/" class="uk-display-inline" target="_blank">Utah Effective Teaching Standards</a>, collectively determine the teaching practices you need to strengthen as a team, based on the learning needs of the students in your classroom this year.</label>
                     <div class="uk-form-controls">
-                        <textarea id="grow-1-33" cols="113" rows="8" name="answer" placeholder="Outline Team&apos;s Professional Growth Plan Here..."><?= isset($questions[5]['answer']) ? $questions[5]['answer'] : "" ?></textarea><br><br>
+                        <textarea id="grow-1-33" cols="113" rows="8" name="answer" placeholder="Outline Team&apos;s Professional Growth Plan Here..."><?= isset($questions[33]['answer']) ? $questions[33]['answer'] : "" ?></textarea><br><br>
                     </div>
                     <br>
                     <button class="uk-button uk-button-success uk-align-right" type="button" onclick="save_answers(this)">Save</button>

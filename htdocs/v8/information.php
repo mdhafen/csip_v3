@@ -5,21 +5,6 @@
 ?>
 	<ul class="uk-tab" data-uk-tab="{connect:'#cfas'}" id="rightpaneltabs">
 <?php
-  $answers = 0;
-  foreach ( $data['csip']['form'][ $data['courseid'] ][1] as $answer ) {
-    if ( isset($answer['answer']) && $answer['answer'] != "" ) {
-      $answers++;
-    }
-  }
-  if ( $answers == 1 ) {
-    $completeness = "uk-badge-success";
-  }
-  else {
-    $completeness = "uk-badge-warning";
-  }
-?>
-        <li class="" id="growth_tab"><a href=""><div class="uk-badge <?= $completeness ?>">Team PGP</div></a></li>
-<?php
       $count = 1;
       $max_tab = 0;
       foreach ( $data['csip']['form'][ $data['courseid'] ] as $part => $questions ) {
@@ -55,8 +40,23 @@
  ?>
         <li class="" id="addcfa_tab"><a href="" onclick="addCFATab('<?= $data['csip']['csipid'] ?>','<?= $data['categoryid'] ?>','<?= $data['courseid'] ?>','<?= $max_tab ?>','<?= $count ?>','<?= $part ?>');"><i class="uk-icon-plus"></i></a></li>
 <?php } ?>
-        <li class="" id="accreditation_tab"><a href=""><div class="uk-badge uk-badge-primary">Accreditation</div></a></li>
+<?php
+  $answers = 0;
+  foreach ( $data['csip']['form'][ $data['courseid'] ][1] as $answer ) {
+    if ( isset($answer['answer']) && $answer['answer'] != "" ) {
+      $answers++;
+    }
+  }
+  if ( $answers == 1 ) {
+    $completeness = "uk-badge-success";
+  }
+  else {
+    $completeness = "uk-badge-warning";
+  }
+?>
+        <li class="" id="growth_tab"><a href=""><div class="uk-badge <?= $completeness ?>">Team PGP</div></a></li>
         <li class="" id="results_tab"><a href=""><div class="uk-badge uk-badge-primary">Stakeholder Input</div></a></li>
+        <li class="" id="accreditation_tab"><a href=""><div class="uk-badge uk-badge-primary">Accreditation</div></a></li>
 
 	</ul>
 	<!-- Tabs End -->
@@ -64,9 +64,6 @@
 
     <!-- Load pages based on tab selected -->
         <div id="cfas" class="uk-switcher">
-	<div id="growth_content">
-	   <?php include 'leftpanel.php';?>
-	</div>
 <?php
       $count = 1;
       foreach ( $data['csip']['form'][ $data['courseid'] ] as $part => $these_questions ) {
@@ -90,11 +87,14 @@
 <?php
       }
 ?>
-	<div id="accreditation_content">
-	   <?php include 'accreditation.php';?>
+	<div id="growth_content">
+	   <?php include 'leftpanel.php';?>
 	</div>
 	<div id="results_content">
 	   <?php include 'results.php';?>
+	</div>
+	<div id="accreditation_content">
+	   <?php include 'accreditation.php';?>
 	</div>
     </div>
 

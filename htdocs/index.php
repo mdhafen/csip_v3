@@ -52,7 +52,7 @@ if ( !empty($data['csip']['courses']) ) {
         </form>
         </h2>
 <?php
-if ( !empty($data['courseid']) ) {
+if ( !empty($data['csip']) && !empty($data['courseid']) ) {
  if ( !empty($data['_session']['CAN_approve_csip']) ) {
  ?>
     <form method="post" class="uk-form uk-display-inline-block" action="approve.php">
