@@ -1,3 +1,4 @@
+<br>
 <?php
 if ( ! empty($data['courseid']) && ! empty($data['csip']['form'][ $data['courseid'] ][1]) ) {
   $questions = array();

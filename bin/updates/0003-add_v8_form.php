@@ -102,17 +102,17 @@ For middle and high school only-Utilize the elements of this section to support 
   $sth->bindValue(':group','4');
   $sth->bindValue(':type','9');
   $sth->bindValue(':order','1');
-  $sth->bindValue(':quest','<b>Our Team\'s GVC</b><br/>
-With your team:<ol><li>identify/list the Essential Learnings that all students need to know.  These are your GVC\'s</li>
-<li>Once your team has identified the Essential Learnings, share with the team above and below your specific grade level.</li>
-<li>Share the Essential Learnings with your students.</li></ol>');
+  $sth->bindValue(':quest','<b>What do students NEED to know and be able to do?</b><br/>
+With your team:<ol><li>identify/list the Essential Learnings that all students need to know.  These are your GVC\'s.</li>
+<li>Once your team has identified each GVC, share with the team above and below your specific grade level.</li>
+<li>Share the GVC with your students.</li></ol>');
   $sth->execute();
 
   $sth->bindValue(':qid','46');
   $sth->bindValue(':group','4');
   $sth->bindValue(':type','1');
   $sth->bindValue(':order','2');
-  $sth->bindValue(':quest','Enter your GVC here');
+  $sth->bindValue(':quest','Enter the GVC:');
   $sth->execute();
 
   $sth->bindValue(':qid','47');
@@ -127,8 +127,8 @@ With your team:<ol><li>identify/list the Essential Learnings that all students n
   $sth->bindValue(':type','9');
   $sth->bindValue(':order','4');
   $sth->bindValue(':quest','<b>How will WE know if they LEARNED it?</b><br/>
-A learning target is any achievement expectation for students <i>on the path</i> toward mastery of a standard.  It clearly states what we want the students to learn and should be understood by teachers and students.  Learning targets should be formatively assessed to monitor progress toward a standard.<br/>
-With your team:<ol><li>Break the GVC into specific, measurable learning targets</li><li>Identify a common formative assessment(s) (CFA) that your team will use to measure these learning targets.</li><li>Schedule, administer, and analyze the results of your CFA(s).</li></ol>');
+A learning target is any achievement expectation for students <i>on the path</i> toward mastery of a standard.  It clearly states what we want the students to learn and should be understood by teachers and students.  Learning targets should be formatively assessed to monitor progress toward a GVC.<br/>
+With your team:<ol><li>Break the GVC into specific, measurable learning targets.</li><li>Identify a Common Formative Assessment(s) that your team will use to measure these learning targets.</li><li>Schedule, administer, and analyze the results of your CFA(s).</li></ol>');
   $sth->execute();
 
   $sth->bindValue(':qid','49');
@@ -163,14 +163,14 @@ With your team:<ol><li>Break the GVC into specific, measurable learning targets<
   $sth->bindValue(':group','4');
   $sth->bindValue(':type','1');
   $sth->bindValue(':order','8');
-  $sth->bindValue(':quest','Enter any website links to online documents which support this assessment');
+  $sth->bindValue(':quest','OPTIONAL: Enter links to online documents which support this assessment.');
   $sth->execute();
 
   $sth->bindValue(':qid','54');
   $sth->bindValue(':group','4');
   $sth->bindValue(':type','1');
   $sth->bindValue(':order','9');
-  $sth->bindValue(':quest','According to the results of our CFA(s) and our team\'s collaboration, the following teaching practices/strategies were most effective');
+  $sth->bindValue(':quest','According to the results of our CFA(s) and our team collaboration, the following teaching practices/strategies were most effective for this GVC.');
   $sth->execute();
 
   $sth->bindValue(':qid','55');
@@ -192,7 +192,7 @@ EFFECTIVE TEAMS analyze the results of their common formative assessment (CFA) a
   $sth->bindValue(':group','4');
   $sth->bindValue(':type','1');
   $sth->bindValue(':order','12');
-  $sth->bindValue(':quest','List the SPECIFIC INTERVENTIONS your team responded with for students who WERE NOT proficient.');
+  $sth->bindValue(':quest','List the SPECIFIC INTERVENTIONS your team responded with for students who WERE NOT proficient in this GVC.');
   $sth->execute();
 
   $sth->bindValue(':qid','58');
@@ -206,7 +206,7 @@ EFFECTIVE TEAMS analyze the results of their common formative assessment (CFA) a
   $sth->bindValue(':group','4');
   $sth->bindValue(':type','1');
   $sth->bindValue(':order','14');
-  $sth->bindValue(':quest','List the SPECIFIC FIRST NAMES of those students who were not proficient even after your team\'s intervention. (To indicate growth, include how much the student grew from the first to second assessment).');
+  $sth->bindValue(':quest','List the FIRST NAMES of those students who were not proficient even after your team\'s intervention. (Or enter a link to an online document with the students names.)');
   $sth->execute();
 
   $sth->bindValue(':qid','60');
@@ -227,28 +227,35 @@ EFFECTIVE TEAMS analyze the results of their common formative assessment (CFA) a
   $sth->bindValue(':group','4');
   $sth->bindValue(':type','9');
   $sth->bindValue(':order','17');
-  $sth->bindValue(':quest','EFFECTIVE TEAMS provide extension activities for those students who already know a standard or skill.');
+  $sth->bindValue(':quest','What will we do if they already know it?');
   $sth->execute();
 
   $sth->bindValue(':qid','63');
   $sth->bindValue(':group','4');
   $sth->bindValue(':type','1');
   $sth->bindValue(':order','18');
-  $sth->bindValue(':quest','ACTION STEPS: As you review your GVC (from step #1), identify extension activities your team will use for those who already know it.');
+  $sth->bindValue(':quest','As you review this GVC, identify extension activities your team will use for those who already know it.');
   $sth->execute();
 
   $sth->bindValue(':qid','64');
   $sth->bindValue(':group','4');
   $sth->bindValue(':type','3');
   $sth->bindValue(':order','19');
-  $sth->bindValue(':quest','Reflect on what worked');
+  $sth->bindValue(':quest','Once you have completed the process for this GVC...');
   $sth->execute();
 
   $sth->bindValue(':qid','65');
   $sth->bindValue(':group','4');
+  $sth->bindValue(':type','3');
+  $sth->bindValue(':order','19');
+  $sth->bindValue(':quest','Reflect on what worked:');
+  $sth->execute();
+
+  $sth->bindValue(':qid','66');
+  $sth->bindValue(':group','4');
   $sth->bindValue(':type','1');
   $sth->bindValue(':order','20');
-  $sth->bindValue(':quest','Reflect on what didn\'t work');
+  $sth->bindValue(':quest','Reflect on what didn\'t work:');
   $sth->execute();
 
   $dbh->exec( 'UPDATE question SET group_repeatableid = 1 WHERE questionid in (43,44)' );

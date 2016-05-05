@@ -1,3 +1,4 @@
+<br>
 <?php
 if ( !empty($data['courseid']) && !empty($data['csip']['form'][ $data['courseid'] ][3]) ) {
   $questions = $data['csip']['form'][ $data['courseid'] ][3];
@@ -82,6 +83,7 @@ if ( !empty($data['courseid']) && !empty($data['csip']['form'][ $data['courseid'
 
     $num_answers = 0;
     if ( $first ) {
+      echo "<div class='uk-panel uk-panel-box'>\n";
       echo "<form method='post' class='uk-form uk-form-horizontal uk-clearfix' action='save_answer.php'>";
       echo "<input type='hidden' name='csipid' value='". $data['csip']['csipid'] ."'>\n";
       echo "<input type='hidden' name='categoryid' value='". $data['categoryid'] ."'>";
@@ -138,9 +140,9 @@ if ( !empty($data['courseid']) && !empty($data['csip']['form'][ $data['courseid'
       if ( !empty($data['can_edit']) ) { ?>
 <button class="uk-button uk-button-success uk-align-right uk-margin-top" type="button" onclick="save_answers(this)">Save</button>
 <?php }
-    echo "          </form>\n";
+      echo "          </form>\n";
 
-    if ( count(array_column($question['end_group'],'answerid')) ) {
+      if ( count(array_column($question['end_group'],'answerid')) ) {
 	echo "<form method='post' class='uk-form uk-form-horizontal uk-clearfix' action='save_answer.php'>";
 	echo "<input type='hidden' name='csipid' value='". $data['csip']['csipid'] ."'>\n";
 	echo "<input type='hidden' name='categoryid' value='". $data['categoryid'] ."'>";
@@ -162,7 +164,7 @@ if ( !empty($data['courseid']) && !empty($data['csip']['form'][ $data['courseid'
         echo "<button class=\"uk-button uk-button-danger uk-align-right uk-margin-top\" type=\"button\" onclick=\"this.form.submit()\">Delete</button>\n";
         echo "</form>\n";
       }
-      echo "<hr>\n";
+      echo "</div><br>\n";
     }
   }
 }
