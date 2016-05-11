@@ -51,12 +51,12 @@ foreach ( (array) $data['error'] as $err ) {
 
 <tr>
 <td><label for="min_grade">First Grade</label></td>
-<td><input name="min_grade" id="min_grade" value="<?= (!empty($data['course']['min_grade'])) ? $data['course']['min_grade'] : "" ?>" > <span class="uk-form-help-inline">Enter 0 for Kindergarten</span></td>
+<td><input name="min_grade" id="min_grade" value="<?= (isset($data['course']['min_grade'])) ? $data['course']['min_grade'] : "" ?>" > <span class="uk-form-help-inline">Enter 0 for Kindergarten</span></td>
 </tr>
 
 <tr>
 <td><label for="max_grade">Last Grade</label></td>
-<td><input name="max_grade" id="max_grade" value="<?= (!empty($data['course']['max_grade'])) ? $data['course']['max_grade'] : "" ?>" ></td>
+<td><input name="max_grade" id="max_grade" value="<?= (isset($data['course']['max_grade'])) ? $data['course']['max_grade'] : "" ?>" ></td>
 </tr>
 
 <tr>

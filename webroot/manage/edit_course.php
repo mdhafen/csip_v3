@@ -43,8 +43,8 @@ if ( $courseid ) {
 if ( $op == "Save" ) {  // Update/Add the location
   $categoryid = input( 'categoryid', INPUT_PINT );
   $name = input( 'course_name', INPUT_HTML_NONE );
-  $mingrade = input( 'min_grade', INPUT_PINT );
-  $maxgrade = input( 'max_grade', INPUT_PINT );
+  $mingrade = input( 'min_grade', INPUT_INT );
+  $maxgrade = input( 'max_grade', INPUT_INT );
   $active = input( 'active', INPUT_STR );
   $active = ( !empty($active) ) ? 1 : 0;
   $question_parts = input( 'parts', INPUT_PINT );
