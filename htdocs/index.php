@@ -9,7 +9,10 @@
         <div class="uk-container uk-container-center uk-animation-fade">
 <br>
 
-            <span class="uk-align-right"><img src="https://schools.washk12.org/enterprise/wp-content/uploads/sites/23/2014/01/grey_wcsd_logo-e1395268854370.png"></span>
+            <span class="uk-align-right">
+                <img src="https://logos.washk12.org/dist_SDLogo.png"><br>
+                <a href="https://prodev.washk12.org" class="uk-button uk-button-primary" target="_BLANK">Go here for help</a>
+            </span>
             <h2>
             <form method="post" class="uk-form uk-display-inline-block" action="index.php">
                    Plan for
@@ -60,11 +63,11 @@ if ( !empty($data['csip']) && !empty($data['courseid']) ) {
         <input type="hidden" name="categoryid" value="<?= $data['categoryid'] ?>">
         <input type="hidden" name="courseid" value="<?= $data['courseid'] ?>">
         <input type="hidden" name="op" value="Comment">
-        <textarea id="a-c" cols="115" rows="3" name="comment" placeholder="Principal&apos;s feedback"><?= isset($data['csip']['courses'][ $data['courseid'] ]['principal_comment']) ? $data['csip']['courses'][ $data['courseid'] ]['principal_comment'] : "" ?></textarea>
-        <button class='uk-button uk-button-success' onclick="save_answers(this)">Save Feedback</button>
+        <textarea id="a-c" cols="115" rows="3" name="comment" placeholder="Principal&apos;s feedback"><?= isset($data['csip']['courses'][ $data['courseid'] ]['principal_comment']) ? $data['csip']['courses'][ $data['courseid'] ]['principal_comment'] : "" ?></textarea><br>
+        <button class='uk-button uk-button-success' onclick="save_answers(this)">Save Feedback</button><?php if ( isset($data['csip']['courses'][ $data['courseid'] ]['comment_date']) ) { $date = new DateTime($data['csip']['courses'][ $data['courseid'] ]['comment_date']); print " (". $date->format('m/d/Y') .") "; } ?>
     </form>
-<?php } else { ?>
-   <span class="uk-alert uk-alert-warning"><span class="uk-text-large uk-text-bold">Principal&apos;s Feedback:</span>
+<?php } else if ( !empty($data['csip']['courses'][ $data['courseid'] ]['principal_comment']) ) { ?>
+   <span class="uk-alert uk-alert-warning"><span class="uk-text-large uk-text-bold">Principal&apos;s Feedback:</span><?php if ( isset($data['csip']['courses'][ $data['courseid'] ]['comment_date']) ) { $date = new DateTime($data['csip']['courses'][ $data['courseid'] ]['comment_date']); print " (". $date->format('m/d/Y') .") "; } ?>
 <?= isset($data['csip']['courses'][ $data['courseid'] ]['principal_comment']) ? $data['csip']['courses'][ $data['courseid'] ]['principal_comment'] : "" ?>
     </span>
 <?php

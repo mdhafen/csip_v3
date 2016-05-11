@@ -70,6 +70,7 @@ CREATE TABLE `course_approval` (
 	`csipid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
 	`principal_approved` DATE NULL DEFAULT NULL,
         `principal_comment` TEXT NULL DEFAULT NULL,
+	`comment_date` DATE NULL DEFAULT NULL,
 	PRIMARY KEY (`courseid`,`csipid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

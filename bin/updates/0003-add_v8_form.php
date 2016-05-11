@@ -15,6 +15,9 @@ if ( $row['count'] == 0 ) {
   $query = "ALTER TABLE course_approval ADD COLUMN principal_comment TEXT NULL AFTER principal_approved";
   $dbh->exec( $query );
 
+  $query = "ALTER TABLE course_approval ADD COLUMN comment_date DATE NULL AFTER principal_comment";
+  $dbh->exec( $query );
+
   $sth = $dbh->prepare("INSERT INTO question (questionid,version,question_group,type,order_num,question) VALUES (:qid,8,:group,:type,:order,:quest)");
 
   // type 1:text 2:select 3:sm-text 4:md-text 5:lg-text 7:check 8:multi 9:info
@@ -22,66 +25,15 @@ if ( $row['count'] == 0 ) {
   $sth->bindValue(':group','1');
   $sth->bindValue(':type','9');
   $sth->bindValue(':order','1');
-  $sth->bindValue(':quest','<b>What is the GVC?</b><br/>
-HIGHLY EFFECTIVE TEAMS teach ALL of the standards within their discipline but engage in the work of IDENTIFYING which of the standards/skills are so critical that EVERY student MUST know. TEAMS then work to ENSURE that every student will demonstrate proficiency in them. The <a class="uk-display-inline" target="_blank" href="http://prodev.washk12.org/site_file/prodev/files/Learning_Graphics/gvc.pdf">GVC</a> are the agreed upon essentials within the course or grade level that teams will commit to collectively address, commonly assess and persistently provide targeted interventions for students in need.');
+  $sth->bindValue(':quest','<b>Team Professional Growth Plan:</b><br/>
+After identifying your GVC and individually self assessing with the <a class="uk-display-inline" target="_blank" href="https://drive.google.com/a/ashk12.org/file/d/0B38lNytwBJpAM3Q5QXNCVzBzNW8/view?usp=sharing">Utah Teaching Ovservation Tool (UTOT)</a>, collectively determine the Teaching Standard(s) you need to strengthen as a team, based on the learning needs of the students in your classroom this year.');
   $sth->execute();
 
   $sth->bindValue(':qid','33');
   $sth->bindValue(':group','1');
   $sth->bindValue(':type','1');
   $sth->bindValue(':order','2');
-  $sth->bindValue(':quest','<b>Team Professional Growth Plan</b><br/>
-After identifying your GVC and individually self assessing with the <a class="uk-display-inline" target="_blank" href="http://www.uen.org/k12educator/uets/">Utah Effective Teaching Standards</a>, collectively determine the teaching practices you need to strengthen as a team, based on the learning needs of the students in your classroom this year.');
-  $sth->execute();
-
-  $sth->bindValue(':qid','36');
-  $sth->bindValue(':group','2');
-  $sth->bindValue(':type','9');
-  $sth->bindValue(':order','1');
-  $sth->bindValue(':quest','<b>Essential Elements of Accreditation</b><br/>
-For middle and high school only-Utilize the elements of this section to support the necessary accreditation expectations and highlight the work that your school is engaged in..');
-  $sth->execute();
-
-  $sth->bindValue(':qid','37');
-  $sth->bindValue(':group','2');
-  $sth->bindValue(':type','1');
-  $sth->bindValue(':order','2');
-  $sth->bindValue(':quest','Demographics');
-  $sth->execute();
-
-  $sth->bindValue(':qid','38');
-  $sth->bindValue(':group','2');
-  $sth->bindValue(':type','1');
-  $sth->bindValue(':order','3');
-  $sth->bindValue(':quest','Learning Data');
-  $sth->execute();
-
-  $sth->bindValue(':qid','39');
-  $sth->bindValue(':group','2');
-  $sth->bindValue(':type','1');
-  $sth->bindValue(':order','4');
-  $sth->bindValue(':quest','Survey Results');
-  $sth->execute();
-
-  $sth->bindValue(':qid','40');
-  $sth->bindValue(':group','2');
-  $sth->bindValue(':type','1');
-  $sth->bindValue(':order','5');
-  $sth->bindValue(':quest','IEQ-Index of Education Equality');
-  $sth->execute();
-
-  $sth->bindValue(':qid','41');
-  $sth->bindValue(':group','2');
-  $sth->bindValue(':type','1');
-  $sth->bindValue(':order','6');
-  $sth->bindValue(':quest','Learning Environment');
-  $sth->execute();
-
-  $sth->bindValue(':qid','42');
-  $sth->bindValue(':group','2');
-  $sth->bindValue(':type','1');
-  $sth->bindValue(':order','7');
-  $sth->bindValue(':quest','Other Information');
+  $sth->bindValue(':quest','Outline Team\'s Professional Growth Plan Here...');
   $sth->execute();
 
   $sth->bindValue(':qid','43');
@@ -135,7 +87,7 @@ With your team:<ol><li>Break the GVC into specific, measurable learning targets.
   $sth->bindValue(':group','4');
   $sth->bindValue(':type','1');
   $sth->bindValue(':order','5');
-  $sth->bindValue(':quest','List the Learning Targets that will lead to proficiency in this GVC');
+  $sth->bindValue(':quest','List all Learning Targets that will lead to proficiency in this GVC');
   $sth->execute();
 
   $sth->bindValue(':qid','50');
@@ -234,28 +186,28 @@ EFFECTIVE TEAMS analyze the results of their common formative assessment (CFA) a
   $sth->bindValue(':group','4');
   $sth->bindValue(':type','1');
   $sth->bindValue(':order','18');
-  $sth->bindValue(':quest','As you review this GVC, identify extension activities your team will use for those who already know it.');
+  $sth->bindValue(':quest','As you plan instruction for this GVC and the learning targets, identify extension activities your team will use for those who already know it.');
   $sth->execute();
 
   $sth->bindValue(':qid','64');
   $sth->bindValue(':group','4');
   $sth->bindValue(':type','3');
   $sth->bindValue(':order','19');
-  $sth->bindValue(':quest','Once you have completed the process for this GVC...');
+  $sth->bindValue(':quest','Once you have completed the process, reflect on...');
   $sth->execute();
 
   $sth->bindValue(':qid','65');
   $sth->bindValue(':group','4');
   $sth->bindValue(':type','3');
   $sth->bindValue(':order','19');
-  $sth->bindValue(':quest','Reflect on what worked:');
+  $sth->bindValue(':quest','What we will keep for this GVC:');
   $sth->execute();
 
   $sth->bindValue(':qid','66');
   $sth->bindValue(':group','4');
   $sth->bindValue(':type','1');
   $sth->bindValue(':order','20');
-  $sth->bindValue(':quest','Reflect on what didn\'t work:');
+  $sth->bindValue(':quest','What we will change for this GVC:');
   $sth->execute();
 
   $dbh->exec( 'UPDATE question SET group_repeatableid = 1 WHERE questionid in (43,44)' );

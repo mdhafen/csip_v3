@@ -16,16 +16,16 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['form'][ $data['coursei
         <ul id="grow" class="uk-nav uk-nav-side uk-nav-parent-icon">
             <li id="grow1">
                 <div class="uk-panel uk-panel-box uk-panel-box-primary">
-                    <p><strong>What is the GVC?</strong></p>
+                    <p><strong>Team Professional Growth Plan:</strong></p>
                     <hr>
-                    <p>HIGHLY EFFECTIVE TEAMS teach ALL of the standards within their discipline but engage in the work of IDENTIFYING which of the standards/skills are so critical that EVERY student MUST know. TEAMS then work to ENSURE that every student will demonstrate proficiency in them. The <a class="uk-display-inline" target="_blank" href="http://prodev.washk12.org/site_file/prodev/files/Learning_Graphics/gvc.pdf">GVC</a> are the agreed upon essentials within the course or grade level that teams will commit to collectively address, commonly assess and persistently provide targeted interventions for students in need.</p>
+                    <p>After identifying your GVC and individually self assessing with the <a href="https://drive.google.com/a/ashk12.org/file/d/0B38lNytwBJpAM3Q5QXNCVzBzNW8/view?usp=sharing" class="uk-display-inline" target="_blank">Utah Teaching Observation Tool (UTOT)</a>, collectively determine the Teaching Standard(s) you need to strengthen as a team, based on the learning needs of the students in your classroom this year.</p>
                 </div>
                 <br>
                 <div class="uk-panel uk-panel-box">
                     <input type="hidden" name="questionid" value="33">
                     <input type="hidden" name="answerid" value="<?= isset($questions[33]['answerid']) ? $questions[33]['answerid'] : "" ?>">
-                        <label class="uk-form-label" for="grow-1-33"><strong>Team Professional Growth Plan:</strong><br>
-After identifying your GVC and individually self assessing with the <a href="http://www.uen.org/k12educator/uets/" class="uk-display-inline" target="_blank">Utah Effective Teaching Standards</a>, collectively determine the teaching practices you need to strengthen as a team, based on the learning needs of the students in your classroom this year.</label>
+                        <label class="uk-form-label" for="grow-1-33"><br>
+</label>
                     <div class="uk-form-controls">
                         <textarea id="grow-1-33" cols="113" rows="8" name="answer" placeholder="Outline Team&apos;s Professional Growth Plan Here..."><?= isset($questions[33]['answer']) ? $questions[33]['answer'] : "" ?></textarea><br><br>
                     </div>

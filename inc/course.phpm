@@ -975,7 +975,7 @@ function course_principal_comment( $comment, $courseid = 0, $csip = array() ) {
   $old = $sth->fetchColumn();
 
   if ( $old !== false ) {
-    $query = "UPDATE course_approval SET principal_comment = :comment WHERE courseid = :course AND csipid = :csip";
+    $query = "UPDATE course_approval SET principal_comment = :comment, comment_date = CURDATE() WHERE courseid = :course AND csipid = :csip";
     $sth = $dbh->prepare( $query );
     $sth->bindValue( ':comment', $comment );
     $sth->bindValue( ':course', $courseid );
@@ -986,7 +986,7 @@ function course_principal_comment( $comment, $courseid = 0, $csip = array() ) {
       error_log("Add Course Comment DB Error on Update! ". $db_error[0] ." : ". $db_error[2]);
     }
   } else {
-    $query = "INSERT INTO course_approval ( courseid, csipid, principal_comment ) VALUES ( :course, :csip, :comment )";
+    $query = "INSERT INTO course_approval ( courseid, csipid, principal_comment, comment_date ) VALUES ( :course, :csip, :comment, CURDATE() )";
     $sth = $dbh->prepare( $query );
     $sth->bindValue( ':course', $courseid );
     $sth->bindValue( ':csip', $csip['csipid'] );
