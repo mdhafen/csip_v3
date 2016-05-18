@@ -11,7 +11,7 @@
 
             <span class="uk-align-right">
                 <img src="https://logos.washk12.org/dist_SDLogo.png"><br>
-                <a href="https://prodev.washk12.org" class="uk-button uk-button-primary" target="_BLANK">Go here for help</a>
+                <a href="https://prodev.washk12.org/support/csip" class="uk-button uk-button-primary" target="_BLANK">Go here for help</a>
             </span>
             <h2>
             <form method="post" class="uk-form uk-display-inline-block" action="index.php">
