@@ -5,7 +5,7 @@ $params = array(
 //	'host' => 'scan.washk12.org',
 //	'auth' => false,  // or 'auth' => 'PLAIN',
 );
-$mail_factory =& Mail::factory( 'smtp', $params );
+$mail_factory = Mail::factory( 'smtp', $params );
 
 $from = 'postmaster@washk12.org.invalid';
 $subject = "DCSIP Action Plan due-date passed.  Please report.";
