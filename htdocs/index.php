@@ -118,7 +118,7 @@ function answer_changed(element) {
   }
 
   answers_changed[ element.id ] = 1;
-  $( element.form ).find( "input[type='button'], button" ).each(function(){
+  $( element.form ).find( "button[data-group='cfa_save']" ).each(function(){
     $(this).removeClass("uk-button-success").addClass("uk-button-danger");
     $(this).val('Save');
   });
@@ -144,7 +144,7 @@ function save_answers(button_elm) {
     }
   });
 
-  $( form ).find( "input[type='button'], button" ).each(function(){
+  $( form ).find( "button[data-group='cfa_save']" ).each(function(){
     $(this).removeClass("uk-button-danger").addClass("uk-button-success");
     $(this).val('Changes Saved');
   });
@@ -202,7 +202,7 @@ function answer_saved_ajax( part, xml_result ) {
       }
     });
 
-    $( form ).find( "input[type='button'], button" ).each(function(){
+    $( form ).find( "button[data-group='cfa_save']" ).each(function(){
       $(this).removeClass("uk-button-danger").addClass("uk-button-success");
       $(this).val('Changes Saved');
     });

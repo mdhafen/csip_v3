@@ -53,12 +53,12 @@
         <div class="uk-panel uk-panel-box">
             <div class="uk-form-row uk-flex uk-flex-wrap uk-margin-top">
                 <div class="uk-flex-item-auto uk-margin-right" style="width: 40%">
-                    <div style="min-height:40px;"><label class="" for="cfa-c-<?= $part ?>-48">List the Learning Targets that lead to proficiency in GVC #<?= $count ?></label></div>
+                    <div style="min-height:40px;"><label class="" for="cfa-c-<?= $part ?>-49">List the Learning Targets that lead to proficiency in GVC #<?= $count ?></label></div>
                     <div class="">
-                        <input type="hidden" name="questions[]" value="48">
+                        <input type="hidden" name="questions[]" value="49">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[49]['answerid']) ? $questions[49]['answerid'] : "" ?>">
                         <input type="hidden" name="sequences[]" value="0">
-                        <textarea id="cfa-c-<?= $part ?>-48" cols="65" rows="8" name="answers[]" placeholder="text input"></textarea>
+                        <textarea id="cfa-c-<?= $part ?>-49" cols="65" rows="8" name="answers[]" placeholder="text input"></textarea>
                     </div>
                 </div>
 
@@ -114,7 +114,7 @@
             </div>
             <br>
   <?php if ( !empty($data['can_edit']) ) { ?>
-            <button class="uk-button uk-button-success uk-align-right" type="button" onclick="save_answers(this)">Save</button>
+            <button class="uk-button uk-button-success uk-align-right" type="button" data-group="cfa_save" onclick="save_answers(this)">Save</button>
   <?php } ?>
         </div>
         <br>
@@ -173,7 +173,7 @@
                 </div>
                 <br>
   <?php if ( !empty($data['can_edit']) ) { ?>
-                <button class="uk-button uk-button-success uk-align-right" type="button" onclick="save_answers(this)">Save</button>
+                <button class="uk-button uk-button-success uk-align-right" type="button" data-group="cfa_save" onclick="save_answers(this)">Save</button>
   <?php } ?>
             </div>
         <br>
@@ -190,7 +190,7 @@
 
             <div class="uk-panel uk-panel-box">
                 <div class="uk-form-row">
-                    <label class="uk-form-label" for="cfa-l-<?= $part ?>-63">As you review GVC #<?= $count ?>, identify extension activities your team will use for those who already know it.</label>
+                    <label class="uk-form-label" for="cfa-l-<?= $part ?>-63">As you plan instruction for GVC #<?= $count ?> and the learning targets, identify extension activities your team will use for those who already know it.</label>
                     <div class="uk-form-controls">
                         <input type="hidden" name="questions[]" value="63">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[63]['answerid']) ? $questions[63]['answerid'] : "" ?>">
@@ -200,7 +200,7 @@
                 </div>
                 <br>
   <?php if ( !empty($data['can_edit']) ) { ?>
-                <button class="uk-button uk-button-success uk-align-right" type="button" onclick="save_answers(this)">Save</button>
+                <button class="uk-button uk-button-success uk-align-right" type="button" data-group="cfa_save" onclick="save_answers(this)">Save</button>
   <?php } ?>
             </div>
         </li></ul>
@@ -209,13 +209,13 @@
 
     <li id="re<?= $part ?>">
         <div class="uk-panel uk-panel-box uk-alert-warning">
-            <p><strong>Once you have completed the process for GVC #<?= $count ?>...</strong></p>
+            <p><strong>Once you have completed the process, reflect on...</strong></p>
         </div>
         <br>
         <div class="uk-panel uk-panel-box">
             <div class="uk-form-row uk-flex">
                 <div class="uk-flex-item-auto uk-margin-right" style="width: 45%">
-                    <label class="" for="cfa-r-<?= $part ?>-65">Reflect on what worked:</label>
+                    <label class="" for="cfa-r-<?= $part ?>-65">What we will keep for GVC #<?= $count ?>:</label>
                     <div class="">
                         <input type="hidden" name="questions[]" value="65">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[65]['answerid']) ? $questions[65]['answerid'] : "" ?>">
@@ -224,7 +224,7 @@
                     </div>
                 </div>
                 <div class="uk-flex-item-auto uk-margin-right" style="">
-                    <label class="" for="cfa-l-<?= $part ?>-66">Reflect on what didn&apos;t work:</label>
+                    <label class="" for="cfa-l-<?= $part ?>-66">What we will change for GVC #<?= $count ?>:</label>
                     <div class="">
                         <input type="hidden" name="questions[]" value="66">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[66]['answerid']) ? $questions[66]['answerid'] : "" ?>">
@@ -235,7 +235,7 @@
             </div>
                 <br>
   <?php if ( !empty($data['can_edit']) ) { ?>
-                <button class="uk-button uk-button-success uk-align-right" type="button" onclick="save_answers(this)">Save</button>
+                <button class="uk-button uk-button-success uk-align-right" type="button" data-group="cfa_save" onclick="save_answers(this)">Save</button>
   <?php } ?>
         </div>
     </li>

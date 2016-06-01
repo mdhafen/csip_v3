@@ -61,7 +61,7 @@
                     </div>
                     <br>
   <?php if ( !empty($data['can_edit']) ) { ?>
-					<button class="uk-button uk-button-success uk-align-right" type="button" onclick="save_answers(this)">Save</button>
+					<button class="uk-button uk-button-success uk-align-right" type="button" data-group="cfa_save" onclick="save_answers(this)">Save</button>
   <?php } ?>
             </li>
         </ul>
@@ -127,7 +127,7 @@
                     </div>
                     <br>
   <?php if ( !empty($data['can_edit']) ) { ?>
-					<button class="uk-button uk-button-success uk-align-right" type="button" onclick="save_answers(this)">Save</button>
+					<button class="uk-button uk-button-success uk-align-right" type="button" data-group="cfa_save" onclick="save_answers(this)">Save</button>
   <?php } ?>
             </li>
         </ul>
@@ -177,7 +177,7 @@
                     </div>
 					<br>
   <?php if ( !empty($data['can_edit']) ) { ?>
-					<button class="uk-button uk-button-success uk-align-right" type="button" onclick="save_answers(this)">Save</button>
+					<button class="uk-button uk-button-success uk-align-right" type="button" data-group="cfa_save" onclick="save_answers(this)">Save</button>
   <?php } ?>
             </li>
         </ul>
