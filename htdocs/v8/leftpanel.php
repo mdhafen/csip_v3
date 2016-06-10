@@ -18,7 +18,7 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['form'][ $data['coursei
                 <div class="uk-panel uk-panel-box uk-panel-box-primary">
                     <p><strong>Team Professional Growth Plan:</strong></p>
                     <hr>
-                    <p>After identifying your GVC and individually self assessing with the <a href="https://drive.google.com/a/ashk12.org/file/d/0B38lNytwBJpAM3Q5QXNCVzBzNW8/view?usp=sharing" class="uk-display-inline" target="_blank">Utah Teaching Observation Tool (UTOT)</a>, collectively determine the Teaching Standard(s) you need to strengthen as a team, based on the learning needs of the students in your classroom this year.</p>
+                    <p>After identifying your GVC and individually self assessing with the <a href="https://docs.google.com/document/d/1avnRg24z6hlyZccCJTKoFnTKzNXmPR4dqGACC-AOlyI/edit" class="uk-display-inline" target="_blank">Utah Teaching Observation Tool (UTOT)</a>, collectively determine the Teaching Standard(s) you need to strengthen as a team, based on the learning needs of the students in your classroom this year.</p>
                 </div>
                 <br>
                 <div class="uk-panel uk-panel-box">
