@@ -79,7 +79,7 @@ INSERT INTO course_question_links (courseid,question_group,part,title) (SELECT c
 
 INSERT INTO question (questionid,version,question_group,type,order_num,question) VALUES
 (32,8,1,9,1,'<b>Team Professional Growth Plan:</b><br/>
-After identifying your GVC and individually self assessing with the <a class="uk-display-inline" target="_blank" href="https://drive.google.com/a/ashk12.org/file/d/0B38lNytwBJpAM3Q5QXNCVzBzNW8/view?usp=sharing">Utah Teaching Ovservation Tool (UTOT)</a>, collectively determine the Teaching Standard(s) you need to strengthen as a team, based on the learning needs of the students in your classroom this year.'),
+After identifying your GVC and individually self assessing with the <a class="uk-display-inline" target="_blank" href="http://www.schools.utah.gov/CURR/educatoreffectiveness/Observation-Tools/Teaching/Chart.aspx">Utah Teaching Ovservation Tool (UTOT)</a>, collectively determine the Teaching Standard(s) you need to strengthen as a team, based on the learning needs of the students in your classroom this year (<a href="https://docs.google.com/document/d/1avnRg24z6hlyZccCJTKoFnTKzNXmPR4dqGACC-AOlyI/edit" class="uk-display-inline" target="_blank">click here for optional template</a>).'),
 (33,8,1,1,2,'Outline Team''s Professional Growth Plan Here...'),
 (43,8,3,3,1,'Teacher Name'),
 (44,8,3,1,2,'Reflect on your individual practices based on your stakeholder input'),
