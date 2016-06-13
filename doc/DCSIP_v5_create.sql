@@ -6,6 +6,7 @@ CREATE TABLE `user` (
 	`password` BLOB NOT NULL,
 	`salt` BLOB NOT NULL,
 	`role` INT(4) NOT NULL DEFAULT 0,
+        `externalid` VARCHAR(12) NOT NULL DEFAULT '',
 	PRIMARY KEY (`userid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -15,6 +16,7 @@ CREATE TABLE `location` (
 	`mingrade` INT(4) NOT NULL DEFAULT 1,
 	`maxgrade` INT(4) NOT NULL DEFAULT 5,
 	`loc_demo` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
+        `externalid` VARCHAR(12) NOT NULL DEFAULT '',
 	PRIMARY KEY (`locationid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -49,6 +51,7 @@ CREATE TABLE `course` (
 	`active` INT(1) UNSIGNED NOT NULL DEFAULT 1,
 	`min_grade` INT(4) NOT NULL DEFAULT 1,
 	`max_grade` INT(4) NOT NULL DEFAULT 12,
+        `externalid` VARCHAR(12) NOT NULL DEFAULT '',
 	PRIMARY KEY (`courseid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

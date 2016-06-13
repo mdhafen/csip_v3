@@ -91,14 +91,29 @@ function authenticate() {
 	global $config;
 
 	if ( ! isset( $_SESSION[ 'loggedin_user' ] ) ) {
+		$user = 0;
 		$username = input( '_username', INPUT_HTML_NONE );
 		$password = input( '_password', INPUT_STR );
 		if ( ! $username || ! $password ) {
-			$_SESSION[ 'NOSESSION' ] = 1;
-			$_SESSION[ 'username' ] = $username;
-			$_SESSION[ 'token' ] = '';
+			if ( !empty($config['authen_modules']['basic']) ) {
+				$username = $_SERVER['REMOTE_USER'];
+				$module = $config['authen_modules']['db'];
+				$user = user_by_username( $username, $module );
+			}
+			if ( !$user && !empty($config['authen_modules']['external']) ) {
+				$module = $config['authen_modules']['external'];
+				if ( is_readable( $module .".phpm" ) ) {
+					include_once( $module .".phpm" );
+					$ex = new Authen_External();
+					$user = $ex->authen_external( $module );
+				}
+			}
+			else {
+				$_SESSION[ 'NOSESSION' ] = 1;
+				$_SESSION[ 'username' ] = $username;
+				$_SESSION[ 'token' ] = '';
+			}
 		} else {
-			$user = 0;
 			if ( !empty( $config['authen_modules'] ) ) {
 				if ( !empty($config['authen_modules']['ldap']) ) {
 					$module = $config['authen_modules']['ldap'];
@@ -106,31 +121,36 @@ function authenticate() {
 				}
 				if ( ! $user && !empty($config['authen_modules']['external']) ) {
 					$module = $config['authen_modules']['external'];
+					if ( is_readable( $module .".phpm" ) ) {
+						include_once( $module .".phpm" );
+						$ex = new Authen_External();
+						$user = $ex->authen_external( $module, $username, $password );
+					}
 				}
 				if ( ! $user && !empty($config['authen_modules']['db']) ) {
 					$module = $config['authen_modules']['db'];
 					$user = authen_db( $module, $username, $password );
 				}
 			}
-			if ( $user && $user['username'] ) {
-				unset( $_SESSION[ 'BADLOGIN' ] );
-				unset( $_SESSION[ 'NOSESSION' ] );
-				$token = hash(
-					'sha512',
-					session_id() .','.
-					$_SERVER[ 'REMOTE_ADDR' ] .','.
-					$config[ 'secure_phrase' ]
-					);
-				$_SESSION[ 'token' ] = $token;
-				$_SESSION[ 'userid' ] = $user[ 'userid' ];
-				$_SESSION[ 'username' ] = $user[ 'username' ];
-				$_SESSION[ 'loggedin_user' ] = $user;
-				$_SESSION[ 'new_session' ] = 1;
-			} else {
-				$_SESSION[ 'BADLOGIN' ] = 1;
-				$_SESSION[ 'token' ] = '';
-				$_SESSION[ 'username' ] = $username;
-			}
+		}
+		if ( $user && $user['username'] ) {
+			unset( $_SESSION[ 'BADLOGIN' ] );
+			unset( $_SESSION[ 'NOSESSION' ] );
+			$token = hash(
+				'sha512',
+				session_id() .','.
+				$_SERVER[ 'REMOTE_ADDR' ] .','.
+				$config[ 'secure_phrase' ]
+				);
+			$_SESSION[ 'token' ] = $token;
+			$_SESSION[ 'userid' ] = $user[ 'userid' ];
+			$_SESSION[ 'username' ] = $user[ 'username' ];
+			$_SESSION[ 'loggedin_user' ] = $user;
+			$_SESSION[ 'new_session' ] = 1;
+		} else {
+			$_SESSION[ 'BADLOGIN' ] = 1;
+			$_SESSION[ 'token' ] = '';
+			$_SESSION[ 'username' ] = $username;
 		}
 	}
 

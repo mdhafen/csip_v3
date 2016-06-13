@@ -41,6 +41,8 @@
 		<h1>Please enter user information</h1>
 		<div>This user will be the first system administrator, and will create further users.</div>
 		<form class="uk-form" method="post" action="install.php">
+			<?php if ( !empty($data['checks_passed']) ) { ?><input type="hidden" name="checks_passed" value="1"><?php } ?>
+			<?php if ( !empty($data['step']) ) { ?><input type="hidden" name="step" value="<?= $data['step'] ?>"><?php } ?>
 			<fieldset class="uk-form-horizontal">
 				<div class="uk-form-row">
 					<label class="uk-form-label" for="locationid"></label>

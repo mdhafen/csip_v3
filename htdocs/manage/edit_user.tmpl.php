@@ -19,22 +19,22 @@ Changes saved.
 <?php } ?>
 
 <form method="post" action="<?= $data['_config']['base_url'] ?>manage/edit_user.php">
-<input type="hidden" name="userid" id="userid" value="<?= $data['user']['userid'] ?>">
+<input type="hidden" name="userid" id="userid" value="<?= !empty($data['user']['userid']) ? $data['user']['userid'] : "" ?>">
 <table>
 
 <tr>
 <td><label for="username">Username</label></td>
-<td><input name="username" id="username" value="<?= $data['user']['username'] ?>" ></td>
+<td><input name="username" id="username" value="<?= !empty($data['user']['username']) ? $data['user']['username'] : "" ?>" ></td>
 </tr>
 
 <tr>
 <td><label for="fullname">Full Name</label></td>
-<td><input name="fullname" id="fullname" value="<?= $data['user']['fullname'] ?>" ></td>
+<td><input name="fullname" id="fullname" value="<?= !empty($data['user']['fullname']) ? $data['user']['fullname'] : "" ?>" ></td>
 </tr>
 
 <tr>
 <td><label for="email">Email Address</label></td>
-<td><input name="email" id="email" value="<?= $data['user']['email'] ?>" ></td>
+<td><input name="email" id="email" value="<?= !empty($data['user']['email']) ? $data['user']['email'] : "" ?>" ></td>
 </tr>
 
 <tr>
@@ -67,6 +67,11 @@ Changes saved.
 <tr>
 <td><label for="password_2">Repeat Password to confirm</label></td>
 <td><input type="password" name="password_2" id="password_2" value="" ></td>
+</tr>
+
+<tr>
+<td><label for="externalid">External ID</label></td>
+<td><input type="text" name="externalid" id="externalid" disabled value="<?= !empty($data['user']['externalid']) ? $data['user']['externalid'] : "" ?>" ></td>
 </tr>
 
 </table>

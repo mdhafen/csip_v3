@@ -12,6 +12,66 @@ $config = array(
 		'external' => '',
 		'ldap'     => 0,
 	),
+	'user_external_module' => '',
+	'PS_API' => array(
+		'url' => '',
+		'id' => '',
+		'secret' => '',
+		'StaffStatus_to_role_map' => array(
+			1 => 2, // Teacher is PLC Member
+			4 => 3, // School Admin is Principal
+			6 => 4, // DO Staff is District Personel
+			7 => 6, // DO Admin is Site Supervisor
+			8 => 6, // Tech Office is Site Supervisor
+		),
+		'CreditType_to_category_map' => array(
+			'AR' => 5,
+			'AR7' => 5,
+			'CB' => 3,
+			'CB6' =>3 ,
+			'CP' => 3,
+			'CP8' => 3,
+			'EL' => 9,
+			'EL6' => 9,
+			'EL8' => 9,
+			'ELK' => 9,
+			'ELP' => 9,
+			'EN' => 9,
+			'FL' => 6,
+			'FL6' => 6,
+			'FL7' => 6,
+			'FL8' => 6,
+			'HC' => 8,
+			'HE' => 8,
+			'HF' => 8,
+			'HO' => 8,
+			'HO6' => 8,
+			'LA' => 1,
+			'LA6' => 1,
+			'LA7' => 1,
+			'LA8' => 1,
+			'LAEL' => 1,
+			'LAK' => 1,
+			'LAP' => 1,
+			'MA' => 2,
+			'MA6' => 2,
+			'MA8' => 2,
+			'ME' => 2,
+			'SG' => 7,
+			'SO' => 7,
+			'SO6' => 7,
+			'SR' => 7,
+			'SU' => 7,
+			'SU8' => 7,
+			'SUT' => 7,
+			'SW' => 7,
+			'TF' => 9,
+			'TL' => 4,
+			'TT' => 4,
+			'TT6' => 4,
+			'TT8' => 4,
+        ),
+	),
 	'trusted_proxies'   => array(),
 	'database'          => array(
 		'core' => array(
@@ -95,13 +155,13 @@ while ( strripos( $dir, substr( $config['this_url'], 0, $count ) ) > 0 ) {
  */
 if ( ! empty($config['trusted_proxies']) && array_search($_SERVER['REMOTE_ADDR'],$config['trusted_proxies']) !== false ) {
 	if ( isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || isset($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on' ) {
-		$host = "https://". $_SERVER['HTTP_X_FORWAREDED_SERVER'];
+		$host = "https://". $_SERVER['HTTP_X_FORWARDED_SERVER'];
 		if ( isset($_SERVER['HTTP_X_FORWARDED_PORT']) && $_SERVER['HTTP_X_FORWARDED_PORT'] != '443' ) {
 			$host .= ':'. $_SERVER['HTTP_X_FORWARDED_PORT'];
 		}
 	}
 	else if ( isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'http' ) {
-		$host = "http://". $_SERVER['HTTP_X_FORWAREDED_SERVER'];
+		$host = "http://". $_SERVER['HTTP_X_FORWARDED_SERVER'];
 		if ( isset($_SERVER['HTTP_X_FORWARDED_PORT']) && $_SERVER['HTTP_X_FORWARDED_PORT'] != '80' ) {
 			$host .= ':'. $_SERVER['HTTP_X_FORWARDED_PORT'];
 		}

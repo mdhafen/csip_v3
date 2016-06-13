@@ -34,6 +34,22 @@ function user_by_username( $username, $module = 'core' ) {
   return $row;
 }
 
+function user_by_externalid( $externalid, $module = 'core' ) {
+  $dbh = db_connect( $module );
+  $query = "SELECT * FROM user WHERE externalid = :xid";
+  $sth = $dbh->prepare( $query );
+  $sth->bindParam( ':xid', $externalid );
+  $sth->execute();
+
+  $row = $sth->fetch();
+  $row = stripslashes_array( $row );
+
+  if ( !empty($row['userid']) ) {
+    $row['locations'] = user_locations( $row['userid'], $module );
+  }
+  return $row;
+}
+
 function user_locations( $userid, $module = 'core' ) {
   $result = array();
   $dbh = db_connect( $module );
@@ -50,7 +66,25 @@ function user_locations( $userid, $module = 'core' ) {
   return $result;
 }
 
+function user_courses( $userid, $locationid, $module = 'core' ) {
+  $result = array();
+  $dbh = db_connect( $module );
+  $query = "SELECT * FROM user_course_links CROSS JOIN course USING (courseid) WHERE userid = :uid AND locationid = :loc";
+  $sth = $dbh->prepare( $query );
+  $sth->bindParam( ':uid', $userid );
+  $sth->bindParam( ':loc', $locationid );
+  $sth->execute();
+
+  while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+    $row = stripslashes_array( $row );
+    $result[ $row['courseid'] ] = $row;
+  }
+
+  return $result;
+}
+
 function all_users( $module = 'core') {
+  $result = array();
   $dbh = db_connect( $module );
 
   $query = "SELECT * FROM user ORDER BY fullname,username";
@@ -66,7 +100,32 @@ function all_users( $module = 'core') {
   return $result;
 }
 
+function location_by_id( $locationid, $module = 'core' ) {
+  $dbh = db_connect( $module );
+  $query = "SELECT * FROM location WHERE locationid = :locationid";
+  $sth = $dbh->prepare( $query );
+  $sth->bindParam( ':locationid', $locationid );
+  $sth->execute();
+
+  $row = $sth->fetch();
+  $row = stripslashes_array( $row );
+  return $row;
+}
+
+function location_by_externalid( $externalid, $module = 'core' ) {
+  $dbh = db_connect( $module );
+  $query = "SELECT * FROM location WHERE externalid = :xid";
+  $sth = $dbh->prepare( $query );
+  $sth->bindParam( ':xid', $externalid );
+  $sth->execute();
+
+  $row = $sth->fetch();
+  $row = stripslashes_array( $row );
+  return $row;
+}
+
 function all_locations( $module = 'core') {
+  $result = array();
   $dbh = db_connect( $module );
 
   $query = "SELECT * FROM location ORDER BY name";
@@ -91,7 +150,7 @@ function update_user( $userid, $update, $module = 'core' ) {
     $query = rtrim( $query, ", " );
     $query .= "WHERE userid = ". $dbh->quote( $userid );
   } else {
-    $query = "INSERT INTO user (username,fullname,email,role,password,salt) VALUES (?,?,?,?,?,?)";
+    $query = "INSERT INTO user (username,fullname,email,role,password,salt,externalid) VALUES (?,?,?,?,?,?,?)";
   }
   $sth = $dbh->prepare( $query );
   $sth->execute( array_values( $update ) );
@@ -133,7 +192,7 @@ function update_location( $locationid, $update, $module = 'core' ) {
     $query = rtrim( $query, ", " );
     $query .= "WHERE locationid = ". $dbh->quote( $locationid );
   } else {
-    $query = "INSERT INTO location (locationid,name,mingrade,maxgrade,loc_demo) VALUES (?,?,?,?,?)";
+    $query = "INSERT INTO location (locationid,name,mingrade,maxgrade,loc_demo,externalid) VALUES (?,?,?,?,?,?)";
   }
   $sth = $dbh->prepare( $query );
   $sth->execute( array_values( $update ) );

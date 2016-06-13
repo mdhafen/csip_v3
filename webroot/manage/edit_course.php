@@ -109,6 +109,7 @@ if ( $op == "Save" ) {  // Update/Add the location
 	'min_grade' => $mingrade,
 	'max_grade' => $maxgrade,
 	'active' => $active,
+        'externalid' => '',
 		       );
     }
 

@@ -1,3 +1,14 @@
+INSERT INTO `course_categories` (categoryid,category_name) VALUES
+ ( 1, 'Language Arts' ),
+ ( 2, 'Math' ),
+ ( 3, 'Science' ),
+ ( 4, 'CTE' ),
+ ( 5, 'Fine Arts' ),
+ ( 6, 'World Language' ),
+ ( 7, 'Social Science' ),
+ ( 8, 'Health Ed.' ),
+ ( 9, 'Other' );
+
 INSERT INTO `question_options` (option_group,option_value,option_label) VALUES
  (1, 'yes', 'Yes'),
  (1, 'no', 'No');

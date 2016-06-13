@@ -5,6 +5,22 @@ require_once( $config['base_dir'] ."/lib/security.phpm" );
 
 require_once( 'csips.phpm' );
 
+function get_course_by_externalid( $externalid ) {
+    $dbh = db_connect();
+    $query = "
+    SELECT course.*,cc.category_name
+      FROM course
+ LEFT JOIN course_categories AS cc ON course.course_category = cc.categoryid
+     WHERE externalid = :xid
+  ORDER BY cc.category_name,course.course_name
+";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':xid', $externalid );
+    $sth->execute();
+    $row = $sth->fetch( PDO::FETCH_ASSOC );
+    return $row;
+}
+
 function get_courses( $all_courses = false ) {
     $dbh = db_connect();
     $courses = array();
@@ -56,7 +72,7 @@ function update_course( $courseid, $update, $parts = array() ) {
     $query = rtrim( $query, ", " );
     $query .= "WHERE courseid = ". $dbh->quote( $courseid );
   } else {
-    $query = "INSERT INTO course (course_category,course_name,min_grade,max_grade,active) VALUES (?,?,?,?,?)";
+    $query = "INSERT INTO course (course_category,course_name,min_grade,max_grade,active,externalid) VALUES (?,?,?,?,?,?)";
   }
   $sth = $dbh->prepare( $query );
   $sth->execute( array_values( $update ) );
@@ -624,6 +640,70 @@ function get_course_question_groups( $courseid ) {
   }
 
   return $groups;
+}
+
+function get_course_location_links( $courseid, $locationid = null ) {
+  $dbh = db_connect();
+
+  $links = array();
+  $query = "SELECT * FROM location_course_links WHERE courseid = :cid";
+  if ( $locationid ) {
+      $query .= " AND locationid = :lid";
+  }
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':cid', $courseid );
+  if ( $locationid ) {
+      $sth->bindValue( ':lid', $locationid );
+  }
+  $sth->execute();
+  while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+    $links[] = $row;
+  }
+
+  return $links;
+}
+
+function add_course_location_link( $courseid, $locationid ) {
+  $dbh = db_connect();
+
+  $query = "INSERT IGNORE INTO location_course_links (courseid,locationid) VALUES (:cid,:lid)";
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':cid', $courseid );
+  $sth->bindValue( ':lid', $locationid );
+  $sth->execute();
+}
+
+function get_course_user_links( $courseid, $userid, $locationid = null ) {
+  $dbh = db_connect();
+
+  $links = array();
+  $query = "SELECT * FROM user_course_links WHERE courseid = :cid AND userid = :uid";
+  if ( $locationid ) {
+      $query .= " AND locationid = :lid";
+  }
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':cid', $courseid );
+  $sth->bindValue( ':uid', $userid );
+  if ( $locationid ) {
+      $sth->bindValue( ':lid', $locationid );
+  }
+  $sth->execute();
+  while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+    $links[] = $row;
+  }
+
+  return $links;
+}
+
+function add_course_user_link( $courseid, $userid, $locationid ) {
+  $dbh = db_connect();
+
+  $query = "INSERT IGNORE INTO user_course_links (courseid,userid,locationid) VALUES (:cid,:uid,:lid)";
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':cid', $courseid );
+  $sth->bindValue( ':uid', $userid );
+  $sth->bindValue( ':lid', $locationid );
+  $sth->execute();
 }
 
 function course_save_answers( $answerid, $answer, $courseid, $questionid, $seq, $part, $csip ) {

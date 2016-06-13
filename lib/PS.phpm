@@ -1,0 +1,441 @@
+<?php
+require_once( 'config.phpm' );
+require_once( 'user.phpm' );
+require_once( 'output.phpm' );
+
+require_once( $config['base_dir'] .'/inc/course.phpm' );
+
+class Authen_External {
+  private $token = '';
+  private $url = '';
+
+  function __construct() {
+    $this->get_access_token();
+  }
+
+  public function authen_external( $module=null, $username=null, $password=null ) {
+    global $config;
+    // FIXME Verify PS login and get $ps_userid
+    //   check http://php.net/manual/en/class.oauth.php
+    $ps_userid = 0;
+    // FIXME first pass: authenticate(identifier,returnUrl,realm,immediate,stateless,{callback},extensions,strict)
+    // FIXME second pass: verify(RequestOrUrl,returnUrl,{callback},stateless,extensions,strict)
+    //$ps_username = $this->get_username( $ps_userid );
+
+    $user = user_by_externalid( $ps_userid );
+
+    $this->do_sync( $ps_userid, $user );
+
+    $user = user_by_externalid( $ps_userid );
+
+    return $user;
+  }
+
+  private function get_access_token() {
+    global $config;
+    $url = $config['PS_API']['url'];
+    $id = $config['PS_API']['id'];
+    $secret = $config['PS_API']['secret'];
+
+    $credentials = base64_encode( $id .':'. $secret );
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_TIMEOUT, 10);
+    curl_setopt($curl, CURLOPT_URL, $url.'/oauth/access_token');
+    curl_setopt($curl, CURLOPT_POST, 1);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    $headers = array();
+    $headers[] = 'Authorization: Basic ' . $credentials;
+    $headers[] = 'Content-Type: application/x-www-form-urlencoded;charset=UTF-8';
+    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($curl, CURLOPT_POSTFIELDS, 'grant_type=client_credentials');
+    $output = curl_exec($curl);
+    curl_close($curl);
+    $result = json_decode($output);
+    if ( !empty($result->access_token) ) {
+      $this->token = $result->access_token;
+      $this->url = $url;
+    }
+    else {
+      //error( array('AUTHEN_EXTERNAL_NO_CONNECTION'=>'Failed to get Access Token from PowerSchool API') );
+      error_log('PowerSchool API: Failed to get Access Token');
+    }
+  }
+
+  private function get_data( $URI ) {
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_TIMEOUT, 10);
+    $URL = $this->url . urlencode($URI);
+    $URL = $this->url . $URI;
+    curl_setopt($curl, CURLOPT_URL, $URL);
+    curl_setopt($curl, CURLOPT_HTTPGET, 1);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+    $headers = array();
+    $headers[] = 'Accept: application/json';
+    $headers[] = 'Authorization: Bearer ' . $this->token;
+    curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
+    $output = curl_exec($curl);
+    curl_close($curl);
+    $result = json_decode($output);
+    return $result;
+  }
+
+  public function get_locations() {
+    $locations = array();
+
+    $page = 1;
+    $schools = $this->get_data('/ws/v1/district/school?page='.$page);
+    while ( !empty($schools->schools->school) ) {
+      foreach ($schools->schools->school as $school) {
+        if ( empty($locations[$school->id]) ) {
+          $locations[$school->id] = $this->school_to_csip_location( $school );
+        }
+      }
+      $page++;
+      $schools = $this->get_data('/ws/v1/district/school?page='.$page);
+    }
+    return $locations;
+  }
+
+  public function get_users() {
+    $users = array();
+
+    $page = 1;
+    $schools = $this->get_data('/ws/v1/district/school?page='.$page);
+    while ( !empty($schools->schools->school) ) {
+      foreach ($schools->schools->school as $school) {
+        $stf_page = 1;
+        $ps_staff = $this->get_data('/ws/v1/school/'. $school->id .'/staff?page='.$stf_page);
+        while ( !empty($ps_staff->staffs->staff) ) {
+          foreach ( $ps_staff->staffs->staff as $stf ) {
+            if ( !empty($stf->id) && empty($users[$stf->id]) ) {
+              $users[$stf->id] = $this->staff_to_csip_user( $stf );
+            }
+          }
+          $stf_page++;
+          $ps_staff = $this->get_data('/ws/v1/school/'. $school->id .'/staff?page='.$stf_page);
+        }
+      }
+
+      $page++;
+      $schools = $this->get_data('/ws/v1/district/school?page='.$page);
+    }
+
+    return $users;
+  }
+
+  public function get_courses() {
+    $courses = array();
+
+    $page = 1;
+    $schools = $this->get_data('/ws/v1/district/school?page='.$page);
+    while ( !empty($schools->schools->school) ) {
+      foreach ($schools->schools->school as $school) {
+        $crs_page = 1;
+        $ps_courses = $this->get_data('/ws/v1/school/'. $school->id .'/course?page='.$crs_page);
+        while ( !empty($ps_courses->courses->course) ) {
+          foreach ( $ps_courses->courses->course as $crs ) {
+            if ( !empty($crs->id) && empty($courses[$crs->id]) ) {
+              $courses[$crs->id] = $this->course_to_csip_course( $crs );
+            }
+          }
+          $crs_page++;
+          $ps_courses = $this->get_data('/ws/v1/school/'. $school->id .'/course?page='.$crs_page);
+        }
+      }
+
+      $page++;
+      $schools = $this->get_data('/ws/v1/district/school?page='.$page);
+    }
+      
+    return $courses;
+  }
+
+  private function credittype_to_category( $course_dcid ) {
+    global $config;
+    $map = $config['PS_API']['CreditType_to_category_map'];
+
+    $category = 9;  // FIXME hard coded default of 'Other'
+    $course = $this->get_data('/ws/schema/table/course/'. $course_dcid .'?projection=CreditType');
+
+    // FIXME credittype needs to be tested - this whole table access thing does
+    if ( !empty($course->tables->course) ) {
+      $type = $course->tables->course->credittype;
+      if ( !empty($map[$type]) ) {
+        $category = $map[$type];
+      }
+    }
+
+    return $category;
+  }
+
+  private function get_username( $ps_userid, $staff = null ) {
+    $username = null;
+    if ( empty($staff) ) {
+      $user = $this->get_data('/ws/v1/staff/'. $userid);
+      $staff = $user->staff;
+    }
+    if ( !empty($staff) ) {
+      $username = !empty($staff->teacher_username) ? $staff->teacher_username : ( !empty($staff->admin_username) ? $staff->admin_username : "[No Name]" );
+    }
+
+    return $username;
+  }
+
+  private function get_fullname( $ps_userid, $staff = null ) {
+    $name = null;
+    if ( empty($staff) ) {
+      $user = $this->get_data('/ws/v1/staff/'. $userid);
+      $staff = $user->staff;
+    }
+    if ( !empty($staff) ) {
+      $name = !empty($staff->name->first_name) ? $staff->name->first_name : "";
+      if ( empty($name) ) {
+        $name = !empty($staff->name->middle_name) ? $staff->name->middle_name : "";
+      }
+      if ( !empty($staff->name->last_name) ) {
+        if ( !empty($name) ) {
+          $name .= " ";
+        }
+        $name .= $staff->name->last_name;
+      }
+    }
+    if ( empty($name) ) {
+      $name .= "[No Name] ";
+    }
+
+    return $name;
+  }
+
+  private function userid_to_role( $ps_userid, $staff = null ) {
+    global $config;
+    $map = $config['PS_API']['StaffStatus_to_role_map'];
+
+    $role = 0;
+    if ( empty($staff) ) {
+      $user = $this->get_data('/ws/v1/staff/'. $userid);
+      $staff = $user->staff;
+    }
+
+    if ( !empty($staff->school_affiliations) ) {
+        foreach ( $staff->school_affiliations as $school ) {
+            if ( $school->school_affiliation->status == 2 ) {
+                continue;
+            }
+            if ( $role === 0 || $school->school_affiliation->type < $role ) {
+                $role = $school->school_affiliation->type;
+            }
+        }
+    }
+
+    if ( $role > 0 ) {
+      if ( !empty($map[$role]) ) {
+        $role = $map[$role];
+      }
+      else {
+        $role = 0;
+      }
+    }
+
+    return $role;
+  }
+
+  private function get_location_courses( $ps_locid ) {
+    $courses = array();
+
+    $page = 1;
+    $ps_courses = $this->get_data('/ws/v1/school/'. $ps_locid .'/course?page='.$page);
+    while ( !empty($ps_courses->courses->course) ) {
+      foreach ( $ps_courses->courses->course as $crs ) {
+        $courses[] = $crs;
+      }
+      $page++;
+      $ps_courses = $this->get_data('/ws/v1/school/'. $ps_locid .'/course?page='.$page);
+    }
+      
+    return $courses;
+  }
+
+  private function do_sync( $userid, $old_user ) {
+    $teacher = $this->get_data('/ws/v1/staff/'. $userid .'?expansions=addresses,emails,phones,school_affiliations&extensions=u_schoolstaffuserfields');
+
+    $user = array();
+    $db_userid = 0;
+    $new_user = $this->staff_to_csip_user( $teacher->staff );
+
+    if ( !empty($old_user['userid']) ) {
+      $db_userid = $old_user['userid'];
+      if ( empty($old_user['username']) || $old_user['username'] != $new_user['username'] ) {
+        $check_dup = user_by_username( $new_user['username'] );
+        if ( !empty($check_dup) ) {
+          error_log('PowerSchool API: duplicate username on sync ('. $username .')');
+        }
+        else {
+          $user['username'] = $new_user['username'];
+        }
+      }
+      if ( empty($old_user['fullname']) || $old_user['fullname'] != $new_user['fullname'] ) {
+        $user['fullname'] = $new_user['fullname'];
+      }
+      if ( empty($old_user['email']) || $old_user['email'] != $new_user['email'] ) {
+        $user['email'] = $new_user['email'];
+      }
+      if ( empty($old_user['role']) || $old_user['role'] != $new_user['role'] ) {
+        $user['role'] = $new_user['role'];
+      }
+    }
+    else {
+      $check_dup = user_by_username( $new_user['username'] );
+      if ( !empty($check_dup) ) {
+        error_log('PowerSchool API: duplicate username on sync ('. $new_user['username'] .')');
+        return;
+      }
+      else {
+        $user = $new_user;
+      }
+    }
+    if ( !empty($user) ) {
+      $new_userid = update_user($db_userid, $user);
+      $user = user_by_externalid( $ps_userid );
+      $old_user = $user;
+    }
+
+    $schools = array();
+    foreach ( $teacher->staff->school_affiliations as $school ) {
+      if ( $school->school_affiliation->status == 2 ) {
+        continue;
+      }
+      $a_school = $this->get_data( '/ws/v1/school/'. $school->school_affiliation->school_id );
+      $ps_loc_id = $a_school->school->school_id;
+      $old_loc = location_by_externalid( $ps_loc_id );
+      if ( empty($old_loc) ) {
+        $this->new_location($ps_loc_id, $a_school);
+      }
+      $schools[$locationid] = $a_school;
+    }
+    if ( !empty($old_user['locations']) ) {
+      $diff1 = array_diff( array_keys($schools), array_keys($old_user['locations']) );
+      $diff2 = array_diff( array_keys($old_user['locations']), array_keys($schools) );
+    }
+    else {
+      $diff1 = 1;
+    }
+    if ( !empty($diff1) || !empty($diff2) ) {
+      update_user_locations( $old_user['userid'], array_keys($schools) );
+    }
+
+    foreach ( $schools as $locationid => $ps_loc ) {
+      $courses = $this->get_location_courses( $ps_loc->id );
+      foreach ( $courses as $ps_crs ) {
+        $csip_crs = get_course_by_externalid( $ps_crs->id );
+        if ( empty($csip_crs) ) {
+          $this->new_course( $ps_crs->id, $ps_crs );
+          $csip_crs = get_course_by_externalid( $ps_crs->id );
+        }
+        $access = 0;
+        if ( !empty($csip_crs['max_grade']) && !empty($ps_loc->low_grade) ) {
+          if ( $csip_crs['max_grade'] >= $ps_loc->low_grade ) {
+            $access++;
+          }
+        }
+        if ( !empty($csip_crs['min_grade']) && !empty($ps_loc->high_grade) ) {
+          if ( $csip_crs['min_grade'] <= $ps_loc->high_grade ) {
+            $access++;
+          }
+        }
+        $links = get_course_location_links( $csip_crs['courseid'], $locationid );
+        if ( !empty($links) ) {
+          $access++;
+        }
+        if ( !$access ) {
+          add_course_location_link( $csip_crs['courseid'], $locationid );
+        }
+        $links = get_course_user_links( $csip_crs['courseid'], $old_user['userid'], $locationid );
+        if ( empty($links) ) {
+          add_course_user_link( $csip_crs['courseid'], $old_user['userid'], $locationid );
+        }
+      }
+    }
+  }
+
+  private function new_location( $ps_loc_id, $school = null ) {
+    if ( empty($school) ) {
+      $school = $this->get_data('/ws/v1/school/'. $ps_loc_id);
+    }
+    $new_loc = school_to_csip_location( $school->school );
+    update_location( 0, $new_loc );
+    error_log('PowerSchool API: added location '. $new_loc['locationid'] .' ('. $new_loc['name'] .') some settings will need to be adjusted.');
+    return $locationid;
+  }
+
+  private function new_course( $ps_crs_id, $course = null ) {
+    if ( empty($course) ) {
+      $course = $this->get_data('/ws/v1/course/'. $ps_crs_id);
+    }
+    $updated = $this->course_to_csip_course( $course->course );
+    $parts = array_pop( $updated );
+    $courseid = update_course( 0, $updated, $parts );
+    error_log('PowerSchool API: added course '. $courseid .' ('. $updated['course_name'] .') some settings will need to be adjusted.');
+    return $courseid;
+  }
+
+  private function staff_to_csip_user( $staff ) {
+    $username = $this->get_username( $staff->id, $staff );
+    $fullname = $this->get_fullname( $staff->id, $staff );
+    $email = empty($staff->emails->work_email) ? "" : $staff->emails->work_email;
+    $role = $this->userid_to_role( $staff->id, $staff );
+    $externalid = $staff->id;
+
+    $user = array(
+        'username' => $username,
+        'fullname' => $fullname,
+        'email' => $email,
+        'role' => $role,
+        'password' => '',
+        'salt' => '',
+        'externalid' => $externalid,
+    );
+    return $user;
+  }
+
+  private function school_to_csip_location( $school ) {
+    $ps_loc_id = $school->id;
+    $locationid = $school->school_number;
+    $location_name = $school->name;
+    $min_grade = $school->low_grade;
+    $max_grade = $school->high_grade;
+
+    $location = array(
+        'locationid' => $locationid,
+        'name' => $location_name,
+        'mingrade' => $min_grade,
+        'maxgrade' => $max_grade,
+        'loc_demo' => 0,
+        'externalid' => $ps_loc_id,
+    );
+    return $location;
+  }
+
+  private function course_to_csip_course( $course ) {
+    $categoryid = $this->credittype_to_category( $course->id );
+    $name = $course->course_name;
+    $mingrade = 0;
+    $maxgrade = 0;
+    $active = 1;
+    $ex_id = $course->id;
+    $new_course = array(
+        'course_category' => $categoryid,
+        'course_name' => $name,
+        'min_grade' => $mingrade,
+        'max_grade' => $maxgrade,
+        'active' => $active,
+        'externalid' => $ex_id,
+    );
+    $parts[] = array( 'part' => '1', 'title' => 'Guaranteed Curriculum', 'question_group' => '1' );
+    $parts[] = array( 'part' => '2', 'title' => 'Accreditation', 'question_group' => '2' );
+    $parts[] = array( 'part' => '3', 'title' => 'Stakeholder Input', 'question_group' => '3' );
+    $parts[] = array( 'part' => '4', 'title' => 'GVC 1', 'question_group' => '4' );
+    $new_course['parts'] = $parts;
+    return $new_course;
+  }
+}
+?>

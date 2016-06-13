@@ -100,6 +100,7 @@ if ( $op == "Save" ) {  // Update/Add the user
 	'role' => $role,
 	'password' => $user_password,
 	'salt' => $salt,
+        'externalid' => '',
 		     );
     $loc_changed = true;
   }
