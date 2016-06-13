@@ -22,7 +22,7 @@ if ( !empty($output) ) {
         include_once( $module );
         $ex = new Authen_External();
         $sync_out = $output;
-        if ( count($output) == 1 || !empty($checks_passed) ) {
+        if ( count($output) == 1 ) {
             $sync_out['checks_passed'] = 1;
         }
         else {
@@ -42,11 +42,11 @@ if ( !empty($output) ) {
                       break;  // courses
 
             case "4": handle_courses();
+                      $step++;
                       break;
         }
 
-        if ( $step != "4" ) {
-//FIXME check out http://www.w3schools.com/html/html5_draganddrop.asp
+        if ( $step < "4" ) {
             $sync_out['step'] = $step;
             output( $sync_out, 'install_external' );
             exit;

@@ -43,7 +43,7 @@
 			<input type="hidden" name="checks_passed" value="1">
 <?php } ?>
 			<fieldset class="uk-form-horizontal uk-grid">
-				<div class="uk-width-1-2 uk-panel uk-panel-box" id="PreSyncCSIPSide">
+				<div class="uk-width-1-2 uk-panel uk-panel-box uk-scrollable-text" id="PreSyncCSIPSide">
 <?php
 $count = 1;
 $f_val = $data['value_field'];
@@ -71,7 +71,7 @@ foreach ( $data['left'] as $element ) {
 }
 ?>
 				</div>
-				<div class="uk-width-1-2 uk-panel uk-panel-box" id="PreSyncExternalSide" ondragover="drag_allowdrop(event)" ondrop="drag_dropped(event)">
+				<div class="uk-width-1-2 uk-panel uk-panel-box uk-scrollable-text" id="PreSyncExternalSide" ondragover="drag_allowdrop(event)" ondrop="drag_dropped(event)" style="max_height:100%">
 <?php
 unset($left);
 foreach ( $data['right'] as $element ) {
