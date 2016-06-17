@@ -2,6 +2,7 @@
 require_once( 'config.phpm' );
 require_once( 'user.phpm' );
 require_once( 'output.phpm' );
+require_once( 'input.phpm' );
 
 require_once( $config['base_dir'] .'/inc/course.phpm' );
 
@@ -15,18 +16,68 @@ class Authen_External {
 
   public function authen_external( $module=null, $username=null, $password=null ) {
     global $config;
-    // FIXME Verify PS login and get $ps_userid
-    //   check http://php.net/manual/en/class.oauth.php
     $ps_userid = 0;
-    // FIXME first pass: authenticate(identifier,returnUrl,realm,immediate,stateless,{callback},extensions,strict)
-    // FIXME second pass: verify(RequestOrUrl,returnUrl,{callback},stateless,extensions,strict)
-    //$ps_username = $this->get_username( $ps_userid );
+    $user = null;
+    $o_id = input( 'openid_identifier', INPUT_STR );
+    $o_mode = input( 'openid_mode', INPUT_STR );
 
-    $user = user_by_externalid( $ps_userid );
+    require_once "Auth/OpenID/Consumer.php";
+    require_once "Auth/OpenID/FileStore.php";
+    require_once "Auth/OpenID/AX.php";
 
-    $this->do_sync( $ps_userid, $user );
+    $store_path = (function_exists('sys_get_temp_dir') ? sys_get_temp_dir() . '' : '/tmp') . DIRECTORY_SEPARATOR . 'csip_openid_info_store';
+    $consumer = new Auth_OpenID_Consumer( new Auth_OpenID_FileStore($store_path) );
+    if ( !empty($o_id) ) {
+        $auth_request = $consumer->begin( $o_id );
+        if ( !$auth_request ) {
+            error_log( 'PowerSchool API: Auth - invalid OpenID identifier' );
+            return $user;
+        }
+        $ax_request = new Auth_OpenID_AX_FetchRequest();
+        // FIXME newer versions of OpenID use build() here
+        $ax_request->add( Auth_OpenID_AX_AttrInfo::make('http://powerschool.com/entity/id',1,true,'dcid') );
+        $auth_request->addExtension($ax_request);
+        $redirect_url = $auth_request->redirectURL($config['base_url'],$config['base_url']);
+        if ( Auth_OpenID::isFailure($redirect_url) ) {
+            error_log( 'PowerSchool API: Auth - could not redirect: '. $redirect_url->message );
+            return $user;
+        }
+        else {
+            redirect($redirect_url);
+            exit;
+        }
+    }
+    else if ( !empty($o_mode) ) {
+        $response = $consumer->complete($config['base_url']);
+        if ( $response->status == Auth_OpenID_SUCCESS ) {
+            $ax_response = Auth_OpenID_AX_FetchResponse::fromSuccessResponse($response);
+            $eid = $ax_response->getSingle('http://powerschool.com/entity/id');
+            if ( !empty($eid) ) {
+                $ps_userid = $eid;
+            }
+            else {
+                error_log( 'PowerSchool API: Auth: No user dcid in response' );
+                return $user;
+            }
+        }
+        else {
+            if ( $response->status == Auth_OpenID_FAILURE ) {
+                $message = ': '. $response->message;
+            }
+            error_log( 'PowerSchool API: Auth Failed'. $message );
+            return $user;
+        }
+    }
 
-    $user = user_by_externalid( $ps_userid );
+    if ( $ps_userid ) {
+        $user = user_by_externalid( $ps_userid );
+
+        if ( $config['user_external_module'] == 'PS' ) {
+            $this->do_sync( $ps_userid, $user );
+
+            $user = user_by_externalid( $ps_userid );
+        }
+    }
 
     return $user;
   }
@@ -64,7 +115,6 @@ class Authen_External {
   private function get_data( $URI ) {
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_TIMEOUT, 10);
-    $URL = $this->url . urlencode($URI);
     $URL = $this->url . $URI;
     curl_setopt($curl, CURLOPT_URL, $URL);
     curl_setopt($curl, CURLOPT_HTTPGET, 1);
@@ -168,7 +218,7 @@ class Authen_External {
     return $category;
   }
 
-  private function get_username( $ps_userid, $staff = null ) {
+  private function get_username( $userid, $staff = null ) {
     $username = null;
     if ( empty($staff) ) {
       $user = $this->get_data('/ws/v1/staff/'. $userid);
@@ -181,7 +231,7 @@ class Authen_External {
     return $username;
   }
 
-  private function get_fullname( $ps_userid, $staff = null ) {
+  private function get_fullname( $userid, $staff = null ) {
     $name = null;
     if ( empty($staff) ) {
       $user = $this->get_data('/ws/v1/staff/'. $userid);
@@ -206,7 +256,7 @@ class Authen_External {
     return $name;
   }
 
-  private function userid_to_role( $ps_userid, $staff = null ) {
+  private function userid_to_role( $userid, $staff = null ) {
     global $config;
     $map = $config['PS_API']['StaffStatus_to_role_map'];
 
@@ -218,11 +268,11 @@ class Authen_External {
 
     if ( !empty($staff->school_affiliations) ) {
         foreach ( $staff->school_affiliations as $school ) {
-            if ( $school->school_affiliation->status == 2 ) {
+            if ( $school->status == 2 ) {
                 continue;
             }
-            if ( $role === 0 || $school->school_affiliation->type < $role ) {
-                $role = $school->school_affiliation->type;
+            if ( $role === 0 || $school->type < $role ) {
+                $role = $school->type;
             }
         }
     }
@@ -295,22 +345,25 @@ class Authen_External {
     }
     if ( !empty($user) ) {
       $new_userid = update_user($db_userid, $user);
-      $user = user_by_externalid( $ps_userid );
+      $user = user_by_externalid( $userid );
       $old_user = $user;
     }
 
     $schools = array();
     foreach ( $teacher->staff->school_affiliations as $school ) {
-      if ( $school->school_affiliation->status == 2 ) {
+      if ( $school->status == 2 ) {
         continue;
       }
-      $a_school = $this->get_data( '/ws/v1/school/'. $school->school_affiliation->school_id );
-      $ps_loc_id = $a_school->school->school_id;
+      $a_school = $this->get_data( '/ws/v1/school/'. $school->school_id );
+      $ps_loc_id = $a_school->school->id;
       $old_loc = location_by_externalid( $ps_loc_id );
-      if ( empty($old_loc) ) {
+      if ( empty($old_loc) && !empty($ps_loc_id) ) {
         $this->new_location($ps_loc_id, $a_school);
+        $old_loc = location_by_externalid( $ps_loc_id );
       }
-      $schools[$locationid] = $a_school;
+      if ( !empty($old_loc) ) {
+        $schools[ $old_loc['locationid'] ] = $a_school;
+      }
     }
     if ( !empty($old_user['locations']) ) {
       $diff1 = array_diff( array_keys($schools), array_keys($old_user['locations']) );
@@ -361,7 +414,7 @@ class Authen_External {
     if ( empty($school) ) {
       $school = $this->get_data('/ws/v1/school/'. $ps_loc_id);
     }
-    $new_loc = school_to_csip_location( $school->school );
+    $new_loc = $this->school_to_csip_location( $school->school );
     update_location( 0, $new_loc );
     error_log('PowerSchool API: added location '. $new_loc['locationid'] .' ('. $new_loc['name'] .') some settings will need to be adjusted.');
     return $locationid;

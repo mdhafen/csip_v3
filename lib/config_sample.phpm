@@ -12,7 +12,9 @@ $config = array(
 		'external' => '',
 		'ldap'     => 0,
 	),
+	'authen_external_login_html' => '',
 	'user_external_module' => '',
+	'course_external_module' => 'PS',
 	'PS_API' => array(
 		'url' => '',
 		'id' => '',

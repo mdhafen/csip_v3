@@ -102,16 +102,11 @@ function authenticate() {
 			}
 			if ( !$user && !empty($config['authen_modules']['external']) ) {
 				$module = $config['authen_modules']['external'];
-				if ( is_readable( $module .".phpm" ) ) {
+				if ( is_readable( $config['base_dir'] ."/lib/". $module .".phpm" ) ) {
 					include_once( $module .".phpm" );
 					$ex = new Authen_External();
 					$user = $ex->authen_external( $module );
 				}
-			}
-			else {
-				$_SESSION[ 'NOSESSION' ] = 1;
-				$_SESSION[ 'username' ] = $username;
-				$_SESSION[ 'token' ] = '';
 			}
 		} else {
 			if ( !empty( $config['authen_modules'] ) ) {

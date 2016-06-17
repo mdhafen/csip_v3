@@ -33,6 +33,10 @@ function output_build( $data, $filename ) {
 
 	if ( is_array( $data ) ) {
 		$data['_config'] = array('base_dir'=>$config['base_dir'],'base_url'=>$config['base_url']);
+		if ( !empty($config['authen_modules']['external']) &&
+		     !empty($config['authen_external_login_html']) ) {
+			$data['_config']['authen_external_login_html'] = $config['authen_external_login_html'];
+		}
 		if ( ! empty( $_SESSION[ 'loggedin_user' ] ) ) {
 			$data['_session']['username'] = $_SESSION[ 'loggedin_user' ][ 'username' ];
 			$data['_session']['userid'] = $_SESSION[ 'loggedin_user' ][ 'userid' ];
