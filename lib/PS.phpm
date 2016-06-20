@@ -306,6 +306,22 @@ class Authen_External {
     return $courses;
   }
 
+  private function get_location_sections( $ps_locid ) {
+    $sections = array();
+
+    $page = 1;
+    $ps_sections = $this->get_data('/ws/v1/school/'. $ps_locid .'/section?page='.$page);
+    while ( !empty($ps_sections->sections->section) ) {
+      foreach ( $ps_sections->sections->section as $sec ) {
+        $sections[] = $sec;
+      }
+      $page++;
+      $ps_sections = $this->get_data('/ws/v1/school/'. $ps_locid .'/section?page='.$page);
+    }
+
+    return $sections;
+  }
+
   private function do_sync( $userid, $old_user ) {
     $teacher = $this->get_data('/ws/v1/staff/'. $userid .'?expansions=addresses,emails,phones,school_affiliations&extensions=u_schoolstaffuserfields');
 
@@ -377,6 +393,7 @@ class Authen_External {
       update_user_locations( $old_user['userid'], array_keys($schools) );
     }
 
+    $course_cache = array();
     foreach ( $schools as $locationid => $ps_loc ) {
       $courses = $this->get_location_courses( $ps_loc->id );
       foreach ( $courses as $ps_crs ) {
@@ -385,6 +402,7 @@ class Authen_External {
           $this->new_course( $ps_crs->id, $ps_crs );
           $csip_crs = get_course_by_externalid( $ps_crs->id );
         }
+        $course_cache[$ps_crs->id] = $csip_crs;
         $access = 0;
         if ( !empty($csip_crs['max_grade']) && !empty($ps_loc->low_grade) ) {
           if ( $csip_crs['max_grade'] >= $ps_loc->low_grade ) {
@@ -403,9 +421,22 @@ class Authen_External {
         if ( !$access ) {
           add_course_location_link( $csip_crs['courseid'], $locationid );
         }
-        $links = get_course_user_links( $csip_crs['courseid'], $old_user['userid'], $locationid );
+      }
+      $sections = $this->get_location_sections( $ps_loc->id );
+      foreach ( $sections->section as $sec ) {
+        if ( $sec->staff_id != $userid ) {
+          continue;
+        }
+	if ( empty($course_cache[$sec->course_id]) ) {
+	  $csip_sec = get_course_by_externalid( $sec->course_id );
+	  $course_cache[$sec->course_id] = $csip_sec;
+	}
+	else {
+	  $csip_sec = $course_cache[$sec->course_id];
+	}
+        $links = get_course_user_links( $csip_sec['courseid'], $old_user['userid'], $locationid );
         if ( empty($links) ) {
-          add_course_user_link( $csip_crs['courseid'], $old_user['userid'], $locationid );
+          add_course_user_link( $csip_sec['courseid'], $old_user['userid'], $locationid );
         }
       }
     }
