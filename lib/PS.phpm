@@ -266,8 +266,9 @@ class Authen_External {
       $staff = $user->staff;
     }
 
-    if ( !empty($staff->school_affiliations) ) {
-        foreach ( $staff->school_affiliations as $school ) {
+    if ( !empty($staff->school_affiliations->school_affiliation) ) {
+        foreach ( $staff->school_affiliations->school_affiliation as $school ) {
+	    if ( empty($school) ) { continue; }
             if ( $school->status == 2 ) {
                 continue;
             }
@@ -350,7 +351,7 @@ class Authen_External {
     }
 
     $schools = array();
-    foreach ( $teacher->staff->school_affiliations as $school ) {
+    foreach ( $teacher->staff->school_affiliations->school_affiliation as $school ) {
       if ( $school->status == 2 ) {
         continue;
       }
