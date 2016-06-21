@@ -36,7 +36,7 @@
 
 <?php if ( !empty($data['INSTALL_DONE']) ) { ?><div><a href="index.php">Installation is complete.  Please login to add users.</a></div><?php } ?>
 
-	<div class="uk-flex uk-flex-middle uk-flex-center">
+	<div class="uk-container-center">
 	<div class="uk-panel uk-panel-box">
 		<h1>Please enter user information</h1>
 		<div>This user will be the first system administrator, and will create further users.</div>

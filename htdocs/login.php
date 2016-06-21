@@ -37,6 +37,7 @@
 
 						<br>
 						<button class="uk-button uk-button-success uk-button-large">Login</button>
+						<input type="hidden" name="_op" value="do_login">
 					</form>
 				</div>
 <?php if ( !empty($data['_config']['authen_external_login_html']) ) { ?>

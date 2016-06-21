@@ -33,7 +33,7 @@
 
 <?php if ( !empty($data['INSTALL_DONE']) ) { ?><div class="uk-alert uk-alert-success"><a href="index.php">Installation is complete.  Please login to add users.</a></div><?php } ?>
 
-	<div class="uk-flex uk-flex-middle uk-flex-center">
+	<div class="uk-container-center">
 	<div class="uk-panel uk-panel-box">
 		<h3>Please review information already in CSIP and in the External source.</h3>
 		<div><?= $data['data_set'] ?></div>
@@ -50,12 +50,12 @@ $f_val = $data['value_field'];
 $f_lab = $data['label_field'];
 foreach ( $data['left'] as $element ) {
 ?>
-					<div>
+					<div class="uk-nbfc uk-overflow-container">
 					<label class="uk-form-label" for="external<?= $count ?>"><?= $element[$f_lab] ?></label>
 					<div class="uk-form-controls" ondragover="drag_allowdrop(event)" ondrop="drag_dropped(event)">
 						<input type="hidden" id="element<?= $count ?>" name="elements[]" value="<?= $element[ $f_val ] ?>">
 <?php
-    if ( !empty($element['externalid']) ) {
+    if ( !empty($element['externalid']) && !empty($data['right'][ $element['externalid'] ]) ) {
         $ex_label = $data['right'][ $element['externalid'] ][ $f_lab ];
         unset( $data['right'][ $element['externalid'] ] );
 ?>
