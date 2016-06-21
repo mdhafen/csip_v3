@@ -205,11 +205,10 @@ class Authen_External {
     $map = $config['PS_API']['CreditType_to_category_map'];
 
     $category = 9;  // FIXME hard coded default of 'Other'
-    $course = $this->get_data('/ws/schema/table/course/'. $course_dcid .'?projection=CreditType');
+    $course = $this->get_data('/ws/schema/table/courses/'. $course_dcid .'?projection=CreditType');
 
-    // FIXME credittype needs to be tested - this whole table access thing does
-    if ( !empty($course->tables->course) ) {
-      $type = $course->tables->course->credittype;
+    if ( !empty($course->tables->courses) ) {
+      $type = $course->tables->courses->credittype;
       if ( !empty($map[$type]) ) {
         $category = $map[$type];
       }
@@ -457,7 +456,7 @@ class Authen_External {
         }
       }
       $sections = $this->get_location_sections( $ps_loc->school->id );
-      foreach ( $sections->section as $sec ) {
+      foreach ( $sections as $sec ) {
         if ( $sec->staff_id != $userid ) {
           continue;
         }
@@ -489,8 +488,9 @@ class Authen_External {
   private function new_course( $ps_crs_id, $course = null ) {
     if ( empty($course) ) {
       $course = $this->get_data('/ws/v1/course/'. $ps_crs_id);
+      $course = $course->course;
     }
-    $updated = $this->course_to_csip_course( $course->course );
+    $updated = $this->course_to_csip_course( $course );
     $parts = array_pop( $updated );
     $courseid = update_course( 0, $updated, $parts );
     error_log('PowerSchool API: added course '. $courseid .' ('. $updated['course_name'] .') some settings will need to be adjusted.');
