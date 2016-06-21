@@ -34,9 +34,10 @@ an external source.  One module has been provided for connecting to the
 PowerSchool student information system.
 
 user_external_module =>  This is the identifier for the module to be used for
-getting user information from an external source.  This identifier should match
-code in modules/lib/external_user_module.pm for linking to the external
-information source.
+getting user information from an external source.  This will use the same
+Authen_External class as the authen external module for fetching user,
+location, and course information from an external source.  This information
+will be added to the database.
 
 trusted_proxies => This is a list of load balancers in order for the application
 url to be guessed.  The load balancer is expected to set the
@@ -47,8 +48,15 @@ Third, you will need to configure the web server.  In the apache web server it
 should be as easy as creating the virtual host entry with the document root
 set to the webroot folder of the application.
 
-Fourth, for those not using the external user module.  Point a web browser at
-/install.php to begin creating users.  This will also create the database
-tables.  If that page isn't able to create the database tables then the files
-doc/DCSIP_v5_create.sql and doc/DCSIP_v5_install.sql, in that order, can be
-used to create the tables by hand.
+Fourth, point a web browser at /install.php to begin creating users.
+This will also create the database tables.  If that page isn't able to create
+the database tables then the files doc/DCSIP_v5_create.sql and
+doc/DCSIP_v5_install.sql, in that order, can be used to create the tables by
+hand.  This page will also allow you to match existing information in the
+database on users, locations, and courses to information from the external
+source if user_external_module is set.
+
+Finally, if necessary, install any plugins in the external information source.
+A PowerSchool plugin XML file is included in the /doc folder as an example.
+The openid host attribute and link path attribute will need to be adjusted to
+match your environment.
