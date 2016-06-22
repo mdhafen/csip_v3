@@ -6,15 +6,14 @@ $config = array(
 	'base_dir'          => '/var/www/',  // sane defaults
 	'base_url'	    => '/', // these are set below
 	'secure_phrase'     => 'SetYourOwnHashSaltHere',
-	'cookie_token_name' => 'CSIPTOKEN',
 	'authen_modules'      => array(
 		'db'       => 'core',
 		'external' => '',
 		'ldap'     => 0,
 	),
-	'authen_external_login_html' => '',
+	'authen_external_login_html' => '<a id="external_auth_button" href="#">External Login</a>',
 	'user_external_module' => '',
-	'course_external_module' => 'PS',
+	'course_external_module' => '',
 	'PS_API' => array(
 		'url' => '',
 		'id' => '',
@@ -72,7 +71,19 @@ $config = array(
 			'TT' => 4,
 			'TT6' => 4,
 			'TT8' => 4,
-        ),
+		),
+	),
+	'ldap' => array(
+		'core' => array(
+			'server' => '',
+			'base' => 'dc=example',
+			'userdn' => 'cn=root,dc=example',
+			'passwd' => '',
+			'roles' => array(
+				2 => 'cn=TechnologyStaff,dc=example',
+				3 => 'cn=DistrictManagers,dc=example',
+			),
+		),
 	),
 	'trusted_proxies'   => array(),
 	'database'          => array(
