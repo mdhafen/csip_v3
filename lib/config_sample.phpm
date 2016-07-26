@@ -13,7 +13,6 @@ $config = array(
 	),
 	'authen_external_login_html' => '<a id="external_auth_button" href="#">External Login</a>',
 	'user_external_module' => '',
-	'course_external_module' => '',
 	'PS_API' => array(
 		'url' => '',
 		'id' => '',
@@ -80,8 +79,8 @@ $config = array(
 			'userdn' => 'cn=root,dc=example',
 			'passwd' => '',
 			'roles' => array(
-				2 => 'cn=TechnologyStaff,dc=example',
-				3 => 'cn=DistrictManagers,dc=example',
+				4 => 'cn=TechnologyStaff,dc=example',
+				6 => 'cn=DistrictManagers,dc=example',
 			),
 		),
 	),
