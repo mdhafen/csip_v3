@@ -18,7 +18,12 @@ if ( $row['count'] == 0 ) {
   $query = "ALTER TABLE location ADD COLUMN externalid VARCHAR(12) NOT NULL DEFAULT '' AFTER loc_demo";
   $dbh->exec( $query );
 
-  $query = "ALTER TABLE course ADD COLUMN externalid VARCHAR(12) NOT NULL DEFAULT '' AFTER max_grade";
+  $query = "CREATE TABLE course_external_links (
+  courseid INT(10) UNSIGNED NOT NULL DEFAULT '0',
+  externalid VARCHAR(12) NOT NULL DEFAULT '',
+  PRIMARY KEY (courseid,externalid),
+  KEY (externalid)
+) ENGINE MyISAM DEFAULT CHARSET=utf8";
   $dbh->exec( $query );
 
   return "Add the columns necessary to link users, locations, and courses for external auth and sync";

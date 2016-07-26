@@ -11,6 +11,7 @@ function get_course_by_externalid( $externalid ) {
     SELECT course.*,cc.category_name
       FROM course
  LEFT JOIN course_categories AS cc ON course.course_category = cc.categoryid
+CROSS JOIN course_external_links AS cxl ON course.courseid = cxl.courseid
      WHERE externalid = :xid
   ORDER BY cc.category_name,course.course_name
 ";
@@ -63,7 +64,12 @@ function get_course_categories() {
 
 function update_course( $courseid, $update, $parts = array() ) {
   $dbh = db_connect();
+  $externalid = 0;
 
+  if ( !empty($update['externalid']) ) {
+    $externalid = $update['externalid'];
+    unset($update['externalid']);
+  }
   if ( $courseid ) {
     $query = "UPDATE course SET ";
     foreach ( $update as $field => $value ) {
@@ -72,7 +78,7 @@ function update_course( $courseid, $update, $parts = array() ) {
     $query = rtrim( $query, ", " );
     $query .= "WHERE courseid = ". $dbh->quote( $courseid );
   } else {
-    $query = "INSERT INTO course (course_category,course_name,min_grade,max_grade,active,externalid) VALUES (?,?,?,?,?,?)";
+    $query = "INSERT INTO course (course_category,course_name,min_grade,max_grade,active) VALUES (?,?,?,?,?)";
   }
   $sth = $dbh->prepare( $query );
   $sth->execute( array_values( $update ) );
@@ -83,6 +89,10 @@ function update_course( $courseid, $update, $parts = array() ) {
 
   if ( ! $courseid ) {
     $courseid = $dbh->lastInsertId();
+  }
+
+  if ( $courseid && $externalid ) {
+    add_course_external_link( $courseid, $externalid );
   }
 
   if ( !empty($parts) ) {
@@ -160,6 +170,11 @@ function delete_course_dependants( $courseid ) {
     $sth->execute();
 
     $query = "DELETE FROM location_course_links WHERE courseid = :cid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':cid', $courseid );
+    $sth->execute();
+
+    $query = "DELETE FROM course_external_links WHERE courseid = :cid";
     $sth = $dbh->prepare( $query );
     $sth->bindValue( ':cid', $courseid );
     $sth->execute();
@@ -703,6 +718,52 @@ function add_course_user_link( $courseid, $userid, $locationid ) {
   $sth->bindValue( ':cid', $courseid );
   $sth->bindValue( ':uid', $userid );
   $sth->bindValue( ':lid', $locationid );
+  $sth->execute();
+}
+
+function get_course_external_links( $courseid, $externalid = null ) {
+  $dbh = db_connect();
+
+  $links = array();
+  $query = "SELECT * FROM course_external_links WHERE courseid = :cid";
+  if ( $externalid ) {
+      $query .= " AND externalid = :xid";
+  }
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':cid', $courseid );
+  if ( $externalid ) {
+      $sth->bindValue( ':xid', $externalid );
+  }
+  $sth->execute();
+  while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
+    $links[] = $row;
+  }
+
+  return $links;
+}
+
+function add_course_external_link( $courseid, $externalid ) {
+  $dbh = db_connect();
+
+  $query = "INSERT IGNORE INTO course_external_links (courseid,externalid) VALUES (:cid,:xid)";
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':cid', $courseid );
+  $sth->bindValue( ':xid', $externalid );
+  $sth->execute();
+}
+
+function delete_course_external_link( $courseid, $externalid ) {
+  $dbh = db_connect();
+
+  $query = "DELETE FROM course_external_links WHERE courseid = :crsid";
+  if ( !empty($externalid) ) {
+	  $query .= " AND externalid = :exid";
+  }
+  $sth = $dbh->prepare( $query );
+  $sth->bindValue( ':cid', $courseid );
+  if ( !empty($externalid) ) {
+	  $sth->bindValue( ':xid', $externalid );
+  }
   $sth->execute();
 }
 

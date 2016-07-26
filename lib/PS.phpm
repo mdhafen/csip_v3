@@ -540,7 +540,8 @@ class Authen_External {
     $mingrade = 0;
     $maxgrade = 0;
     $active = 1;
-    $ex_id = $this->courseid_to_statecorecode( $course->id );
+    //$ex_id = $this->courseid_to_statecorecode( $course->id );
+    $ex_id = $course->id;
     $new_course = array(
         'course_category' => $categoryid,
         'course_name' => $name,

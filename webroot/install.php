@@ -239,6 +239,11 @@ function prepare_courses( $ex ) {
     $out['right'] = $ex->get_courses();
     uasort( $out['left'], function($a,$b){ return strcasecmp($a['course_name'],$b['course_name']); } );
     uasort( $out['right'], function($a,$b){ return strcasecmp($a['course_name'],$b['course_name']); } );
+
+    foreach ( $out['left'] as &$course ) {
+        $course['externalids'] = array_column( get_course_external_links($course['courseid']), 'externalid');
+    }
+
     $out['data_set'] = 'Courses';
     $out['value_field'] = 'courseid';
     $out['label_field'] = 'course_name';
@@ -277,15 +282,22 @@ function handle_users() {
 
 function handle_courses() {
     $courses = get_courses( true );
-    $crs_map = array_combine( array_column($courses,'courseid'), array_column($courses,'externalid') );
+    $crs_map = array();
+	foreach ( $courses as $crs ) {
+		$crs_map[ $crs['courseid'] ] = array_column( get_course_external_links($crs['courseid']), 'externalid');
+	}
     $crs_ids = input( 'elements', INPUT_PINT );
-    $ex_ids = input( 'externals', INPUT_HTML_NONE );
     $count = count($crs_ids);
     for ( $i = 0; $i < $count; $i++ ) {
         $crsid = $crs_ids[$i];
-        $extid = $ex_ids[$i];
-        if ( empty($crs_map[$crsid]) || $crs_map[$crsid] != $extid ) {
-            update_course( $crsid, array( 'externalid' => $extid ) );
-        }
+		delete_course_external_link( $crsid );
+		$ex_ids = input( $crsid .'_externals', INPUT_HTML_NONE );
+		if ( !empty( $ex_ids ) ) {
+			foreach ( $ex_ids as $extid ) {
+				if ( empty($crs_map[$crsid]) || !in_array($extid,$crs_map[$crsid]) ) {
+					update_course( $crsid, array( 'externalid' => $extid ) );
+				}
+			}
+		}
     }
 }
