@@ -11,7 +11,6 @@ class Authen_External {
   private $url = '';
 
   function __construct() {
-    $this->get_access_token();
   }
 
   public function authen_external( $module=null, $username=null, $password=null ) {
@@ -113,6 +112,10 @@ class Authen_External {
   }
 
   private function get_data( $URI ) {
+    if ( empty($this->token) ) {
+      $this->get_access_token();
+    }
+
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_TIMEOUT, 10);
     $URL = $this->url . $URI;
