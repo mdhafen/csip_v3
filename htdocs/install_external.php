@@ -36,6 +36,7 @@
 	<div class="uk-container-center">
 	<div class="uk-panel uk-panel-box">
 		<h3>Please review information already in CSIP and in the External source.</h3>
+		<p>Drag and drop items to manage the links between CSIP and the External Source.</p>
 		<div id="data_set"><?= $data['data_set'] ?></div>
 		<form class="uk-form" method="post" action="install.php">
 			<input type="hidden" name="step" value="<?= empty($data['step']) ? '1' : $data['step']+1 ?>">
@@ -51,7 +52,7 @@ $f_val = $data['value_field'];
 $f_lab = $data['label_field'];
 foreach ( $data['left'] as $element ) {
 ?>
-					<div class="uk-nbfc uk-overflow-container">
+					<div class="uk-nbfc uk-overflow-container uk-panel-box uk-padding-remove uk-margin-small">
 					<label class="uk-form-label" for="external<?= $count ?>"><?= $element[$f_lab] ?></label>
 					<div class="uk-form-controls" ondragover="drag_allowdrop(event)" ondrop="drag_dropped(event)">
 						<input type="hidden" id="element<?= $count ?>" name="elements[]" value="<?= $element[ $f_val ] ?>">
