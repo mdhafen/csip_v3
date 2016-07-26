@@ -208,6 +208,11 @@ function delete_user( $userid, $module = 'core' ) {
   $dbh = db_connect( $module );
 
   if ( $userid ) {
+    $query = "DELETE FROM user_location_links WHERE userid = :uid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':uid', $userid );
+    $sth->execute();
+
     $query = "DELETE FROM user WHERE userid = :uid";
     $sth = $dbh->prepare( $query );
     $sth->bindValue( ':uid', $userid );

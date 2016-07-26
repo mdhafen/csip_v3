@@ -1,6 +1,17 @@
 <?php
 require_once( $config['base_dir'] ."/lib/data.phpm" );
 
+function delete_user_dependants( $userid ) {
+  $dbh = db_connect();
+
+  if ( $userid ) {
+    $query = "DELETE FROM user_course_links WHERE userid = :uid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':uid', $userid );
+    $sth->execute();
+  }
+}
+
 function delete_location_dependants( $locationid ) {
   $dbh = db_connect();
 
