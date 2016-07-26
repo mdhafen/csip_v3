@@ -18,7 +18,7 @@
 
 <?php if ( !empty($data['ERROR']) ) { ?>
 <div class="uk-alert uk-alert-danger">
-<?php if ( !empty($data['INSTALL_USER_EXTERNAL']) ) { ?><div>External Users is set.  No user information will be entered in this database, but this program will get it from another database.</div><?php } ?>
+<?php if ( !empty($data['INSTALL_USER_EXTERNAL']) ) { ?><div>External Users is set.  User information will be copied from another database.  Individual users can be entered manually later.</div><?php } ?>
 
 <?php if ( !empty($data['INSTALL_CREATETABLES_CANT_READ']) ) { ?><div>The database hasn&apos;t been setup.  This program will now attempt to create the necessary tables for you.<br>Can&apos;t read the sql files.  You will have to do it yourself.</div><?php } ?>
 <?php if ( !empty($data['INSTALL_CREATETABLES_FAILED']) ) { ?><div>The database hasn&apos;t been setup.  This program will now attempt to create the necessary tables for you.<br>There was an error.  You will have to check on the state of the database and tables yourself.<br>Error message: <?= $data['INSTALL_CREATETABLES_FAILED'] ?></div><?php } ?>
