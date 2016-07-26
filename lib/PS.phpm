@@ -106,8 +106,8 @@ class Authen_External {
       $this->url = $url;
     }
     else {
-      //error( array('AUTHEN_EXTERNAL_NO_CONNECTION'=>'Failed to get Access Token from PowerSchool API') );
-      error_log('PowerSchool API: Failed to get Access Token');
+      error( array('AUTHEN_EXTERNAL_NO_CONNECTION'=>'Failed to get Access Token from PowerSchool API') );
+      //error_log('PowerSchool API: Failed to get Access Token');
     }
   }
 
