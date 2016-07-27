@@ -19,7 +19,7 @@ Changes saved.
 <?php } ?>
 
 <form method="post" action="<?= $data['_config']['base_url'] ?>manage/edit_location.php">
-<input type="hidden" name="locationid" id="locationid" value="<?= $data['location']['locationid'] ?>">
+<input type="hidden" name="locationid" id="locationid" value="<?= !empty($data['location']['locationid']) ? $data['location']['locationid'] : "" ?>">
 <?php if ( $data['error'] ) { ?>
 <div class="uk-alert uk-alert-warning">
 There was an error
@@ -34,27 +34,32 @@ foreach ( (array) $data['error'] as $err ) {
 
 <tr>
 <td><label for="new_locationid">Location Number</label></td>
-<td><input name="new_locationid" id="new_locationid" value="<?= $data['location']['locationid'] ?>" ></td>
+<td><input name="new_locationid" id="new_locationid" value="<?= !empty($data['location']['locationid']) ? $data['location']['locationid'] : "" ?>" ></td>
 </tr>
 
 <tr>
 <td><label for="name">Name</label></td>
-<td><input name="name" id="name" value="<?= $data['location']['name'] ?>" ></td>
+<td><input name="name" id="name" value="<?= !empty($data['location']['name']) ? $data['location']['name'] : "" ?>" ></td>
 </tr>
 
 <tr>
 <td><label for="mingrade">First Grade</label></td>
-<td><input name="mingrade" id="mingrade" value="<?= $data['location']['mingrade'] ?>" ></td>
+<td><input name="mingrade" id="mingrade" value="<?= !empty($data['location']['mingrade']) ? $data['location']['mingrade'] : "" ?>" ></td>
 </tr>
 
 <tr>
 <td><label for="maxgrade">Last Grade</label></td>
-<td><input name="maxgrade" id="maxgrade" value="<?= $data['location']['maxgrade'] ?>" ></td>
+   <td><input name="maxgrade" id="maxgrade" value="<?= !empty($data['location']['maxgrade']) ? $data['location']['maxgrade'] : "" ?>" ></td>
 </tr>
 
 <tr>
 <td><label for="loc_demo">Location is Demo</label></td>
 <td><input type="checkbox" name="loc_demo" id="loc_demo" <?= ( $data['location']['loc_demo'] ) ? "checked='checked'" : "" ?> ></td>
+</tr>
+
+<tr>
+<td><label for="externalid">External ID</label></td>
+<td><input type="text" name="externalid" id="externalid" disabled value="<?= !empty($data['location']['externalid']) ? $data['location']['externalid'] : "" ?>" ></td>
 </tr>
 
 </table>

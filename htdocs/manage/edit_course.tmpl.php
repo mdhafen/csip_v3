@@ -65,6 +65,11 @@ foreach ( (array) $data['error'] as $err ) {
 </tr>
 
 <tr>
+<td><label for="externalid">External IDs</label></td>
+<td><input type="text" name="externalid" id="externalid" disabled value="<?= !empty($data['externalids']) ? implode( ',', array_column($data['externalids'],'externalid') ) : "" ?>" ></td>
+</tr>
+
+<tr>
 <td><label>Course Parts and Questions</label></td>
 <td>
 <?php if ( !empty($data['parts']) ) { $count = 0; ?>

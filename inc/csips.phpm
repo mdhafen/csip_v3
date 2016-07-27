@@ -204,6 +204,7 @@ CROSS JOIN year USING (yearid)
            cc.category_name
       FROM course
  LEFT JOIN location_course_links USING (courseid)
+ LEFT JOIN user_course_links USING (courseid)
  LEFT JOIN course_approval AS ca ON course.courseid = ca.courseid AND ca.csipid = :csip
  LEFT JOIN course_categories AS cc ON course.course_category = cc.categoryid
      WHERE active = 1
@@ -214,7 +215,8 @@ CROSS JOIN year USING (yearid)
   }
   $query .= "
        AND ( ( max_grade >= :mingrade AND min_grade <= :maxgrade )
-        OR ( location_course_links.locationid = :loc_link ) )
+        OR ( location_course_links.locationid = :loc_link )
+        OR ( user_course_links.locationid = :usr_crs_loc AND user_course_links.userid = :usr_crs_link ) )
   ORDER BY course.course_name
 ";
   $sth = $dbh->prepare( $query );
@@ -222,6 +224,8 @@ CROSS JOIN year USING (yearid)
   $sth->bindValue( ':mingrade', $csip['mingrade'] );
   $sth->bindValue( ':maxgrade', $csip['maxgrade'] );
   $sth->bindValue( ':loc_link', $csip['locationid'] );
+  $sth->bindValue( ':usr_crs_loc', $csip['locationid'] );
+  $sth->bindValue( ':usr_crs_link', $userid );
   $sth->execute();
   while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
     $csip['courses'][ $row['courseid'] ] = stripslashes_array( $row );

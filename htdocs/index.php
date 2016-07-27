@@ -8,12 +8,17 @@
 
         <div class="uk-container uk-container-center uk-animation-fade">
 <br>
-
             <span class="uk-align-right">
-                <img src="https://logos.washk12.org/dist_SDLogo.png"><br>
-                <a href="https://prodev.washk12.org/support/csip" class="uk-button uk-button-primary" target="_BLANK">Go here for help</a>
+						<?php
+							foreach( $data['_config']['header_logos'] as $logo ) {
+								echo '<img src="' . $logo . '" class="uk-margin-left" style="max-height: 30px">';
+							}
+						?>
+						<br>
+						<a href="https://prodev.washk12.org/support/csip" style="float: right;" class="uk-button uk-button-primary" target="_BLANK">Go here for help</a>
             </span>
-            <h2>
+						<h2>
+
             <form method="post" class="uk-form uk-display-inline-block" action="index.php">
                    Plan for
             <select type="text" class="uk-form-large" name="csipid" onchange="this.form.submit()">
@@ -233,4 +238,3 @@ $( document ).ready( function() {
 </script>
 	</body>
 </html>
-

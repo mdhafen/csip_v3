@@ -18,7 +18,7 @@
 
 <?php if ( !empty($data['ERROR']) ) { ?>
 <div class="uk-alert uk-alert-danger">
-<?php if ( !empty($data['INSTALL_USER_EXTERNAL']) ) { ?><div>External Users is set.  No user information will be entered in this database, but this program will get it from another database.</div><?php } ?>
+<?php if ( !empty($data['INSTALL_USER_EXTERNAL']) ) { ?><div>External Users is set.  User information will be copied from another database.  Individual users can be entered manually later.</div><?php } ?>
 
 <?php if ( !empty($data['INSTALL_CREATETABLES_CANT_READ']) ) { ?><div>The database hasn&apos;t been setup.  This program will now attempt to create the necessary tables for you.<br>Can&apos;t read the sql files.  You will have to do it yourself.</div><?php } ?>
 <?php if ( !empty($data['INSTALL_CREATETABLES_FAILED']) ) { ?><div>The database hasn&apos;t been setup.  This program will now attempt to create the necessary tables for you.<br>There was an error.  You will have to check on the state of the database and tables yourself.<br>Error message: <?= $data['INSTALL_CREATETABLES_FAILED'] ?></div><?php } ?>
@@ -36,11 +36,13 @@
 
 <?php if ( !empty($data['INSTALL_DONE']) ) { ?><div><a href="index.php">Installation is complete.  Please login to add users.</a></div><?php } ?>
 
-	<div class="uk-flex uk-flex-middle uk-flex-center">
+	<div class="uk-container-center">
 	<div class="uk-panel uk-panel-box">
 		<h1>Please enter user information</h1>
 		<div>This user will be the first system administrator, and will create further users.</div>
 		<form class="uk-form" method="post" action="install.php">
+			<?php if ( !empty($data['checks_passed']) ) { ?><input type="hidden" name="checks_passed" value="1"><?php } ?>
+			<?php if ( !empty($data['step']) ) { ?><input type="hidden" name="step" value="<?= $data['step'] ?>"><?php } ?>
 			<fieldset class="uk-form-horizontal">
 				<div class="uk-form-row">
 					<label class="uk-form-label" for="locationid"></label>

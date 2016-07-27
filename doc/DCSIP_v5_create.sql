@@ -6,6 +6,7 @@ CREATE TABLE `user` (
 	`password` BLOB NOT NULL,
 	`salt` BLOB NOT NULL,
 	`role` INT(4) NOT NULL DEFAULT 0,
+	`externalid` VARCHAR(12) NOT NULL DEFAULT '',
 	PRIMARY KEY (`userid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -15,6 +16,7 @@ CREATE TABLE `location` (
 	`mingrade` INT(4) NOT NULL DEFAULT 1,
 	`maxgrade` INT(4) NOT NULL DEFAULT 5,
 	`loc_demo` TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
+	`externalid` VARCHAR(12) NOT NULL DEFAULT '',
 	PRIMARY KEY (`locationid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -65,11 +67,18 @@ CREATE TABLE `location_course_links` (
 	KEY (`locationid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+CREATE TABLE `course_external_links` (
+	`courseid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
+	`externalid` VARCHAR(12) NOT NULL DEFAULT '',
+	PRIMARY KEY (`courseid`,`externalid`),
+	KEY (`externalid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 CREATE TABLE `course_approval` (
 	`courseid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
 	`csipid` INT(10) UNSIGNED NOT NULL DEFAULT 0,
 	`principal_approved` DATE NULL DEFAULT NULL,
-        `principal_comment` TEXT NULL DEFAULT NULL,
+	`principal_comment` TEXT NULL DEFAULT NULL,
 	`comment_date` DATE NULL DEFAULT NULL,
 	PRIMARY KEY (`courseid`,`csipid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

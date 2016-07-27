@@ -37,8 +37,16 @@
 
 						<br>
 						<button class="uk-button uk-button-success uk-button-large">Login</button>
+						<input type="hidden" name="_op" value="do_login">
 					</form>
 				</div>
+<?php if ( !empty($data['_config']['authen_external_login_html']) ) { ?>
+				<div id="external_auth_wrapper" class="uk-text-center">
+<br><hr>
+<?= $data['_config']['authen_external_login_html'] ?>
+				</div>
+<?php } ?>
+
                 <br>
                 <hr>
                 <div class="uk-text-center" style="font-size: 10px;">
@@ -48,5 +56,13 @@
 	<br>
 	<?php include 'footer.php'; ?>
 	</div>
+
+<script type="text/javascript">
+$( document ).ready( function() {
+  $("div#external_auth_wrapper form").addClass("uk-form");
+  $("div#external_auth_wrapper #external_auth_button").addClass("uk-button uk-button-large uk-button-success");
+});
+
+</script>
     </body>
 </html>
