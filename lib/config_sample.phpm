@@ -195,4 +195,14 @@ $config['base_url'] = $host . $lcs;
 if ( substr( $config['base_url'], -1, 1 ) != '/' ) {
 	$config['base_url'] .= '/';
 }
+
+$config['header_logos'] = array(
+  'https://logos.washk12.org/dist_SDLogo.png',
+	/* path to other logo */
+);
+
+$config['footer_logos'] = array(
+  'https://logos.washk12.org/wcsd_web_95.png',
+	/* path to other logo */
+);
 ?>

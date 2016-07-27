@@ -8,12 +8,27 @@
 
         <div class="uk-container uk-container-center uk-animation-fade">
 <br>
-
             <span class="uk-align-right">
-                <img src="https://logos.washk12.org/dist_SDLogo.png"><br>
-                <a href="https://prodev.washk12.org/support/csip" class="uk-button uk-button-primary" target="_BLANK">Go here for help</a>
+						<?php
+							if ( empty($data['_config']['header_logos']) ){
+								echo '<img src="https://logos.washk12.org/dist_SDLogo.png"><br>';
+							} else {
+								foreach( $data['_config']['header_logos'] as $logo ) {
+									echo '<img src="' . $logo . '" width="150">';
+								}
+								echo '<br>';
+							}
+						?>
+						<a href="https://prodev.washk12.org/support/csip" style="float: right;" class="uk-button uk-button-primary" target="_BLANK">Go here for help</a>
             </span>
-            <h2>
+						<h2
+							<?php
+								if ( !empty($data['_config']['header_logos']) ) {
+									echo 'style="padding-bottom: 30px;"';
+								}
+							?>
+						>
+
             <form method="post" class="uk-form uk-display-inline-block" action="index.php">
                    Plan for
             <select type="text" class="uk-form-large" name="csipid" onchange="this.form.submit()">
@@ -233,4 +248,3 @@ $( document ).ready( function() {
 </script>
 	</body>
 </html>
-
