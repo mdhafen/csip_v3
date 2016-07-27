@@ -11,6 +11,7 @@ $config = array(
 		'external' => '',
 		'ldap'     => 0,
 	),
+	'utot_link' => '', // link to utot
 	'authen_external_login_html' => '<a id="external_auth_button" href="#">External Login</a>',
 	'user_external_module' => '',
 	'PS_API' => array(

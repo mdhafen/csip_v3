@@ -36,7 +36,8 @@ function output_build( $data, $filename ) {
 			'base_dir' => $config['base_dir'],
 			'base_url' => $config['base_url'],
 			'header_logos' => $config['header_logos'],
-			'footer_logos' => $config['footer_logos']
+			'footer_logos' => $config['footer_logos'],
+			'utot_link' => $config['utot_link']
 		);
 		if ( !empty($config['authen_modules']['external']) &&
 		     !empty($config['authen_external_login_html']) ) {
