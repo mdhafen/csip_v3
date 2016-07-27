@@ -10,24 +10,14 @@
 <br>
             <span class="uk-align-right">
 						<?php
-							if ( empty($data['_config']['header_logos']) ){
-								echo '<img src="https://logos.washk12.org/dist_SDLogo.png"><br>';
-							} else {
-								foreach( $data['_config']['header_logos'] as $logo ) {
-									echo '<img src="' . $logo . '" width="150">';
-								}
-								echo '<br>';
+							foreach( $data['_config']['header_logos'] as $logo ) {
+								echo '<img src="' . $logo . '" class="uk-margin-left" style="max-height: 30px">';
 							}
 						?>
+						<br>
 						<a href="https://prodev.washk12.org/support/csip" style="float: right;" class="uk-button uk-button-primary" target="_BLANK">Go here for help</a>
             </span>
-						<h2
-							<?php
-								if ( !empty($data['_config']['header_logos']) ) {
-									echo 'style="padding-bottom: 30px;"';
-								}
-							?>
-						>
+						<h2>
 
             <form method="post" class="uk-form uk-display-inline-block" action="index.php">
                    Plan for

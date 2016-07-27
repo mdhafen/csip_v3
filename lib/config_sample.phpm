@@ -11,7 +11,6 @@ $config = array(
 		'external' => '',
 		'ldap'     => 0,
 	),
-	'utot_link' => '', // link to utot
 	'authen_external_login_html' => '<a id="external_auth_button" href="#">External Login</a>',
 	'user_external_module' => '',
 	'PS_API' => array(
@@ -106,6 +105,19 @@ $config = array(
 			),
 		),
 	),
+
+	'header_logos' => array(
+		'https://logos.washk12.org/dist_SDLogo.png',
+	),
+
+	'footer_logos' => array(
+		'https://logos.washk12.org/wcsd_web_95.png',
+	),
+
+	// link to utot
+	'utot_url' => 'http://www.schools.utah.gov/CURR/educatoreffectiveness/Observation-Tools/Teaching/Chart.aspx',
+	'utot_label' => 'Utah Teaching Observation Tool (UTOT)',
+
 	'auth' => array(
 		1   => "load_csip",
 		2   => "load_other_csip",
@@ -196,14 +208,4 @@ $config['base_url'] = $host . $lcs;
 if ( substr( $config['base_url'], -1, 1 ) != '/' ) {
 	$config['base_url'] .= '/';
 }
-
-$config['header_logos'] = array(
-  'https://logos.washk12.org/dist_SDLogo.png',
-	/* path to other logo */
-);
-
-$config['footer_logos'] = array(
-  'https://logos.washk12.org/wcsd_web_95.png',
-	/* path to other logo */
-);
 ?>

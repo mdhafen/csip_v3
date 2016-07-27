@@ -1,14 +1,10 @@
 <hr>
 <div class="clearfix">
-  <div class="uk-width-1-2 uk-container-center" style="text-align: center;">
+  <div class="uk-width-1-2 uk-container-center uk-text-center">
   <?php
-    if ( empty($data['_config']['footer_logos']) ) {
-      echo '<img width="95" class="uk-align-center" src="https://logos.washk12.org/wcsd_web_95.png">';
-    } else {
       foreach ( $data['_config']['footer_logos'] as $logo ) {
-        echo '<img width="95" src="' . $logo . '">';
+        echo '<img class="uk-align-center uk-display-inline uk-margin-left" src="' . $logo . '">';
       }
-    }
   ?>
   </div>
   <div class="uk-align-right" style="font-size: 9pt;">

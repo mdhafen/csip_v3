@@ -32,13 +32,11 @@ function output_build( $data, $filename ) {
 	$output = '';
 
 	if ( is_array( $data ) ) {
-		$data['_config'] = array(
-			'base_dir' => $config['base_dir'],
-			'base_url' => $config['base_url'],
-			'header_logos' => $config['header_logos'],
-			'footer_logos' => $config['footer_logos'],
-			'utot_link' => $config['utot_link']
-		);
+		$data['_config'] = array();
+		$config_exports = array('base_dir','base_url','header_logos','footer_logos','utot_url','utot_label');
+		foreach ( $config_exports as $setting ) {
+			$data['_config'][$setting] = $config[$setting];
+		}
 		if ( !empty($config['authen_modules']['external']) &&
 		     !empty($config['authen_external_login_html']) ) {
 			$data['_config']['authen_external_login_html'] = $config['authen_external_login_html'];
