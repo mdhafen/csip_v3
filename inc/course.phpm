@@ -752,7 +752,7 @@ function add_course_external_link( $courseid, $externalid ) {
   $sth->execute();
 }
 
-function delete_course_external_link( $courseid, $externalid ) {
+function delete_course_external_link( $courseid, $externalid = null ) {
   $dbh = db_connect();
 
   $query = "DELETE FROM course_external_links WHERE courseid = :crsid";
