@@ -3,12 +3,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation='http://plugin.powerschool.pearson.com plugin.xsd'
 	name="CSIP"
-	version="1.0.0"
+	version="1.0.2"
 	description="Plugin for access for CSIP">
 	<oauth></oauth>
-	<openid host="development.washk12.org">
+	<openid host="csip.washk12.org">
 		<links>
-			<link title="CSIP Login" display-text="CSIP" path="/csip_v5/webroot/">
+			<link title="CSIP Login" display-text="CSIP" path="/">
 				<ui_contexts>
 					<ui_context id="admin.left_nav" />
 					<ui_context id="teacher.header" />
@@ -19,6 +19,7 @@
 	<access_request>
 		<field table="COURSES" field="DCID" access="ViewOnly" />
 		<field table="COURSES" field="CREDITTYPE" access="ViewOnly" />
+		<field table="COURSES" field="EXCLUDEFROMSTOREDGRADES" access="ViewOnly" />
 		<field table="COURSESCOREFIELDS" field="COURSESDCID" access="ViewOnly" />
 		<field table="COURSESCOREFIELDS" field="ALT_COURSE_NUMBER" access="ViewOnly" />
 	</access_request>  
