@@ -241,7 +241,7 @@ class Authen_External {
     global $config;
 
     $reported = 1;
-    $course = $this->get_data('/ws/schema/table/courses/'. $course_dcid .'?projection=Alt_Course_Number');
+    $course = $this->get_data('/ws/schema/table/courses/'. $course_dcid .'?projection=excludefromstoredgrades');
 
     if ( !empty($course->tables->courses) ) {
       if ( !empty($course->tables->courses->excludefromstoredgrades) ) {
