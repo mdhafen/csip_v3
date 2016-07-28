@@ -188,7 +188,9 @@ class Authen_External {
         while ( !empty($ps_courses->courses->course) ) {
           foreach ( $ps_courses->courses->course as $crs ) {
             if ( !empty($crs->id) && empty($courses[$crs->id]) ) {
-              $courses[$crs->id] = $this->course_to_csip_course( $crs );
+              if ( $this->course_get_state_reporting($crs->id) ) {
+                $courses[$crs->id] = $this->course_to_csip_course( $crs );
+              }
             }
           }
           $crs_page++;
@@ -233,6 +235,22 @@ class Authen_External {
     }
 
     return $corecode;
+  }
+
+  private function course_get_state_reporting( $course_dcid ) {
+    global $config;
+
+    $reported = 1;
+    $course = $this->get_data('/ws/schema/table/courses/'. $course_dcid .'?projection=Alt_Course_Number');
+
+    if ( !empty($course->tables->courses) ) {
+      if ( !empty($course->tables->courses->excludefromstoredgrades) ) {
+	// if it is set the course is excluded from reporting
+	$reported = empty($course->tables->courses->excludefromstoredgrades)? 1 : 0;
+      }
+    }
+
+    return $reported;
   }
 
   private function get_username( $userid, $staff = null ) {
@@ -340,7 +358,9 @@ class Authen_External {
     $ps_sections = $this->get_data('/ws/v1/school/'. $ps_locid .'/section?page='.$page);
     while ( !empty($ps_sections->sections->section) ) {
       foreach ( $ps_sections->sections->section as $sec ) {
-        $sections[] = $sec;
+        if ( $this->course_get_state_reporting($sec->course_id) ) {
+          $sections[] = $sec;
+        }
       }
       $page++;
       $ps_sections = $this->get_data('/ws/v1/school/'. $ps_locid .'/section?page='.$page);
