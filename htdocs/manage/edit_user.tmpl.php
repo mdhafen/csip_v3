@@ -71,7 +71,7 @@ Changes saved.
 
 <tr>
 <td><label for="externalid">External ID</label></td>
-<td><input type="text" name="externalid" id="externalid" disabled value="<?= !empty($data['user']['externalid']) ? $data['user']['externalid'] : "" ?>" ></td>
+<td><input type="text" name="externalid" id="externalid" readonly value="<?= !empty($data['user']['externalid']) ? $data['user']['externalid'] : "" ?>" ></td>
 </tr>
 
 </table>

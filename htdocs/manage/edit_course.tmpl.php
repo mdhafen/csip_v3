@@ -66,7 +66,7 @@ foreach ( (array) $data['error'] as $err ) {
 
 <tr>
 <td><label for="externalid">External IDs</label></td>
-<td><input type="text" name="externalid" id="externalid" disabled value="<?= !empty($data['externalids']) ? implode( ',', array_column($data['externalids'],'externalid') ) : "" ?>" ></td>
+<td><input type="text" name="externalid" id="externalid" readonly value="<?= !empty($data['externalids']) ? implode( ',', array_column($data['externalids'],'externalid') ) : "" ?>" ></td>
 </tr>
 
 <tr>

@@ -12,7 +12,7 @@
 <div class="uk-panel uk-panel-box uk-panel-box-primary">
 <h3>Locations</h3>
 
-<a href="<?= $data['_config']['base_url'] ?>manage/edit_location.php">Add Location</a>
+	 <a href="<?= $data['_config']['base_url'] ?>manage/edit_location.php">Add Location</a><?php if ( $data['_config']['user_external_module'] ) { ?><a href="<?= $data['_config']['base_url'] ?>manage/new_location_from_external.php" class="uk-margin-left">Add Location From External Source</a><?php } ?>
 
 <table class="uk-table uk-table-striped">
 <thead>

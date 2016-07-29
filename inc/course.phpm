@@ -721,18 +721,29 @@ function add_course_user_link( $courseid, $userid, $locationid ) {
   $sth->execute();
 }
 
-function get_course_external_links( $courseid, $externalid = null ) {
+function get_course_external_links( $courseid = 0, $externalid = null ) {
   $dbh = db_connect();
 
+  $wheres = array();
+  $binds = array();
   $links = array();
-  $query = "SELECT * FROM course_external_links WHERE courseid = :cid";
+  $query = "SELECT * FROM course_external_links";
+  if ( $courseid ) {
+      $wheres[] = "courseid = :cid";
+	  $binds[':cid'] = $courseid;
+  }
   if ( $externalid ) {
-      $query .= " AND externalid = :xid";
+      $wheres[] = "externalid = :xid";
+	  $binds[':xid'] = $externalid;
+  }
+  if ( !empty($wheres) ) {
+	  $query .= " WHERE ". implode( ' AND ', $wheres );
   }
   $sth = $dbh->prepare( $query );
-  $sth->bindValue( ':cid', $courseid );
-  if ( $externalid ) {
-      $sth->bindValue( ':xid', $externalid );
+  if ( !empty($binds) ) {
+	  foreach ( $binds as $label => $value ) {
+		  $sth->bindValue( $label, $value );
+	  }
   }
   $sth->execute();
   while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {

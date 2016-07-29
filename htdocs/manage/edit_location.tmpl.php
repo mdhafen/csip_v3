@@ -59,7 +59,7 @@ foreach ( (array) $data['error'] as $err ) {
 
 <tr>
 <td><label for="externalid">External ID</label></td>
-<td><input type="text" name="externalid" id="externalid" disabled value="<?= !empty($data['location']['externalid']) ? $data['location']['externalid'] : "" ?>" ></td>
+<td><input type="text" name="externalid" id="externalid" readonly value="<?= !empty($data['location']['externalid']) ? $data['location']['externalid'] : "" ?>" ><?php if ( $data['_config']['user_external_module'] ) { ?><a href="<?= $data['_config']['base_url'] ?>manage/link_location_to_external.php?locationid=<?= $data['location']['locationid'] ?>" class="uk-margin-left">Change External Link</a><?php } ?></td>
 </tr>
 
 </table>
