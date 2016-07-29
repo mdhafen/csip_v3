@@ -241,6 +241,7 @@ function prepare_courses( $ex ) {
     uasort( $out['right'], function($a,$b){ return strcasecmp($a['course_name'],$b['course_name']); } );
 
     foreach ( $out['left'] as &$course ) {
+        $course['label'] = $course['category_name'] .":". $course['course_name'] . ( ($course['min_grade'] > 0 && $course['max_grade'] > 0 ) ? " (". $course['min_grade'] ."-". $course['max_grade'] .")" : "" );
         $course['externalids'] = array_column( get_course_external_links($course['courseid']), 'externalid');
     }
 
