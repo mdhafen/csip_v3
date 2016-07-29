@@ -53,7 +53,7 @@ $f_lab = $data['label_field'];
 foreach ( $data['left'] as $element ) {
 ?>
 					<div class="uk-nbfc uk-overflow-container uk-panel-box uk-padding-remove uk-margin-small">
-					<label class="uk-form-label" for="external<?= $count ?>"><?= $element[$f_lab] ?></label>
+					<label class="uk-form-label" for="external<?= $count ?>"><?= !empty($element['label']) ? $element['label'] : $element[$f_lab] ?></label>
 					<div class="uk-form-controls" ondragover="drag_allowdrop(event)" ondrop="drag_dropped(event)">
 						<input type="hidden" id="element<?= $count ?>" name="elements[]" value="<?= $element[ $f_val ] ?>">
 <?php
