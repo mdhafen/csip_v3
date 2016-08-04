@@ -1,3 +1,7 @@
+a.custom-anchor {
+  text-decoration: underline !important;
+}
+
 html {
   font: normal 14px / 20px "Open Sans", Helvetica Neue, Helvetica, Arial, sans-serif;
 }
