@@ -115,7 +115,7 @@ $config = array(
 	),
 
 	// link to utot
-	'utot_url' => 'http://www.schools.utah.gov/CURR/educatoreffectiveness/Observation-Tools/Teaching/Chart.aspx',
+	'utot_url' => 'https://drive.google.com/a/washk12.org/file/d/0B38lNytwBJpANW5SMzFpaE1STEFZYV9LVy1PMkp4ZHpHQXZF/view?usp=sharing',
 	'utot_label' => 'Utah Teaching Observation Tool (UTOT)',
 
 	'auth' => array(
