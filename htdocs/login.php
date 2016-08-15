@@ -60,7 +60,7 @@
 <script type="text/javascript">
 $( document ).ready( function() {
   $("div#external_auth_wrapper form").addClass("uk-form");
-  $("div#external_auth_wrapper #external_auth_button").addClass("uk-button uk-button-large uk-button-success");
+  $("div#external_auth_wrapper .external_auth_button").addClass("uk-button uk-button-large uk-button-success");
 });
 
 </script>
