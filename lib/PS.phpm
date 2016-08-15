@@ -453,10 +453,10 @@ class Authen_External {
     foreach ( $schools as $locationid => $ps_loc ) {
       $courses = $this->get_location_courses( $ps_loc->school->id );
       foreach ( $courses as $ps_crs ) {
-        $csip_crs = get_course_by_externalid( $this->courseid_to_statecorecode($ps_crs->id) );
+        $csip_crs = get_course_by_externalid( $ps_crs->id );
         if ( empty($csip_crs) ) {
           $this->new_course( $ps_crs->id, $ps_crs );
-          $csip_crs = get_course_by_externalid( $this->courseid_to_statecorecode($ps_crs->id) );
+          $csip_crs = get_course_by_externalid( $ps_crs->id );
         }
         $course_cache[$ps_crs->id] = $csip_crs;
         $access = 0;
@@ -484,7 +484,7 @@ class Authen_External {
           continue;
         }
 	if ( empty($course_cache[$sec->course_id]) ) {
-	  $csip_sec = get_course_by_externalid( $this->courseid_to_statecorecode($sec->course_id) );
+	  $csip_sec = get_course_by_externalid( $sec->course_id );
 	  $course_cache[$sec->course_id] = $csip_sec;
 	}
 	else {
