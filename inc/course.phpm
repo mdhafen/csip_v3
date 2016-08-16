@@ -914,12 +914,11 @@ function part_get_next_sequence( $csipid, $courseid, $part, $questionid) {
   $count = $sth->fetchColumn();
 
   if ( $count === false ) {
-    $query = "SELECT max(group_sequence) FROM answer WHERE csipid = :csip AND courseid = :course AND part = :part AND questionid IN (:questions)";
+    $query = "SELECT max(group_sequence) FROM answer WHERE csipid = :csip AND courseid = :course AND part = :part AND questionid IN (". implode(',',$questions) .")";
     $sth = $dbh->prepare( $query );
     $sth->bindValue( ':csip', $csipid );
     $sth->bindValue( ':course', $courseid );
     $sth->bindValue( ':part', $part );
-    $sth->bindValue( ':questions', implode(',',$questions) );
     $sth->execute();
     $count = $sth->fetchColumn();
     if ( $sth->errorCode() !== '00000' ) {
