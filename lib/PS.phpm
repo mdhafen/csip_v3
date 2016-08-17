@@ -176,6 +176,44 @@ class Authen_External {
     return $users;
   }
 
+  public function get_users_locations( $userid ) {
+    $teacher = $this->get_data('/ws/v1/staff/'. $userid .'?expansions=addresses,emails,phones,school_affiliations&extensions=u_schoolstaffuserfields');
+    $affiliations = array();
+    $locations = array();
+    if ( count($teacher->staff->school_affiliations->school_affiliation) > 1 ) {
+      foreach ( $teacher->staff->school_affiliations->school_affiliation as $aff ) {
+	$affiliations[] = $aff;
+      }
+    }
+    else if ( !empty($teacher->staff->school_affiliations->school_affiliation->school_id) ) {
+      $affiliations[] = $teacher->staff->school_affiliations->school_affiliation;
+    }
+    foreach ( $affiliations as $school ) {
+      if ( $school->status == 2 ) {
+        continue;
+      }
+      $a_school = $this->get_data( '/ws/v1/school/'. $school->school_id );
+      $loc = $this->school_to_csip_location( $a_school->school );
+      $locations[] = $loc;
+    }
+    return $locations;
+  }
+
+  public function get_users_location_courses( $userid, $schoolid ) {
+    $course = array();
+    $sections = $this->get_location_sections( $schoolid );
+    foreach ( $sections as $sec ) {
+      if ( $sec->staff_id != $userid ) {
+        continue;
+      }
+      if ( empty($course_cache[$sec->course_id]) ) {
+        $csip_sec = get_course_by_externalid( $sec->course_id );
+        $course[$sec->course_id] = $csip_sec;
+      }
+    }
+    return $courses;
+  }
+
   public function get_courses() {
     $courses = array();
 

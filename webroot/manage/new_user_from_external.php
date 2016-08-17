@@ -57,6 +57,19 @@ if ( $op == "Save" ) {  // Update/Add the user
   if ( $updated ) {
     $userid = update_user( 0, $updated );
     if ( $userid ) {
+      $locations = $ex->get_users_locations( $externalid );
+      update_user_locations( $userid, array_column($locations,'locationid') );
+      if ( !empty($locations) ) {
+        delete_course_user_links( $userid );
+        foreach ( $locations as $loc ) {
+          if ( !empty($loc['externalid']) ) {
+            $courses = $ex->get_users_location_courses( $externalid, $loc['externalid'] );
+            foreach ( $courses as $crs ) {
+              add_course_user_link( $crs['courseid'], $userid, $loc['locationid'] );
+            }
+          }
+        }
+      }
       redirect( 'manage/edit_user.php?userid='.$userid );
       exit;
     }
