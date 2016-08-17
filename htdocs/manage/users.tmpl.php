@@ -12,7 +12,7 @@
 <div class="uk-panel uk-panel-box uk-panel-box-primary">
 <h3>Users</h3>
 
-<a href="<?= $data['_config']['base_url'] ?>manage/edit_user.php">Add User</a>
+<a class="uk-button" href="<?= $data['_config']['base_url'] ?>manage/edit_user.php">Add User</a><?php if ( $data['_config']['user_external_module'] ) { ?><a class="uk-button" href="<?= $data['_config']['base_url'] ?>manage/new_user_from_external.php" class="uk-margin-left">Add User From External Source</a><?php } ?>
 
 <table class="uk-table uk-table-striped">
 <thead>

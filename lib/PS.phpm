@@ -157,7 +157,7 @@ class Authen_External {
     while ( !empty($schools->schools->school) ) {
       foreach ($schools->schools->school as $school) {
         $stf_page = 1;
-        $ps_staff = $this->get_data('/ws/v1/school/'. $school->id .'/staff?page='.$stf_page);
+        $ps_staff = $this->get_data('/ws/v1/school/'. $school->id .'/staff?expansions=school_affiliations&page='.$stf_page);
         while ( !empty($ps_staff->staffs->staff) ) {
           foreach ( $ps_staff->staffs->staff as $stf ) {
             if ( !empty($stf->id) && empty($users[$stf->id]) ) {
@@ -307,13 +307,13 @@ class Authen_External {
         if ( count($staff->school_affiliations->school_affiliation) > 1 ) {
             foreach ( $staff->school_affiliations->school_affiliation as $aff ) {
                 $affiliations[] = $aff;
-	    }
-	}
-	else {
+            }
+        }
+        else {
             $affiliations[] = $staff->school_affiliations->school_affiliation;
-	}
+        }
         foreach ( $affiliations as $school ) {
-	    if ( empty($school) ) { continue; }
+            if ( empty($school) ) { continue; }
             if ( $school->status == 2 ) {
                 continue;
             }

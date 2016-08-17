@@ -71,7 +71,7 @@ Changes saved.
 
 <tr>
 <td><label for="externalid">External ID</label></td>
-<td><input type="text" name="externalid" id="externalid" readonly value="<?= !empty($data['user']['externalid']) ? $data['user']['externalid'] : "" ?>" ></td>
+<td><input type="text" name="externalid" id="externalid" readonly value="<?= !empty($data['user']['externalid']) ? $data['user']['externalid'] : "" ?>" ><?php if ( $data['_config']['user_external_module'] ) { ?><a href="<?= $data['_config']['base_url'] ?>manage/link_user_to_external.php?userid=<?= $data['user']['userid'] ?>" class="uk-margin-left">Change External Link</a><?php } ?></td>
 </tr>
 
 </table>

@@ -12,7 +12,7 @@
 <div class="uk-panel uk-panel-box uk-panel-box-primary">
 <h3>Courses</h3>
 
-<a href="<?= $data['_config']['base_url'] ?>manage/edit_course.php">Add Course</a>
+<a class="uk-button" href="<?= $data['_config']['base_url'] ?>manage/edit_course.php">Add Course</a>
 
 <table class="uk-table uk-table-striped">
 <thead>

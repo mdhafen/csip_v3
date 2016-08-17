@@ -28,7 +28,7 @@ foreach ( (array) $data['error'] as $err ) {
 <?php
 foreach ( $data['locations'] as $ex_loc ) {
 ?>
-<button id="ex_<?= $ex_loc['externalid'] ?>" class="uk-button" onclick="do_select(this)" data-external-id="<?= $ex_loc['locationid'] ?>" data-external-name="<?= $ex_loc['name'] ?>" data-external-mingrade="<?= $ex_loc['mingrade'] ?>" data-external-maxgrade="<?= $ex_loc['maxgrade'] ?>" data-external-exid="<?= $ex_loc['externalid'] ?>"><?= $ex_loc['name'] ?></a>
+<button id="ex_<?= $ex_loc['externalid'] ?>" class="uk-button" onclick="do_select(this)" data-external-id="<?= $ex_loc['locationid'] ?>" data-external-name="<?= $ex_loc['name'] ?>" data-external-mingrade="<?= $ex_loc['mingrade'] ?>" data-external-maxgrade="<?= $ex_loc['maxgrade'] ?>" data-external-exid="<?= $ex_loc['externalid'] ?>"><?= $ex_loc['name'] ?></button>
 <?php
 }
 ?>

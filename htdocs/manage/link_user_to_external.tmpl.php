@@ -10,7 +10,7 @@
             <br>
 
 <div class="uk-panel uk-panel-box uk-panel-box-primary">
-<h3>External Location Link</h3>
+<h3>External User Link</h3>
 
 <?php if ( $data['error'] ) { ?>
 <div class="uk-alert uk-alert-warning">
@@ -24,19 +24,19 @@ foreach ( (array) $data['error'] as $err ) {
 <?php } ?>
 
 <div class="uk-panel uk-panel-box">
-<p>Click on a location to select</p>
+<p>Click on a user to select</p>
 <?php
-foreach ( $data['locations'] as $ex_loc ) {
+foreach ( $data['users'] as $ex_user ) {
 ?>
-<button id="ex_<?= $ex_loc['externalid'] ?>" class="uk-button" onclick="do_update(this)" data-external-exid="<?= $ex_loc['externalid'] ?>"><?= $ex_loc['name'] ?></a>
+<button id="ex_<?= $ex_user['externalid'] ?>" class="uk-button" onclick="do_update(this)" data-external-exid="<?= $ex_user['externalid'] ?>"><?= $ex_user['fullname'] ?></a>
 <?php
 }
 ?>
 </div>
-<a class="uk-button" href="edit_location.php?locationid=<?= $data['locationid'] ?>">Back</a>
+<a class="uk-button" href="edit_user.php?userid=<?= $data['userid'] ?>">Back</a>
 
-<form id="update_link_form" method="post" action="<?= $data['_config']['base_url'] ?>manage/link_location_to_external.php">
-<input type="hidden" name="locationid" id="locationid" value="<?= $data['locationid'] ?>">
+<form id="update_link_form" method="post" action="<?= $data['_config']['base_url'] ?>manage/link_user_to_external.php">
+<input type="hidden" name="userid" id="userid" value="<?= $data['userid'] ?>">
 <input type="hidden" name="externalid" id="externalid" value="">
 </form>
 
