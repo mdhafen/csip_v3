@@ -10,6 +10,7 @@ authorize( 'manage_users' );
 $courseid = input( 'courseid', INPUT_PINT );
 $op = input( 'op', INPUT_STR );
 
+$externals = array();
 $categories = get_course_categories();
 $courses = get_courses(true);
 $groups = get_question_groups();
@@ -18,7 +19,7 @@ $saved = 0;
 $course = array();
 $old_parts = array();
 $parts = array();
-$externals = array();
+$externalids = array();
 $error = array();
 
 if ( $courseid ) {
@@ -32,7 +33,7 @@ if ( $courseid ) {
 	if ( $course ) {
 		$edit = 1;
 		$old_parts = get_course_question_groups( $courseid );
-		$externals = get_course_external_links( $courseid );
+		$externalids = get_course_external_links( $courseid );
 
 		foreach ( $categories as &$cat ) {
 			if ( $cat['categoryid'] == $course['course_category'] ) {
@@ -40,6 +41,26 @@ if ( $courseid ) {
 			}
 		}
 	}
+}
+
+if ( !empty($config['user_external_module']) ) {
+	$module = $config['base_dir'] .'/lib/'. $config['user_external_module'] .".phpm";
+	if ( !is_readable( $module ) ) {
+		$error[] = 'EXTERNAL_NOMODULE';
+	}
+	include_once( $module );
+	$ex = new Authen_External();
+
+	global $assigned_externals;
+	$assigned_externals = array_column(get_course_external_links(),'externalid');
+	$assigned_externals = array_diff( $assigned_externals, array_column($externalids,'externalid') );
+	$externals = $ex->get_courses();
+	$tmp_externals = array_filter( $externals, function($var){global $assigned_externals; return !in_array($var['externalid'],$assigned_externals); } );
+	$externals = array();
+	foreach ( $tmp_externals as $ext ) {
+		$externals[ $ext['externalid'] ] = $ext;
+	}
+	uasort( $externals, function($a,$b){ return strcasecmp($a['course_name'],$b['course_name']); } );
 }
 
 if ( $op == "Save" ) {	// Update/Add the location
@@ -52,6 +73,8 @@ if ( $op == "Save" ) {	// Update/Add the location
 	$question_parts = input( 'parts', INPUT_PINT );
 	$question_titles = input( 'part_titles', INPUT_HTML_NONE );
 	$question_groups = input( 'questions', INPUT_PINT );
+	$new_externalids = input( 'externalids', INPUT_HTML_NONE );
+
 	$parts = array();
 
 	if ( $mingrade < 0 ) { $error[] = "LOWMIN"; }
@@ -69,6 +92,7 @@ if ( $op == "Save" ) {	// Update/Add the location
 			}
 		}
 
+		$updated = array();
 		if ( !empty($course) ) {
 			if ( $categoryid != $course['course_category'] ) {
 				$updated['course_category'] = $categoryid;
@@ -114,7 +138,7 @@ if ( $op == "Save" ) {	// Update/Add the location
 							 );
 		}
 
-		if ( $updated ) {
+		if ( !empty($updated) ) {
 			$courseid = update_course( $courseid, $updated, $parts );
 			$saved = 1;
 
@@ -136,6 +160,18 @@ if ( $op == "Save" ) {	// Update/Add the location
 				}
 			}
 		}
+
+		if ( !empty($externalids) || !empty($new_externalids) ) {
+			$diff1 = array_diff( array_column($externalids,'externalid'), $new_externalids );
+			$diff2 = array_diff( $new_externalids, array_column($externalids,'externalid') );
+			if ( !empty($diff1) || !empty($diff2) ) {
+				delete_course_external_link( $courseid );
+				foreach ( $new_externalids as $externalid ) {
+					update_course( $courseid, array( 'externalid' => $externalid ) );
+				}
+			}
+			$externalids = get_course_external_links( $courseid );
+		}
 	}
 }
 
@@ -144,8 +180,9 @@ $output = array(
 				'saved' => $saved,
 				'course' => $course,
 				'parts' => $old_parts,
-				'externalids' => $externals,
+				'externalids' => $externalids,
 				'categories' => $categories,
+				'externals' => $externals,
 				'error' => $error,
 				);
 output( $output, 'manage/edit_course.tmpl' );

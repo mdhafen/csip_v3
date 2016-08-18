@@ -154,6 +154,10 @@ function update_user( $userid, $update, $module = 'core' ) {
   }
   $sth = $dbh->prepare( $query );
   $sth->execute( array_values( $update ) );
+  if ( $sth->errorCode() !== '00000' ) {
+    $db_error = $sth->errorInfo();
+    error_log("Save User DB Error! ". $db_error[0] ." : ". $db_error[2]);
+  }
 
   if ( ! $userid ) {
     $userid = $dbh->lastInsertId();

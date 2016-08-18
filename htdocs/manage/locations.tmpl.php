@@ -12,7 +12,7 @@
 <div class="uk-panel uk-panel-box uk-panel-box-primary">
 <h3>Locations</h3>
 
-<a href="<?= $data['_config']['base_url'] ?>manage/edit_location.php">Add Location</a>
+	 <a class="uk-button" href="<?= $data['_config']['base_url'] ?>manage/edit_location.php">Add Location</a>
 
 <table class="uk-table uk-table-striped">
 <thead>

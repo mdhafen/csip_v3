@@ -71,7 +71,7 @@ Changes saved.
 
 <tr>
 <td><label for="externalid">External ID</label></td>
-<td><input type="text" name="externalid" id="externalid" disabled value="<?= !empty($data['user']['externalid']) ? $data['user']['externalid'] : "" ?>" ></td>
+<td><input type="text" name="externalid" id="externalid" readonly value="<?= !empty($data['user']['externalid']) ? $data['user']['externalid'] : "" ?>" ><?php if ( $data['_config']['user_external_module'] ) { ?><span class="uk-margin-left">Click a button below to change External Link</span><?php } ?></td>
 </tr>
 
 </table>
@@ -82,8 +82,33 @@ Changes saved.
 </form>
 
 	</div>
+
+<?php if ( $data['_config']['user_external_module'] && !empty($data['externals']) ) { ?>
+<div class="uk-panel uk-panel-box">
+<?php  foreach ( $data['externals'] as $ex_user ) { ?>
+<button id="ex_<?= $ex_user['externalid'] ?>" class="uk-button" onclick="do_select(this)" data-external-name="<?= $ex_user['fullname'] ?>"  data-external-username="<?= $ex_user['username'] ?>" data-external-email="<?= $ex_user['email'] ?>" data-external-role="<?= $ex_user['role'] ?>" data-external-exid="<?= $ex_user['externalid'] ?>"><?= $ex_user['fullname'] ?></button>
+<?php  } ?>
+</div>
+<?php } ?>
+
 	<br>
 	<?php include $data['_config']['base_dir'] .'/htdocs/footer.php'; ?>
 	</div>
+
+    <script>
+function do_select(element) {
+    var username = element.getAttribute("data-external-username");
+    var name = element.getAttribute("data-external-name");
+    var email = element.getAttribute("data-external-email");
+    var role = element.getAttribute("data-external-role");
+    var ex_id = element.getAttribute("data-external-exid");
+
+	if ( ! $("#username").val() ) { $("#username").val(username); }
+	if ( ! $("#fullname").val() ) { $("#fullname").val(name); }
+	if ( ! $("#email").val() ) { $("#email").val(email); }
+	$("#role").val(role);
+	$("#externalid").val(ex_id);
+}
+    </script>
     </body>
 </html>

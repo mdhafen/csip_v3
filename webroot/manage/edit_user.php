@@ -3,12 +3,14 @@ include_once( '../../lib/input.phpm' );
 include_once( '../../lib/security.phpm' );
 include_once( '../../lib/output.phpm' );
 include_once( '../../lib/user.phpm' );
+global $config;
 
 authorize( 'manage_users' );
 
 $userid = input( 'userid', INPUT_PINT );
 $op = input( 'op', INPUT_STR );
 
+$externals = array();
 $edit = 0;
 $saved = 0;
 $user = array();
@@ -36,15 +38,34 @@ if ( $userid ) {
   }
 }
 
+if ( !empty($config['user_external_module']) ) {
+	$module = $config['base_dir'] .'/lib/'. $config['user_external_module'] .".phpm";
+	if ( !is_readable( $module ) ) {
+		$error[] = 'EXTERNAL_NOMODULE';
+	}
+	include_once( $module );
+	$ex = new Authen_External();
+
+	$users = all_users();
+	global $assigned_externals;
+	$assigned_externals = array_filter(array_column($users,'externalid'));
+	$externals = $ex->get_users();
+	$externals = array_filter( $externals, function($var){global $assigned_externals; return !in_array($var['externalid'],$assigned_externals); } );
+	uasort( $externals, function($a,$b){ return strcasecmp($a['fullname'],$b['fullname']); } );
+}
+
 if ( $op == "Save" ) {  // Update/Add the user
   $username = input( 'username', INPUT_HTML_NONE );
   $fullname = input( 'fullname', INPUT_HTML_NONE );
   $email = input( 'email', INPUT_EMAIL );
   $role = input( 'role', INPUT_PINT );
+  $externalid = input( 'externalid', INPUT_HTML_NONE );
   $user_locations = input( 'locations', INPUT_PINT );
   $loc_changed = false;
   $password = input( 'password', INPUT_STR );
   $password2 = input( 'password_2', INPUT_STR );
+  $user_password = '';
+  $salt = '';
   if ( $password && $password != '*****' && $password == $password2 ) {
     list( $user_password, $salt ) = new_password( $password );
   }
@@ -88,6 +109,9 @@ if ( $op == "Save" ) {  // Update/Add the user
     if ( $role != $user['role'] ) {
       $updated['role'] = $role;
     }
+    if ( $externalid != $user['externalid'] ) {
+      $updated['externalid'] = $externalid;
+    }
     if ( !empty($salt) ) {
       $updated['salt'] = $salt;
       $updated['password'] = $user_password;
@@ -100,7 +124,7 @@ if ( $op == "Save" ) {  // Update/Add the user
 	'role' => $role,
 	'password' => $user_password,
 	'salt' => $salt,
-        'externalid' => '',
+        'externalid' => $externalid,
 		     );
     $loc_changed = true;
   }
@@ -108,6 +132,18 @@ if ( $op == "Save" ) {  // Update/Add the user
   if ( !empty($updated) || $loc_changed ) {
     if ( !empty($updated) ) {
       $userid = update_user( $userid, $updated );
+
+	  if ( !empty($config['user_external_module']) && !empty($updated['externalid'])) {
+        delete_course_user_links( $userid );
+        foreach ( $user_locations as $loc ) {
+          if ( !empty($loc['externalid']) ) {
+            $courses = $ex->get_users_location_courses( $externalid, $loc['externalid'] );
+            foreach ( $courses as $crs ) {
+              add_course_user_link( $crs['courseid'], $userid, $loc['locationid'] );
+            }
+          }
+        }
+	  }
     }
     if ( $loc_changed ) {
       update_user_locations( $userid, $user_locations );
@@ -137,6 +173,7 @@ $output = array(
 	'edit' => $edit,
 	'saved' => $saved,
 	'user' => $user,
+	'externals' => $externals,
 	'locations' => $locations,
 	'roles' => $roles,
 );

@@ -59,7 +59,7 @@ foreach ( (array) $data['error'] as $err ) {
 
 <tr>
 <td><label for="externalid">External ID</label></td>
-<td><input type="text" name="externalid" id="externalid" disabled value="<?= !empty($data['location']['externalid']) ? $data['location']['externalid'] : "" ?>" ></td>
+<td><input type="text" name="externalid" id="externalid" readonly value="<?= !empty($data['location']['externalid']) ? $data['location']['externalid'] : "" ?>" ><?php if ( $data['_config']['user_external_module'] ) { ?><span class="uk-margin-left">Click a button below to change External Link</span><?php } ?></td>
 </tr>
 
 </table>
@@ -70,8 +70,33 @@ foreach ( (array) $data['error'] as $err ) {
 </form>
 
 	</div>
+
+<?php if ( $data['_config']['user_external_module'] && !empty($data['externals']) ) { ?>
+<div class="uk-panel uk-panel-box">
+<?php  foreach ( $data['externals'] as $ex_loc ) { ?>
+<button id="ex_<?= $ex_loc['externalid'] ?>" class="uk-button" onclick="do_select(this)" data-external-id="<?= $ex_loc['locationid'] ?>" data-external-name="<?= $ex_loc['name'] ?>" data-external-mingrade="<?= $ex_loc['mingrade'] ?>" data-external-maxgrade="<?= $ex_loc['maxgrade'] ?>" data-external-exid="<?= $ex_loc['externalid'] ?>"><?= $ex_loc['name'] ?></button>
+<?php  } ?>
+</div>
+<?php } ?>
+
 	<br>
 	<?php include $data['_config']['base_dir'] .'/htdocs/footer.php'; ?>
 	</div>
+
+    <script>
+function do_select(element) {
+    var id = element.getAttribute("data-external-id");
+    var name = element.getAttribute("data-external-name");
+    var mingrade = element.getAttribute("data-external-mingrade");
+    var maxgrade = element.getAttribute("data-external-maxgrade");
+    var ex_id = element.getAttribute("data-external-exid");
+
+	if ( ! $("#new_locationid").val() ) { $("#new_locationid").val(id); }
+	if ( ! $("#name").val() ) { $("#name").val(name); }
+	if ( ! $("#mingrade").val() ) { $("#mingrade").val(mingrade); }
+	if ( ! $("#maxgrade").val() ) { $("#maxgrade").val(maxgrade); }
+	$("#externalid").val(ex_id);
+}
+    </script>
     </body>
 </html>

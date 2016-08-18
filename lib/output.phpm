@@ -33,7 +33,7 @@ function output_build( $data, $filename ) {
 
 	if ( is_array( $data ) ) {
 		$data['_config'] = array();
-		$config_exports = array('base_dir','base_url','header_logos','footer_logos','utot_url','utot_label');
+		$config_exports = array('base_dir','base_url','header_logos','footer_logos','utot_url','utot_label','user_external_module');
 		foreach ( $config_exports as $setting ) {
 			$data['_config'][$setting] = $config[$setting];
 		}
