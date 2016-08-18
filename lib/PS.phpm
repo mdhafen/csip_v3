@@ -9,6 +9,8 @@ require_once( $config['base_dir'] .'/inc/course.phpm' );
 class Authen_External {
   private $token = '';
   private $url = '';
+  private $school_cache = array();
+  private $course_cache = array();
 
   function __construct() {
   }
@@ -200,16 +202,14 @@ class Authen_External {
   }
 
   public function get_users_location_courses( $userid, $schoolid ) {
-    $course = array();
+    $courses = array();
     $sections = $this->get_location_sections( $schoolid );
     foreach ( $sections as $sec ) {
       if ( $sec->staff_id != $userid ) {
         continue;
       }
-      if ( empty($course_cache[$sec->course_id]) ) {
-        $csip_sec = get_course_by_externalid( $sec->course_id );
-        $course[$sec->course_id] = $csip_sec;
-      }
+      $csip_sec = get_course_by_externalid( $sec->course_id );
+	  if ( !empty($csip_sec) ) { $courses[$sec->course_id] = $csip_sec; }
     }
     return $courses;
   }
@@ -458,14 +458,20 @@ class Authen_External {
 	$affiliations[] = $aff;
       }
     }
-    else if ( !empty($staff->school_affiliations->school_affiliation->school_id) ) {
+    else if ( !empty($teacher->staff->school_affiliations->school_affiliation->school_id) ) {
       $affiliations[] = $teacher->staff->school_affiliations->school_affiliation;
     }
     foreach ( $affiliations as $school ) {
       if ( $school->status == 2 ) {
         continue;
       }
-      $a_school = $this->get_data( '/ws/v1/school/'. $school->school_id );
+      if ( empty($this->school_cache[$school->school_id]) ) {
+        $a_school = $this->get_data( '/ws/v1/school/'. $school->school_id );
+        $this->school_cache[$school->school_id] = $a_school;
+      }
+      else {
+        $a_school = $this->school_cache[$school->school_id];
+      }
       $ps_loc_id = $a_school->school->id;
       $old_loc = location_by_externalid( $ps_loc_id );
       if ( empty($old_loc) && !empty($ps_loc_id) ) {
@@ -487,16 +493,19 @@ class Authen_External {
       update_user_locations( $old_user['userid'], array_keys($schools) );
     }
 
-    $course_cache = array();
+    $csip_courseids = array();
     foreach ( $schools as $locationid => $ps_loc ) {
       $courses = $this->get_location_courses( $ps_loc->school->id );
       foreach ( $courses as $ps_crs ) {
+        if ( empty($this->course_cache[$ps_crs->id]) ) {
+          $this->course_cache[$ps_crs->id] = $ps_crs;
+        }
         $csip_crs = get_course_by_externalid( $ps_crs->id );
         if ( empty($csip_crs) ) {
           $this->new_course( $ps_crs->id, $ps_crs );
           $csip_crs = get_course_by_externalid( $ps_crs->id );
         }
-        $course_cache[$ps_crs->id] = $csip_crs;
+        $csip_courseids[$ps_crs->id] = $csip_crs['courseid'];
         $access = 0;
         if ( !empty($csip_crs['max_grade']) && !empty($ps_loc->school->low_grade) ) {
           if ( $csip_crs['max_grade'] >= $ps_loc->school->low_grade ) {
@@ -521,16 +530,16 @@ class Authen_External {
         if ( $sec->staff_id != $userid ) {
           continue;
         }
-	if ( empty($course_cache[$sec->course_id]) ) {
+	if ( empty($csip_courseids[$sec->course_id]) ) {
 	  $csip_sec = get_course_by_externalid( $sec->course_id );
-	  $course_cache[$sec->course_id] = $csip_sec;
+	  $csip_courseids[$sec->course_id] = $csip_sec['courseid'];
 	}
 	else {
-	  $csip_sec = $course_cache[$sec->course_id];
+	  $csip_sec = $csip_courseids[$sec->course_id];
 	}
-        $links = get_course_user_links( $csip_sec['courseid'], $old_user['userid'], $locationid );
+        $links = get_course_user_links( $csip_sec, $old_user['userid'], $locationid );
         if ( empty($links) ) {
-          add_course_user_link( $csip_sec['courseid'], $old_user['userid'], $locationid );
+          add_course_user_link( $csip_sec, $old_user['userid'], $locationid );
         }
       }
     }
@@ -538,7 +547,13 @@ class Authen_External {
 
   private function new_location( $ps_loc_id, $school = null ) {
     if ( empty($school) ) {
-      $school = $this->get_data('/ws/v1/school/'. $ps_loc_id);
+      if ( empty($this->school_cache[$ps_loc_id]) ) {
+        $school = $this->get_data('/ws/v1/school/'. $ps_loc_id);
+        $this->school_cache[$ps_loc_id] = $school;
+      }
+      else {
+        $school = $this->school_cache[$ps_loc_id];
+      }
     }
     $new_loc = $this->school_to_csip_location( $school->school );
     update_location( 0, $new_loc );
@@ -548,8 +563,14 @@ class Authen_External {
 
   private function new_course( $ps_crs_id, $course = null ) {
     if ( empty($course) ) {
-      $course = $this->get_data('/ws/v1/course/'. $ps_crs_id);
-      $course = $course->course;
+      if ( empty($this->course_cache[ $ps_crs_id ]) ) {
+        $course = $this->get_data('/ws/v1/course/'. $ps_crs_id);
+        $this->course_cache[ $ps_crs_id ] = $course;
+        $course = $course->course;
+      }
+      else {
+        $course = $this->course_cache[ $ps_crs_id ];
+      }
     }
     $updated = $this->course_to_csip_course( $course );
     $parts = array_pop( $updated );
