@@ -28,6 +28,10 @@
                 <input type="hidden" name="sequences[]" value="0">
                 <textarea id="cfa-l-<?= $part ?>-46" cols="113" rows="3" name="answers[]" placeholder="text input"><?= isset($questions[46]['answer']) ? $questions[46]['answer'] : "" ?></textarea>
             </div>
+  <?php if ( !empty($data['can_edit']) ) { ?>
+            <br>
+            <button class="uk-button uk-button-success uk-align-right" type="button" data-group="cfa_save" onclick="save_answers(this)">Save</button>
+  <?php } ?>
         </div>
         <br>
     </li>
