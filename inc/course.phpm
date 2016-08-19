@@ -196,6 +196,11 @@ function delete_course_dependants( $courseid ) {
     $sth->bindValue( ':cid', $courseid );
     $sth->execute();
 
+    $query = "DELETE FROM answer_group_sequence WHERE courseid = :cid";
+    $sth = $dbh->prepare( $query );
+    $sth->bindValue( ':cid', $courseid );
+    $sth->execute();
+
     $query = "DELETE FROM answer WHERE courseid = :cid";
     $sth = $dbh->prepare( $query );
     $sth->bindValue( ':cid', $courseid );
