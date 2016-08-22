@@ -85,6 +85,7 @@ Changes saved.
 
 <?php if ( $data['_config']['user_external_module'] && !empty($data['externals']) ) { ?>
 <div class="uk-panel uk-panel-box">
+<h2 class="uk-panel-title">Available external users</h2>
 <?php  foreach ( $data['externals'] as $ex_user ) { ?>
 <button id="ex_<?= $ex_user['externalid'] ?>" class="uk-button" onclick="do_select(this)" data-external-name="<?= $ex_user['fullname'] ?>"  data-external-username="<?= $ex_user['username'] ?>" data-external-email="<?= $ex_user['email'] ?>" data-external-role="<?= $ex_user['role'] ?>" data-external-exid="<?= $ex_user['externalid'] ?>"><?= $ex_user['fullname'] ?></button>
 <?php  } ?>

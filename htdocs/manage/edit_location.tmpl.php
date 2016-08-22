@@ -73,6 +73,7 @@ foreach ( (array) $data['error'] as $err ) {
 
 <?php if ( $data['_config']['user_external_module'] && !empty($data['externals']) ) { ?>
 <div class="uk-panel uk-panel-box">
+<h2 class="uk-panel-title">Available external locations</h2>
 <?php  foreach ( $data['externals'] as $ex_loc ) { ?>
 <button id="ex_<?= $ex_loc['externalid'] ?>" class="uk-button" onclick="do_select(this)" data-external-id="<?= $ex_loc['locationid'] ?>" data-external-name="<?= $ex_loc['name'] ?>" data-external-mingrade="<?= $ex_loc['mingrade'] ?>" data-external-maxgrade="<?= $ex_loc['maxgrade'] ?>" data-external-exid="<?= $ex_loc['externalid'] ?>"><?= $ex_loc['name'] ?></button>
 <?php  } ?>

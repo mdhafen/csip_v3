@@ -136,8 +136,9 @@ foreach ( $data['externalids'] as $ex_id ) {
 
 	</div>
 
-<?php if ( $data['_config']['user_external_module'] && !empty($data['externals']) ) { ?>
+<?php if ( $data['_config']['user_external_module'] ) { ?>
 <div class="uk-panel uk-panel-box uk-scrollable-text" id="ExternalSide" ondragover="drag_allowdrop(event)" ondrop="drag_dropped(event)" style="max_height:50%">
+<h2 class="uk-panel-title">Available external courses</h2>
 <?php
   foreach ( $data['externals'] as $ex_course ) {
 ?>
