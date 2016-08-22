@@ -72,7 +72,7 @@ if ( !empty($data['csip']) && !empty($data['courseid']) ) {
         <button class='uk-button uk-button-success' onclick="save_answers(this)">Save Feedback</button><?php if ( isset($data['csip']['courses'][ $data['courseid'] ]['comment_date']) ) { $date = new DateTime($data['csip']['courses'][ $data['courseid'] ]['comment_date']); print " (". $date->format('m/d/Y') .") "; } ?>
     </form>
 <?php } else if ( !empty($data['csip']['courses'][ $data['courseid'] ]['principal_comment']) ) { ?>
-   <span class="uk-alert uk-alert-warning"><span class="uk-text-large uk-text-bold">Principal&apos;s Feedback:</span><?php if ( isset($data['csip']['courses'][ $data['courseid'] ]['comment_date']) ) { $date = new DateTime($data['csip']['courses'][ $data['courseid'] ]['comment_date']); print " (". $date->format('m/d/Y') .") "; } ?>
+   <span class="uk-panel uk-alert uk-alert-warning"><span class="uk-text-large uk-text-bold">Principal&apos;s Feedback:</span><?php if ( isset($data['csip']['courses'][ $data['courseid'] ]['comment_date']) ) { $date = new DateTime($data['csip']['courses'][ $data['courseid'] ]['comment_date']); print " (". $date->format('m/d/Y') .") "; } ?>
 <?= isset($data['csip']['courses'][ $data['courseid'] ]['principal_comment']) ? $data['csip']['courses'][ $data['courseid'] ]['principal_comment'] : "" ?>
     </span>
 <?php
