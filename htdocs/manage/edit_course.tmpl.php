@@ -117,6 +117,7 @@ foreach ( $data['externalids'] as $ex_id ) {
 	<a href="#"  id="link<?= $link_count ?>" dragable="true" ondragstart="drag_start(event)" class="uk-button" data-csip-link-value="<?= $ex_id['externalid'] ?>"><?= $data['externals'][ $ex_id['externalid'] ]['course_name'] ?></a>
 	<input type="hidden" id="ex_id_input<?= $link_count ?>" name="externalids[]" placeholder="external id" value="<?= $ex_id['externalid'] ?>">
 <?php
+	unset($data['externals'][ $ex_id['externalid'] ]);
 	$link_count++;
 }
 ?>
