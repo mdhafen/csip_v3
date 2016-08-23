@@ -7,9 +7,9 @@ include_once( '../lib/user.phpm' );
 
 global $config;
 
-/*if ( ! authen_against_db() ) {
+if ( ! authen_against_db() ) {
     error(array('INSTALL_ACCESS_DENIED'=>'Access to the installer is denied.'));
-    }*/
+}
 
 $output = array();
 $checks_passed = input( 'checks_passed', INPUT_INT );
