@@ -171,6 +171,10 @@ function authen_against_db() {
 	global $config;
 	$op = input( '_op', INPUT_HTML_NONE );
 	$output[ 'DBLOGIN' ] = 1;
+	// Make sure the user is the DB user
+	if ( isset($_SESSION['loggedin_user']) && $_SESSION['loggedin_user']['userid'] != -1 ) {
+		unset( $_SESSION['loggein_user'] );
+	}
 
 	if ( $op == 'do_login' || ! isset( $_SESSION[ 'loggedin_user' ] ) ) {
 		$user = 0;
