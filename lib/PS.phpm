@@ -380,7 +380,9 @@ class Authen_External {
     $ps_courses = $this->get_data('/ws/v1/school/'. $ps_locid .'/course?page='.$page);
     while ( !empty($ps_courses->courses->course) ) {
       foreach ( $ps_courses->courses->course as $crs ) {
-        $courses[] = $crs;
+        if ( $this->course_get_state_reporting($crs->id) ) {
+          $courses[] = $crs;
+        }
       }
       $page++;
       $ps_courses = $this->get_data('/ws/v1/school/'. $ps_locid .'/course?page='.$page);
@@ -537,6 +539,9 @@ class Authen_External {
 	else {
 	  $csip_sec = $csip_courseids[$sec->course_id];
 	}
+        if ( empty($csip_sec) ) {
+          continue;
+        }
         $links = get_course_user_links( $csip_sec, $old_user['userid'], $locationid );
         if ( empty($links) ) {
           add_course_user_link( $csip_sec, $old_user['userid'], $locationid );
