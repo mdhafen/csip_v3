@@ -167,6 +167,67 @@ function authenticate() {
 	}
 }
 
+function authen_against_db() {
+	global $config;
+	$op = input( '_op', INPUT_HTML_NONE );
+	$output[ 'DBLOGIN' ] = 1;
+
+	if ( $op == 'do_login' || ! isset( $_SESSION[ 'loggedin_user' ] ) ) {
+		$user = 0;
+		$username = input( '_username', INPUT_HTML_NONE );
+		$password = input( '_password', INPUT_STR );
+
+		if ( empty($username) || !empty($password) ) {
+			$output[ 'BADLOGIN' ] = 1;
+		}
+		else {
+			$db_user = $config['database']['core']['write']['user'];
+			$db_pass = $config['database']['core']['write']['passwd'];
+			if ( $username === $db_user && $password === $db_pass ) {
+				$user = array();
+				$user[ 'userid' ] = -1;
+				$user[ 'username' ] = $username;
+			}
+		}
+
+		if ( $user && $user['username'] ) {
+			unset( $_SESSION[ 'NOSESSION' ] );
+			$token = hash(
+				'sha512',
+				session_id() .','.
+				$_SERVER[ 'REMOTE_ADDR' ] .','.
+				$config[ 'secure_phrase' ]
+				);
+			$_SESSION[ 'token' ] = $token;
+			$_SESSION[ 'userid' ] = $user[ 'userid' ];
+			$_SESSION[ 'username' ] = $user[ 'username' ];
+			$_SESSION[ 'loggedin_user' ] = $user;
+			$_SESSION[ 'new_session' ] = 1;
+		} else {
+			$output[ 'BADLOGIN' ] = 1;
+			$_SESSION[ 'token' ] = '';
+			$_SESSION[ 'username' ] = $username;
+		}
+	}
+
+	$my_token = hash(
+		'sha512',
+		session_id() .','.
+		$_SERVER[ 'REMOTE_ADDR' ] .','.
+		$config[ 'secure_phrase' ]
+	);
+
+	if ( $my_token == $_SESSION[ 'token' ] ) {
+		return 1;
+	} else {
+		if ( !empty( $_SESSION['token'] ) ) {
+			destroy_session();
+		}
+		output( $output, 'login' );
+		exit;
+	}
+}
+
 function authen_db( $module, $username, $password ) {
 	global $config;
 	$user = user_by_username( $username, $module );

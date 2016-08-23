@@ -22,8 +22,13 @@
 					<form class="uk-form" method="post" action="index.php">
 
 <?php if ( !empty($data['NOTPERMITTED']) ) { ?>
-						<div id="errors" class="uk-alert uk-alert-danger">
+						<div id="errors" class="uk-panel uk-alert uk-alert-danger">
 							<strong>You do not have access to that function.</strong>
+						</div>
+<?php } ?>
+<?php if ( !empty($data['DBLOGIN']) ) { ?>
+						<div id="errors" class="uk-panel uk-alert">
+							<strong>Please enter the Database username and password to continue.</strong>
 						</div>
 <?php } ?>
 

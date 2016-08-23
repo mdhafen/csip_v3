@@ -94,7 +94,7 @@ foreach ( $data['left'] as $element ) {
 }
 ?>
 				</div>
-				<div class="uk-width-1-2 uk-panel uk-panel-box uk-scrollable-text" id="PreSyncExternalSide" ondragover="drag_allowdrop(event)" ondrop="drag_dropped(event)" style="max_height:100%">
+				<div class="uk-width-1-2 uk-panel uk-panel-box uk-scrollable-text" id="PreSyncExternalSide" ondragover="drag_allowdrop(event)" ondrop="drag_dropped(event)" style="max_height:100%;min_height:30%">
 <?php
 unset($left);
 foreach ( $data['right'] as $element ) {
