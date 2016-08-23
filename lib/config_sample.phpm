@@ -13,6 +13,7 @@ $config = array(
 	),
 	'authen_external_login_html' => '<a class="external_auth_button" href="#">External Login</a>',
 	'user_external_module' => '',
+	'course_external_module' => '',
 	'PS_API' => array(
 		'url' => '',
 		'id' => '',
