@@ -181,7 +181,7 @@ function authen_against_db() {
 		$username = input( '_username', INPUT_HTML_NONE );
 		$password = input( '_password', INPUT_STR );
 
-		if ( empty($username) || !empty($password) ) {
+		if ( empty($username) || empty($password) ) {
 			$output[ 'BADLOGIN' ] = 1;
 		}
 		else {
@@ -190,7 +190,7 @@ function authen_against_db() {
 			if ( $username === $db_user && $password === $db_pass ) {
 				$user = array();
 				$user[ 'userid' ] = -1;
-				$user[ 'username' ] = $username;
+				$user[ 'username' ] = $config['this_url'];
 			}
 		}
 

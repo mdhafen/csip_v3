@@ -19,7 +19,7 @@
 				<h1 align="center">Digital CSIP</h1>
                 <hr>
 				<div class="uk-text-center">
-					<form class="uk-form" method="post" action="index.php">
+					<form class="uk-form" method="post" action="<?= $data['_config']['this_url'] ?>">
 
 <?php if ( !empty($data['NOTPERMITTED']) ) { ?>
 						<div id="errors" class="uk-panel uk-alert uk-alert-danger">
