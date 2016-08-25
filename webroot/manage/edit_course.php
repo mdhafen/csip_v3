@@ -77,8 +77,8 @@ if ( $op == "Save" ) {	// Update/Add the location
 
 	$parts = array();
 
-	if ( $mingrade < 0 ) { $error[] = "LOWMIN"; }
-	if ( $maxgrade > 12 ) { $error[] = "HIGHMAX"; }
+	if ( $mingrade < -1 ) { $error[] = "LOWMIN"; }
+	if ( $maxgrade > 13 ) { $error[] = "HIGHMAX"; }
 	if ( $mingrade > $maxgrade ) { $error[] = "MINABOVEMAX"; }
 
 	if ( empty($error) ) {
