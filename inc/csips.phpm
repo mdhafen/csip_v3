@@ -207,7 +207,7 @@ CROSS JOIN year USING (yearid)
  LEFT JOIN user_course_links USING (courseid)
  LEFT JOIN course_approval AS ca ON course.courseid = ca.courseid AND ca.csipid = :csip
  LEFT JOIN course_categories AS cc ON course.course_category = cc.categoryid
-     WHERE active = 1
+     WHERE ( active = 1 OR course.courseid IN ( SELECT DISTINCT courseid FROM answer where csipid = :ans_csipid ) )
 ";
    if ( ! empty($courses) ) {
     $query .= "       AND course.courseid IN (". implode( ',',$courses ) .")";
@@ -221,6 +221,7 @@ CROSS JOIN year USING (yearid)
 ";
   $sth = $dbh->prepare( $query );
   $sth->bindValue( ':csip', $csip['csipid'] );
+  $sth->bindValue( ':ans_csipid', $csip['csipid'] );
   $sth->bindValue( ':mingrade', $csip['mingrade'] );
   $sth->bindValue( ':maxgrade', $csip['maxgrade'] );
   $sth->bindValue( ':loc_link', $csip['locationid'] );
