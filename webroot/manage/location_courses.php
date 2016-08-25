@@ -17,7 +17,7 @@ $location = array();
 $loc_links = array();
 $loc_courses = array();
 $loc_course_by_cat = array();
-$courses = get_courses();
+$courses = get_courses(TRUE);
 $course_by_cat = array();
 $saved = 0;
 
@@ -38,17 +38,9 @@ if ( !empty($locationid) ) {
   foreach ( $loc_courses as $l_c_id ) {
     $loc_course_by_cat[ $courses[$l_c_id]['category_name'] ][ $l_c_id ] = $courses[$l_c_id];
   }
-  ksort( $loc_course_by_cat, SORT_STRING | SORT_FLAG_CASE );
-  foreach ( $loc_course_by_cat as $cat => $cat_courses ) {
-    uasort( $loc_course_by_cat[$cat], 'cmp_course_name' );
-  }
 
   foreach ( $courses as $c_id => $crs ) {
     $course_by_cat[ $courses[$c_id]['category_name'] ][ $c_id ] = $courses[$c_id];
-  }
-  ksort( $course_by_cat, SORT_STRING | SORT_FLAG_CASE );
-  foreach ( $course_by_cat as $cat => $cat_courses ) {
-    uasort( $course_by_cat[$cat], 'cmp_course_name' );
   }
 
   if ( !empty($courseid) ) {
@@ -68,21 +60,33 @@ if ( !empty($locationid) ) {
     foreach ( $loc_courses as $l_c_id ) {
       $loc_course_by_cat[ $courses[$l_c_id]['category_name'] ][ $l_c_id ] = $courses[$l_c_id];
     }
-    ksort( $loc_course_by_cat, SORT_STRING | SORT_FLAG_CASE );
-    foreach ( $loc_course_by_cat as $cat => $cat_courses ) {
-      uasort( $loc_course_by_cat[$cat], 'cmp_course_name' );
-    }
   }
 }
 
+if ( !empty($course_by_cat) ) {
+  ksort( $course_by_cat, SORT_STRING | SORT_FLAG_CASE );
+  foreach ( $course_by_cat as $cat => $cat_courses ) {
+    uasort( $course_by_cat[$cat], 'cmp_course_name' );
+  }
+}
+if ( !empty($loc_course_by_cat) ) {
+  ksort( $loc_course_by_cat, SORT_STRING | SORT_FLAG_CASE );
+  foreach ( $loc_course_by_cat as $cat => $cat_courses ) {
+    uasort( $loc_course_by_cat[$cat], 'cmp_course_name' );
+  }
+}
+if ( !empty($loc_links) ) {
+  uasort( $loc_links, function ($a,$b) use ($courses) { return strcasecmp($courses[$a]['course_name'],$courses[$b]['course_name']); } );
+}
+
 $output = array(
-        'locationid' => $locationid,
-        'location' => $location,
-        'loc_links' => $loc_links,
-        'loc_courses' => $loc_courses,
-        'loc_course_by_cat' => $loc_course_by_cat,
-        'courses' => $courses,
-        'course_by_cat' => $course_by_cat,
+	'locationid' => $locationid,
+	'location' => $location,
+	'loc_links' => $loc_links,
+	'loc_courses' => $loc_courses,
+	'loc_course_by_cat' => $loc_course_by_cat,
+	'courses' => $courses,
+	'course_by_cat' => $course_by_cat,
 	'saved' => $saved,
 );
 output( $output, 'manage/location_courses.tmpl' );
