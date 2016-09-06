@@ -13,6 +13,7 @@
             <hr>
             <p>
             With your team:<ol>
+            <li>Look at your standards, give priority, and come to consensus around key skills and concepts.</li>
             <li>Identify/list the Essential Learnings that all students need to know.  These are your GVC&apos;s.</li>
             <li>Once your team has identified each GVC, share them with the team above and below your specific grade level.</li>
             <li>Share the GVC with your students.</li>
