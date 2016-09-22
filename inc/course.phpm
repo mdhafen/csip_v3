@@ -824,7 +824,7 @@ function course_save_answers( $answerid, $answer, $courseid, $questionid, $seq, 
     $old = $sth->fetch(PDO::FETCH_ASSOC);
   }
   else {
-    $query = "SELECT answer FROM answer WHERE questionid = :ques AND group_sequence = :seq AND part = :part AND courseid = :course AND csipid = :csip";
+    $query = "SELECT * FROM answer WHERE questionid = :ques AND group_sequence = :seq AND part = :part AND courseid = :course AND csipid = :csip";
     $sth = $dbh->prepare( $query );
     $sth->bindValue( ':ques', $questionid );
     $sth->bindValue( ':seq', $seq );

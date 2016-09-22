@@ -128,7 +128,7 @@ function answer_changed(element) {
     $(this).val('Save');
   });
 
-    //save_answers_ajax();
+  save_answers_ajax();
 }
 
 function check_unsaved_answers() {
@@ -184,33 +184,69 @@ function save_answers_ajax() {
   for ( var data_key in parts ) {
     if ( parts.hasOwnProperty( data_key ) ) {
       var data = parts[ data_key ];
-      $.post('<?= $data['_config']['base_url'] ?>api/save_answer_ajax.php', data, function(xml_result) { answer_saved_ajax(data_key,xml_result) }, "xml" );
+	  var modal = UIkit.modal.blockUI("Saving Answer...");
+      $.post('<?= $data['_config']['base_url'] ?>api/save_answer_ajax.php', data, function(xml_result) { answer_saved_ajax(data_key,xml_result,modal) }, "xml" );
     }
   }
 }
 
-function answer_saved_ajax( part, xml_result ) {
+function answer_saved_ajax( part, xml_result, modal ) {
   if ( $(xml_result).find("state").text() == 'Success' ) {
 
     var form = $("input[type='hidden'][name='part'][value='"+ part +"']")[0].form;
 
-    $(xml_result).find("answerids").each( function(){
-      $(form).find( "input[type='hidden'][name='questions'][value='"+ $(this).find('questionid').text() +"'] ~ input[type='hidden'][name='answerids'][value='']" ).get(0).value = $(this).find('answerid').text();
-    });
+    $(xml_result).find("answer_details").each( function(){
+		var this_result_questionid = $(this).find('questionid').text();
+		var this_result_answerid = $(this).find('answerid').text();
+		var this_result_sequence = $(this).find('group_sequence').text();
+		$(form).find( "div[data-csip-answer-ids]" ).each( function(){
+			if ( $(this).find( "input[name='questionid']" ).length &&
+			     $(this).find( "input[name='questionid']" ).val() != this_result_questionid ) {
+				return true;
+			}
+			if ( $(this).find( "input[name='questions[]']" ).length &&
+			     $(this).find( "input[name='questions[]']" ).val() != this_result_questionid ) {
+				return true;
+			}
 
-    $( form ).find( "input[type='text'], textarea" ).each(function(){
-      if ( answers_changed[ this.id ] ) {
-	delete answers_changed[ this.id ];
-      }
-      if ( answers_original[ this.id ] ) {
-	delete answers_original[ this.id ];
-      }
+			if ( $(this).find( "input[name='answerids[]']" ).length ) {
+				if ( ! $(this).find( "input[name='answerids[]']" ).val() ) {
+					$(this).find( "input[name='answerids[]']" ).val( this_result_answerid );
+					if ( this_result_sequence ) {
+						$(this).find( "input[name='sequences']" ).val( this_result_sequence );
+					}
+				}
+			}
+			else {
+				if ( $(this).find( "input[name='answerid']" ).length && ! $(this).find( "input[name='answerid']" ).val() ) {
+					$(this).find( "input[name='answerid']" ).val( this_result_answerid );
+					if ( this_result_sequence ) {
+						$(this).find( "input[name='sequence']" ).val( this_result_sequence );
+					}
+				}
+			}
+
+			$(this).find( "input[type='text'], textarea" ).each(function(){ 
+				if ( answers_changed[ this.id ] ) {
+					delete answers_changed[ this.id ];
+				}
+				if ( answers_original[ this.id ] ) {
+					delete answers_original[ this.id ];
+				}
+			});
+		});
     });
 
     $( form ).find( "button[data-group='cfa_save']" ).each(function(){
       $(this).removeClass("uk-button-danger").addClass("uk-button-success");
       $(this).val('Changes Saved');
     });
+
+    modal.hide();
+  }
+  else {
+    modal.hide();
+    modal = UIkit.modal.alert("Save Failed.  Please make sure you use the 'Save' button.  It is also recommended that you copy and paste them to another program, like notepad or Word.");
   }
 }
 

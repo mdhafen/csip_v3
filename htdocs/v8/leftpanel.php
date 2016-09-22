@@ -21,7 +21,7 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['form'][ $data['coursei
                     <p>After identifying your GVC and individually self assessing with the <a href="<?= $data['_config']['utot_url'] ?>" class="uk-display-inline custom-anchor" target="_blank"><?= $data['_config']['utot_label'] ?></a>, collectively determine the Teaching Standard(s) you need to strengthen as a team, based on the learning needs of the students in your classroom this year (<a href="https://docs.google.com/document/d/1avnRg24z6hlyZccCJTKoFnTKzNXmPR4dqGACC-AOlyI/edit" class="uk-display-inline custom-anchor" target="_blank">click here for optional template</a>).
                 </div>
                 <br>
-                <div class="uk-panel uk-panel-box">
+                <div class="uk-panel uk-panel-box" data-csip-answer-ids>
                     <input type="hidden" name="questionid" value="33">
                     <input type="hidden" name="answerid" value="<?= isset($questions[33]['answerid']) ? $questions[33]['answerid'] : "" ?>">
                         <label class="uk-form-label" for="grow-1-33"><br>

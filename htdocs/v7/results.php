@@ -109,7 +109,7 @@ if ( !empty($data['courseid']) && !empty($data['csip']['form'][ $data['courseid'
 
                     <div class="uk-form-row">
                         <label class="uk-form-label" for="res-3-<?= $questionid ?>-<?= $c ?>"><?= $data['csip']['questions'][ $questionid ]['question_clean'] ?></label>
-                        <div class="uk-form-controls">
+                        <div class="uk-form-controls" data-csip-answer-ids>
                             <input type="hidden" name="questions[]" value="<?= $questionid ?>">
                             <input type="hidden" name="answerids[]" value="<?= !empty($answer['answerid']) ? $answer['answerid'] : "" ?>">
                             <input type="hidden" name="sequences[]" value="<?= !empty($answer['group_sequence']) ? $answer['group_sequence'] : "" ?>">

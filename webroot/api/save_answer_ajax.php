@@ -22,11 +22,20 @@ $sequences = input( 'sequences', INPUT_PINT );
 $questionid = input( 'questionid', INPUT_PINT );
 $answer = input( 'answer', INPUT_HTML_NONE );
 $answerid = input( 'answerid', INPUT_PINT );
-$sequence = input( 'sequence', INPUT_PINT ) || 0;
+( $sequence = input('sequence',INPUT_PINT) ) || ( $sequence = 0 );
 
 $error = array();
 
-$csip = $_SESSION['csip'];
+$csip = array();
+if ( !empty($csipid) ) {
+  if ( !in_array( get_csip_locationid($csipid), $locations ) ) {
+    $error[] = array('NOTYOURS'=>'Access to CSIP at that location is denied.');
+  }
+  else {
+    $csip = load_csip( $csipid, False, $_SESSION['loggedin_user']['userid'] );
+  }
+}
+
 if ( empty($csip) ) {
    $error[] = array('NOTYOURS' => 'No CSIP loaded.');
 }
@@ -70,15 +79,15 @@ if ( empty($error) ) {
   $answer_details = '';
   if ( !empty($answers) ) {
     $count = 0;
-    $new_seq = 0;
+    $new_seq = null;
     for ( $count = 0; $count < count($questions); $count++ ) {
       $questionid = $questions[ $count ];
       $answer = $answers[ $count ];
       $answerid = $answerids[ $count ];
-      $sequence = $sequences[ $count ];
+      ( $sequence = $sequences[ $count ] ) || ( $sequence = 0 );
       if ( !empty($answer) || !empty($answerid) ) {
-	if ( empty($sequence) ) {
-	  if ( empty($new_seq) ) {
+	if ( empty($sequence) && !empty($csip['questions'][$questionid]['group_repeatableid']) ) {
+	  if ( is_null($new_seq) ) {
 	    $new_seq = $sequence = part_get_next_sequence( $csipid, $courseid, $part, $questionid);
 	  }
 	  else {
@@ -86,13 +95,15 @@ if ( empty($error) ) {
 	  }
 	}
 	$newanswerid = course_save_answers( $answerid, $answer, $courseid, $questionid, $sequence, $part, $csip );
-        if ( empty($answerid) && !empty($newanswerid) ) {
-          $answer_details .= "<answer_details><answerid>".(!empty($answerid)?$answerid:$newanswerid)."</answerid><questionid>$questionid</questionid><group_sequence>$sequence</group_sequence><part>$part</part><courseid>$courseid</courseid><csipid>".$csip['csipid']."</csipid></answer_details>";
-        }
+
+	$answer_details .= "<answer_details><answerid>".(!empty($answerid)?$answerid:$newanswerid)."</answerid><questionid>$questionid</questionid><group_sequence>$sequence</group_sequence><part>$part</part><courseid>$courseid</courseid><csipid>".$csip['csipid']."</csipid></answer_details>";
       }
     }
   }
   else {
+    if ( empty($answerid) && !empty($csip['questions'][$questionid]['group_repeatableid']) ) {
+      $sequence = part_get_next_sequence( $csipid, $courseid, $part, $questionid);
+    }
     $newanswerid = course_save_answers( $answerid, $answer, $courseid, $questionid, $sequence, $part, $csip );
     $answer_details .= "<answer_details><answerid>".(!empty($answerid)?$answerid:$newanswerid)."</answerid><questionid>$questionid</questionid><group_sequence>$sequence</group_sequence><part>$part</part><courseid>$courseid</courseid><csipid>".$csip['csipid']."</csipid></answer_details>";
   }

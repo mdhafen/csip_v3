@@ -23,7 +23,7 @@
 
         <div class="uk-form-row uk-panel uk-panel-box">
             <label class="uk-form-label" for="cfa-l-<?= $part ?>-46">Enter GVC #<?= $count ?> here:</label>
-            <div class="uk-form-controls">
+            <div class="uk-form-controls" data-csip-answer-ids>
                 <input type="hidden" name="questions[]" value="46">
                 <input type="hidden" name="answerids[]" value="<?= isset($questions[46]['answerid']) ? $questions[46]['answerid'] : "" ?>">
                 <input type="hidden" name="sequences[]" value="0">
@@ -51,7 +51,7 @@
             <div class="uk-form-row uk-flex uk-flex-wrap uk-margin-top">
                 <div class="uk-flex-item-auto uk-margin-right" style="width: 40%">
                     <div style="min-height:40px;"><label class="" for="cfa-c-<?= $part ?>-49">List all Learning Targets that lead to proficiency in GVC #<?= $count ?></label></div>
-                    <div class="">
+                    <div class="" data-csip-answer-ids>
                         <input type="hidden" name="questions[]" value="49">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[49]['answerid']) ? $questions[49]['answerid'] : "" ?>">
                         <input type="hidden" name="sequences[]" value="0">
@@ -61,7 +61,7 @@
 
                 <div class="uk-flex-item-auto uk-margin-right" style="width: 20%">
                     <div style="min-height:40px;"><label class="" for="cfa-c-<?= $part ?>-50">CFA(s)</label></div>
-                    <div class="">
+                    <div class="" data-csip-answer-ids>
                         <input type="hidden" name="questions[]" value="50">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[50]['answerid']) ? $questions[50]['answerid'] : "" ?>">
                         <input type="hidden" name="sequences[]" value="0">
@@ -71,7 +71,7 @@
 
                 <div class="uk-flex-item-auto uk-margin-right" style="width: 5%">
                     <div style="min-height:40px;"><label class="" for="cfa-c-<?= $part ?>-51"># assessed</label></div>
-                    <div class="">
+                    <div class="" data-csip-answer-ids>
                         <input type="hidden" name="questions[]" value="51">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[51]['answerid']) ? $questions[51]['answerid'] : "" ?>">
                         <input type="hidden" name="sequences[]" value="0">
@@ -81,7 +81,7 @@
 
                 <div class="uk-flex-item-auto" style="width: 5%">
                     <div style="min-height:40px;"><label class="" for="cfa-c-<?= $part ?>-52"># NOT proficient</label></div>
-                    <div class="">
+                    <div class="" data-csip-answer-ids>
                         <input type="hidden" name="questions[]" value="52">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[52]['answerid']) ? $questions[52]['answerid'] : "" ?>">
                         <input type="hidden" name="sequences[]" value="0">
@@ -92,7 +92,7 @@
             <hr>
             <div class="uk-form-row">
                 <label class="uk-form-label" for="cfa-c-<?= $part ?>-53">OPTIONAL: Enter links to online documents which support this assessment.</label>
-                <div class="uk-form-controls">
+                <div class="uk-form-controls" data-csip-answer-ids>
                     <input type="hidden" name="questions[]" value="53">
                     <input type="hidden" name="answerids[]" value="<?= isset($questions[53]['answerid']) ? $questions[53]['answerid'] : "" ?>">
                     <input type="hidden" name="sequences[]" value="0">
@@ -102,7 +102,7 @@
             <hr>
             <div class="uk-form-row">
                 <label class="uk-form-label" for="cfa-c-<?= $part ?>-54">According to the results of our CFA(s) and team collaboration, the following teaching practices/strategies were most effective for GVC #<?= $count ?>.</label>
-                <div class="uk-form-controls">
+                <div class="uk-form-controls" data-csip-answer-ids>
                     <input type="hidden" name="questions[]" value="54">
                     <input type="hidden" name="answerids[]" value="<?= isset($questions[54]['answerid']) ? $questions[54]['answerid'] : "" ?>">
                     <input type="hidden" name="sequences[]" value="0">
@@ -131,7 +131,7 @@
             <div class="uk-form-row uk-flex">
                 <div class="uk-flex-item-auto uk-margin-right" style="width: 50%">
                     <label class="" for="cfa-i-<?= $part ?>-57">List the SPECIFIC INTERVENTIONS your team responded with for students who WERE NOT proficient in GVC #<?= $count ?>.</label>
-                    <div class="">
+                    <div class="" data-csip-answer-ids>
                         <input type="hidden" name="questions[]" value="57">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[57]['answerid']) ? $questions[57]['answerid'] : "" ?>">
                         <input type="hidden" name="sequences[]" value="0">
@@ -140,7 +140,7 @@
                 </div>
                 <div class="uk-flex-item-auto uk-margin-right" style="width: 50%">
                     <label class="" for="cfa-i-<?= $part ?>-58">Following your team&apos;s INTERVENTIONS and REASSESSMENT, how many students are still not proficient?</label>
-                    <div class="">
+                    <div class="" data-csip-answer-ids>
                         <input type="hidden" name="questions[]" value="58">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[58]['answerid']) ? $questions[58]['answerid'] : "" ?>">
                         <input type="hidden" name="sequences[]" value="0">
@@ -152,7 +152,7 @@
                 <div class="uk-form-row">
                     <label class="uk-form-label" for="cfa-i-<?= $part ?>-59">List the FIRST NAMES of those students who were not proficient even after your team&apos;s intervention.<br><br>(Or enter a link to an online document with the students names.)</label>
 <?php if ( !empty($data['_session']['CAN_view_protected_answers']) ) { ?>
-                    <div class="uk-form-controls">
+                    <div class="uk-form-controls" data-csip-answer-ids>
                         <input type="hidden" name="questions[]" value="59">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[59]['answerid']) ? $questions[59]['answerid'] : "" ?>">
                         <input type="hidden" name="sequences[]" value="0">
@@ -166,7 +166,7 @@
                 <hr>
                 <div class="uk-form-row">
                     <label class="uk-form-label" for="cfa-i-<?= $part ?>-60">How did your TEAM respond to those who were still not proficient even after your team&apos;s interventions?</label>
-                    <div class="uk-form-controls">
+                    <div class="uk-form-controls" data-csip-answer-ids>
                         <input type="hidden" name="questions[]" value="60">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[60]['answerid']) ? $questions[60]['answerid'] : "" ?>">
                         <input type="hidden" name="sequences[]" value="0">
@@ -193,7 +193,7 @@
             <div class="uk-panel uk-panel-box">
                 <div class="uk-form-row">
                     <label class="uk-form-label" for="cfa-l-<?= $part ?>-63">As you plan instruction for GVC #<?= $count ?> and the learning targets, identify extension activities your team will use for those who already know it.</label>
-                    <div class="uk-form-controls">
+                    <div class="uk-form-controls" data-csip-answer-ids>
                         <input type="hidden" name="questions[]" value="63">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[63]['answerid']) ? $questions[63]['answerid'] : "" ?>">
                         <input type="hidden" name="sequences[]" value="0">
@@ -218,7 +218,7 @@
             <div class="uk-form-row uk-flex">
                 <div class="uk-flex-item-auto uk-margin-right" style="width: 45%">
                     <label class="" for="cfa-r-<?= $part ?>-65">What we will keep for GVC #<?= $count ?>:</label>
-                    <div class="">
+                    <div class="" data-csip-answer-ids>
                         <input type="hidden" name="questions[]" value="65">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[65]['answerid']) ? $questions[65]['answerid'] : "" ?>">
                         <input type="hidden" name="sequences[]" value="0">
@@ -227,7 +227,7 @@
                 </div>
                 <div class="uk-flex-item-auto uk-margin-right" style="">
                     <label class="" for="cfa-l-<?= $part ?>-66">What we will change for GVC #<?= $count ?>:</label>
-                    <div class="">
+                    <div class="" data-csip-answer-ids>
                         <input type="hidden" name="questions[]" value="66">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[66]['answerid']) ? $questions[66]['answerid'] : "" ?>">
                         <input type="hidden" name="sequences[]" value="0">
