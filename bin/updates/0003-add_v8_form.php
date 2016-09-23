@@ -26,7 +26,7 @@ if ( $row['count'] == 0 ) {
   $sth->bindValue(':type','9');
   $sth->bindValue(':order','1');
   $sth->bindValue(':quest','<b>Team Professional Growth Plan:</b><br/>
-After identifying your GVC and individually self assessing with the <a class="uk-display-inline" target="_blank" href="http://www.schools.utah.gov/CURR/educatoreffectiveness/Observation-Tools/Teaching/Chart.aspx">Utah Teaching Ovservation Tool (UTOT)</a>, collectively determine the Teaching Standard(s) you need to strengthen as a team, based on the learning needs of the students in your classroom this year (<a href="https://docs.google.com/document/d/1avnRg24z6hlyZccCJTKoFnTKzNXmPR4dqGACC-AOlyI/edit" class="uk-display-inline" target="_blank">click here for optional template</a>).');
+After identifying your GVC and individually self assessing with the <a class="uk-display-inline" target="_blank" href="http://www.schools.utah.gov/CURR/educatoreffectiveness/Observation-Tools/Teaching/Chart.aspx">Utah Teaching Ovservation Tool (UTOT)</a>, collectively determine the Teaching Standard(s) you need to strengthen as a team, based on the learning needs of the students in your classroom this year (<a href="https://docs.google.com/document/d/1avnRg24z6hlyZccCJTKoFnTKzNXmPR4dqGACC-AOlyI/copy" class="uk-display-inline" target="_blank">click here for optional template</a>).');
   $sth->execute();
 
   $sth->bindValue(':qid','33');
