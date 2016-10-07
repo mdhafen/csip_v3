@@ -22,11 +22,11 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['form'][ $data['coursei
                 </div>
                 <br>
                 <div class="uk-panel uk-panel-box" data-csip-answer-ids>
-                    <input type="hidden" name="questionid" value="33">
-                    <input type="hidden" name="answerid" value="<?= isset($questions[33]['answerid']) ? $questions[33]['answerid'] : "" ?>">
-                        <label class="uk-form-label" for="grow-1-33"><br>
+                    <label class="uk-form-label" for="grow-1-33"><br>
 </label>
                     <div class="uk-form-controls">
+                        <input type="hidden" name="questionid" value="33">
+                        <input type="hidden" name="answerid" value="<?= isset($questions[33]['answerid']) ? $questions[33]['answerid'] : "" ?>">
                         <textarea id="grow-1-33" cols="113" rows="8" name="answer" placeholder="Outline Team&apos;s Professional Growth Plan Here..."><?= isset($questions[33]['answer']) ? $questions[33]['answer'] : "" ?></textarea><br><br>
                     </div>
                     <br>
