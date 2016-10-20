@@ -27,7 +27,7 @@ if ( !empty($courseid) && !empty($courses) ) {
 }
 
 $reporter = authorized( 'view_reports' );
-$csip = load_csip( $csipid, $reporter, $_SESSION['loggedin_user']['userid'] );
+$csip = load_csip( $csipid, $_SESSION['loggedin_user']['userid'], $reporter );
 
 $data = array(
 	'csip' => $csip,

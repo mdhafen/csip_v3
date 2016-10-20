@@ -22,7 +22,7 @@ if ( ! empty($csipid) ) {
         error( array('NOTYOURS' => 'Access to CSIP at that location is denied.') );
     }
     else {
-        $csip = load_csip( $csipid, $reporter, $_SESSION['loggedin_user']['userid'] );
+        $csip = load_csip( $csipid, $_SESSION['loggedin_user']['userid'], $reporter );
     }
 }
 

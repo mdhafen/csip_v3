@@ -172,11 +172,8 @@ function delete_csip( $csipid ) {
   }
 }
 
-function load_csip( $csipid = 0, $all_courses = 0, $userid = 0 ) {
+function load_csip( $csipid, $userid, $all_courses = 0, $include_inactive = 0 ) {
   $csip = array();
-  if ( ! $csipid ) {
-    return;
-  }
   $dbh = db_connect();
 
   $query = "
@@ -207,16 +204,20 @@ CROSS JOIN year USING (yearid)
  LEFT JOIN user_course_links USING (courseid)
  LEFT JOIN course_approval AS ca ON course.courseid = ca.courseid AND ca.csipid = :csip
  LEFT JOIN course_categories AS cc ON course.course_category = cc.categoryid
-     WHERE ( active = 1 OR course.courseid IN ( SELECT DISTINCT courseid FROM answer where csipid = :ans_csipid ) )
-";
-   if ( ! empty($courses) ) {
-    $query .= "       AND course.courseid IN (". implode( ',',$courses ) .")";
+     WHERE ";
+  if ( ! $include_inactive ) {
+    $query .= "active = 1\n       AND ";
+  }
+  if ( ! empty($courses) ) {
+    $query .= "course.courseid IN (". implode( ',',$courses ) .")\n       AND ";
     $courses = array();
   }
-  $query .= "
-       AND ( ( max_grade >= :mingrade AND min_grade <= :maxgrade )
+  $query .= "( ( max_grade >= :mingrade AND min_grade <= :maxgrade )
         OR ( location_course_links.locationid = :loc_link )
-        OR ( user_course_links.locationid = :usr_crs_loc AND user_course_links.userid = :usr_crs_link ) )
+";
+  if ($userid) $query .= "      OR ( user_course_links.locationid = :usr_crs_loc AND user_course_links.userid = :usr_crs_link )";
+  $query .= "
+        OR ( course.courseid IN ( SELECT DISTINCT courseid FROM answer where csipid = :ans_csipid ) ) )
   ORDER BY course.course_name
 ";
   $sth = $dbh->prepare( $query );
@@ -225,8 +226,10 @@ CROSS JOIN year USING (yearid)
   $sth->bindValue( ':mingrade', $csip['mingrade'] );
   $sth->bindValue( ':maxgrade', $csip['maxgrade'] );
   $sth->bindValue( ':loc_link', $csip['locationid'] );
-  $sth->bindValue( ':usr_crs_loc', $csip['locationid'] );
-  $sth->bindValue( ':usr_crs_link', $userid );
+  if ($userid) {
+    $sth->bindValue( ':usr_crs_loc', $csip['locationid'] );
+    $sth->bindValue( ':usr_crs_link', $userid );
+  }
   $sth->execute();
   while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
     $csip['courses'][ $row['courseid'] ] = stripslashes_array( $row );

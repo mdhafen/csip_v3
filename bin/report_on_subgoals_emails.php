@@ -1,4 +1,7 @@
 <?php
+exit;
+// This is here as an example, and is unused since csip_v3
+
 require_once 'Mail.php';
 
 $params = array(
@@ -35,7 +38,7 @@ $result = $dbh->query( $query );
 
 foreach ( $result as $row ) {
   $csipid = $row['csipid'];
-  $csip = load_csip( $csipid );
+  $csip = load_csip( $csipid, 0 );
 
   foreach ( (array) $csip['category'] as $categoryid => $category ) {
 
