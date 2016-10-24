@@ -55,7 +55,7 @@ After identifying your GVC and individually self assessing with the <a class="uk
   $sth->bindValue(':type','9');
   $sth->bindValue(':order','1');
   $sth->bindValue(':quest','<b>What do students NEED to know and be able to do?</b><br/>
-With your team:<ol><li>Look at your standards, give priority, and come to consensus around key skills, concepts, behaviours, and dispositions.</li><li>identify/list the Essential Learnings that all students need to know.  These are your GVC\'s.</li>
+With your team:<ol><li>Look at your standards, give priority, and come to consensus around key skills, concepts, behaviors, and dispositions.</li><li>identify/list the Essential Learnings that all students need to know.  These are your GVC\'s.</li>
 <li>Once your team has identified each GVC, share with the team above and below your specific grade level.</li>
 <li>Share the GVC with your students.</li></ol>');
   $sth->execute();
