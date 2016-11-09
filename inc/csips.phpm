@@ -83,7 +83,7 @@ function get_versions() {
   return $result;
 }
 
-function get_csips( $locations = array(), $district = 0, $history = 3 ) {
+function get_csips( $locations = array(), $district = 0, $yearids = array() ) {
   $dbh = db_connect();
   $result = array();
 
@@ -91,13 +91,13 @@ function get_csips( $locations = array(), $district = 0, $history = 3 ) {
   if ( ! $district && !empty($locations) ) {
     $query .= "WHERE csip.locationid IN (". implode( ',', $locations ) .") ";
   }
-  if ( $history ) {
+  if ( !empty($yearids) ) {
     if ( $district ) {
       $query .= "WHERE ";
     } else {
       $query .= "AND ";
     }
-    $query .= "yearid > ( SELECT MAX(yearid) - $history FROM year ) ";
+    $query .= "yearid IN (". implode(',',$yearids) .") ";
   }
   $query .= "ORDER BY yearid DESC, name ASC ";
   $sth = $dbh->prepare( $query );
