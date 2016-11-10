@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<?php include 'head.php';?>
+	<?php include $data['_config']['base_dir'] .'/htdocs/head.php';?>
 	</head>
 	<body>
-		<?php include 'menu.php'; ?>
+		<?php include $data['_config']['base_dir'] .'/htdocs/menu.php'; ?>
 
         <div class="uk-container uk-container-center uk-animation-fade">
 <br>
@@ -23,7 +23,7 @@
       <li><a href="<?= $data['_config']['base_url'] ?>reports/a_report.php">A Report</a></li>
       </ul>
 <?php
-include 'footer.php';
+include $data['_config']['base_dir'] .'/htdocs/footer.php';
 ?>
         </div>
 
