@@ -5,6 +5,7 @@ $updates = array(
   '0002-add_answer_group_sequence',
   '0003-add_v8_form',
   '0004-add_external_auth',
+  '0005-expand_username_field'
 );
 $results = array();
 
