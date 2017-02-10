@@ -20,7 +20,7 @@
 			<h2>Select Report</h2>
 
       <ul>
-      <li><a href="<?= $data['_config']['base_url'] ?>reports/a_report.php">A Report</a></li>
+      <li><a href="<?= $data['_config']['base_url'] ?>reports/GVCs.php">GVCs</a></li>
       </ul>
 <?php
 include $data['_config']['base_dir'] .'/htdocs/footer.php';
