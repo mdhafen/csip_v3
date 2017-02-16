@@ -29,7 +29,7 @@ if ( !empty($locationid) ) {
   if ( empty($location) ) {
     error( array('BADLOC' => 'Undefined Location') );
   }
-  $csips = get_csips( array($locationid), false, 0 );
+  $csips = get_csips( array($locationid), false );
   foreach ( $csips as &$csip ) {
     $csip['num_answers'] = get_csip_num_answers( $csip['csipid'] );
   }
@@ -49,7 +49,7 @@ if ( !empty($locationid) ) {
         delete_csip( $csipid );
       }
     }
-    $csips = get_csips( array($locationid), false, 0 );
+    $csips = get_csips( array($locationid), false );
     foreach ( $csips as &$csip ) {
       $csip['num_answers'] = get_csip_num_answers( $csip['csipid'] );
     }

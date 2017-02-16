@@ -37,7 +37,7 @@ if ( !empty($csip) ) {
 
 $csips = array();
 if ( !empty( $_SESSION['loggedin_user']) ) {
-	$csips = get_csips( $locations, $district, 0 ); // 0 means load all years
+	$csips = get_csips( $locations, $district ); // load all years
 }
 
 $output = array(
