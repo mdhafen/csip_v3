@@ -19,8 +19,8 @@
             </span>
 			<h2>Select Report</h2>
 
-      <ul>
-      <li><a href="<?= $data['_config']['base_url'] ?>reports/GVCs.php">GVCs</a></li>
+      <ul class="uk-list">
+      <li><a class="uk-button" href="<?= $data['_config']['base_url'] ?>reports/GVCs.php">GVCs</a></li>
       </ul>
 <?php
 include $data['_config']['base_dir'] .'/htdocs/footer.php';

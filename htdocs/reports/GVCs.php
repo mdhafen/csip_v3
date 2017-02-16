@@ -17,11 +17,15 @@
 						<br>
 						<a href="https://prodev.washk12.org/support/csip" style="float: right;" class="uk-button uk-button-primary" target="_BLANK">Go here for help</a>
             </span>
-			<h2>GVCs Report</h2>
+      <ul class="uk-breadcrumb"><li><a href="GVCs.php">GVCs Report</a></li>
 <?php
-      if ( $data['run'] ) {
+      if ( !empty($data['run']) && $data['run'] == 'Finished' ) {
+          print "<li><span href='#'>Results</span></li></ul>";
+          if ( empty($data['gvcs']) ) {
+              print "<div class='uk-alert uk-alert-warning' uk-alert><p>No answers found in that course</p></div>";
+          }
           foreach ( $data['gvcs'] as $location => $parts ) {
-              print "<table>\n";
+              print "<table class='uk-table'>\n";
               print "<thead><tr><th colspan='2'>$location</th></tr></thead>\n";
               foreach ( $parts as $tab => $questions ) {
                   print "<thead><tr><th colspan='2'>GVC #$tab</th></tr></thead>\n";
@@ -35,6 +39,7 @@
           }
       } else {
           if ( !empty($data['courses']) ) {
+              print "<li><span href='#'>Select Course</span></li></ul>";
 ?>
             <h3>Select a Course</h3>
             <form class="uk-form-horizontal">
@@ -43,29 +48,49 @@
               <?php foreach ( $data['locationids'] as $locid ) { ?>
               <input type="hidden" name="locations[]" value="<?= $locid ?>">
               <?php } ?>
+              <div>Select a Course</div>
+              <fieldset class="uk-form-controls">
               <?php foreach ( $data['courses'] as $course ) { ?>
-              <label class="uk-form-label"><input type="radio" class="uk-radio" name="courseid" value="<?= $course['courseid'] ?>"><?= $course['course_name'] ?></label>
+              <label for="courseid_<?= $course['courseid'] ?>" class="uk-form-label"><input type="radio" id="courseid_<?= $course['courseid'] ?>" class="uk-radio" name="courseid" value="<?= $course['courseid'] ?>"><?= $course['course_name'] ?></label>
               <?php } ?>
+              </fieldset>
+              <div class="uk-form-row uk-form-controls">
+              <label for="CFAs">
+              <input type="checkbox" checked value="1" name="CFAs" id="CFAs" class="uk-checkbox"> Also show Learning Targets and CFAs if available
+              </label>
+              </div>
               <input type="submit" class="uk-button" value="Run Report" name="run">
             </form>
 <?php
           } else {
+              print "<li><span href='#'>Select Year, Schools, and/or Grade</span></li></ul>";
 ?>
             <h3>Select a Year, and Schools and/or Grade Level</h3>
             <form class="uk-form-horizontal">
-              <label class="uk-form-label">Select Year</label><select name="yearid" class="uk-form-controls">
+              <label class="uk-form-label">Select Year</label>
+              <div class="uk-form-controls">
+              <select name="yearid" class="uk-select">
               <?php foreach ( $data['years'] as $year ) { ?>
-              <option value="<?= $year['yearid'] ?>"<?= ($year['yearid'] == $data['yearid']) ? " selected" : ""><?= $year['year_name'] ?></option>
+              <option value="<?= $year['yearid'] ?>"<?= ($year['yearid'] == $data['yearid']) ? " selected" : "" ?>><?= $year['year_name'] ?></option>
               <?php } ?>
               </select>
-
-              <div class="uk-form-controls">
-              <?php foreach ( $data['locations'] as $loc ) { ?>
-              <label class="uk-form-label"><input type="checkbox" class="uk-checkbox" name="locations[]" value="<?= $loc['locationid'] ?>"><?= $loc['name'] ?></label>
-              <?php } ?>
               </div>
 
-              <label class="uk-form-label">Enter Grade</label><input class="uk-input" type="number" min="1" max="12" name="grade"<?= !empty($data['grade'])?" value='".$data['grade']."'":"" ?>>
+              <label class="uk-form-label">Select School(s)</label>
+              <div class="uk-form-controls">
+              <select name="locations[]" multiple size="5" class="uk-select">
+              <?php foreach ( $data['locations'] as $loc ) { ?>
+              <option value="<?= $loc['locationid'] ?>"><?= $loc['name'] ?></option>
+              <?php } ?>
+              </select>
+              </div>
+
+              <div>And / Or</div>
+
+              <label class="uk-form-label">Enter Grade</label>
+              <div class="uk-form-controls">
+              <input class="uk-input" type="number" min="1" max="12" name="grade"<?= !empty($data['grade'])?" value='".$data['grade']."'":"" ?>>
+              </div>
 
               <input type="submit" class="uk-button" value="Next" name="run">
             </form>

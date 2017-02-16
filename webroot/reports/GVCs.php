@@ -13,12 +13,16 @@ $district = authorized( 'load_other_csip' );
 $years = get_years();
 $locations = all_locations();
 $courses = array();
+$gvcs = array();
+
+uasort( $years, function($a,$b){ return strcasecmp($b['year_name'],$a['year_name']); } );
 
 $run = input( 'run', INPUT_STR );
-$locationids = input( 'locations', INPUT_PINT );
+($locationids = input( 'locations', INPUT_PINT )) || ($locationids = array());
 $yearid = input( 'yearid', INPUT_PINT );
 $courseid = input( 'courseid', INPUT_PINT );
 $grade = input( 'grade', INPUT_PINT );
+$cfas = input( 'CFAs', INPUT_STR );
 
 if ( !empty($run) ) {
     $dbh = db_connect();
@@ -33,32 +37,52 @@ if ( !empty($run) ) {
     }
     switch ( $version ) {
         case 7: $questions = '15'; break;
-        case 8: $questions = '46,49,50'; break;
+        case 8: $questions = !empty($cfas)?'46,49,50':'46'; break;
         //FIXME hard coded values suck, but are necessary here
         default :
             error( array('REPORT_NOYEAR' => 'You must select a year.') );
     }
     
-    $quoted_locations = "";
+    $quoted_locations = array();
     foreach ( $locationids as $loc ) {
         $quoted_locations[] = $dbh->quote( $loc );
     }
 
     if ( empty($courseid) ) {
-        $query = "SELECT courseid,course_name FROM course CROSS JOIN location_course_links USING (courseid) WHERE ( course.min_grade > ". $dbh->quote($grade) ." AND course.max_grade < ". $dbh->quote($grade) ." ) OR locationid IN (". implode(',',$quoted_locations) .")";
+        $wheres = array();
+        $query = "SELECT courseid,course_name FROM course LEFT JOIN location_course_links USING (courseid) WHERE active = 1";
+        if ( !empty($grade) ) {
+            $wheres[] = "( course.min_grade <= ". $dbh->quote($grade) ." AND course.max_grade >= ". $dbh->quote($grade) ." )";
+        }
+        else if ( !empty($quoted_locations) ) {
+            $grade_query = "SELECT MIN(mingrade) AS min, MAX(maxgrade) AS max FROM location WHERE locationid IN (". implode(',',$quoted_locations) .")";
+            $sth = $dbh->query($grade_query);
+            $grades = $sth->fetch(PDO::FETCH_ASSOC);
+            $wheres[] = "( course.min_grade <= ". $dbh->quote($grades['max']) ." AND course.max_grade >= ". $dbh->quote($grades['min']) ." )";
+        }
+
+        if ( !empty($quoted_locations) ) {
+            $wheres[] = "locationid IN (". implode(',',$quoted_locations) .")";
+        }
+        if ( !empty($wheres) ) {
+            $query .= " AND ( ". implode( ' OR ', $wheres ) ." )";
+        }
+        $query .= " GROUP BY courseid ORDER BY course_name";
         $sth = $dbh->query($query);
         $courses = $sth->fetchAll(PDO::FETCH_ASSOC);
     }
     else {
-        $gvcs = array();
-
-        $query = "SELECT answer,part,location.name AS location_name,questionid FROM answers CROSS JOIN csip USING (csipid) CROSS JOIN location USING (locationid) WHERE courseid = ? AND questionid IN (?) order by csipid,part,questionid";
+        $query = "SELECT answer,part,location.name AS location_name,questionid FROM answer CROSS JOIN csip USING (csipid) CROSS JOIN location USING (locationid) WHERE courseid = ? AND questionid IN (?)";
+        if ( !empty($quoted_locations) ) {
+            $query .= " AND csip.locationid IN (". implode(',',$quoted_locations) .")";
+        }
+        $query .= " order by csipid,part,questionid";
         $sth = $dbh->prepare($query);
-        $sth->execute($courseid,$questions);
+        $sth->execute([$courseid,$questions]);
         while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
             switch ( $version ) {
             case 7:
-                $gvcs[ $row['location_name'] ][ $row['part'] - 3 ]['GVC'] = stripslashes_array( $row );
+                $gvcs[ $row['location_name'] ][ $row['part'] - 3 ]['GVC'] = $row['answer'];
                 break;
             case 8:
                 switch ( $row['questionid'] ) {
@@ -66,11 +90,12 @@ if ( !empty($run) ) {
                    case 49: $label = 'Learning Targets'; break;
                    case 50: $label = 'CFA'; break;
                 }
-                $gvcs[ $row['location_name'] ][ $row['part'] - 3 ][$label] = stripslashes_array( $row );
+                $gvcs[ $row['location_name'] ][ $row['part'] - 3 ][$label] = $row['answer'];
                 break;
             //FIXME have to use hard coded values here again
             }
         }
+        $run = 'Finished';
     }
 }
 
@@ -83,7 +108,7 @@ $output = array(
         'courses' => $courses,
         'courseid' => $courseid,
         'gvcs' => $gvcs,
-        'run' => !empty($run),
+        'run' => !empty($run)?$run:0,
 );
 output( $output, 'reports/GVCs' );
 ?>
