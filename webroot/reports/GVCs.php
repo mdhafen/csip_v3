@@ -28,7 +28,6 @@ if ( !empty($run) ) {
     $dbh = db_connect();
 
     $version = 0;
-    $questionid = 0;
     foreach ( $years as $year ) {
         if ( $year['yearid'] == $yearid ) {
             $version = $year['version'];
@@ -72,26 +71,24 @@ if ( !empty($run) ) {
         $courses = $sth->fetchAll(PDO::FETCH_ASSOC);
     }
     else {
-        $query = "SELECT answer,part,location.name AS location_name,questionid FROM answer CROSS JOIN csip USING (csipid) CROSS JOIN location USING (locationid) WHERE courseid = ? AND questionid IN (?)";
+        $query = "SELECT answer,part,location.name AS location_name,questionid FROM answer CROSS JOIN csip USING (csipid) CROSS JOIN location USING (locationid) WHERE courseid = ? AND questionid IN ($questions)";
         if ( !empty($quoted_locations) ) {
             $query .= " AND csip.locationid IN (". implode(',',$quoted_locations) .")";
         }
         $query .= " order by csipid,part,questionid";
         $sth = $dbh->prepare($query);
-        $sth->execute([$courseid,$questions]);
+        $sth->execute([$courseid]);
         while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
-            switch ( $version ) {
-            case 7:
+            if ( $version == 7 ) {
                 $gvcs[ $row['location_name'] ][ $row['part'] - 3 ]['GVC'] = $row['answer'];
-                break;
-            case 8:
+            }
+            else if ( $version == 8 ) {
                 switch ( $row['questionid'] ) {
                    case 46: $label = 'GVC'; break;
                    case 49: $label = 'Learning Targets'; break;
                    case 50: $label = 'CFA'; break;
                 }
                 $gvcs[ $row['location_name'] ][ $row['part'] - 3 ][$label] = $row['answer'];
-                break;
             //FIXME have to use hard coded values here again
             }
         }
