@@ -2,6 +2,10 @@ a.custom-anchor {
   text-decoration: underline !important;
 }
 
+.prewrap {
+  white-space: pre-wrap;
+}
+
 html {
   font: normal 14px / 20px "Open Sans", Helvetica Neue, Helvetica, Arial, sans-serif;
 }

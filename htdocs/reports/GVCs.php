@@ -31,7 +31,7 @@
                   print "<thead><tr><th colspan='2'>GVC #$tab</th></tr></thead>\n";
                   print "<tbody>\n";
                   foreach ( $questions as $label => $answer ) {
-                      print "<tr><td>$label</td><td>$answer</td></tr>\n";
+                      print "<tr><td>$label</td><td><span class='prewrap'>$answer</span></td></tr>\n";
                   }
                   print "</tbody>\n";
               }
