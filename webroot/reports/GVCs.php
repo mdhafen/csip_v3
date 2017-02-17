@@ -11,11 +11,17 @@ authorize( 'view_reports' );
 $district = authorized( 'load_other_csip' );
 
 $years = get_years();
-$locations = all_locations();
+$locations = array();
 $courses = array();
 $gvcs = array();
 
 uasort( $years, function($a,$b){ return strcasecmp($b['year_name'],$a['year_name']); } );
+if ( $district ) {
+    $locations = all_locations();
+}
+else if ( !empty($_SESSION['loggedin_user']['locations']) ) {
+    $locations = $_SESSION['loggedin_user']['locations'];
+}
 
 $run = input( 'run', INPUT_STR );
 ($locationids = input( 'locations', INPUT_PINT )) || ($locationids = array());
