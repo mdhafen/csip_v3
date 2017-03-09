@@ -162,22 +162,36 @@ function save_answers_ajax() {
   for ( var ans_id in answers_changed ) {
     if ( answers_changed.hasOwnProperty(ans_id) ) {
       var elm = document.getElementById(ans_id);
+      var questionid=0; var answerid=0; var sequence=0;
       var nodes = elm.parentNode.getElementsByTagName( 'input' );
+      for ( var i = 0, l = nodes.length; i < l; i++ ) {
+        var node = nodes[i];
+        switch ( node.name ) {
+          case "questions[]": questionid = node.value; break;
+          case "answerids[]": answerid = node.value; break;
+          case "sequences[]": sequence = node.value; break;
+          case "questionid": questionid = node.value; break;
+          case "answerid": answerid = node.value; break;
+          case "sequence": sequence = node.value; break;
+        }
+      }
       var this_part = elm.form.elements["part"].value;
       if ( parts.hasOwnProperty( this_part ) ) {
-	parts[ this_part ].questions.push( nodes[0].value );
-	parts[ this_part ].answerids.push( nodes[1].value );
-	parts[ this_part ].answers.push( elm.value );
+        parts[ this_part ].questions.push( questionid );
+        parts[ this_part ].answerids.push( answerid );
+        parts[ this_part ].sequences.push( sequence );
+        parts[ this_part ].answers.push( elm.value );
       }
       else {
-	parts[ this_part ] = {
-	  "csipid" : elm.form.elements["csipid"].value,
-	  "courseid" : elm.form.elements["courseid"].value,
-	  "part" : this_part,
-	  "questions" : [ nodes[0].value ],
-	  "answerids" : [ nodes[1].value ],
-	  "answers" : [ elm.value ]
-	};
+        parts[ this_part ] = {
+          "csipid" : elm.form.elements["csipid"].value,
+          "courseid" : elm.form.elements["courseid"].value,
+          "part" : this_part,
+          "questions" : [ questionid ],
+          "answerids" : [ answerid ],
+          "sequences" : [ sequence ],
+          "answers" : [ elm.value ]
+        };
       }
     }
   }
