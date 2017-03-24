@@ -21,7 +21,7 @@ $title = 'GVC '. ($part - 2);
 $csip = array();
 if ( !empty($csipid) ) {
   if ( !in_array( get_csip_locationid($csipid), $locations ) ) {
-    error( array('NOTYOUR' => 'Access to CSIP at that location is denied.') );
+    $errors[] = array('NOTYOUR' => 'Access to CSIP at that location is denied.');
   }
   else {
     $csip = load_csip( $csipid, $_SESSION['loggedin_user']['userid'], False );
@@ -73,8 +73,8 @@ if ( empty($errors) ) {
 else {
    $err_string = '';
    foreach ( $errors as $e ) {
-      $err_string .= "<flag>". $e['FLAG'] ."</flag><message>". $e['message'] ."</message>";
+      $err_string .= "<error><flag>". $e['FLAG'] ."</flag><message>". $e['message'] ."</message></error>";
    }
-   output( '<?xml version="1.0"?><result><state>Error</state><errors><messages>'. $err_string .'</messages></errors></result>' );
+   output( '<?xml version="1.0"?><result><state>Error</state><errors>'. $err_string .'</errors></result>' );
 }
 ?>

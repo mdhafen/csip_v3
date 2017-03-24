@@ -113,9 +113,9 @@ if ( empty($error) ) {
 }
 else {
    $err_string = '';
-   foreach ( $errors as $e ) {
-      $err_string .= "<flag>". $e['FLAG'] ."</flag><message>". $e['message'] ."</message>";
+   foreach ( $error as $e ) {
+      $err_string .= "<error><flag>". $e['FLAG'] ."</flag><message>". $e['message'] ."</message></error>";
    }
-   output( '<?xml version="1.0"?><result><state>Error</state><errors><messages>'. $err_string .'</messages></errors></result>' );
+   output( '<?xml version="1.0"?><result><state>Error</state><errors>'. $err_string .'</errors></result>' );
 }
 ?>
