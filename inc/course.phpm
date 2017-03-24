@@ -952,8 +952,10 @@ function part_get_next_sequence( $csipid, $courseid, $part, $questionid) {
       $db_error = $sth->errorInfo();
       error_log("Create Sequence DB Error getting value! ". $db_error[0] ." : ". $db_error[2]);
     }
-
-    if ( $count > 0 || $count === "0" ) {
+    else {
+      if ( $count <= 0 ) {
+        $count = 0;
+      }
       $sequence = $count + 1;
 
       $query = "INSERT INTO answer_group_sequence ( sequence_value, csipid, courseid, part, group_repeatableid ) VALUES ( :seq, :csip, :course, :part, :repeat )";

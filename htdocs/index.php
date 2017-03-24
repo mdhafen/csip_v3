@@ -210,6 +210,7 @@ function answer_saved_ajax( part, xml_result, modal ) {
     var form = $("input[type='hidden'][name='part'][value='"+ part +"']")[0].form;
 
     $(xml_result).find("answer_details").each( function(){
+		var this_result_part = $(this).find('part').text();
 		var this_result_questionid = $(this).find('questionid').text();
 		var this_result_answerid = $(this).find('answerid').text();
 		var this_result_sequence = $(this).find('group_sequence').text();
@@ -227,7 +228,9 @@ function answer_saved_ajax( part, xml_result, modal ) {
 				if ( ! $(this).find( "input[name='answerids[]']" ).val() ) {
 					$(this).find( "input[name='answerids[]']" ).val( this_result_answerid );
 					if ( this_result_sequence ) {
-						$(this).find( "input[name='sequences']" ).val( this_result_sequence );
+                        if ( ! $(form).find( "input[data-sequence-group='"+ this_result_part +"-"+ this_result_sequence +"']" ).length ) {
+                            $(form).find( "input[data-sequence-group='"+ this_result_part +"-0']" ).val( this_result_sequence ).attr("data-sequence-group",this_result_part +"-"+ this_result_sequence);
+                        }
 					}
 				}
 			}
@@ -235,7 +238,9 @@ function answer_saved_ajax( part, xml_result, modal ) {
 				if ( $(this).find( "input[name='answerid']" ).length && ! $(this).find( "input[name='answerid']" ).val() ) {
 					$(this).find( "input[name='answerid']" ).val( this_result_answerid );
 					if ( this_result_sequence ) {
-						$(this).find( "input[name='sequence']" ).val( this_result_sequence );
+                        if ( ! $(form).find( "input[data-sequence-group='"+ this_result_part +"-"+ this_result_sequence +"']" ).length ) {
+                            $(form).find( "input[data-sequence-group='"+ this_result_part +"-0']" ).val( this_result_sequence ).attr("data-sequence-group",this_result_part +"-"+ this_result_sequence);
+                        }
 					}
 				}
 			}
@@ -244,7 +249,7 @@ function answer_saved_ajax( part, xml_result, modal ) {
 				if ( answers_changed[ this.id ] ) {
 					delete answers_changed[ this.id ];
 				}
-				if ( answers_original[ this.id ] ) {
+				if ( answers_original.hasOwnProperty( this.id ) ) {
 					delete answers_original[ this.id ];
 				}
 			});
