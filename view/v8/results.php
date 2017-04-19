@@ -114,7 +114,7 @@ if ( !empty($data['courseid']) && !empty($data['csip']['form'][ $data['courseid'
                         <div class="uk-form-controls" data-csip-answer-ids>
                             <input type="hidden" name="questions[]" value="<?= $questionid ?>">
                             <input type="hidden" name="answerids[]" value="<?= !empty($answer['answerid']) ? $answer['answerid'] : "" ?>">
-                            <input type="hidden" name="sequences[]" value="<?= !empty($answer['group_sequence']) ? $answer['group_sequence'] : "" ?>">
+                            <input data-sequence-group="3-<?= !empty($answer['group_sequence']) ? $answer['group_sequence'] : "0" ?>" type="hidden" name="sequences[]" value="<?= !empty($answer['group_sequence']) ? $answer['group_sequence'] : "" ?>">
 
 <?php
     switch ( $data['csip']['questions'][ $questionid ]['type'] ) {
