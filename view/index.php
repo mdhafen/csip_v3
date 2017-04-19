@@ -227,7 +227,7 @@ function answer_saved_ajax( part, xml_result, modal ) {
 				if ( ! $(this).find( "input[name='answerids[]']" ).val() ) {
 					$(this).find( "input[name='answerids[]']" ).val( this_result_answerid );
 					if ( this_result_sequence ) {
-						$(this).find( "input[name='sequences']" ).val( this_result_sequence );
+						$(this).find( "input[name='sequences[]']" ).val( this_result_sequence );
 					}
 				}
 			}

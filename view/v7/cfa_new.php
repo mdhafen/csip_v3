@@ -1,6 +1,6 @@
 <?php
 // To rebuild this:
-//   Copy htdocs/v7/cfa.php
+//   Copy view/v7/cfa.php
 //   Remove text input value's and contents of textarea's
 //     Leave the hidden inputs alone!
 //   Collapse if/else block around 'protected-content' to just the if block

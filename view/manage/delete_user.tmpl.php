@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<?php include $data['_config']['base_dir'] .'/htdocs/head.php';?>
+	<?php include $data['_config']['base_dir'] .'/view/head.php';?>
 	</head>
 	<body>
-		<?php include $data['_config']['base_dir'] .'/htdocs/menu.php'; ?>
+		<?php include $data['_config']['base_dir'] .'/view/menu.php'; ?>
 
         <div class="uk-container uk-container-center uk-animation-fade">
             <br>
@@ -28,7 +28,7 @@ Are you sure you want to delete <?= $data['user']['fullname'] ?> ( <?= $data['us
 
 	</div>
 	<br>
-	<?php include $data['_config']['base_dir'] .'/htdocs/footer.php'; ?>
+	<?php include $data['_config']['base_dir'] .'/view/footer.php'; ?>
 	</div>
     </body>
 </html>

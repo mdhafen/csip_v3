@@ -1,6 +1,6 @@
 <?php
 // To rebuild this:
-//   Copy htdocs/cfa.php
+//   Copy view/cfa.php
 //   Remove text input value's and contents of textarea's
 //     Leave the hidden inputs alone!
 //   Collapse if/else block around 'protected-content' to just the if block
@@ -38,8 +38,8 @@ $data = array(
 
 if ( !empty($csip['version']) ) {
   switch ( $csip['version'] ) {
-    case 7:  include '../htdocs/v7/cfa_new.php'; break;
-    case 8:  include '../htdocs/v8/cfa_new.php'; break;
+    case 7:  include '../view/v7/cfa_new.php'; break;
+    case 8:  include '../view/v8/cfa_new.php'; break;
     default: print '<h1>Alpha Code!  Form version '. $csip['version'] .' has not been created yet!</h1>'; break;
   }
 }

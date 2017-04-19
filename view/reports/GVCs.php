@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	<?php include $data['_config']['base_dir'] .'/htdocs/head.php';?>
+	<?php include $data['_config']['base_dir'] .'/view/head.php';?>
 	</head>
 	<body>
-		<?php include $data['_config']['base_dir'] .'/htdocs/menu.php'; ?>
+		<?php include $data['_config']['base_dir'] .'/view/menu.php'; ?>
 
         <div class="uk-container uk-container-center uk-animation-fade">
 <br>
@@ -99,7 +99,7 @@
       }
 ?>
 <?php
-include $data['_config']['base_dir'] .'/htdocs/footer.php';
+include $data['_config']['base_dir'] .'/view/footer.php';
 ?>
         </div>
 
