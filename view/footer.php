@@ -6,9 +6,7 @@
         echo '<img class="uk-align-center uk-display-inline uk-margin-left" src="' . $logo . '">';
       }
   ?>
-  </div>
-  <div class="uk-align-right" style="font-size: 9pt;">
-    <p>Copyright &copy; 2017 Washington County School District.</p>
+    <p style="font-size: 9pt;">Copyright &copy; 2017 Washington County School District.</p>
   </div>
 </div>
 <br>
