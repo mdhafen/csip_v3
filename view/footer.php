@@ -8,7 +8,7 @@
   ?>
   </div>
   <div class="uk-align-right" style="font-size: 9pt;">
-    <p>Developed for <strong>Washington County School District</strong> | A joint venture, powered by <img src="<?= $data['_config']['base_url'] ?>images/blackplum_logo_small.png" width="70" alt="BlackPlum Logo"> <i class="uk-icon-plus"></i> <strong>HAFEN</strong>&copy; 2017 Washington County School District.</p>
+    <p>Copyright &copy; 2017 Washington County School District.</p>
   </div>
 </div>
 <br>
