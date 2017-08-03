@@ -47,7 +47,7 @@ else {
       $error[] = array('NOTYOURS' => 'Access to CSIP denied.' );
    }
    if ( ! $can_edit ) {
-      $errors[] = array('NOTYOURS' => 'Access to CSIP denied.' );
+      $error[] = array('NOTYOURS' => 'Access to CSIP denied.' );
    }
    if ( empty($csip['courses'][$courseid]) ) {
       $error[] = array('NOTYOURS' => 'Access to course not allowed here.');
