@@ -116,8 +116,10 @@ if ( empty($error) ) {
 }
 else {
    $err_string = '';
-   foreach ( $error as $flag => $message ) {
-      $err_string .= "<error><flag>". $flag ."</flag><message>". $message ."</message></error>";
+   foreach ( $error as $err ) {
+      foreach ( $err as $flag => $message ) {
+         $err_string .= "<error><flag>". $flag ."</flag><message>". $message ."</message></error>";
+      }
    }
    output( '<?xml version="1.0"?><result><state>Error</state><errors>'. $err_string .'</errors></result>' );
 }
