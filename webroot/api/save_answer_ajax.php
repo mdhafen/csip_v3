@@ -7,7 +7,7 @@ include_once( '../../inc/site.phpm' );
 include_once( '../../inc/csips.phpm' );
 include_once( '../../inc/course.phpm' );
 
-authorize( 'update_csip' );
+$can_edit = authorized( 'update_csip' );
 $super = authorized( 'manage_users' );
 
 $locations = empty($_SESSION['loggedin_user']['locations']) ? array() : array_keys( $_SESSION['loggedin_user']['locations'] );
@@ -45,6 +45,9 @@ else {
    }
    if ( !in_array( $csip['locationid'], $locations ) && ! $super ) {
       $error[] = array('NOTYOURS' => 'Access to CSIP denied.' );
+   }
+   if ( ! $can_edit ) {
+      $errors[] = array('NOTYOURS' => 'Access to CSIP denied.' );
    }
    if ( empty($csip['courses'][$courseid]) ) {
       $error[] = array('NOTYOURS' => 'Access to course not allowed here.');
