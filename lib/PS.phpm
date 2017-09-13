@@ -464,6 +464,20 @@ class Authen_External {
     else if ( !empty($teacher->staff->school_affiliations->school_affiliation->school_id) ) {
       $affiliations[] = $teacher->staff->school_affiliations->school_affiliation;
     }
+    if ( count( $affiliations ) > 2 ) {
+      $page = 1;
+      $schools = $this->get_data('/ws/v1/district/school?page='.$page);
+      while ( !empty($schools->schools->school) ) {
+        foreach ($schools->schools->school as $school) {
+          if ( empty($this->school_cache[$school->id]) ) {
+            $this->school_cache[$school->id] = $school;
+          }
+        }
+        $page++;
+        $schools = $this->get_data('/ws/v1/district/school?page='.$page);
+      }
+      $schools = array();
+    }
     foreach ( $affiliations as $school ) {
       if ( $school->status == 2 ) {
         continue;
@@ -497,58 +511,60 @@ class Authen_External {
     }
 
     $csip_courseids = array();
-    foreach ( $schools as $locationid => $ps_loc ) {
-      $courses = $this->get_location_courses( $ps_loc->school->id );
-      foreach ( $courses as $ps_crs ) {
-        if ( empty($this->course_cache[$ps_crs->id]) ) {
-          $this->course_cache[$ps_crs->id] = $ps_crs;
-        }
-        $csip_crs = get_course_by_externalid( $ps_crs->id );
-        if ( empty($csip_crs) && $sync_course ) {
-          $this->new_course( $ps_crs->id, $ps_crs );
+    if ( $sync_course ) {
+      foreach ( $schools as $locationid => $ps_loc ) {
+        $courses = $this->get_location_courses( $ps_loc->school->id );
+        foreach ( $courses as $ps_crs ) {
+          if ( empty($this->course_cache[$ps_crs->id]) ) {
+            $this->course_cache[$ps_crs->id] = $ps_crs;
+          }
           $csip_crs = get_course_by_externalid( $ps_crs->id );
-        }
-        if ( empty($csip_crs) ) {
-          continue;
-        }
-        $csip_courseids[$ps_crs->id] = $csip_crs['courseid'];
-        $access = 0;
-        if ( !empty($csip_crs['max_grade']) && !empty($ps_loc->school->low_grade) ) {
-          if ( $csip_crs['max_grade'] >= $ps_loc->school->low_grade ) {
+          if ( empty($csip_crs) ) {
+            $this->new_course( $ps_crs->id, $ps_crs );
+            $csip_crs = get_course_by_externalid( $ps_crs->id );
+          }
+          if ( empty($csip_crs) ) {
+            continue;
+          }
+          $csip_courseids[$ps_crs->id] = $csip_crs['courseid'];
+          $access = 0;
+          if ( !empty($csip_crs['max_grade']) && !empty($ps_loc->school->low_grade) ) {
+            if ( $csip_crs['max_grade'] >= $ps_loc->school->low_grade ) {
+              $access++;
+            }
+          }
+          if ( !empty($csip_crs['min_grade']) && !empty($ps_loc->school->high_grade) ) {
+            if ( $csip_crs['min_grade'] <= $ps_loc->school->high_grade ) {
+              $access++;
+            }
+          }
+          $links = get_course_location_links( $csip_crs['courseid'], $locationid );
+          if ( !empty($links) ) {
             $access++;
           }
-        }
-        if ( !empty($csip_crs['min_grade']) && !empty($ps_loc->school->high_grade) ) {
-          if ( $csip_crs['min_grade'] <= $ps_loc->school->high_grade ) {
-            $access++;
+          if ( !$access ) {
+            add_course_location_link( $csip_crs['courseid'], $locationid );
           }
         }
-        $links = get_course_location_links( $csip_crs['courseid'], $locationid );
-        if ( !empty($links) ) {
-          $access++;
-        }
-        if ( !$access ) {
-          add_course_location_link( $csip_crs['courseid'], $locationid );
-        }
-      }
-      $sections = $this->get_location_sections( $ps_loc->school->id );
-      foreach ( $sections as $sec ) {
-        if ( $sec->staff_id != $userid ) {
-          continue;
-        }
-        if ( empty($csip_courseids[$sec->course_id]) ) {
-          $csip_sec = get_course_by_externalid( $sec->course_id );
-          $csip_courseids[$sec->course_id] = $csip_sec['courseid'];
-        }
-        else {
-          $csip_sec = $csip_courseids[$sec->course_id];
-        }
-        if ( empty($csip_sec) ) {
-          continue;
-        }
-        $links = get_course_user_links( $csip_sec, $old_user['userid'], $locationid );
-        if ( empty($links) ) {
-          add_course_user_link( $csip_sec, $old_user['userid'], $locationid );
+        $sections = $this->get_location_sections( $ps_loc->school->id );
+        foreach ( $sections as $sec ) {
+          if ( $sec->staff_id != $userid ) {
+            continue;
+          }
+          if ( empty($csip_courseids[$sec->course_id]) ) {
+            $csip_sec = get_course_by_externalid( $sec->course_id );
+            $csip_courseids[$sec->course_id] = $csip_sec['courseid'];
+          }
+          else {
+            $csip_sec = $csip_courseids[$sec->course_id];
+          }
+          if ( empty($csip_sec) ) {
+            continue;
+          }
+          $links = get_course_user_links( $csip_sec, $old_user['userid'], $locationid );
+          if ( empty($links) ) {
+            add_course_user_link( $csip_sec, $old_user['userid'], $locationid );
+          }
         }
       }
     }
