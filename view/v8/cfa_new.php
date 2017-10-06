@@ -54,7 +54,7 @@
         <div class="uk-panel uk-panel-box">
             <div class="uk-form-row uk-flex uk-flex-wrap uk-margin-top">
                 <div class="uk-flex-item-auto uk-margin-right" style="width: 40%">
-                    <div style="min-height:40px;"><label class="" for="cfa-c-<?= $part ?>-49">List the Learning Targets that lead to proficiency in GVC #<?= $count ?></label></div>
+                    <div style="min-height:40px;"><label class="" for="cfa-c-<?= $part ?>-49">List all Learning Targets that lead to proficiency in GVC #<?= $count ?></label></div>
                     <div class="" data-csip-answer-ids>
                         <input type="hidden" name="questions[]" value="49">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[49]['answerid']) ? $questions[49]['answerid'] : "" ?>">

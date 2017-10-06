@@ -18,13 +18,16 @@ function addCFATab(csipid,categoryid,courseid,part,label,last){
 					messages = messages +" "+ t_flag.text();
 				});
 				alert("Error(s): "+ messages);
-			}	
+			}
 			else {
 				$('<li id="cfa'+part+'_tab"><a href=""><div class="uk-badge uk-badge-warning">GVC '+label+'</div></a></li>");').insertAfter("#cfa"+lastTAB+'_tab');
 				$('<div id="cfa'+part+'_content">This is CFA'+part+'</div>').insertAfter("#cfa"+lastTAB+'_content');
 				$("#cfa"+part+"_content").load("cfa_new.php?tab="+label+"&csipid="+csipid+"&courseid="+courseid+"&part="+part, function(response, status, xhr) {
 					if (status == "error") {
 						console.log(xhr.status + " " + xhr.statusText);
+					} else {
+						$("#cfa"+part+"_content input[type='text'], #cfa"+part+" textarea").blur(function(e){ answer_changed(this) });
+						$("#cfa"+part+"_content input[type='text'], #cfa"+part+" textarea").focus(function(e){ answer_save_original(this) });
 					}
 				});
 				$("li#addcfa_tab a").attr("onclick","addCFATab('"+csipid+"','"+categoryid+"','"+courseid+"','"+ part +"','"+ ( (label*1.0)+1 ) +"','"+ part +"');");
