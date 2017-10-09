@@ -30,7 +30,9 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['form'][ $data['coursei
                         <textarea id="grow-1-33" cols="113" rows="8" name="answer" placeholder="Outline Team&apos;s Professional Growth Plan Here..."><?= isset($questions[33]['answer']) ? $questions[33]['answer'] : "" ?></textarea><br><br>
                     </div>
                     <br>
+  <?php if ( !empty($data['can_edit']) ) { ?>
                     <button class="uk-button uk-button-success uk-align-right" type="button" onclick="save_answers(this)">Save</button>
+  <?php } ?>
 
                 </div>
             </li>
