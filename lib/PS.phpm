@@ -484,12 +484,12 @@ class Authen_External {
       }
       if ( empty($this->school_cache[$school->school_id]) ) {
         $a_school = $this->get_data( '/ws/v1/school/'. $school->school_id );
-        $this->school_cache[$school->school_id] = $a_school;
+        $this->school_cache[$school->school_id] = $a_school->school;
       }
       else {
         $a_school = $this->school_cache[$school->school_id];
       }
-      $ps_loc_id = $a_school->school->id;
+      $ps_loc_id = $a_school->id;
       $old_loc = location_by_externalid( $ps_loc_id );
       if ( empty($old_loc) && !empty($ps_loc_id) ) {
         $this->new_location($ps_loc_id, $a_school);
@@ -513,7 +513,7 @@ class Authen_External {
     $csip_courseids = array();
     if ( $sync_course ) {
       foreach ( $schools as $locationid => $ps_loc ) {
-        $courses = $this->get_location_courses( $ps_loc->school->id );
+        $courses = $this->get_location_courses( $ps_loc->id );
         foreach ( $courses as $ps_crs ) {
           if ( empty($this->course_cache[$ps_crs->id]) ) {
             $this->course_cache[$ps_crs->id] = $ps_crs;
@@ -528,13 +528,13 @@ class Authen_External {
           }
           $csip_courseids[$ps_crs->id] = $csip_crs['courseid'];
           $access = 0;
-          if ( !empty($csip_crs['max_grade']) && !empty($ps_loc->school->low_grade) ) {
-            if ( $csip_crs['max_grade'] >= $ps_loc->school->low_grade ) {
+          if ( !empty($csip_crs['max_grade']) && !empty($ps_loc->low_grade) ) {
+            if ( $csip_crs['max_grade'] >= $ps_loc->low_grade ) {
               $access++;
             }
           }
-          if ( !empty($csip_crs['min_grade']) && !empty($ps_loc->school->high_grade) ) {
-            if ( $csip_crs['min_grade'] <= $ps_loc->school->high_grade ) {
+          if ( !empty($csip_crs['min_grade']) && !empty($ps_loc->high_grade) ) {
+            if ( $csip_crs['min_grade'] <= $ps_loc->high_grade ) {
               $access++;
             }
           }
@@ -546,7 +546,7 @@ class Authen_External {
             add_course_location_link( $csip_crs['courseid'], $locationid );
           }
         }
-        $sections = $this->get_location_sections( $ps_loc->school->id );
+        $sections = $this->get_location_sections( $ps_loc->id );
         foreach ( $sections as $sec ) {
           if ( $sec->staff_id != $userid ) {
             continue;
@@ -574,13 +574,13 @@ class Authen_External {
     if ( empty($school) ) {
       if ( empty($this->school_cache[$ps_loc_id]) ) {
         $school = $this->get_data('/ws/v1/school/'. $ps_loc_id);
-        $this->school_cache[$ps_loc_id] = $school;
+        $this->school_cache[$ps_loc_id] = $school->school;
       }
       else {
         $school = $this->school_cache[$ps_loc_id];
       }
     }
-    $new_loc = $this->school_to_csip_location( $school->school );
+    $new_loc = $this->school_to_csip_location( $school );
     update_location( 0, $new_loc );
     error_log('PowerSchool API: added location '. $new_loc['locationid'] .' ('. $new_loc['name'] .') some settings will need to be adjusted.');
     return $locationid;

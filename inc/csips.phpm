@@ -206,7 +206,9 @@ CROSS JOIN year USING (yearid)
  LEFT JOIN course_categories AS cc ON course.course_category = cc.categoryid
      WHERE ";
   if ( ! $include_inactive ) {
-    $query .= "active = 1\n       AND ";
+    $query .= "( active = 1\n";
+    $query .= "
+        OR ( course.courseid IN ( SELECT DISTINCT courseid FROM answer where csipid = :ans_csipid ) ) )\n       AND ";
   }
   if ( ! empty($courses) ) {
     $query .= "course.courseid IN (". implode( ',',$courses ) .")\n       AND ";
@@ -216,8 +218,7 @@ CROSS JOIN year USING (yearid)
         OR ( location_course_links.locationid = :loc_link )
 ";
   if ($userid) $query .= "      OR ( user_course_links.locationid = :usr_crs_loc AND user_course_links.userid = :usr_crs_link )";
-  $query .= "
-        OR ( course.courseid IN ( SELECT DISTINCT courseid FROM answer where csipid = :ans_csipid ) ) )
+  $query .= " )
   ORDER BY course.course_name
 ";
   $sth = $dbh->prepare( $query );
