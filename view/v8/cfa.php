@@ -97,6 +97,19 @@
                     <input type="hidden" name="answerids[]" value="<?= isset($questions[53]['answerid']) ? $questions[53]['answerid'] : "" ?>">
                     <input type="hidden" name="sequences[]" value="0">
                     <textarea id="cfa-c-<?= $part ?>-53" cols="113" rows="8" name="answers[]" placeholder="text input"><?= isset($questions[53]['answer']) ? $questions[53]['answer'] : "" ?></textarea>
+<?php
+    if ( !empty($questions[53]['answer']) ) {
+        $lines = explode("\n",str_replace("\r", '', $questions[53]['answer']));
+        foreach ( $lines as $line ) {
+            if ( preg_match('~(https?://(?:docs\.google\.com|.+?\.washk12\.org)/\S+)~',$line,$links) ) { ?>
+                    <div class="uk-margin-top"><a href="<?= $links[1] ?>" target="_blank"><?= $links[1] ?></a></div>
+<?php       }
+            else {
+                continue;
+            }
+        }
+    }
+?>
                 </div>
             </div>
             <hr>
