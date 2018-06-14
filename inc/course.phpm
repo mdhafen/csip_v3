@@ -523,6 +523,7 @@ function clean_question( $question, $courseid, $csip ) {
 }
 
 function mangle_question( $question, $courseid, $csip ) {
+  global $config;
   $dbh = db_connect();
 
   $course = $csip['courses'][ $courseid ];
@@ -535,6 +536,8 @@ function mangle_question( $question, $courseid, $csip ) {
   $text = str_replace( "[courseid]", $course['courseid'], $text );
   $text = str_replace( "[locationid]", $csip['locationid'], $text );
   $text = str_replace( "[csipid]", $csip['csipid'], $text );
+  $text = str_replace( "[utot_url]", $config['utot_url'], $text );
+  $text = str_replace( "[utot_label]", $config['utot_label'], $text );
 
   while ( ($pos = strpos( $text, "[[")) !== false ) {
     $num = 0;
