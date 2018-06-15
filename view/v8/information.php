@@ -41,13 +41,21 @@
         <li class="" id="addcfa_tab"><a href="" onclick="addCFATab('<?= $data['csip']['csipid'] ?>','<?= $data['categoryid'] ?>','<?= $data['courseid'] ?>','<?= $max_tab ?>','<?= $count ?>','<?= $max_tab ?>');"><i class="uk-icon-plus"></i></a></li>
 <?php } ?>
 <?php
-  $answers = 0;
-  foreach ( $data['csip']['form'][ $data['courseid'] ][1] as $answer ) {
-    if ( isset($answer['answer']) && $answer['answer'] != "" ) {
-      $answers++;
+  $num_questions = 0;
+  $num_answers = 0;
+  foreach ( $data['csip']['form'][ $data['courseid'] ][1] as $question ) {
+    $questionid = $question['questionid'];
+    if ( $data['csip']['questions'][$questionid]['type'] != 9 ) {
+      $num_questions++;
+      if ( !empty($question['answer']['answer']) ) {
+        $num_answers++;
+      }
+      if ( !empty($question['answers']) ) {
+        $num_answers++;
+      }
     }
   }
-  if ( $answers == 1 ) {
+  if ( $num_answers == $num_questions ) {
     $completeness = "uk-badge-success";
   }
   else {
