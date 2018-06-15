@@ -30,7 +30,7 @@ if ( $row['count'] == 0 ) {
   $sth->bindValue(':qid','69');
   $sth->bindValue(':type','9');
   $sth->bindValue(':order','3');
-  $sth->bindValue(':quest','<p><strong>Leadership Team Technology Plan:</strong></p><hr><p>After completing your Team PGP, outline: <ul><li>your school\'s technology goals and explain how they align with and support your school\'s academic goals,</li><li>the technology purchases you will make to support these goals,</li><li>how you will lead the process of change in your school culture as you implement your plan,</li><li>the actions your learning coach will take to support the work of your teachers and teams,</li><li>and how you will monitor and lead the blended and digital work of your teacher(s)/team(s).</li></ul></p>');
+  $sth->bindValue(':quest','<p><strong>Leadership Team Technology Plan:</strong></p><hr><p>After completing your Team PGP, outline: <ul><li>your school\'s technology goals and explain how they align with and support your school\'s learning goals,</li><li>the technology purchases you will make to support these goals,</li><li>how you will lead the process of change in your school culture as you implement your plan,</li><li>the actions your learning coach will take to support the work of your teachers and teams,</li><li>and how you will monitor and lead the blended and digital work of your teacher(s)/team(s).</li></ul></p><p>(<a href="https://washk12.learning.powerschool.com/tony.campbell/sltp/cms_page/view" target="_blank">Click here for optional technology template</a>)</p>');
   $sth->execute();
 
   $sth->bindValue(':qid','70');
