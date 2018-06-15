@@ -13,7 +13,7 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['form'][ $data['coursei
         <input type="hidden" name="part" value="1">
         <input type="hidden" name="sequence" value="0">
         <input type="hidden" name="op" value="SaveAnswer">
-        <ul id="grow" class="uk-nav uk-nav-side uk-nav-parent-icon">
+        <div id="grow">
 <?php
   $count = 0;
   foreach ( $data['csip']['form'][ $data['courseid'] ][1] as $question ) {
@@ -24,7 +24,7 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['form'][ $data['coursei
           echo "<hr>\n";
       }
 ?>
-            <li id="grow<?=$count?>">
+            <div id="grow<?=$count?>">
 <?php if ( $data['csip']['questions'][ $questionid ]['type'] == 9 ) { ?>
                 <div class="uk-panel uk-panel-box uk-panel-box-primary">
                     <?= $data['csip']['questions'][ $questionid ]['question_clean'] ?>
@@ -43,8 +43,8 @@ if ( ! empty($data['courseid']) && ! empty($data['csip']['form'][ $data['coursei
   <?php } ?>
                 </div>
 <?php } ?>
-            </li>
+            </div>
 <?php } ?>
-        </ul>
+        </div>
     </form>
 <?php } ?>

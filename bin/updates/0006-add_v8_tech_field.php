@@ -18,8 +18,7 @@ if ( $row['count'] == 0 ) {
   $sth->bindValue(':qid','67');
   $sth->bindValue(':type','9');
   $sth->bindValue(':order','1');
-  $sth->bindValue(':quest','<p><strong>Team Professional Growth Plan:</strong></p><hr>
-<p>After identifying your GVC and individually self assessing with the <a class="uk-display-inline custom-anchor" target="_blank" href="[utot_url]">[utot_label]</a>, collectively determine the Teaching Standard(s) you need to strengthen as a team, based on the learning needs of the students in your classroom this year (<a href="https://docs.google.com/document/d/1avnRg24z6hlyZccCJTKoFnTKzNXmPR4dqGACC-AOlyI/copy" class="uk-display-inline custom-anchor" target="_blank">click here for optional template</a>).</p>');
+  $sth->bindValue(':quest','<p><strong>Team Professional Growth Plan:</strong></p><hr><p>After identifying your GVC and individually self assessing with the <a class="uk-display-inline custom-anchor" target="_blank" href="[utot_url]">[utot_label]</a>, collectively determine the Teaching Standard(s) you need to strengthen as a team, based on the learning needs of the students in your classroom this year (<a href="https://docs.google.com/document/d/1avnRg24z6hlyZccCJTKoFnTKzNXmPR4dqGACC-AOlyI/copy" class="uk-display-inline custom-anchor" target="_blank">click here for optional template</a>).</p>');
   $sth->execute();
 
   $sth->bindValue(':qid','68');
@@ -31,19 +30,18 @@ if ( $row['count'] == 0 ) {
   $sth->bindValue(':qid','69');
   $sth->bindValue(':type','9');
   $sth->bindValue(':order','3');
-  $sth->bindValue(':quest','<p><strong>Outline the Technology Plan:</stong></p>');
+  $sth->bindValue(':quest','<p><strong>Leadership Team Technology Plan:</strong></p><hr><p>After completing your Team PGP, outline: <ul><li>your school\'s technology goals and explain how they align with and support your school\'s academic goals,</li><li>the technology purchases you will make to support these goals,</li><li>how you will lead the process of change in your school culture as you implement your plan,</li><li>the actions your learning coach will take to support the work of your teachers and teams,</li><li>and how you will monitor and lead the blended and digital work of your teacher(s)/team(s).</li></ul></p>');
   $sth->execute();
 
   $sth->bindValue(':qid','70');
   $sth->bindValue(':type','1');
   $sth->bindValue(':order','4');
-  $sth->bindValue(':quest','Technology Plan...');
+  $sth->bindValue(':quest','Outline Schools\'s Technology Plan here...');
   $sth->execute();
 
   $dbh->exec( 'UPDATE course_question_links CROSS JOIN course USING (courseid) SET question_group = 5 WHERE part = 1 AND course_name = \'School Leadership\'' );
 
-  $dbh->exec( 'UPDATE question SET question = \'<p><strong>Team Professional Growth Plan:</strong></p><hr>
-<p>After identifying your GVC and individually self assessing with the <a class="uk-display-inline custom-anchor" target="_blank" href="[utot_url]">[utot_label]</a>, collectively determine the Teaching Standard(s) you need to strengthen as a team, based on the learning needs of the students in your classroom this year (<a href="https://docs.google.com/document/d/1avnRg24z6hlyZccCJTKoFnTKzNXmPR4dqGACC-AOlyI/copy" class="uk-display-inline custom-anchor" target="_blank">click here for optional template</a>).</p>\' WHERE questionid = 32' );
+  $dbh->exec( 'UPDATE question SET question = \'<p><strong>Team Professional Growth Plan:</strong></p><hr><p>After identifying your GVC and individually self assessing with the <a class="uk-display-inline custom-anchor" target="_blank" href="[utot_url]">[utot_label]</a>, collectively determine the Teaching Standard(s) you need to strengthen as a team, based on the learning needs of the students in your classroom this year (<a href="https://docs.google.com/document/d/1avnRg24z6hlyZccCJTKoFnTKzNXmPR4dqGACC-AOlyI/copy" class="uk-display-inline custom-anchor" target="_blank">click here for optional template</a>).</p>\' WHERE questionid = 32' );
 
   return "Add the technology plan to the v8 DCSIP form for the leadership course";
 }
