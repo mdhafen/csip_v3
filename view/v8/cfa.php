@@ -91,7 +91,7 @@
             </div>
             <hr>
             <div class="uk-form-row">
-                <label class="uk-form-label" for="cfa-c-<?= $part ?>-53">OPTIONAL: Enter links to online documents which support this assessment.</label>
+                <label class="uk-form-label" for="cfa-c-<?= $part ?>-53">OPTIONAL: Enter links to online documents which support this assessment.<br><br>(Links must start with http:// or https:// and come from Google Docs or something in washk12.org.)</label>
                 <div class="uk-form-controls" data-csip-answer-ids>
                     <input type="hidden" name="questions[]" value="53">
                     <input type="hidden" name="answerids[]" value="<?= isset($questions[53]['answerid']) ? $questions[53]['answerid'] : "" ?>">
