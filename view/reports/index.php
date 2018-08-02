@@ -21,6 +21,7 @@
 
       <ul class="uk-list">
       <li><a class="uk-button" href="<?= $data['_config']['base_url'] ?>reports/GVCs.php">GVCs</a></li>
+      <li><a class="uk-button" href="<?= $data['_config']['base_url'] ?>reports/tech_plans.php">Schools Technology Plans</a></li>
       </ul>
 <?php
 include $data['_config']['base_dir'] .'/view/footer.php';
