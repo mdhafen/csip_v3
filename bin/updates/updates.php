@@ -7,6 +7,7 @@ $updates = array(
   '0004-add_external_auth',
   '0005-expand_username_field',
   '0006-add_v8_tech_field',
+  '0007-add_password_mode_field',
 );
 $results = array();
 

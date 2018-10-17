@@ -5,6 +5,7 @@ CREATE TABLE `user` (
 	`email` VARCHAR(128) NOT NULL DEFAULT '',
 	`password` BLOB NOT NULL,
 	`salt` BLOB NOT NULL,
+	`password_mode` VARCHAR(32) NOT NULL DEFAULT '',
 	`role` INT(4) NOT NULL DEFAULT 0,
 	`externalid` VARCHAR(12) NOT NULL DEFAULT '',
 	PRIMARY KEY (`userid`)
