@@ -5,6 +5,7 @@ require_once( 'output.phpm' );
 require_once( 'input.phpm' );
 
 require_once( $config['base_dir'] .'/inc/course.phpm' );
+set_include_path(get_include_path() . PATH_SEPARATOR . $config['base_dir'].'/lib/local' );
 
 class Authen_External {
   private $token = '';
