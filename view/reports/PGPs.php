@@ -25,10 +25,12 @@
               print "<div class='uk-alert uk-alert-warning' uk-alert><p>No plans found at those locations</p></div>";
           }
           print "<table class='uk-table'>\n";
-          print "<thead><tr><th>Location</th><th>Plan</th></tr></thead>\n";
+          print "<thead><tr><th>Location</th><th>Course</th><th>Plan</th></tr></thead>\n";
           print "<tbody>\n";
-          foreach ( $data['plans'] as $location => $answer ) {
-              print "<tr><td>$location</td><td><span class='prewrap'>$answer</span></td></tr>\n";
+          foreach ( $data['plans'] as $location => $courses ) {
+              foreach ( $courses as $course_name => $answer ) {
+                  print "<tr><td>$location</td><td>$course_name</td><td><span class='prewrap'>$answer</span></td></tr>\n";
+              }
           }
           print "</tbody>\n";
           print "</table>\n";
@@ -45,7 +47,7 @@
               <div>Select a Course</div>
               <fieldset class="uk-form-controls">
               <?php foreach ( $data['courses'] as $course ) { ?>
-              <label for="courseid_<?= $course['courseid'] ?>" class="uk-form-label"><input type="radio" id="courseid_<?= $course['courseid'] ?>" class="uk-radio" name="courseid" value="<?= $course['courseid'] ?>"><?= $course['course_name'] ?></label>
+              <label for="courseids_<?= $course['courseid'] ?>" class="uk-form-label"><input type="checkbox" id="courseids_<?= $course['courseid'] ?>" class="uk-radio" name="courseids[]" value="<?= $course['courseid'] ?>"><?= $course['course_name'] ?></label>
               <?php } ?>
               </fieldset>
               <input type="submit" class="uk-button" value="Run Report" name="run">
