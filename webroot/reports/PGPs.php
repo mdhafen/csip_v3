@@ -31,7 +31,7 @@ foreach ( $locations as &$loc ) {
 
 $run = input( 'run', INPUT_STR );
 ($locationids = input( 'locations', INPUT_PINT )) || ($locationids = array());
-$courseid = input( 'courseid', INPUT_PINT );
+($courseids = input( 'courseids', INPUT_PINT )) || ($courseids = array());
 $yearid = input( 'yearid', INPUT_PINT );
 
 if ( !empty($run) ) {
@@ -50,13 +50,17 @@ if ( !empty($run) ) {
         default :
             error( array('REPORT_NOYEAR' => 'You must select a year that includes a technology plan.') );
     }
-    
+
     $quoted_locations = array();
     foreach ( $locationids as $loc ) {
         $quoted_locations[] = $dbh->quote( $loc );
     }
+    $quoted_courses = array();
+    foreach ( $courseids as $cor ) {
+        $quoted_courses[] = $dbh->quote( $cor );
+    }
 
-    if ( empty($courseid) ) {
+    if ( empty($courseids) ) {
         $wheres = array();
         $query = "SELECT courseid,course_name FROM course LEFT JOIN location_course_links USING (courseid) WHERE active = 1";
         if ( !empty($quoted_locations) ) {
@@ -75,16 +79,16 @@ if ( !empty($run) ) {
         $courses = $sth->fetchAll(PDO::FETCH_ASSOC);
     }
     else {
-        $query = "SELECT answer,part,location.name AS location_name,questionid FROM answer CROSS JOIN csip USING (csipid) CROSS JOIN location USING (locationid) WHERE yearid = ? AND courseid = ? AND questionid IN ($question)";
+        $query = "SELECT answer,part,location.name AS location_name,course_name,questionid FROM answer CROSS JOIN csip USING (csipid) CROSS JOIN location USING (locationid) CROSS JOIN course USING (courseid) WHERE yearid = ? AND courseid IN (". implode(',',$quoted_courses) .") AND questionid IN ($question)";
         if ( !empty($quoted_locations) ) {
             $query .= " AND csip.locationid IN (". implode(',',$quoted_locations) .")";
         }
         $query .= " order by csipid,part,questionid";
         $sth = $dbh->prepare($query);
-        $sth->execute([$yearid,$courseid]);
+        $sth->execute([$yearid]);
         while ( $row = $sth->fetch( PDO::FETCH_ASSOC ) ) {
             if ( $version == 8 ) {
-                $plans[ $row['location_name'] ] = $row['answer'];
+                $plans[ $row['location_name'] ][ $row['course_name'] ] = $row['answer'];
             }
         }
         $run = 'Finished';
@@ -97,7 +101,7 @@ $output = array(
         'yearid' => $yearid,
         'locationids' => $locationids,
         'courses' => $courses,
-        'courseid' => $courseid,
+        'courseids' => $courseids,
         'plans' => $plans,
         'run' => !empty($run)?$run:0,
 );
