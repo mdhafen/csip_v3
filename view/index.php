@@ -15,7 +15,7 @@
 							}
 						?>
 						<br>
-						<a href="https://prodev.washk12.org/support/csip" style="float: right;" class="uk-button uk-button-primary" target="_BLANK">Go here for help</a>
+						<a href="https://www.washk12.org/professional-learning/help-me/csip" style="float: right;" class="uk-button uk-button-primary" target="_BLANK">Go here for help</a>
             </span>
 						<h2>
 
