@@ -68,6 +68,8 @@ if ( $op == "Save" ) {	// Update/Add the location
 	$name = input( 'course_name', INPUT_HTML_NONE );
 	$mingrade = input( 'min_grade', INPUT_INT );
 	$maxgrade = input( 'max_grade', INPUT_INT );
+	$for_leadership = input( 'for_leadership', INPUT_STR );
+	$for_leadership = ( !empty($for_leadership) ) ? 1 : 0;
 	$active = input( 'active', INPUT_STR );
 	$active = ( !empty($active) ) ? 1 : 0;
 	$question_parts = input( 'parts', INPUT_PINT );
@@ -106,6 +108,9 @@ if ( $op == "Save" ) {	// Update/Add the location
 			if ( $maxgrade != $course['max_grade'] ) {
 				$updated['max_grade'] = $maxgrade;
 			}
+			if ( $for_leadership != $course['for_leadership'] ) {
+				$updated['for_leadership'] = $for_leadership;
+			}
 			if ( $active != $course['active'] ) {
 				$updated['active'] = $active;
 			}
@@ -134,6 +139,7 @@ if ( $op == "Save" ) {	// Update/Add the location
 							 'course_name' => $name,
 							 'min_grade' => $mingrade,
 							 'max_grade' => $maxgrade,
+							 'for_leadership' => $for_leadership,
 							 'active' => $active,
 							 );
 		}
