@@ -17,12 +17,12 @@
 						<br>
 						<a href="https://prodev.washk12.org/support/csip" style="float: right;" class="uk-button uk-button-primary" target="_BLANK">Go here for help</a>
             </span>
-      <ul class="uk-breadcrumb"><li><a href="tech_plans.php">Archived Technology Plans Report</a></li>
+      <ul class="uk-breadcrumb"><li><a href="leadership_plans.php">Archived Leadership Growth Plans Report</a></li>
 <?php
       if ( !empty($data['run']) && $data['run'] == 'Finished' ) {
           print "<li><span href='#'>Results</span></li></ul>";
           if ( empty($data['plans']) ) {
-              print "<div class='uk-alert uk-alert-warning' uk-alert><p>No technology plans found at those locations</p></div>";
+              print "<div class='uk-alert uk-alert-warning' uk-alert><p>No leadership growth plans found at those locations</p></div>";
           }
 
           print "<table class='uk-table'>\n";
