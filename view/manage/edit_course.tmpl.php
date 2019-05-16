@@ -60,6 +60,11 @@ foreach ( (array) $data['error'] as $err ) {
 </tr>
 
 <tr>
+<td><label for="for_leadership">Course is for school leadership</label></td>
+<td><input type="checkbox" name="for_leadership" id="for_leadership"<?= ( empty($data['course']) || !empty($data['course']['for_leadership']) ) ? " checked='checked'" : "" ?>></td>
+</tr>
+
+<tr>
 <td><label for="active">Course is active</label></td>
 <td><input type="checkbox" name="active" id="active"<?= ( empty($data['course']) || !empty($data['course']['active']) ) ? " checked='checked'" : "" ?>></td>
 </tr>
