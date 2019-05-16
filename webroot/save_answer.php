@@ -7,8 +7,11 @@ include_once( '../inc/site.phpm' );
 include_once( '../inc/csips.phpm' );
 include_once( '../inc/course.phpm' );
 
-authorize( 'update_csip' );
+authorize( 'load_csip' );
+
+$can_edit = authorized( 'update_csip' );
 $super = authorized( 'manage_users' );
+$principal = authorized( 'approve_csip' );
 
 $locations = empty($_SESSION['loggedin_user']['locations']) ? array() : array_keys( $_SESSION['loggedin_user']['locations'] );
 $csipid = input( 'csipid', INPUT_PINT );
@@ -50,6 +53,10 @@ else {
    }
    if ( empty($csip['form'][$courseid][$part]) ) {
       error( array('NOTYOURS' => 'Course does not have that tab.') );
+   }
+   $can_edit = $can_edit || ( in_array($csip['locationid'],$locations) && $csip['courses'][$courseid]['for_leadership'] && $principal );
+   if ( ! $can_edit ) {
+      $error[] = array('NOTYOURS' => 'Access to CSIP denied.' );
    }
    $courses = get_user_courses( $_SESSION['loggedin_user']['userid'], $csip['locationid'] );
    if ( ! empty($questionid) ) {

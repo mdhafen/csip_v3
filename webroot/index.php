@@ -9,6 +9,7 @@ include_once( '../inc/site.phpm' );
 authorize( 'load_csip' );
 $district = authorized( 'load_other_csip' );
 $reporter = authorized( 'view_reports' );
+$principal = authorized( 'approve_csip' );
 $can_edit = authorized( 'update_csip' );
 $locations = empty($_SESSION['loggedin_user']['locations']) ? array() : array_keys( $_SESSION['loggedin_user']['locations'] );
 $csipid = input( 'csipid', INPUT_PINT );
@@ -28,8 +29,9 @@ if ( ! empty($csipid) ) {
 
 if ( !empty($csip) ) {
    $courses = get_user_courses( $_SESSION['loggedin_user']['userid'], $csip['locationid'] );
-   if ( !empty($courseid) && !empty($courses) ) {
-      if ( ! array_key_exists( $courseid, $courses ) ) {
+   if ( !empty($courseid) ) {
+       $can_edit = $can_edit || ( in_array($csip['locationid'],$locations) && $csip['courses'][$courseid]['for_leadership'] && $principal );
+      if ( !empty($courses) && ! array_key_exists( $courseid, $courses ) ) {
          $can_edit = 0;
       }
    }

@@ -49,6 +49,7 @@ CREATE TABLE `course` (
 	`courseid` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
 	`course_name` VARCHAR(64) NOT NULL DEFAULT '',
 	`course_category` INT(10) NOT NULL DEFAULT 0,
+    `for_leadership` INT(1) UNSIGNED NOT NULL DEFAULT 0,
 	`active` INT(1) UNSIGNED NOT NULL DEFAULT 1,
 	`min_grade` INT(4) NOT NULL DEFAULT 1,
 	`max_grade` INT(4) NOT NULL DEFAULT 12,
