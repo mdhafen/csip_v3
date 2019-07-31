@@ -150,7 +150,15 @@ function update_user( $userid, $update, $module = 'core' ) {
     $query = rtrim( $query, ", " );
     $query .= "WHERE userid = ". $dbh->quote( $userid );
   } else {
-    $query = "INSERT INTO user (username,fullname,email,role,password,salt,password_mode,externalid) VALUES (?,?,?,?,?,?,?,?)";
+    if ( empty($update['password']) ) { $update['password'] = ''; }
+    if ( empty($update['salt']) ) { $update['salt'] = ''; }
+    $query = "INSERT INTO user (";
+    $query .= implode( ',', array_keys($update) );
+    $query .= ") VALUES (?";
+    for ( $i = 1; $i < count($update); $i++ ) {
+        $query .= ",?";
+    }
+    $query .= ")";
   }
   $sth = $dbh->prepare( $query );
   $sth->execute( array_values( $update ) );
@@ -196,7 +204,13 @@ function update_location( $locationid, $update, $module = 'core' ) {
     $query = rtrim( $query, ", " );
     $query .= "WHERE locationid = ". $dbh->quote( $locationid );
   } else {
-    $query = "INSERT INTO location (locationid,name,mingrade,maxgrade,loc_demo,externalid) VALUES (?,?,?,?,?,?)";
+    $query = "INSERT INTO location (";
+    $query .= implode( ',', array_keys($update) );
+    $query .= ") VALUES (?";
+    for ( $i = 1; $i < count($update); $i++ ) {
+        $query .= ",?";
+    }
+    $query .= ")";
   }
   $sth = $dbh->prepare( $query );
   $sth->execute( array_values( $update ) );
