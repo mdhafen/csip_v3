@@ -620,6 +620,7 @@ class Authen_External {
         'password' => '',
         'salt' => '',
         'externalid' => $externalid,
+        'password_mode' => '',
     );
     return $user;
   }
