@@ -7,6 +7,12 @@ require_once( 'input.phpm' );
 require_once( $config['base_dir'] .'/inc/course.phpm' );
 set_include_path(get_include_path() . PATH_SEPARATOR . $config['base_dir'].'/lib/local' );
 
+if (!function_exists('is_countable')) {
+    function is_countable($var) {
+        return (is_array($var) || $var instanceof Countable);
+    }
+}
+
 class Authen_External {
   private $token = '';
   private $url = '';
@@ -184,7 +190,7 @@ class Authen_External {
     $teacher = $this->get_data('/ws/v1/staff/'. $userid .'?expansions=addresses,emails,phones,school_affiliations&extensions=u_schoolstaffuserfields');
     $affiliations = array();
     $locations = array();
-    if ( count($teacher->staff->school_affiliations->school_affiliation) > 1 ) {
+    if ( is_countable($teacher->staff->school_affiliations->school_affiliation) && count($teacher->staff->school_affiliations->school_affiliation) > 1 ) {
       foreach ( $teacher->staff->school_affiliations->school_affiliation as $aff ) {
 	$affiliations[] = $aff;
       }
@@ -344,7 +350,7 @@ class Authen_External {
     $affiliations = array();
     if ( !empty($staff->school_affiliations->school_affiliation) ) {
 
-        if ( count($staff->school_affiliations->school_affiliation) > 1 ) {
+        if ( is_countable($staff->school_affiliations->school_affiliation) && count($staff->school_affiliations->school_affiliation) > 1 ) {
             foreach ( $staff->school_affiliations->school_affiliation as $aff ) {
                 $affiliations[] = $aff;
             }
