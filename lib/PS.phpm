@@ -496,7 +496,10 @@ class Authen_External {
       else {
         $a_school = $this->school_cache[$school->school_id];
       }
-      $ps_loc_id = $a_school->school->id;
+      if ( empty($a_school->school_number) ) {
+          continue;
+      }
+      $ps_loc_id = $a_school->id;
       $old_loc = location_by_externalid( $ps_loc_id );
       if ( empty($old_loc) && !empty($ps_loc_id) ) {
         $this->new_location($ps_loc_id, $a_school);
