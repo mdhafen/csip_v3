@@ -429,7 +429,7 @@ class Authen_External {
       if ( empty($old_user['username']) || $old_user['username'] != $new_user['username'] ) {
         $check_dup = user_by_username( $new_user['username'] );
         if ( !empty($check_dup) ) {
-          error_log('PowerSchool API: duplicate username on sync ('. $username .')');
+          error_log('PowerSchool API: duplicate username on sync for dcid '. $userid .' ( new: '. $new_user['username'] .' old: '. $old_user['username'] .')' );
         }
         else {
           $user['username'] = $new_user['username'];
@@ -448,7 +448,7 @@ class Authen_External {
     else {
       $check_dup = user_by_username( $new_user['username'] );
       if ( !empty($check_dup) ) {
-        error_log('PowerSchool API: duplicate username on sync ('. $new_user['username'] .')');
+        error_log('PowerSchool API: duplicate username on sync for dcid '. $userid .' ('. $new_user['username'] .')');
         return;
       }
       else {
@@ -463,13 +463,13 @@ class Authen_External {
 
     $schools = array();
     $affiliations = array();
-    if ( count($teacher->staff->school_affiliations->school_affiliation) > 1 ) {
+    if ( !empty($teacher->staff->school_affiliations->school_affiliation->school_id) ) {
+      $affiliations[] = $teacher->staff->school_affiliations->school_affiliation;
+    }
+    else if ( count($teacher->staff->school_affiliations->school_affiliation) > 0 ) {
       foreach ( $teacher->staff->school_affiliations->school_affiliation as $aff ) {
 	$affiliations[] = $aff;
       }
-    }
-    else if ( !empty($teacher->staff->school_affiliations->school_affiliation->school_id) ) {
-      $affiliations[] = $teacher->staff->school_affiliations->school_affiliation;
     }
     if ( count( $affiliations ) > 2 ) {
       $page = 1;
