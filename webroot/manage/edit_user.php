@@ -66,6 +66,7 @@ if ( $op == "Save" ) {  // Update/Add the user
   $password2 = input( 'password_2', INPUT_STR );
   $user_password = '';
   $salt = '';
+  $pass_mode = '';
   if ( $password && $password != '*****' && $password == $password2 ) {
     list( $user_password, $salt, $pass_mode ) = new_password( $password );
   }
