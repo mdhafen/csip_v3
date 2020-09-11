@@ -363,19 +363,10 @@ class Authen_External {
             if ( $school->status == 2 ) {
                 continue;
             }
-            if ( $role === 0 || $school->type < $role ) {
-                $role = $school->type;
+            if ( !empty($map[$school->type]) && $map[$school->type] > $role ) {
+                $role = $map[$school->type];
             }
         }
-    }
-
-    if ( $role > 0 ) {
-      if ( !empty($map[$role]) ) {
-        $role = $map[$role];
-      }
-      else {
-        $role = 0;
-      }
     }
 
     return $role;
