@@ -28,6 +28,7 @@ $config = array(
 		'secret' => '',
 		'StaffStatus_to_role_map' => array(
 			1 => 2, // Teacher is PLC Member
+			2 => 2, // Staff is PLC Member
 			4 => 3, // School Admin is Principal
 			6 => 4, // DO Staff is District Personel
 			7 => 6, // DO Admin is Site Supervisor
