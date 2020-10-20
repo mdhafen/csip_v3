@@ -44,6 +44,7 @@ class Authen_External {
         $ax_request = new Auth_OpenID_AX_FetchRequest();
         // FIXME newer versions of OpenID use build() here
         $ax_request->add( Auth_OpenID_AX_AttrInfo::make('http://powerschool.com/entity/id',1,true,'dcid') );
+        $ax_request->add( Auth_OpenID_AX_AttrInfo::make('http://powerschool.com/entity/usersDCID',1,true,'usersDCID') );
         $auth_request->addExtension($ax_request);
         $redirect_url = $auth_request->redirectURL($config['base_url'],$config['base_url']);
         if ( Auth_OpenID::isFailure($redirect_url) ) {
@@ -59,13 +60,33 @@ class Authen_External {
         $response = $consumer->complete($config['base_url']);
         if ( $response->status == Auth_OpenID_SUCCESS ) {
             $ax_response = Auth_OpenID_AX_FetchResponse::fromSuccessResponse($response);
+            $uid = $ax_response->getSingle('http://powerschool.com/entity/usersDCID');
             $eid = $ax_response->getSingle('http://powerschool.com/entity/id');
-            if ( !empty($eid) ) {
-                $ps_userid = $eid;
+            if ( !empty($uid) ) {
+                $ps_userid = $uid;
+                $user = user_by_externalid( $ps_userid );
+                if ( empty($user) ) {
+                    if ( !empty($eid) ) {
+                        $user = user_by_externalid( $eid );
+                        if ( !empty($user) ) {
+                            // change externalid from schoolstaff.dcid to dcid
+                            update_user( $user['userid'], array('externalid'=>$uid) );
+                        }
+                    }
+                    else {
+                        error_log( 'PowerSchool API: Auth: No user id in response' );
+                    }
+                }
             }
             else {
                 error_log( 'PowerSchool API: Auth: No user dcid in response' );
-                return $user;
+                if ( !empty($eid) ) {
+                    $ps_userid = $eid;
+                    $user = user_by_externalid( $ps_userid );
+                }
+                else {
+                    error_log( 'PowerSchool API: Auth: No user id in response' );
+                }
             }
         }
         else {
@@ -77,8 +98,7 @@ class Authen_External {
         }
     }
 
-    if ( $ps_userid ) {
-        $user = user_by_externalid( $ps_userid );
+    if ( !empty($user) ) {
         $sync_course = ($config['course_external_module'] == 'PS') ? 1 : 0;
 
         if ( $config['user_external_module'] == 'PS' ) {
@@ -86,6 +106,9 @@ class Authen_External {
 
             $user = user_by_externalid( $ps_userid );
         }
+    }
+    else {
+        error_log( 'PowerSchool API: Auth: User not found by external id' );
     }
 
     return $user;
@@ -170,8 +193,9 @@ class Authen_External {
         $ps_staff = $this->get_data('/ws/v1/school/'. $school->id .'/staff?expansions=school_affiliations,emails&page='.$stf_page);
         while ( !empty($ps_staff->staffs->staff) ) {
           foreach ( $ps_staff->staffs->staff as $stf ) {
-            if ( !empty($stf->id) && empty($users[$stf->id]) ) {
-              $users[$stf->id] = $this->staff_to_csip_user( $stf );
+            $id = ( !empty($stf->users_dcid)?$stf->users_dcid:$stf->id );
+            if ( empty($users[$id]) ) {
+              $users[$id] = $this->staff_to_csip_user( $stf );
             }
           }
           $stf_page++;
@@ -606,11 +630,11 @@ class Authen_External {
   }
 
   private function staff_to_csip_user( $staff ) {
-    $username = $this->get_username( $staff->id, $staff );
-    $fullname = $this->get_fullname( $staff->id, $staff );
+    $externalid = ( !empty($staff->users_dcid)?$staff->users_dcid:$staff->id );
+    $username = $this->get_username( $externalid, $staff );
+    $fullname = $this->get_fullname( $externalid, $staff );
     $email = empty($staff->emails->work_email) ? "" : $staff->emails->work_email;
-    $role = $this->userid_to_role( $staff->id, $staff );
-    $externalid = $staff->id;
+    $role = $this->userid_to_role( $externalid, $staff );
 
     $user = array(
         'username' => $username,
