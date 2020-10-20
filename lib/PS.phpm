@@ -88,6 +88,19 @@ class Authen_External {
                     error_log( 'PowerSchool API: Auth: No user id in response' );
                 }
             }
+
+            if ( !empty($user) ) {
+                $sync_course = ($config['course_external_module'] == 'PS') ? 1 : 0;
+
+                if ( $config['user_external_module'] == 'PS' ) {
+                    $this->do_sync( $ps_userid, $user, $sync_course );
+
+                    $user = user_by_externalid( $ps_userid );
+                }
+            }
+            else {
+                error_log( 'PowerSchool API: Auth: User not found by external id' );
+            }
         }
         else {
             if ( $response->status == Auth_OpenID_FAILURE ) {
@@ -96,19 +109,6 @@ class Authen_External {
             error_log( 'PowerSchool API: Auth Failed'. $message );
             return $user;
         }
-    }
-
-    if ( !empty($user) ) {
-        $sync_course = ($config['course_external_module'] == 'PS') ? 1 : 0;
-
-        if ( $config['user_external_module'] == 'PS' ) {
-            $this->do_sync( $ps_userid, $user, $sync_course );
-
-            $user = user_by_externalid( $ps_userid );
-        }
-    }
-    else {
-        error_log( 'PowerSchool API: Auth: User not found by external id' );
     }
 
     return $user;
