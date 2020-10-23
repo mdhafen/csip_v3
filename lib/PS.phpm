@@ -81,8 +81,15 @@ class Authen_External {
             else {
                 error_log( 'PowerSchool API: Auth: No user dcid in response' );
                 if ( !empty($eid) ) {
-                    $ps_userid = $eid;
-                    $user = user_by_externalid( $ps_userid );
+                    $user = user_by_externalid( $eid );
+                    if ( !empty($user) ) {
+                        $teacher = $this->get_data('/ws/v1/staff/'. $eid .'?expansions=addresses,emails,phones,school_affiliations&extensions=u_schoolstaffuserfields');
+                        if ( !empty($teacher->staff->users_dcid) ) {
+                            $ps_userid = $teacher->staff->users_dcid;
+                            update_user( $user['userid'], array('externalid'=>$ps_userid) );
+                            $user['externalid'] = $ps_userid;
+                        }
+                    }
                 }
                 else {
                     error_log( 'PowerSchool API: Auth: No user id in response' );
@@ -211,7 +218,7 @@ class Authen_External {
   }
 
   public function get_users_locations( $userid ) {
-    $teacher = $this->get_data('/ws/v1/staff/'. $userid .'?expansions=addresses,emails,phones,school_affiliations&extensions=u_schoolstaffuserfields');
+    $teacher = $this->get_data('/ws/v1/staff/'. $userid .'?expansions=addresses,emails,phones,school_affiliations');
     $affiliations = array();
     $locations = array();
     if ( is_countable($teacher->staff->school_affiliations->school_affiliation) && count($teacher->staff->school_affiliations->school_affiliation) > 1 ) {
@@ -433,7 +440,7 @@ class Authen_External {
   }
 
   private function do_sync( $userid, $old_user, $sync_course = 0 ) {
-    $teacher = $this->get_data('/ws/v1/staff/'. $userid .'?expansions=addresses,emails,phones,school_affiliations&extensions=u_schoolstaffuserfields');
+    $teacher = $this->get_data('/ws/v1/staff/'. $userid .'?expansions=addresses,emails,phones,school_affiliations');
 
     $user = array();
     $db_userid = 0;
