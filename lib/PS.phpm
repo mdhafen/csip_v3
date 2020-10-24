@@ -199,7 +199,16 @@ class Authen_External {
         $stf_page = 1;
         $ps_staff = $this->get_data('/ws/v1/school/'. $school->id .'/staff?expansions=school_affiliations,emails&page='.$stf_page);
         while ( !empty($ps_staff->staffs->staff) ) {
-          foreach ( $ps_staff->staffs->staff as $stf ) {
+          if ( is_countable($ps_staff->staffs->staff) && count($ps_staff->staffs->staff) > 1 ) {
+            foreach ( $ps_staff->staffs->staff as $stf ) {
+              $id = ( !empty($stf->users_dcid)?$stf->users_dcid:$stf->id );
+              if ( empty($users[$id]) ) {
+                $users[$id] = $this->staff_to_csip_user( $stf );
+              }
+            }
+          }
+          else {
+            $stf = $ps_staff->staffs->staff;
             $id = ( !empty($stf->users_dcid)?$stf->users_dcid:$stf->id );
             if ( empty($users[$id]) ) {
               $users[$id] = $this->staff_to_csip_user( $stf );
