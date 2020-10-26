@@ -450,6 +450,10 @@ class Authen_External {
 
   private function do_sync( $userid, $old_user, $sync_course = 0 ) {
     $teacher = $this->get_data('/ws/v1/staff/'. $userid .'?expansions=addresses,emails,phones,school_affiliations');
+    if ( empty($teacher->staff) ) {
+      error_log('PowerSchool API: No teacher found for id: '. $userid );
+      return;
+    }
 
     $user = array();
     $db_userid = 0;
