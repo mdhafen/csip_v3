@@ -65,38 +65,42 @@ class Authen_External {
             if ( !empty($uid) ) {
                 $ps_userid = $uid;
                 $user = user_by_externalid( $ps_userid );
-                if ( empty($user) ) {
-                    if ( !empty($eid) ) {
-                        $user = user_by_externalid( $eid );
-                        if ( !empty($user) ) {
-                            // change externalid from schoolstaff.dcid to dcid
-                            update_user( $user['userid'], array('externalid'=>$uid) );
-                        }
-                    }
-                    else {
-                        error_log( 'PowerSchool API: Auth: No user id in response' );
-                    }
-                }
+ /*  Supporting both usersDCID and location DCID is causing me headaches.
+  *              if ( empty($user) ) {
+  *                  if ( !empty($eid) ) {
+  *                      $user = user_by_externalid( $eid );
+  *                      if ( !empty($user) ) {
+  *                          // change externalid from schoolstaff.dcid to dcid
+  *                          update_user( $user['userid'], array('externalid'=>$uid) );
+  *                      }
+  *                  }
+  *                  else {
+  *                      error_log( 'PowerSchool API: Auth: No user id in response' );
+  *                  }
+  *              }
+  */
             }
             else {
                 error_log( 'PowerSchool API: Auth: No user dcid in response' );
-                if ( !empty($eid) ) {
-                    $user = user_by_externalid( $eid );
-                    if ( !empty($user) ) {
-                        $teacher = $this->get_data('/ws/v1/staff/'. $eid .'?expansions=addresses,emails,phones,school_affiliations&extensions=u_schoolstaffuserfields');
-                        if ( !empty($teacher->staff->users_dcid) ) {
-                            $ps_userid = $teacher->staff->users_dcid;
-                            update_user( $user['userid'], array('externalid'=>$ps_userid) );
-                            $user['externalid'] = $ps_userid;
-                        }
-                    }
-                }
-                else {
-                    error_log( 'PowerSchool API: Auth: No user id in response' );
-                }
+ /*
+  *              if ( !empty($eid) ) {
+  *                  $user = user_by_externalid( $eid );
+  *                  if ( !empty($user) ) {
+  *                      $teacher = $this->get_data('/ws/v1/staff/'. $eid .'?expansions=addresses,emails,phones,school_affiliations&extensions=u_schoolstaffuserfields');
+  *                      if ( !empty($teacher->staff->users_dcid) ) {
+  *                          $ps_userid = $teacher->staff->users_dcid;
+  *                          update_user( $user['userid'], array('externalid'=>$ps_userid) );
+  *                          $user['externalid'] = $ps_userid;
+  *                      }
+  *                  }
+  *              }
+  *              else {
+  *                  error_log( 'PowerSchool API: Auth: No user id in response' );
+  *              }
+  */
             }
 
-            if ( !empty($user) ) {
+            if ( isset($user) ) {
                 $sync_course = ($config['course_external_module'] == 'PS') ? 1 : 0;
 
                 if ( $config['user_external_module'] == 'PS' ) {
@@ -105,9 +109,11 @@ class Authen_External {
                     $user = user_by_externalid( $ps_userid );
                 }
             }
-            else {
-                error_log( 'PowerSchool API: Auth: User not found by external id' );
-            }
+ /*
+  *          else {
+  *              error_log( 'PowerSchool API: Auth: User not found by external id' );
+  *          }
+  */
         }
         else {
             if ( $response->status == Auth_OpenID_FAILURE ) {
