@@ -18,6 +18,8 @@ class Authen_External {
   private $url = '';
   private $school_cache = array();
   private $course_cache = array();
+  private $debug = 0;
+  private $debug_file = '';
 
   function __construct() {
   }
@@ -61,43 +63,13 @@ class Authen_External {
         if ( $response->status == Auth_OpenID_SUCCESS ) {
             $ax_response = Auth_OpenID_AX_FetchResponse::fromSuccessResponse($response);
             $uid = $ax_response->getSingle('http://powerschool.com/entity/usersDCID');
-            $eid = $ax_response->getSingle('http://powerschool.com/entity/id');
-            if ( !empty($uid) ) {
-                $ps_userid = $uid;
-                $user = user_by_externalid( $ps_userid );
- /*  Supporting both usersDCID and location DCID is causing me headaches.
-  *              if ( empty($user) ) {
-  *                  if ( !empty($eid) ) {
-  *                      $user = user_by_externalid( $eid );
-  *                      if ( !empty($user) ) {
-  *                          // change externalid from schoolstaff.dcid to dcid
-  *                          update_user( $user['userid'], array('externalid'=>$uid) );
-  *                      }
-  *                  }
-  *                  else {
-  *                      error_log( 'PowerSchool API: Auth: No user id in response' );
-  *                  }
-  *              }
-  */
+            $aid = $ax_response->getSingle('http://powerschool.com/entity/id');
+            if ( !empty($uid) && !empty($aid) ) {
+                $ps_userid = $aid;
+                $user = user_by_externalid( $uid );
             }
             else {
-                error_log( 'PowerSchool API: Auth: No user dcid in response' );
- /*
-  *              if ( !empty($eid) ) {
-  *                  $user = user_by_externalid( $eid );
-  *                  if ( !empty($user) ) {
-  *                      $teacher = $this->get_data('/ws/v1/staff/'. $eid .'?expansions=addresses,emails,phones,school_affiliations&extensions=u_schoolstaffuserfields');
-  *                      if ( !empty($teacher->staff->users_dcid) ) {
-  *                          $ps_userid = $teacher->staff->users_dcid;
-  *                          update_user( $user['userid'], array('externalid'=>$ps_userid) );
-  *                          $user['externalid'] = $ps_userid;
-  *                      }
-  *                  }
-  *              }
-  *              else {
-  *                  error_log( 'PowerSchool API: Auth: No user id in response' );
-  *              }
-  */
+                error_log( 'PowerSchool API: Auth: No user id or dcid in response' );
             }
 
             if ( isset($user) ) {
@@ -106,14 +78,9 @@ class Authen_External {
                 if ( $config['user_external_module'] == 'PS' ) {
                     $this->do_sync( $ps_userid, $user, $sync_course );
 
-                    $user = user_by_externalid( $ps_userid );
+                    $user = user_by_externalid( $uid );
                 }
             }
- /*
-  *          else {
-  *              error_log( 'PowerSchool API: Auth: User not found by external id' );
-  *          }
-  */
         }
         else {
             if ( $response->status == Auth_OpenID_FAILURE ) {
@@ -207,7 +174,7 @@ class Authen_External {
         while ( !empty($ps_staff->staffs->staff) ) {
           if ( is_countable($ps_staff->staffs->staff) && count($ps_staff->staffs->staff) > 1 ) {
             foreach ( $ps_staff->staffs->staff as $stf ) {
-              $id = ( !empty($stf->users_dcid)?$stf->users_dcid:$stf->id );
+              $id = $this->get_user_externalid($stf->id,$stf);
               if ( empty($users[$id]) ) {
                 $users[$id] = $this->staff_to_csip_user( $stf );
               }
@@ -215,7 +182,7 @@ class Authen_External {
           }
           else {
             $stf = $ps_staff->staffs->staff;
-            $id = ( !empty($stf->users_dcid)?$stf->users_dcid:$stf->id );
+            $id = $this->get_user_externalid($stf->id,$stf);
             if ( empty($users[$id]) ) {
               $users[$id] = $this->staff_to_csip_user( $stf );
             }
@@ -343,6 +310,18 @@ class Authen_External {
     }
 
     return $reported;
+  }
+
+  private function get_user_externalid( $userid, $staff = null ) {
+    $externalid = null;
+    if ( empty($staff) ) {
+      $user = $this->get_data('/ws/v1/staff/'. $userid);
+      $staff = $user->staff;
+    }
+    if ( !empty($staff) ) {
+      $id = ( !empty($staff->users_dcid)?$staff->users_dcid:$staff->id );
+    }
+    return $externalid;
   }
 
   private function get_username( $userid, $staff = null ) {
@@ -498,7 +477,7 @@ class Authen_External {
     }
     if ( !empty($user) ) {
       $new_userid = update_user($db_userid, $user);
-      $user = user_by_externalid( $userid );
+      $user = user_by_externalid( $new_user['externalid'] );
       $old_user = $user;
     }
 
@@ -656,7 +635,7 @@ class Authen_External {
   }
 
   private function staff_to_csip_user( $staff ) {
-    $externalid = ( !empty($staff->users_dcid)?$staff->users_dcid:$staff->id );
+    $externalid = $this->get_user_externalid($staff->id,$staff);
     $username = $this->get_username( $externalid, $staff );
     $fullname = $this->get_fullname( $externalid, $staff );
     $email = empty($staff->emails->work_email) ? "" : $staff->emails->work_email;
@@ -715,6 +694,12 @@ class Authen_External {
     $parts[] = array( 'part' => '4', 'title' => 'GVC 1', 'question_group' => '4' );
     $new_course['parts'] = $parts;
     return $new_course;
+  }
+
+  private function do_debug( $message ) {
+    if ( !empty($message) && !empty($this->debug_file) ) {
+      file_put_contents( $this->debug_file, $message ."\n", FILE_APPEND | LOCK_EX );
+    }
   }
 }
 ?>
