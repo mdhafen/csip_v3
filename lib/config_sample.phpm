@@ -30,7 +30,7 @@ $config = array(
 			1 => 2, // Teacher is PLC Member
 			2 => 2, // Staff is PLC Member
 			4 => 3, // School Admin is Principal
-			6 => 4, // DO Staff is District Personel
+			6 => 4, // DO Staff is District Personnel
 			7 => 6, // DO Admin is Site Supervisor
 			8 => 6, // Tech Office is Site Supervisor
 		),
@@ -153,7 +153,7 @@ $config = array(
 			'auth' => 53, // load,answers,approve,report
 		),
 		4 => array(
-			'name' => 'district personel',
+			'name' => 'district personnel',
 			'auth' => 39, // load,load_other,answers,report
 		),
 		5 => array(
