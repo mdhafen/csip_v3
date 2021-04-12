@@ -71,7 +71,7 @@ Changes saved.
 
 <tr>
 <td><label for="externalid">External ID</label></td>
-<td><input type="text" name="externalid" id="externalid" readonly value="<?= !empty($data['user']['externalid']) ? $data['user']['externalid'] : "" ?>" ><?php if ( $data['_config']['user_external_module'] ) { ?><span class="uk-margin-left">Click a button below to change External Link</span><?php } ?></td>
+<td><input type="text" name="externalid" id="externalid" value="<?= !empty($data['user']['externalid']) ? $data['user']['externalid'] : "" ?>" ><?php if ( $data['_config']['user_external_module'] ) { ?><span class="uk-margin-left">Click a button below to change External Link</span><?php } ?></td>
 </tr>
 
 </table>
