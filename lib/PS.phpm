@@ -76,7 +76,7 @@ class Authen_External {
                 $sync_course = ($config['course_external_module'] == 'PS') ? 1 : 0;
 
                 if ( $config['user_external_module'] == 'PS' ) {
-                    $this->do_sync( $ps_userid, $user, $sync_course );
+                    $this->do_sync( $ps_userid, $uid, $user, $sync_course );
 
                     $user = user_by_externalid( $uid );
                 }
@@ -175,16 +175,16 @@ class Authen_External {
           if ( is_countable($ps_staff->staffs->staff) && count($ps_staff->staffs->staff) > 1 ) {
             foreach ( $ps_staff->staffs->staff as $stf ) {
               $id = $this->get_user_externalid($stf->id,$stf);
-              if ( empty($users[$id]) ) {
-                $users[$id] = $this->staff_to_csip_user( $stf );
+              if ( !empty($id) && empty($users[$id]) ) {
+                $users[$id] = $this->staff_to_csip_user( $stf, $id );
               }
             }
           }
           else {
             $stf = $ps_staff->staffs->staff;
             $id = $this->get_user_externalid($stf->id,$stf);
-            if ( empty($users[$id]) ) {
-              $users[$id] = $this->staff_to_csip_user( $stf );
+            if ( !empty($id) && empty($users[$id]) ) {
+              $users[$id] = $this->staff_to_csip_user( $stf, $id );
             }
           }
           $stf_page++;
@@ -313,13 +313,13 @@ class Authen_External {
   }
 
   private function get_user_externalid( $userid, $staff = null ) {
-    $externalid = null;
+    $externalid = '';
     if ( empty($staff) ) {
       $user = $this->get_data('/ws/v1/staff/'. $userid);
       $staff = $user->staff;
     }
-    if ( !empty($staff) ) {
-      $id = ( !empty($staff->users_dcid)?$staff->users_dcid:$staff->id );
+    if ( !empty($staff) && !empty($staff->users_dcid) ) {
+      $externalid = $staff->users_dcid;
     }
     return $externalid;
   }
@@ -433,7 +433,7 @@ class Authen_External {
     return $sections;
   }
 
-  private function do_sync( $userid, $old_user, $sync_course = 0 ) {
+  private function do_sync( $userid, $ex_id, $old_user, $sync_course = 0 ) {
     $teacher = $this->get_data('/ws/v1/staff/'. $userid .'?expansions=addresses,emails,phones,school_affiliations');
     if ( empty($teacher->staff) ) {
       error_log('PowerSchool API: No teacher found for id: '. $userid );
@@ -442,7 +442,7 @@ class Authen_External {
 
     $user = array();
     $db_userid = 0;
-    $new_user = $this->staff_to_csip_user( $teacher->staff );
+    $new_user = $this->staff_to_csip_user( $teacher->staff, $ex_id );
 
     if ( !empty($old_user['userid']) ) {
       $db_userid = $old_user['userid'];
@@ -634,12 +634,14 @@ class Authen_External {
     return $courseid;
   }
 
-  private function staff_to_csip_user( $staff ) {
-    $externalid = $this->get_user_externalid($staff->id,$staff);
-    $username = $this->get_username( $externalid, $staff );
-    $fullname = $this->get_fullname( $externalid, $staff );
+  private function staff_to_csip_user( $staff, $externalid ) {
+    if ( empty($externalid) ) {
+        $externalid = $this->get_user_externalid($staff->id,$staff);
+    }
+    $username = $this->get_username( $staff->id, $staff );
+    $fullname = $this->get_fullname( $staff->id, $staff );
     $email = empty($staff->emails->work_email) ? "" : $staff->emails->work_email;
-    $role = $this->userid_to_role( $externalid, $staff );
+    $role = $this->userid_to_role( $staff->id, $staff );
 
     $user = array(
         'username' => $username,
