@@ -24,6 +24,7 @@
           if ( empty($data['gvcs']) ) {
               print "<div class='uk-alert uk-alert-warning' uk-alert><p>No answers found in that course</p></div>";
           }
+          print "<div class='uk-text-bold'>Results for ".$data['course_name']."</div>";
           foreach ( $data['gvcs'] as $location => $parts ) {
               print "<table class='uk-table'>\n";
               print "<thead><tr><th colspan='2'>$location</th></tr></thead>\n";

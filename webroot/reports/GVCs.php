@@ -14,6 +14,7 @@ $years = get_years();
 $locations = array();
 $courses = array();
 $gvcs = array();
+$course_name = '';
 
 uasort( $years, function($a,$b){ return strcasecmp($b['year_name'],$a['year_name']); } );
 if ( $district ) {
@@ -77,6 +78,12 @@ if ( !empty($run) ) {
         $courses = $sth->fetchAll(PDO::FETCH_ASSOC);
     }
     else {
+        $query = "SELECT courseid,course_name FROM course WHERE active = 1 AND courseid = ". $dbh->quote($courseid);
+        $sth = $dbh->prepare($query);
+        $sth->execute([$courseid]);
+        $course_name = $sth->fetch( PDO::FETCH_ASSOC );
+        $course_name = $course_name['course_name'];
+
         $query = "SELECT answer,part,location.name AS location_name,questionid FROM answer CROSS JOIN csip USING (csipid) CROSS JOIN location USING (locationid) WHERE courseid = ? AND questionid IN ($questions)";
         if ( !empty($quoted_locations) ) {
             $query .= " AND csip.locationid IN (". implode(',',$quoted_locations) .")";
@@ -110,6 +117,7 @@ $output = array(
         'grade' => $grade,
         'courses' => $courses,
         'courseid' => $courseid,
+        'course_name' => $course_name,
         'gvcs' => $gvcs,
         'run' => !empty($run)?$run:0,
 );
