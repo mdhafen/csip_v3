@@ -14,15 +14,15 @@
             <p>
             With your team:<ol>
             <li>Look at your standards, give priority, and come to consensus around key skills, concepts, behaviors, and dispositions.</li>
-            <li>Identify/list the Essential Learnings that all students need to know.  These are your GVC&apos;s.</li>
-            <li>Once your team has identified each GVC, share them with the team above and below your specific grade level.</li>
-            <li>Share the GVC with your students.</li>
+            <li>Identify/list the Essential Learnings that all students need to know.  These are your Essential Standards.</li>
+            <li>Once your team has identified each Essential Standard, share them with the team above and below your specific grade level.</li>
+            <li>Share the Essential Standards with your students.</li>
             </ol></p>
         </div>
         <br>
 
         <div class="uk-form-row uk-panel uk-panel-box">
-            <label class="uk-form-label" for="cfa-l-<?= $part ?>-46">Enter GVC #<?= $count ?> here:</label>
+            <label class="uk-form-label" for="cfa-l-<?= $part ?>-46">Enter ES #<?= $count ?> here:</label>
             <div class="uk-form-controls" data-csip-answer-ids>
                 <input type="hidden" name="questions[]" value="46">
                 <input type="hidden" name="answerids[]" value="<?= isset($questions[46]['answerid']) ? $questions[46]['answerid'] : "" ?>">
@@ -42,15 +42,15 @@
         <div class="uk-panel uk-panel-box uk-panel-box-primary">
             <p><strong>How will WE know if they LEARNED it?</strong></p>
             <hr>
-            <p>A learning target is any achievement expectation for students <i>on the path</i> toward mastery of a standard.  It clearly states what we want our students to learn and should be understood by teachers and students.  Learning targets should be formatively assessed to monitor progress toward a GVC.</p>
-            <p>With your team:<ol><li>Break GVC #<?= $count ?> into specific, measurable learning targets.</li><li>Identify the Common Formative Assessment(s) that your team will use to measure these learning targets.</li><li>Schedule, administer, and analyze the results of your CFA(s).</li></ol></p>
+            <p>A learning target is any achievement expectation for students <i>on the path</i> toward mastery of a standard.  It clearly states what we want our students to learn and should be understood by teachers and students.  Learning targets should be formatively assessed to monitor progress toward an Essential Standard.</p>
+            <p>With your team:<ol><li>Break Essential Standard #<?= $count ?> into specific, measurable learning targets.</li><li>Identify the Common Formative Assessment(s) that your team will use to measure these learning targets.</li><li>Schedule, administer, and analyze the results of your CFA(s).</li></ol></p>
         </div>
         <br>
 
         <div class="uk-panel uk-panel-box">
             <div class="uk-form-row uk-flex uk-flex-wrap uk-margin-top">
                 <div class="uk-flex-item-auto uk-margin-right" style="width: 40%">
-                    <div style="min-height:40px;"><label class="" for="cfa-c-<?= $part ?>-49">List all Learning Targets that lead to proficiency in GVC #<?= $count ?></label></div>
+                    <div style="min-height:40px;"><label class="" for="cfa-c-<?= $part ?>-49">List all Learning Targets that lead to proficiency in ES #<?= $count ?></label></div>
                     <div class="" data-csip-answer-ids>
                         <input type="hidden" name="questions[]" value="49">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[49]['answerid']) ? $questions[49]['answerid'] : "" ?>">
@@ -114,7 +114,7 @@
             </div>
             <hr>
             <div class="uk-form-row">
-                <label class="uk-form-label" for="cfa-c-<?= $part ?>-54">According to the results of our CFA(s) and team collaboration, the following teaching practices/strategies were most effective for GVC #<?= $count ?>.</label>
+                <label class="uk-form-label" for="cfa-c-<?= $part ?>-54">According to the results of our CFA(s) and team collaboration, the following teaching practices/strategies were most effective for ES #<?= $count ?>.</label>
                 <div class="uk-form-controls" data-csip-answer-ids>
                     <input type="hidden" name="questions[]" value="54">
                     <input type="hidden" name="answerids[]" value="<?= isset($questions[54]['answerid']) ? $questions[54]['answerid'] : "" ?>">
@@ -143,7 +143,7 @@
             <div class="uk-panel uk-panel-box">
             <div class="uk-form-row uk-flex">
                 <div class="uk-flex-item-auto uk-margin-right" style="width: 50%">
-                    <label class="" for="cfa-i-<?= $part ?>-57">List the SPECIFIC INTERVENTIONS your team responded with for students who WERE NOT proficient in GVC #<?= $count ?>.</label>
+                    <label class="" for="cfa-i-<?= $part ?>-57">List the SPECIFIC INTERVENTIONS your team responded with for students who WERE NOT proficient in ES #<?= $count ?>.</label>
                     <div class="" data-csip-answer-ids>
                         <input type="hidden" name="questions[]" value="57">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[57]['answerid']) ? $questions[57]['answerid'] : "" ?>">
@@ -205,7 +205,7 @@
 
             <div class="uk-panel uk-panel-box">
                 <div class="uk-form-row">
-                    <label class="uk-form-label" for="cfa-l-<?= $part ?>-63">As you plan instruction for GVC #<?= $count ?> and the learning targets, identify extension activities your team will use for those who already know it.</label>
+                    <label class="uk-form-label" for="cfa-l-<?= $part ?>-63">As you plan instruction for ES #<?= $count ?> and the learning targets, identify extension activities your team will use for those who already know it.</label>
                     <div class="uk-form-controls" data-csip-answer-ids>
                         <input type="hidden" name="questions[]" value="63">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[63]['answerid']) ? $questions[63]['answerid'] : "" ?>">
@@ -230,7 +230,7 @@
         <div class="uk-panel uk-panel-box">
             <div class="uk-form-row uk-flex">
                 <div class="uk-flex-item-auto uk-margin-right" style="width: 45%">
-                    <label class="" for="cfa-r-<?= $part ?>-65">What we will keep for GVC #<?= $count ?>:</label>
+                    <label class="" for="cfa-r-<?= $part ?>-65">What we will keep for ES #<?= $count ?>:</label>
                     <div class="" data-csip-answer-ids>
                         <input type="hidden" name="questions[]" value="65">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[65]['answerid']) ? $questions[65]['answerid'] : "" ?>">
@@ -239,7 +239,7 @@
                     </div>
                 </div>
                 <div class="uk-flex-item-auto uk-margin-right" style="">
-                    <label class="" for="cfa-l-<?= $part ?>-66">What we will change for GVC #<?= $count ?>:</label>
+                    <label class="" for="cfa-l-<?= $part ?>-66">What we will change for ES #<?= $count ?>:</label>
                     <div class="" data-csip-answer-ids>
                         <input type="hidden" name="questions[]" value="66">
                         <input type="hidden" name="answerids[]" value="<?= isset($questions[66]['answerid']) ? $questions[66]['answerid'] : "" ?>">
@@ -269,7 +269,7 @@ if ( $part > 4 && $num_answers == 0 ) {
     <input type="hidden" name="sequence" value="0">
     <input type="hidden" name="op" value="DeleteCFA">
   <?php if ( !empty($data['can_edit']) ) { ?>
-    <div class="uk-align-right"><button class="uk-button uk-button-danger uk-button-mini">Delete this GVC</button></div>
+    <div class="uk-align-right"><button class="uk-button uk-button-danger uk-button-mini">Delete this ES</button></div>
   <?php } ?>
 </form>
 <?php

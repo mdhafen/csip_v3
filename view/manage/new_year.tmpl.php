@@ -31,7 +31,7 @@ Year created.<br>
 <td><label for="due_dates">CSIP Due Dates</label></td>
 <td>
   <textarea name="due_dates" id="due_dates" rows="7" cols="50">
-October : Teams identify GVC
+October : Teams identify ES
 October : Teams identify EXTENSIONS
 October : Teams administer two CFAs
 November : School Board reviews CSIPs

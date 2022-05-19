@@ -17,8 +17,8 @@ $gvcs = array();
 $course_name = '';
 $labels = array(
     //FIXME have to use hard coded values here
-    15 => 'GVC',
-    46 => 'GVC',
+    15 => 'ES',
+    46 => 'ES',
 
     16 => '# assessed',
     51 => '# assessed',

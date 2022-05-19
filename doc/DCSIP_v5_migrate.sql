@@ -13,9 +13,9 @@ UPDATE csip_v5.course SET course_category = 7 WHERE course_name IN ('World Civil
 UPDATE csip_v5.course SET course_category = 8 WHERE course_name IN ('Health','PE','Dance');
 UPDATE csip_v5.course SET course_category = 9 WHERE course_category = 0 OR course_name LIKE 'dual immersion%';
 
-INSERT INTO csip_v5.course_question_links (courseid,question_group,part,title) (SELECT courseid,1,1,'Guaranteed Curriculum' FROM csip_v5.course);
+INSERT INTO csip_v5.course_question_links (courseid,question_group,part,title) (SELECT courseid,1,1,'Essential Standards' FROM csip_v5.course);
 INSERT INTO csip_v5.course_question_links (courseid,question_group,part,title) (SELECT courseid,2,2,'Accreditation' FROM csip_v5.course);
-INSERT INTO csip_v5.course_question_links (courseid,question_group,part,title) (SELECT courseid,3,3,'GVC 1' FROM csip_v5.course);
+INSERT INTO csip_v5.course_question_links (courseid,question_group,part,title) (SELECT courseid,3,3,'ES 1' FROM csip_v5.course);
 
 INSERT INTO csip_v5.user (userid,username,fullname,email,password,salt,role) (SELECT userid,username,fullname,email,password,salt,role FROM csip_v3.user);
 

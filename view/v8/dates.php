@@ -4,7 +4,7 @@
         <h4><i class="uk-icon-pencil-square-o"></i> <strong>Unit By Unit</strong></h4>
 <hr>
         <div class="">
-Every unit of instruction should have GVC, Learning Targets, Common Assessment, and specific interventions/extensions.
+Every unit of instruction should have ES, Learning Targets, Common Assessment, and specific interventions/extensions.
         </div>
 <?php } ?>
 </div>

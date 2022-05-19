@@ -16,7 +16,7 @@ $courseid = input( 'courseid', INPUT_PINT );
 $part = input( 'part', INPUT_PINT );
 
 $group = 4;
-$title = 'GVC '. ($part - 2);
+$title = 'ES '. ($part - 2);
 
 $csip = array();
 if ( !empty($csipid) ) {

@@ -86,42 +86,42 @@ UPDATE `question` SET group_repeatableid = 1 WHERE questionid IN (30,31);
 INSERT INTO course_question_links (courseid,question_group,part,title) (SELECT courseid,1,1,'Team Professional Growth Plan' from course);
 INSERT INTO course_question_links (courseid,question_group,part,title) (SELECT courseid,2,2,'Accreditation' from course);
 INSERT INTO course_question_links (courseid,question_group,part,title) (SELECT courseid,3,3,'Stakeholder Input' from course);
-INSERT INTO course_question_links (courseid,question_group,part,title) (SELECT courseid,4,4,'GVC 1' from course);
+INSERT INTO course_question_links (courseid,question_group,part,title) (SELECT courseid,4,4,'ES 1' from course);
 
 INSERT INTO question (questionid,version,question_group,type,order_num,question) VALUES
 (32,8,1,9,1,'<b>Team Professional Growth Plan:</b><br/>
-After identifying your GVC and individually self assessing with the <a class="uk-display-inline" target="_blank" href="http://www.schools.utah.gov/CURR/educatoreffectiveness/Observation-Tools/Teaching/Chart.aspx">Utah Teaching Ovservation Tool (UTOT)</a>, collectively determine the Teaching Standard(s) you need to strengthen as a team, based on the learning needs of the students in your classroom this year (<a href="https://docs.google.com/document/d/1avnRg24z6hlyZccCJTKoFnTKzNXmPR4dqGACC-AOlyI/copy" class="uk-display-inline" target="_blank">click here for optional template</a>).'),
+After identifying your ES and individually self assessing with the <a class="uk-display-inline" target="_blank" href="http://www.schools.utah.gov/CURR/educatoreffectiveness/Observation-Tools/Teaching/Chart.aspx">Utah Teaching Ovservation Tool (UTOT)</a>, collectively determine the Teaching Standard(s) you need to strengthen as a team, based on the learning needs of the students in your classroom this year (<a href="https://docs.google.com/document/d/1avnRg24z6hlyZccCJTKoFnTKzNXmPR4dqGACC-AOlyI/copy" class="uk-display-inline" target="_blank">click here for optional template</a>).'),
 (33,8,1,1,2,'Outline Team''s Professional Growth Plan Here...'),
 (43,8,3,3,1,'Teacher Name'),
 (44,8,3,1,2,'Reflect on your individual practices based on your stakeholder input'),
 (45,8,4,9,1,'<b>What do students NEED to know and be able to do?</b><br/>
-With your team:<ol><li>Look at your standards, give priority, and come to consensus around key skills, concepts, behaviors, and dispositions.</li><li>identify/list the Essential Learnings that all students need to know.  These are your GVC''s.</li>
-<li>Once your team has identified each GVC, share with the team above and below your specific grade level.</li>
-<li>Share the GVC with your students.</li></ol>'),
-(46,8,4,1,2,'Enter the GVC:'),
+With your team:<ol><li>Look at your standards, give priority, and come to consensus around key skills, concepts, behaviors, and dispositions.</li><li>identify/list the Essential Learnings that all students need to know.  These are your Essential Standards.</li>
+<li>Once your team has identified each Essential Standard, share with the team above and below your specific grade level.</li>
+<li>Share the Essential Standards with your students.</li></ol>'),
+(46,8,4,1,2,'Enter the ES:'),
 (47,8,4,9,3,'<h1>Learning Targets and Common Formative Assessments</h1>'),
 (48,8,4,9,4,'<b>How will WE know if they LEARNED it?</b><br/>
-A learning target is any achievement expectation for students <i>on the path</i> toward mastery of a standard. It clearly states what we want the students to learn and should be understood by teachers and students. Learning targets should be formatively assessed to monitor progress toward a GVC.<br>
-With your team:<ol><li>Break the GVC into specific, measurable learning targets.</li><li>Identify a Common Formative Assessment(s) that your team will use to measure these learning targets.</li><li>Schedule, administer, and analyze the results of your CFA(s).</li></ol>'),
-(49,8,4,1,5,'List all Learning Targets that will lead to proficiency in this GVC'),
+A learning target is any achievement expectation for students <i>on the path</i> toward mastery of a standard. It clearly states what we want the students to learn and should be understood by teachers and students. Learning targets should be formatively assessed to monitor progress toward an Essential Standard.<br>
+With your team:<ol><li>Break the Essential Standard into specific, measurable learning targets.</li><li>Identify a Common Formative Assessment(s) that your team will use to measure these learning targets.</li><li>Schedule, administer, and analyze the results of your CFA(s).</li></ol>'),
+(49,8,4,1,5,'List all Learning Targets that will lead to proficiency in this ES'),
 (50,8,4,1,6,'CFA(s)'),
 (51,8,4,1,7,'# assessed'),
 (52,8,4,1,8,'# NOT proficient'),
 (53,8,4,1,9,'OPTIONAL: Enter links to online documents which support this assessment.'),
-(54,8,4,1,10,'According to the results of our CFA(s) and our team collaboration, the following teaching practices/strategies were most effective for this GVC.'),
+(54,8,4,1,10,'According to the results of our CFA(s) and our team collaboration, the following teaching practices/strategies were most effective for this ES.'),
 (55,8,4,9,11,'<h1>Intervention</h1>'),
 (56,8,4,9,12,'<b>How will WE respond to those who didn''t get it?</b><br/>
 EFFECTIVE TEAMS analyze the results of their common formative assessment (CFA) and immediately intervene with those who are in need of extra time and support. (Keep in mind that if less than 75% of students didn''t get a concept, it might not be an intervention issue; the initial instruction should be re-examined.)'),
-(57,8,4,1,13,'List the SPECIFIC INTERVENTIONS your team responded with for students who WERE NOT proficient in this GVC.'),
+(57,8,4,1,13,'List the SPECIFIC INTERVENTIONS your team responded with for students who WERE NOT proficient in this ES.'),
 (58,8,4,3,14,'Following your team''s INTERVENTIONS and REASSESSMENT, how many students are still not proficient?'),
 (59,8,4,1,15,'List the FIRST NAMES of those students who were not proficient even after your team''s intervention. (Or enter a link to an online document with the students names.)'),
 (60,8,4,1,16,'How did your TEAM respond to those who were still not proficient even after your team''s interventions?'),
 (61,8,4,9,17,'<h1>Learning Extensions</h1>'),
 (62,8,4,9,18,'What will we do if they already know it?'),
-(63,8,4,1,19,'As you plan instruction for this GVC and the learning targets, identify extension activities your team will use for those who already know it.'),
+(63,8,4,1,19,'As you plan instruction for this ES and the learning targets, identify extension activities your team will use for those who already know it.'),
 (64,8,4,9,18,'Once you have completed the process, reflect on...'),
-(65,8,4,1,20,'What we will keep for this GVC:'),
-(66,8,4,1,21,'What we will change for this GVC:');
+(65,8,4,1,20,'What we will keep for this ES:'),
+(66,8,4,1,21,'What we will change for this ES:');
 
 UPDATE question SET group_repeatableid = 1 WHERE questionid in (43,44);
 

@@ -20,7 +20,7 @@
 			<h2>Select Report</h2>
 
       <ul class="uk-list">
-      <li class="uk-margin"><a class="uk-button" href="<?= $data['_config']['base_url'] ?>reports/GVCs.php">GVCs</a></li>
+      <li class="uk-margin"><a class="uk-button" href="<?= $data['_config']['base_url'] ?>reports/GVCs.php">Essential Standards</a></li>
       <li class="uk-margin"><a class="uk-button" href="<?= $data['_config']['base_url'] ?>reports/Interventions.php">Interventions</a></li>
       <li class="uk-margin"><a class="uk-button" href="<?= $data['_config']['base_url'] ?>reports/PGPs.php">Schools Professional Growth Plans by course</a></li>
       <li class="uk-margin"><a class="uk-button" href="<?= $data['_config']['base_url'] ?>reports/leadership_plans.php">Archived Schools Leadership Growth Plans</a></li>

@@ -690,10 +690,10 @@ class Authen_External {
         'active' => $active,
         'externalid' => $ex_id,
     );
-    $parts[] = array( 'part' => '1', 'title' => 'Guaranteed Curriculum', 'question_group' => '1' );
+    $parts[] = array( 'part' => '1', 'title' => 'Essential Standards', 'question_group' => '1' );
     $parts[] = array( 'part' => '2', 'title' => 'Accreditation', 'question_group' => '2' );
     $parts[] = array( 'part' => '3', 'title' => 'Stakeholder Input', 'question_group' => '3' );
-    $parts[] = array( 'part' => '4', 'title' => 'GVC 1', 'question_group' => '4' );
+    $parts[] = array( 'part' => '4', 'title' => 'ES 1', 'question_group' => '4' );
     $new_course['parts'] = $parts;
     return $new_course;
   }

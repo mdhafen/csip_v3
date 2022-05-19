@@ -9,6 +9,7 @@ $updates = array(
   '0006-add_v8_tech_field',
   '0007-add_password_mode_field',
   '0008-add_course_for_leadership_flag',
+  '0009-GVC_to_ES',
 );
 $results = array();
 

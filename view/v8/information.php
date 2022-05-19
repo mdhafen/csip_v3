@@ -32,7 +32,7 @@
           $completeness = 'uk-badge-warning';
         }
  ?>
-        <li class="" id="cfa<?= $part ?>_tab"><a href=""><div class="uk-badge <?= $completeness ?>">GVC <?= $count ?></div></a></li>
+        <li class="" id="cfa<?= $part ?>_tab"><a href=""><div class="uk-badge <?= $completeness ?>">ES <?= $count ?></div></a></li>
 <?php
          $count++;
       }

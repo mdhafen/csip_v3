@@ -121,10 +121,10 @@ if ( !empty($run) ) {
             }
             else if ( $version == 8 ) {
                 switch ( $question ) {
-                   case 46: $label = 'GVC'; break;
+                   case 46: $label = 'ES'; break;
                    case 49: $label = 'Learning Targets'; break;
                    case 50: $label = 'CFA'; break;
-                   case null: $label = 'GVCs'; break;
+                   case null: $label = 'ES'; break;
                 }
                 $gvcs[ $row['location_name'] ][ $row['course_name'] ][ $part ][$label] = $row['answer'];
             //FIXME have to use hard coded values here again

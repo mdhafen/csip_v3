@@ -20,7 +20,7 @@ function addCFATab(csipid,categoryid,courseid,part,label,last){
 				alert("Error(s): "+ messages);
 			}
 			else {
-				$('<li id="cfa'+part+'_tab"><a href=""><div class="uk-badge uk-badge-warning">GVC '+label+'</div></a></li>");').insertAfter("#cfa"+lastTAB+'_tab');
+				$('<li id="cfa'+part+'_tab"><a href=""><div class="uk-badge uk-badge-warning">ES '+label+'</div></a></li>");').insertAfter("#cfa"+lastTAB+'_tab');
 				$('<div id="cfa'+part+'_content">This is CFA'+part+'</div>').insertAfter("#cfa"+lastTAB+'_content');
 				$("#cfa"+part+"_content").load("cfa_new.php?tab="+label+"&csipid="+csipid+"&courseid="+courseid+"&part="+part, function(response, status, xhr) {
 					if (status == "error") {

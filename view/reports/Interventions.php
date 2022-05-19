@@ -26,11 +26,11 @@
           }
           print "<div class='uk-text-bold'>Results for ".$data['course_name']."</div>";
           print "<table class='uk-table'>\n";
-          print "<thead><tr><th>Location</th><th>Year</th><th>GVC#</th><th>GVC</th><th>Assessed</th><th>Not Proficient</th><th>Interventions</th><th>Still Not Proficient</th><th>Extensions</th></tr></thead>\n<tbody>\n";
+          print "<thead><tr><th>Location</th><th>Year</th><th>ES#</th><th>ES</th><th>Assessed</th><th>Not Proficient</th><th>Interventions</th><th>Still Not Proficient</th><th>Extensions</th></tr></thead>\n<tbody>\n";
           foreach ( $data['gvcs'] as $location => $years ) {
               foreach ( $years as $year_name => $parts ) {
                   foreach ( $parts as $tab => $questions ) {
-                      print "<tr><td>$location</td><td>$year_name</td><td>GVC #$tab</td>\n";
+                      print "<tr><td>$location</td><td>$year_name</td><td>ES #$tab</td>\n";
                       foreach ( $data['labels'] as $label ) {
                           $answer = $questions[$label];
                           print "<td><span class='prewrap'>$answer</span></td>\n";

@@ -17,7 +17,7 @@
 						<br>
 						<a href="https://prodev.washk12.org/support/csip" style="float: right;" class="uk-button uk-button-primary" target="_BLANK">Go here for help</a>
             </span>
-      <ul class="uk-breadcrumb"><li><a href="GVCs.php">GVCs Report</a></li>
+      <ul class="uk-breadcrumb"><li><a href="GVCs.php">ES Report</a></li>
 <?php
       if ( !empty($data['run']) && $data['run'] == 'Finished' ) {
           print "<li><span href='#'>Results</span></li></ul>";
@@ -29,7 +29,7 @@
               print "<table class='uk-table'>\n";
               if ( !empty($data['all_courses']) ) {
                   print "<thead><tr><th colspan='3'>$location</th></tr></thead>\n";
-                  print "<thead><tr><th>Course</th><th>GVCs</td><th>Answers</th></tr></thead>\n<tbody>\n";
+                  print "<thead><tr><th>Course</th><th>ES</td><th>Answers</th></tr></thead>\n<tbody>\n";
                   foreach ( $courses as $course_name => $parts ) {
                       $gvcs = 0;
                       $answers = 0;
@@ -47,7 +47,7 @@
                   print "<thead><tr><th colspan='2'>$location</th></tr></thead>\n";
                   foreach ( $courses as $course_name => $parts ) {
                       foreach ( $parts as $tab => $questions ) {
-                          print "<thead><tr><th colspan='2'>GVC #$tab</th></tr></thead>\n";
+                          print "<thead><tr><th colspan='2'>ES #$tab</th></tr></thead>\n";
                           print "<tbody>\n";
                           foreach ( $questions as $label => $answer ) {
                               print "<tr><td>$label</td><td><span class='prewrap'>$answer</span></td></tr>\n";
