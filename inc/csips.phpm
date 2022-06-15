@@ -267,7 +267,7 @@ CROSS JOIN year USING (yearid)
       WHERE version = :ver
         AND csipid = :csip
         AND courseid IN ($courselist)
-   ORDER BY order_num
+   ORDER BY part,order_num,questionid
 ";
   $sth = $dbh->prepare( $query );
   $sth->bindValue( ':ver', $csip['version'] );
