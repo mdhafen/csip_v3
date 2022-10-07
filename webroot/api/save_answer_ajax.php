@@ -8,7 +8,7 @@ include_once( '../../inc/csips.phpm' );
 include_once( '../../inc/course.phpm' );
 
 $can_edit = authorized( 'update_csip' );
-$super = authorized( 'manage_users' );
+$super = ( authorized( 'load_other_csip' ) && $can_edit );
 $principal = authorized( 'approve_csip' );
 
 $locations = empty($_SESSION['loggedin_user']['locations']) ? array() : array_keys( $_SESSION['loggedin_user']['locations'] );
@@ -29,7 +29,7 @@ $error = array();
 
 $csip = array();
 if ( !empty($csipid) ) {
-  if ( !in_array( get_csip_locationid($csipid), $locations ) ) {
+  if ( !in_array( get_csip_locationid($csipid), $locations ) && ! $super ) {
     $error[] = array('NOTYOURS'=>'Access to CSIP at that location is denied.');
   }
   else {
@@ -41,12 +41,6 @@ if ( empty($csip) ) {
    $error[] = array('NOTYOURS' => 'No CSIP loaded.');
 }
 else {
-   if ( ! empty($csipid) && $csip['csipid'] != $csipid ) {
-      $error[] = array('NOTYOURS' => 'Loading other CSIPs not allowed here.');
-   }
-   if ( !in_array( $csip['locationid'], $locations ) && ! $super ) {
-      $error[] = array('NOTYOURS' => 'Access to CSIP denied.' );
-   }
    if ( empty($csip['courses'][$courseid]) ) {
       $error[] = array('NOTYOURS' => 'Access to course not allowed here.');
    }
