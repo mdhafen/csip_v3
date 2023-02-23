@@ -10,6 +10,7 @@ $updates = array(
   '0007-add_password_mode_field',
   '0008-add_course_for_leadership_flag',
   '0009-GVC_to_ES',
+  '0010-add_message_tables',
 );
 $results = array();
 
