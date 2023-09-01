@@ -13,7 +13,7 @@ $op = input( 'op', INPUT_STR );
 $externals = array();
 $edit = 0;
 $saved = 0;
-$user = array();
+$user = array( 'locations'=>array() );
 $locations = all_locations();
 $roles = roles();
 
