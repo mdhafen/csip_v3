@@ -62,8 +62,10 @@
     $completeness = "uk-badge-warning";
   }
 ?>
+<!--
         <li class="" id="growth_tab"><a href=""><div class="uk-badge <?= $completeness ?>">Team PGP</div></a></li>
         <li class="" id="results_tab"><a href=""><div class="uk-badge uk-badge-primary">Stakeholder Input</div></a></li>
+ -->
 	</ul>
 	<!-- Tabs End -->
 
@@ -93,12 +95,14 @@
 <?php
       }
 ?>
+<!--
 	<div id="growth_content">
 	   <?php include 'leftpanel.php';?>
 	</div>
 	<div id="results_content">
 	   <?php include 'results.php';?>
 	</div>
+ -->
     </div>
 
 <?php } ?>
