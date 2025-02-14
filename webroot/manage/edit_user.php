@@ -68,7 +68,7 @@ if ( $op == "Save" ) {  // Update/Add the user
   $salt = '';
   $pass_mode = '';
   if ( $password && $password != '*****' && $password == $password2 ) {
-    list( $user_password, $salt, $pass_mode ) = new_password( $password );
+    list( $user_password, $salt, $pass_mode ) = encode_password( $password );
   }
 
   foreach ( $user_locations as $locid ) {
