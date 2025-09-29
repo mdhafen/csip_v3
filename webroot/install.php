@@ -274,7 +274,7 @@ function handle_locations() {
 function handle_users() {
     $users = all_users();
     $user_map = array_combine( array_column($users,'userid'), array_column($users,'externalid') );
-    $user_ids = input( 'elements', INPUT_PINT );
+    $user_ids = input( 'elements', INPUT_PINT ) ?? array();
     $ex_ids = input( 'externals', INPUT_HTML_NONE );
     $count = count($user_ids);
     for ( $i = 0; $i < $count; $i++ ) {
