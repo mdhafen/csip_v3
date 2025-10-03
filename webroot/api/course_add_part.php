@@ -32,6 +32,10 @@ if ( empty($csip) ) {
    $errors[] = array('FLAG' => 'NOTYOURS', 'message' => 'No CSIP loaded.');
 }
 else {
+   if ( $csip['courses'][$courseid]['for_leadership'] ) {
+      $can_edit = authorized( 'approve_csip' );
+   }
+
    if ( ! empty($csipid) && $csip['csipid'] != $csipid ) {
       $errors[] = array('FLAG' => 'NOTYOURS', 'message' => 'Loading other CSIPs not allowed here.');
    }
