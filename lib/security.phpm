@@ -320,6 +320,7 @@ function decode_password( $password, $key, $mode ) {
 }
 
 function authen_ldap( $module, $username, $password ) {
+	global $config;
 	$user = 0;
 	$userdn = 0;
 	$name = '';
@@ -347,7 +348,7 @@ function authen_ldap( $module, $username, $password ) {
 	}
 
 	if ( $userdn ) {
-		if ( $ldap->do_connect( $module, $userdn, $password ) ) {
+		if ( $ldap->do_connect( $userdn, $password ) ) {
 			if ( ! empty($ldap->config['roles']) ) {
 				foreach ( $ldap->config['roles'] as $group_dn => $role_id ) {
 					$group = $ldap->quick_search( '(objectClass=groupOfNames)', array(), 0, $group_dn );
@@ -371,12 +372,20 @@ function authen_ldap( $module, $username, $password ) {
 				'role' => $role,
 				'password' => $password,
 			);
+			$mode_str = $config['password_modes']['prefered'];
+			$mode = $config['password_modes'][ $mode_str ];
+			unset($mode['hash']);
+			list( $enc_password, $salt ) = encode_password( $password, $mode );
+			$_SESSION['auth_ldap'][$module]['userid'] = $userdn;
+			$_SESSION['auth_ldap'][$module]['password'] = $enc_password;
+			$_SESSION['auth_ldap'][$module]['salt'] = $salt;
+			$_SESSION['auth_ldap'][$module]['mode'] = $mode_str;
 		}
 		else {
 			// re-bind as root
 			$userdn = $ldap->config['userdn'];
 			$password = $ldap->config['passwd'];
-			$ldap->do_connect( $module, $userdn, $password );
+			$ldap->do_connect( $userdn, $password );
 		}
 	}
 
